@@ -1,0 +1,65 @@
+/**
+ * common.css
+ * @author  yefniu
+ * @version 20120304
+ */
+/** 浮动相关 **/
+.dd-left{
+    float:left;
+}
+.dd-right{
+    float:right;
+}
+.dd-clear{
+    clear:both;
+}
+.dd-clr{
+    zoom:1;
+}
+.dd-clr:after{
+    display:block;
+    clear:both;
+    height:0;
+    content:"\0020";
+}
+/** 显示相关 **/
+.dd-hide{
+    display:none;
+}
+.dd-show{
+    display:block;
+}
+.dd-inline{
+    display:inline;
+}
+.dd-lump{
+	display:inline-block; 
+	display:-moz-inline-stack;
+	zoom:1; 
+	*display:inline;
+}
+/** 对象相关 **/
+.dd-visible{
+    visibility:visible;
+}
+.dd-hidden{
+    visibility:hidden;
+}
+/** 定位相关 **/
+.dd-locate{
+    position:relative;
+}
+/**
+ * 人民币符号
+ * 使用方法：<span class="dd-cny">&yen;</span>
+ */
+.dd-cny{
+    font-family:Helvetica,Arial;
+}
+/** 文字相关 **/
+.dd-gray{
+    color:#666;
+}
+.dd-bold{
+    font-weight:700;
+}

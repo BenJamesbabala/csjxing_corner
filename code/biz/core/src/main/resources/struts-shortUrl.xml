@@ -1,0 +1,15 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="surl" namespace="/surl" extends="default">
+		
+		<action name="surl" class="com.doucome.corner.web.common.action.ShortUrlAction">
+			<interceptor-ref name="basicStack" />
+			<result name="success" type="velocity">/zhe/index.vm</result>
+		</action>
+		
+	</package>
+	
+</struts>

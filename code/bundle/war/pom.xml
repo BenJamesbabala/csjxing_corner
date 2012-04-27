@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="GBK"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+      <groupId>com.doucome.corner</groupId>
+      <artifactId>corner.all</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <relativePath>../../pom.xml</relativePath>
+   </parent>
+   
+   
+	<groupId>com.doucome.corner</groupId>
+	<artifactId>corner.bundle.war</artifactId>
+	<packaging>war</packaging>
+	<name>war</name>
+	<description>Auto converted POM for war</description>
+	<properties>
+		<wtpversion>2.0</wtpversion>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.web.common</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.web.zhe</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.web.bops</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.task.zhe</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.templates</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warSourceDirectory>src/main/webapp</warSourceDirectory>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

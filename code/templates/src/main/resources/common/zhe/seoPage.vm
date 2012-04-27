@@ -1,0 +1,39 @@
+######################
+##Parameters : 
+## totalRecords : 总记录数
+## page : 当前页
+## size ： 页大小
+## pageURL ： 跳转地址
+######################
+
+#set($pageItem = $pageUtils.getPageDisplayItem($totalRecords,$page,$size))
+#set($pageURL = $pageUtils.getPageURL($pageURL))
+#set($urlPath = $stringUtils.substringBefore($pageURL,'?'))
+#set($urlPram = $stringUtils.substringAfter($pageURL,'?'))
+<div class="pagination" id="pagination">
+	<form method="get" action="$urlPath" id="form_page">
+		$stringUtils.escapeHiddenInputs($urlPram)
+		<div class="page-op">
+    		<span class="total-page">共$pageItem.totalPage 页</span>
+			到<input type="text" name="page" id="jumpto" autocomplete="off" value="$pageItem.currPage">页
+    		<input type="submit" value="确定" id="jump-sub">
+    	</div>
+    </form>
+    
+	<div class="page-bottom">
+		#if($pageItem.hasPrevItem)
+			<a href="$urlPath/${pageItem.prevPage}?$urlPram" class="page-prev"></a>
+		#end
+    	#foreach($pageIndex in [$pageItem.startPageIndex..$pageItem.endPageIndex])
+			#if($pageIndex == $pageItem.currPage)
+                <span class="page-cur">${pageIndex}</span>
+			#else
+				<a href="$urlPath/${pageIndex}?$urlPram">${pageIndex}</a>
+			#end
+		#end
+		#if($pageItem.hasNextItem)
+			<span class="page-break">...</span>
+			<a href="$urlPath/${pageItem.nextPage}?$urlPram" class="page-next">下一页</a>
+		#end
+    </div>
+</div>

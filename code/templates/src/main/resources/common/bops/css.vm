@@ -1,0 +1,112 @@
+body {
+	font : 12px normal ;
+	witdh: 100% ;
+}
+
+.bops {
+	float:right:
+	text-align:left;
+	width:1100px ;
+}
+
+.bops table{ border-collapse:collapse;}
+.bops th {text-align:center ;font-weight:bold;}
+.bops th,.bops td{ border:1px solid #bbb;font-size:12px;padding:2px 5px;}
+
+.left_menu {
+	float:left:
+	width:100px;
+	clear: both ;
+}
+
+/* Disable properties specified in the imported CSS file */
+.left_menu p {
+	border:none;
+	font-weight:bold;
+	background-color : #cccccc ;
+	font-color:black ;
+	padding : 5px 10px ;
+}
+.left_menu p a {
+	border:none;
+	font-weight:bold;
+}
+
+.left_menu a {
+	border:none;
+	font-weight:normal;
+}
+
+/* Actual menu CSS starts here */
+.left_menu,
+.left_menu ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+.left_menu {width:200px;}
+.left_menu li {
+	display:block;
+	margin:0;
+	padding:0;
+	margin-bottom:1px;
+}
+.left_menu a {
+	display:block;
+	padding:2px 5px;
+	color:#000;
+	background:#cccccc;
+	text-decoration:none;
+}
+.left_menu a:hover,
+.left_menu a:focus,
+.left_menu a:active {background:#2edwe3;}
+.left_menu ul li {padding-left:15px;}
+.left_menu ul a {background:#e8e8e8;}
+.hidden {display:none;}
+
+.settle_u {
+    color: #0088CC;
+}
+
+.settle_s {
+    color: #53A000;
+}
+
+.settle_f {
+    color: #FF4444;
+}
+
+.settle_p {
+    color: #F37800 ;
+}
+
+.F10 {
+	font-size:10px;
+}
+.B {
+	font-weight:bold;
+}
+
+.GRAY {
+	color : gray ;
+}
+
+.btn_s a , .btn_s a:hover , .btn_s a:active {
+	color: #53A000;
+	text-decoration : none ;
+	border : 1px solid gray ;
+	font-size : 14px;
+	padding:3px;
+	background-color : #eeeeee;
+}
+
+.btn_f a , .btn_f a:hover , .btn_f a:active {
+	color: #FF4444;
+	text-decoration : none ;
+	border : 1px solid gray ;
+	font-size : 14px;
+	padding:3px;
+	background-color : #eeeeee;
+}
+

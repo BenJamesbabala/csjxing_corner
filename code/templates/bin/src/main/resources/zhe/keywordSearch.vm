@@ -1,0 +1,63 @@
+#set($layout="zhe/default_list.vm")
+
+#set($page = $itemList.pagination.pag)
+#set($totalPages = $itemList.pagination.totalPages)
+#set($size = $itemList.pagination.size)
+
+
+
+<div class="item-nav dd-clr">
+	<ul>
+		<li class="w82">&nbsp;</li>
+		<li class="w240">&nbsp;</li>
+		<li class="w180">&nbsp;</li>
+		<li class="w140">&nbsp;</li>
+	</ul>
+</div>
+#foreach($item in $itemList.items)
+    	
+   
+    #set($itemClickUrl = "${env.ddzRoot}/zhe/item.htm?id=$item.numIid")
+    
+    <div class="item dd-clr">
+    	<ul>
+    		<li>
+    			<div class="img-container">
+    				<a href="$!itemClickUrl" title="$!item.title" target="_blank">
+    					<img src="$!item.sumPicUrl" alt="$!item.title" />
+    				</a>
+    			</div>
+    			<div class="title-container dd-gray">
+    				<p>
+    					<h1>
+    						<a href="$!itemClickUrl" class="title dd-gray" title="$!item.title" target="_blank">$!item.title</a>
+    					</h1>
+    				</p>
+    				<!--
+    				<p>
+    					<span class="place">Õã½­ ¼ÎÐË</span>
+    					<span class="trade-count">×î½ü³É½»1±Ê</span>
+    				</p>
+    				<p>
+    					<a href="#" title="¾Á×ËÆì½¢µê" class="dd-gray">¾Á×ËÆì½¢µê</a>
+    					<img src="http://pics.taobaocdn.com/newrank/s_cap_3.gif" />
+    				</p>
+    				-->
+    			</div>
+    			<div class="current-price">
+    				<span class="f16">&yen;</span><span class="current-color">$!item.showPrice</span><br/>
+    			</div>
+    			<div class="discount-price">
+					<!--
+    				<span class="f18 yen-color">&yen;</span><span class="discount-color">$decimalUtils.format($!item.commission , '#####')<span class="f18">$decimalUtils.fractionFormat($!item.commission , '.00')</span></span>
+					-->
+					#set($rate = ($!item.commissionRate / 100.00))
+					<span class="f18 yen-color"></span><span class="discount-color">$rate<span class="f18">%</span></span>
+    			</div>
+    		</li>
+    	</ul>
+    </div>
+#end
+ 
+
+#parse("/common/zhe/keyword_pagination.vm")

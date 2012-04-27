@@ -1,0 +1,63 @@
+######################
+##Parameters : 
+## totalPages : 总页数
+## page : 当前页
+## size ： 页大小
+## totalRecords : 总记录数
+######################
+#set($totalPages = $decimalUtils.createInt($totalPages))
+#set($page = $decimalUtils.createInt($page , 1))
+#set($size = $decimalUtils.createInt($size, 20))
+
+#set($curPage = $page)
+
+#if($curPage < 1)
+	#set($curPage = 1) 
+#elseif($curPage > $totalPages)
+	#set($curPage = $totalPages)
+#end
+
+#set($rangeStart = 1)
+#set($rangeEnd = $totalPages)
+
+#set($prePage = ${curPage} - 1)
+#set($nextPage = ${curPage} + 1)
+
+#if($prePage < 1)
+	#set($prePage = 1) 
+#end
+#if($nextPage > $totalPages)
+	#set($nextPage = $totalPages) 
+#end
+
+<!--
+	totalPages : $totalPages
+    page : $page
+    size ：$size
+	prePage : $prePage
+	nextPage : $nextPage
+	curPage : $curPage
+-->
+<div class="page page-nobg fn-right" id="pagination">
+	<form method="get" action="${env.ddzRoot}/zhe/my.htm" id="form_page">
+    	<input type="hidden" name="settleStatus" value="$!settleStatus">
+    	<input type="hidden" name="page" value="$page" id="page_num">
+    </form>
+	<span class="page-link">
+		#set($start = ($curPage - 1)*$size + 1)
+		#if($page == $totalPages)
+			#set($end = $start + $totalRecords%$size - 1)
+		#else
+			#set($end = $start + $size - 1)
+		#end
+		#if($page != 1)
+		<a rel-value="1" rel="currentPageNo" href="javascript:;" class="page-home form-element" data-page="1" >&lt;&lt;首页</a>
+		<a rel-value="1" rel="currentPageNo" href="javascript:;" class="page-previous form-element" data-page="$prePage">&lt;上一页</a>
+		#end
+		$start - $end 条，共<span id="J-record-count">$!totalRecords</span>条
+		#if($page < $totalPages)
+		<a rel-value="2" rel="currentPageNo" href="javascript:;" class="page-next form-element" data-page="$nextPage">下一页&gt;</a>
+		<a rel-value="2" rel="currentPageNo" href="javascript:;" class="page-end form-element" data-page="$totalPages">尾页&gt;&gt;</a>
+		#end
+	</span>
+</div>

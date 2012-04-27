@@ -1,0 +1,35 @@
+!(function($){
+	$.namespace("DD.taokeReport");
+	var self = DD.Index;
+
+	$.extend(DD.taokeReport,{
+		init:function(){
+			self._initPaging();
+		},
+		
+		_initPaging:function(){
+			if($('#pagination').length){
+				$('#pagination a').on('click',function(){
+					$('#page_num').val($(this).data('page'));
+					$('#form_page').submit();
+				});
+
+				$('#jumpto').on('keyup',function(ev){
+					if(ev.keyCode === 13){
+						$('#form_page').submit();
+					}
+					var temp = $('#jumpto').val();
+					if(temp.length){
+						$('#jumpto').val(parseInt(temp));
+						$('#page_num').val(parseInt(temp))
+					}
+				});
+			}
+		},
+		end:0
+	});
+})(jQuery);
+
+jQuery(document).ready(function(){
+	DD.taokeReport.init();
+});

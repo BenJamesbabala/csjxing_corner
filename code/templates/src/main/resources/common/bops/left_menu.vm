@@ -1,0 +1,14 @@
+
+<ul class="left_menu">
+    <p><a href="">点点折BOPS后台管理</a></p>
+	<li><a href="javascript:">点点折后台管理</a>
+		<ul>
+            <li id="taokeReport"><a href="${env.bopsRoot}/bops/zhe/taoke_report.htm" >淘客报表结算</a></li>
+			<li id="taokeReportTask"><a href="${env.bopsRoot}/bops/zhe/taoke_report_task.htm" >淘宝客报表任务日历</a></li>
+		</ul>
+		<ul>
+			<li id="taokeReport"></li>
+		</ul>
+	</li>
+
+</ul>

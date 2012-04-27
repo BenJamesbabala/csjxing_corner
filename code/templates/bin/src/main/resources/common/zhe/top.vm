@@ -1,0 +1,33 @@
+<style>
+.siteNav {
+	height:30px;
+	padding-top:6px;
+}
+.siteNav a , .siteNav a:active {
+	 color: #666666;
+	 text-decoration : none ;
+}
+.siteNav a:hover {
+	 color: #666666;
+	 text-decoration : under-line ;
+}
+
+.siteNav a.loginId {
+	 color: #0092D2;
+}
+
+</style>
+<div id="header" class="header">
+	<div class="w952 siteNav">
+		#set($user = $ddzAuthz.user) 
+		#if(false)
+		#if($user)
+            hi, <a href="${env.ddzRoot}/zhe/my.htm" class="loginId" title="ÎÒµÄµãµãÕÛ">$user.loginId</a>
+			&nbsp;
+			<a href="${env.ddzRoot}/zhe/logout.htm">ÍË³ö</a>
+		#else
+			<a href="${env.ddzRoot}/zhe/tblogin.htm" title="ÌÔ±¦µÇÂ½" >ÌÔ±¦µÇÂ½</a>
+		#end
+		#end
+	</div>
+</div>

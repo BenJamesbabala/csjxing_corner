@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:roma="http://roma.alibaba.com/schema"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://roma.alibaba.com/schema http://roma.alibaba.com/schema/roma-component.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+	
+	<bean id="ddzAccountService" class="com.doucome.corner.biz.zhe.service.impl.DdzAccountServiceImpl" />
+	
+	<bean id="ddzEatDiscountService" class="com.doucome.corner.biz.zhe.service.impl.DdzEatDiscountServiceImpl" />
+	
+	<bean id="ddzTransferUrlService" class="com.doucome.corner.biz.zhe.service.impl.DdzTransferUrlServiceImpl"/>
+	
+	<bean id="ddzSearchLogService" class="com.doucome.corner.biz.zhe.service.impl.DdzSearchLogServiceImpl"/>
+	
+	<bean id="ddzUserService" class="com.doucome.corner.biz.zhe.service.impl.DdzUserServiceImpl"></bean>
+	
+	<bean id="ddzTaokeReportService" class="com.doucome.corner.biz.zhe.service.impl.DdzTaokeReportServiceImpl"></bean>
+	
+	<bean id="ddzSyncReportTaskService" class="com.doucome.corner.biz.zhe.service.impl.DdzSyncReportTaskServiceImpl"></bean>
+	
+	<bean id="ddzTaobaoRecommendService" class="com.doucome.corner.biz.zhe.service.impl.DdzTaobaoRecommendServiceImpl"></bean>
+	
+	<bean id="ddzTaobaoRegisterService" class="com.doucome.corner.biz.zhe.service.impl.DdzTaobaoRegisterServiceImpl"/>
+	
+	<bean id="keywordsFilterService" class="com.doucome.corner.biz.zhe.service.impl.KeywordsFilterServiceImpl"/>
+	
+	<bean id="alipayService" class="com.doucome.corner.biz.zhe.service.impl.pay.AlipayServiceImpl">
+	    <property name="pageSize" value="${corner.alipay.count.limit}" />
+	    <property name="productionMode" value="${corner.production}" />
+	</bean>
+	
+	<bean id="ddzEatDiscountRule" class="com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule" lazy-init="false">
+		<property name="configLocation">
+			<value>classpath:/corner/bean/zhe/discountRule.xml</value>
+		</property>
+	</bean>
+</beans>

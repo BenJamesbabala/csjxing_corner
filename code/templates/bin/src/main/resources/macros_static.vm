@@ -1,0 +1,15 @@
+
+#macro(DDZ_JS $libs)
+   #foreach ($key in $libs)
+   #set($version = $staticVerUtils.ver($!key))   
+   <script type="text/javascript" src="${env.ddzStaticroot}/js/$!key?v=$!version"></script>
+   #end
+#end
+
+
+#macro(DDZ_CSS $libs)
+	#foreach ($key in $libs)
+	#set($version = $staticVerUtils.ver($!key))
+	<link  rel="stylesheet" type="text/css" href="${env.ddzStaticroot}/css/$!key?v=$!version" />
+	#end
+#end

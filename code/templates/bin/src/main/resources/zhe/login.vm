@@ -1,0 +1,6 @@
+#set($layout="zhe/default_main.vm")
+<br/><br/><br/><br/><br/><br/>
+<div >
+	<a class="btn-taobao" rel="external nofollow" href="${env.ddzRoot}/zhe/tblogin.htm"><span>ÌÔ±¦ÕËºÅµÇÂ¼</span></a>
+	
+</div>

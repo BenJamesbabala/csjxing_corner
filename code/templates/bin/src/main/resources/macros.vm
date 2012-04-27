@@ -1,0 +1,19 @@
+
+
+#macro(ESC_HTML $txt)
+	#if($txt)
+	$stringUtils.escapeHtml($txt)
+	#end
+#end
+
+#macro(ESC_JS $txt)
+	#if($txt)
+	$stringUtils.escapeJS($txt)
+	#end
+#end
+
+#macro(HIGHRIGHT_OUTPUT $text $keyword)
+	#set ($highlightKeyword = "<span class='orange'>" + $keyword + "</span>")
+	#set ($str = $stringUtils.replaceIgnorecase($text , $keyword ,$highlightKeyword))
+	$str
+#end

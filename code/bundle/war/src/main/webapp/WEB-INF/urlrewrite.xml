@@ -1,0 +1,32 @@
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN"
+	"http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+
+<!-- https: // urlrewrite.dev.java.net/manual/3.2 -->
+
+<urlrewrite use-query-string="false" decode-using="header,null">
+	<!-- SEO 优化  -->
+	<rule>
+		<from>/s/(\w+)</from>
+		<to type="forward">/surl/surl.htm?shorten=$1</to>
+	</rule>
+	<rule>
+		<from>/zhe/item/(\d+)</from>
+		<to type="forward">/zhe/item.htm?id=$1</to>
+	</rule>
+	<rule>
+		<from>/zhe/keyword/(\w*)/(\d+)</from>
+		<to type="forward">/zhe/keyword.htm?mark=$1&amp;page=$2</to>
+	</rule>
+	<rule>
+		<from>/zhe/keyword/(\w*)</from>
+		<to type="forward">/zhe/keyword.htm?mark=$1</to>
+	</rule>
+	<!-- 重写后缀 -->
+	<rule>
+		<from>/zhe/(index|item|search|keyword).(vm|jsp|action)(.*)</from>
+		<to type="permanent-redirect">$1.htm$3</to>
+	</rule>
+	
+	
+</urlrewrite>
+

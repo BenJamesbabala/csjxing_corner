@@ -1,0 +1,7 @@
+OPTIONS=Server,jsp,jmx,servlets,resources,webapp
+
+$corner_jettyserverhome/etc/jetty.xml
+$corner_jettyserverhome/etc/jetty-logging.xml
+$corner_jettyserverhome/etc/jetty-jmx.xml
+$corner_jettyserverhome/etc/jetty-deploy.xml
+$corner_jettyserverhome/etc/jetty-webapps.xml

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="ddzSyncReportTask">
+	<typeAlias alias="TA-SyncReportTask"
+		type="com.doucome.corner.biz.dal.dataobject.DdzSyncReportTaskDO" />
+
+	<resultMap id="RM-SyncReportTask" class="TA-SyncReportTask">
+		<result property="id" column="ID" />
+		<result property="taskId" column="TASK_ID" jdbcType="VARCHAR" />
+		<result property="runoutData" column="RUNOUT_DATA" jdbcType="VARCHAR" />
+		<result property="isSuccess" column="IS_SUCCESS" jdbcType="VARCHAR" />
+		<result property="reportMembCount" column="REPORT_MEMB_COUNT" />
+		<result property="successCount" column="SUCCESS_COUNT"  />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtReport" column="GMT_REPORT" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="insertReportTaskId">
+		INSERT INTO DDZ_SYNC_REPORT_TASK
+			(ID,TASK_ID,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#taskId#,now(),now())
+		<selectKey resultClass="java.lang.Integer" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="queryByTaskId" resultMap="RM-SyncReportTask">
+		SELECT 
+			ID,TASK_ID,RUNOUT_DATA,IS_SUCCESS,REPORT_MEMB_COUNT,SUCCESS_COUNT,GMT_CREATE,GMT_MODIFIED,GMT_REPORT
+		FROM 
+			DDZ_SYNC_REPORT_TASK
+		WHERE
+			TASK_ID = #taskId#
+	</select>
+	
+	<update id="updateByTaskId">
+		UPDATE 
+			DDZ_SYNC_REPORT_TASK
+		SET 
+			RUNOUT_DATA= #runoutData# , 
+			IS_SUCCESS = #isSuccess# ,
+			REPORT_MEMB_COUNT = #reportMembCount# ,
+			SUCCESS_COUNT = #successCount# , 
+			GMT_MODIFIED = now(),
+			GMT_REPORT = #gmtReport#
+		WHERE
+			TASK_ID = #taskId#
+	</update>
+	
+	<select id="queryReportWithPagination" resultMap="RM-SyncReportTask">
+		<![CDATA[
+		SELECT 
+			ID,TASK_ID,RUNOUT_DATA,IS_SUCCESS,REPORT_MEMB_COUNT,SUCCESS_COUNT,GMT_CREATE,GMT_MODIFIED,GMT_REPORT
+		FROM
+			DDZ_SYNC_REPORT_TASK
+		WHERE
+			GMT_REPORT >= #gmtReportStart#
+		AND
+			GMT_REPORT <= #gmtReportEnd#
+			]]>
+	</select>
+</sqlMap>

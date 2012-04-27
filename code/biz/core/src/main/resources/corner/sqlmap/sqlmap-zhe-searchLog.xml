@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="ddzSearchLog">
+	<typeAlias alias="TA-DDZ-SEARCH-LOG"
+		type="com.doucome.corner.biz.dal.dataobject.DdzSearchLogDO" />
+
+	<resultMap id="RM-DDZ-SEARCH-LOG" class="TA-DDZ-SEARCH-LOG">
+		<result property="id" column="ID" />
+		<result property="alipayId" column="ALIPAY_ID" jdbcType="VARCHAR" />
+		<result property="uid" column="UID" jdbcType="VARCHAR" />
+		<result property="searchBrief" column="SEARCH_BRIEF" jdbcType="VARCHAR" />
+		<result property="searchWay" column="SEARCH_WAY" jdbcType="VARCHAR" />
+		<result property="commission" column="COMMISSION" jdbcType="DECIMAL" />
+		<result property="commissionRate" column="COMMISSION_RATE" jdbcType="DECIMAL"/>
+		<result property="price" column="PRICE" jdbcType="DECIMAL" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertLog">
+
+		INSERT INTO DDZ_SEARCH_LOG 
+			(ID,UID,ALIPAY_ID,SEARCH_BRIEF,SEARCH_WAY,COMMISSION,COMMISSION_RATE,PRICE,GMT_CREATE)
+		VALUES 
+			(#id#,#uid#,#alipayId#,#searchBrief#,#searchWay#,#commission#,#commissionRate#,#price#,now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+</sqlMap>

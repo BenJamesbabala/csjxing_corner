@@ -1,0 +1,114 @@
+<script src="conf.js"></script>
+<script>
+  var SelectTab = -1;
+  var Dwp = [],
+      insertArray = [];
+  var mmid = sys.mmid || "30820461";
+  function InsertFunc(tabId, changeInfo, tab) {
+    if (tab.url.indexOf("item.taobao.com") > -1 || tab.url.indexOf("item.tmall.com") > -1 || tab.url.indexOf("detail.tmall.com") > -1) {
+      if (tab.url.indexOf(mmid) > -1) { 
+       for(var i = 0,length = insertArray.length; i < length; i++){
+          if(insertArray[i] == tabId){
+            return;
+          }
+       }
+
+       for (var C = 0; C < Dwp.length; C++) {
+        if (Dwp[C].id == request("id", tab.url)) {
+            insertArray.push(tabId);
+              chrome.tabs.executeScript(tabId, { code: 'var myElement = document.createElement("div");myElement.style.color = "#ff7300";myElement.style.fontSize = "22px";myElement.style.display = "inline";myElement.innerHTML = "diandianzhe will save ' +Dwp[C].Item[0].commissionRate + '%";document.getElementById("J_StrPriceModBox").appendChild(myElement);document.cookie = ""'} );
+              return;
+        }
+      }
+       //chrome.tabs.executeScript(tabId, { code: 'document.getElementById("J_StrPrice").innerHTML = ' + reqjsion.commissionRate + ''} );
+// chrome.extension.sendRequest({greeting: "hello"}, function(response) {
+//                 console.log(response.farewell);
+//               });
+       // chrome.pageAction.show(tabId);
+        return
+      } else {
+        for (i = 0; i < Dwp.length; i++) {
+          if (Dwp[i].url == tab.url) {
+            chrome.tabs.update(tabId, {
+              url: Dwp[i].Item[0].clickUrl
+            });
+            chrome.browserAction.setBadgeText({
+              text: "" + Dwp[i].Item[0].commissionRate + "%"
+            });
+            return
+          }
+        }
+        var id = request("id", tab.url);
+        if (id != "") {
+          var xhr = new XMLHttpRequest();
+          testUrl = "http://www.dujiaok.com:8002/zhe/remote/rest/convent.htm?wd=" + encodeURIComponent(tab.url);
+          xhr.open("GET", testUrl, false);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+              var req = xhr.responseText;
+              if (req == "") {
+                return
+              }
+              var Newjsion = {
+                "tabId": tabId,
+                "url": tab.url,
+                "id": id,
+                "Item": []
+              };
+              var reqjsion = eval("(" + req + ")");
+              reqjsion = reqjsion.json.data;
+              reqjsion.commissionRate = parseInt(reqjsion.commissionRate/100)
+              Newjsion.Item.push(reqjsion);
+              Dwp.push(Newjsion);
+              chrome.browserAction.setBadgeText({
+                text: "" + reqjsion.commissionRate + "%"
+              });
+              chrome.tabs.update(tabId, {
+                url: reqjsion.clickurl
+              });
+               
+            }
+          };
+          xhr.send()
+        }
+      }
+    }
+  }
+  chrome.tabs.onUpdated.addListener(InsertFunc);
+
+  function EditIconText(A) {
+    chrome.browserAction.setBadgeText({
+      text: A
+    })
+  }
+  chrome.tabs.onSelectionChanged.addListener(function(B, A) {
+    chrome.tabs.getSelected(null, function(D) {
+      for (var C = 0; C < Dwp.length; C++) {
+        if (Dwp[C].id == request("id", D.url)) {
+          chrome.browserAction.setBadgeText({
+            text: "" + Dwp[C].Item[0].commissionRate + "%"
+          });
+          break;
+        } else {
+          chrome.browserAction.setBadgeText({
+            text: ""
+          })
+        }
+      }
+    })
+  });
+
+  function request(C, B) {
+    var D = B.substring(B.indexOf("?") + 1, B.length).split("&");
+    var E = {};
+    for (i = 0; j = D[i]; i++) {
+      E[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length)
+    }
+    var A = E[C.toLowerCase()];
+    if (typeof(A) == "undefined") {
+      return ""
+    } else {
+      return A
+    }
+  };
+</script>

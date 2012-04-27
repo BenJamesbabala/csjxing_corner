@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="SHORT-URL">
+	<typeAlias alias="TA-ALIPAY" type="com.doucome.corner.biz.dal.dataobject.AlipayDetail" />
+
+	<resultMap id="RM-ALIPAY" class="TA-ALIPAY">
+		<result property="serialNO" column="ID" />
+		<result property="batchNO" column="BATCH_NO" />
+		<result property="payerId" column="FROM_ACCOUNT_ID" jdbcType="VARCHAR" />
+		<result property="payerAccount" column="FROM_ACCOUNT" jdbcType="VARCHAR" />
+		<result property="payerName" column="FROM_ACCOUNT_NAME" jdbcType="VARCHAR" />
+		<result property="payeeAccount" column="TO_ACCOUNT" jdbcType="VARCHAR" />
+		<result property="payeeName" column="TO_ACCOUNT_NAME" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS" jdbcType="VARCHAR" />
+		<result property="fee" column="FEE" jdbcType="VARCHAR" />
+		<result property="remark" column="REMAKR" jdbcType="VARCHAR" />
+		<result property="resultRemark" column="RESULT_REMARK" jdbcType="VARCHAR" />
+		<result property="gmtCreated" column="GMT_CREATED" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtEnd" column="GMT_END" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<select id="queryByShorten" resultMap="RM-SHORT-URL">
+		SELECT
+			ID,SHORTEN,URL,MD5_URL,GMT_CREATE
+		FROM 
+			SHORT_URL
+		WHERE 
+			SHORTEN = #shorten#
+	</select>
+	
+	<insert id="logPayDetail">
+		insert into ALIPAY_DETAIL
+		  (ID, BATCH_NO, FROM_ACCOUNT_ID,FROM_ACCOUTN, FROM_ACCOUNT_NAME,
+		   TO_ACCOUNT, TO_ACCOUNT_NAME, FEE, STATUS, REMARK, RESULT_REMARK,
+		   GMT_CREATED, GMT_MODIFIED)
+		values
+		  (#serialNO#, #batchNO#, #payerId#, #payerAccount#, #payerName#,
+		   #payeeAccount#, #payeeName#,#fee#, 'I', #remark#, #resultRemark#,
+		   now(), now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<update id="updatePayResult">
+	    update ALIPAY_DETAIL
+	      set 
+	</update>
+</sqlMap>

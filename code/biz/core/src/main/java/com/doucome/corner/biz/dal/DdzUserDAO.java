@@ -1,0 +1,39 @@
+package com.doucome.corner.biz.dal;
+
+import com.doucome.corner.biz.dal.dataobject.DdzUserDO;
+
+/**
+ * 点点折用户
+ * @author shenjia.caosj 2012-3-30
+ *
+ */
+public interface DdzUserDAO {
+
+	/**
+	 * 新建一个User
+	 * @param searchLog
+	 * @return
+	 */
+	int insertUser(DdzUserDO user) ;
+	
+	/**
+	 * 根据uid查询
+	 * @param uid
+	 * @return
+	 */
+	DdzUserDO queryByUid(String uid) ;
+	
+	/**
+	 * 根据loginId查询
+	 * @param loginId
+	 * @return
+	 */
+	DdzUserDO queryByLoginId(String loginId) ;
+	
+	/**
+	 * 根据loginId和password查询
+	 * @param loginId
+	 * @return
+	 */
+	DdzUserDO queryByLoginIdAndPassword(String loginId , String md5Password) ;
+}

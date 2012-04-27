@@ -1,0 +1,26 @@
+.tb-login,
+.logo,
+.content .submit,
+.alipay-count-submit,
+.show-url .left-arrow,
+.light-icon,
+.page-op #jump-sub,
+.pagination .page-start,
+.pagination .page-next,
+.pagination a.page-prev,
+.pagination .page-end,
+.end{
+	background-image: url(../../../../img/btn.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: inline-block;
+}
+
+.jcarousel-skin-tango,
+.end{
+	background-image: url(../../../../img/carousel.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: inline-block;
+	margin-left:156px;
+}

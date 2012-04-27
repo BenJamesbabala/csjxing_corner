@@ -1,0 +1,63 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	
+	<package name="bops" namespace="/bops" extends="default">
+		<interceptors>
+			 <!-- Basic stack -->
+            <interceptor-stack name="bopsDefaultStack">
+				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="setBopsContextInterceptor" />
+				 <interceptor-ref name="bopsAuthzContextInterceptor" />
+			 </interceptor-stack>
+			 <interceptor-stack name="bopsLoginStack">
+				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="setBopsContextInterceptor" />
+			 </interceptor-stack>
+		</interceptors>
+		<action name="login" class="com.doucome.corner.web.bops.action.LoginAction">
+			<interceptor-ref name="defaultStack" />
+			<result name="success" type="velocity">/bops/login.vm</result>
+		</action>
+		<action name="do_login" class="com.doucome.corner.web.bops.action.LoginAction"  method="doLogin">
+			<interceptor-ref name="bopsLoginStack" />
+			<result name="success" type="redirect">/bops/zhe/taoke_report.htm</result>
+			<result name="error" type="velocity">/bops/login.vm</result>
+		</action>
+		<action name="logout" class="com.doucome.corner.web.bops.action.LoginAction"  method="doLogout">
+			<interceptor-ref name="bopsLoginStack" />
+			<result name="success" type="velocity">/bops/login.vm</result>
+		</action>
+	</package>
+	
+	<package name="bops-zhe" namespace="/bops/zhe" extends="bops">
+		<action name="taoke_report" class="com.doucome.corner.web.bops.action.zhe.TaokeReportAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/zhe/taokeReport.vm</result>
+		</action>
+		
+		<action name="taoke_report_task" class="com.doucome.corner.web.bops.action.zhe.TaokeReportTaskAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/zhe/taokeReportTask.vm</result>
+		</action>
+	</package>
+	
+	<package name="bops-zhe-remote" namespace="/bops/zhe/remote" extends="struts-json">
+		<interceptors>
+			 <!-- Basic stack -->
+            <interceptor-stack name="bopsDefaultStack">
+				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="setBopsContextInterceptor" />
+				 <interceptor-ref name="bopsAuthzContextInterceptor" />
+			 </interceptor-stack>
+		</interceptors>
+		
+		<action name="settle_report_ajax" class="com.doucome.corner.web.bops.action.zhe.TaokeReportSettleAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+	</package>
+	
+</struts>

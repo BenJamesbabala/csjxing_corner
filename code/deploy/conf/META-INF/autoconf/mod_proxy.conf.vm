@@ -1,0 +1,7 @@
+#set ($app_port = $numberUtil.createInteger(${corner_appserver_port}) )
+<IfModule mod_proxy.c>
+	ProxyRequests Off
+	ProxyPreserveHost On	
+	
+	ProxyPassMatch ^(/(s|zhe|surl|task|bops)/(.*))$ http://localhost:${app_port} min=5 smax=16 max=64 ttl=600 timeout=30
+</IfModule>

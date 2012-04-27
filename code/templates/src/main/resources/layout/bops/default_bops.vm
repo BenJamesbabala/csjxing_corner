@@ -1,0 +1,46 @@
+
+#set ($title = $page.title)
+#if(!$title||$title=="") 
+	#set ($title="BOPS - back office process system")
+#end
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+	<title>$!title</title>
+	<style type="text/css">
+	
+		#parse("/common/bops/css.vm")
+	
+	</style>
+</head>
+
+
+<body> 
+	
+	#parse("/common/bops/top.vm")
+	<table width="100%"   border=0 cellpadding="0" cellspacing="0" topmargin="0" >
+		<tr valign=top>
+			<td id="idMainTab" align="left" style="" >
+					#parse("/common/bops/left_menu.vm")
+			</td>
+			<td>
+				<div style="margin-top:10px;"></div>
+				BOPS >> $!navigation
+					$screen_content
+			</td>
+		</tr>
+	</table>
+	#parse("/common/bops/bottom.vm")
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

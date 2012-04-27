@@ -1,0 +1,38 @@
+#set($layout="bops/login.vm")
+<div >
+	<table>
+	<form method="post" action="${env.bopsRoot}/bops/do_login.htm">
+		#if($resultCode>0)
+		<tr>
+			<td colspan="2" align="center" style="color:red;">
+				#if($resultCode==1)
+					ÇëÊäÈëÄúµÄÕÊºÅÃÜÂë¡£
+				#elseif($resultCode==2)
+					ÄúµÄÕÊºÅ»òÃÜÂë´íÎó¡£
+				#end
+            </td>
+		</tr>
+		#end
+		<tr>
+			<td>ÕÊºÅ
+            </td>
+			<td>
+				<input type="text" name="loginId"/>
+            </td>
+		</tr>
+		<tr>
+			<td>ÃÜÂë
+            </td>
+			<td>
+				<input type="password" name="password"/>
+            </td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center" >
+				<input type="submit" value="µÇÂ½"/>
+            </td>
+		</tr>
+	
+    </form>
+	</table>
+</div>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+    
+<sqlMapConfig>
+	<!--
+      - ===============================================
+      - 打开命名空间
+      - @author Flouny.Caesar
+      - @date 2009-08-21
+      - ===============================================
+	-->
+    <settings cacheModelsEnabled="true" enhancementEnabled="true" lazyLoadingEnabled="false" maxRequests="3000" maxSessions="3000" maxTransactions="3000" useStatementNamespaces="true"/>
+    
+  	<sqlMap resource="corner/sqlmap/sqlmap-bops-admin.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-account.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-shortUrl.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-report.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-searchLog.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-transferUrl.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-user.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-syncReportTask.xml" />
+  	
+  	
+</sqlMapConfig>

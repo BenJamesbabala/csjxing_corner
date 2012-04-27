@@ -1,0 +1,18 @@
+<table>
+    <tr>
+		<td>
+        Hi~
+        </td>
+    </tr>
+    <tr>
+        <td>你购买的${!order} 返利啦！
+			<br/>
+			一共${!price}元
+        </td>
+    </tr>
+    <tr align="right">
+		<td>
+			点点折返利
+		</td>
+    </tr>
+</table>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="ZHE_ACCOUNT">
+	<typeAlias alias="TA-ZHE-ACCOUNT"
+		type="com.doucome.corner.biz.dal.dataobject.DdzAccountDO" />
+
+	<resultMap id="RM-ZHE-ACCOUNT" class="TA-ZHE-ACCOUNT">
+		<result property="id" column="ID" />
+		<result property="accountId" column="ACCOUNT_ID" jdbcType="VARCHAR" />
+		<result property="alipayId" column="ALIPAY_ID" jdbcType="VARCHAR" />
+		<result property="uid" column="UID" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<select id="queryByAccountId" resultMap="RM-ZHE-ACCOUNT">
+		select
+		ID,ACCOUNT_ID,ALIPAY_ID,UID,GMT_CREATE,GMT_MODIFIED
+		from DDZ_ACCOUNT
+		where ACCOUNT_ID = #accountId#
+	</select>
+	
+	<select id="queryByAlipayId" resultMap="RM-ZHE-ACCOUNT">
+		select
+		ID,ACCOUNT_ID,ALIPAY_ID,UID,GMT_CREATE,GMT_MODIFIED
+		from DDZ_ACCOUNT
+		where ALIPAY_ID = #alipayId#
+	</select>
+	
+	<select id="queryByUid" resultMap="RM-ZHE-ACCOUNT">
+		select
+		ID,ACCOUNT_ID,ALIPAY_ID,UID,GMT_CREATE,GMT_MODIFIED
+		from DDZ_ACCOUNT
+		where UID = #uid#
+	</select>
+
+	<insert id="insertAccount">
+		insert into DDZ_ACCOUNT
+		(ID,ACCOUNT_ID,ALIPAY_ID,UID,GMT_CREATE,GMT_MODIFIED)
+		values
+		(#id#,#accountId#,#alipayId#,#uid#,now(),now())
+		<selectKey resultClass="java.lang.Integer" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<update id="updateAccount">
+		update DDZ_ACCOUNT
+		set UID=#uid#,GMT_MODIFIED=now()
+		where ACCOUNT_ID=#accountId#
+	</update>
+</sqlMap>

@@ -1,0 +1,49 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "淘宝客报表任务日历")
+
+<div class="bops">
+	
+	<div style="margin:0 auto ;padding:0 auto ;text-align:center ;">
+    
+		<div style="margin:10px 0 ;">
+			<a href='${env.bopsRoot}/bops/zhe/taoke_report_task.htm?m=$dateUtils.format($prev,"yyyyMM")' title='$dateUtils.format($prev,"yyyy")年$dateUtils.format($prev,"MM")月 '>&lt;&lt;</a> $dateUtils.format($current,"yyyy") 年 $dateUtils.format($current,"MM") 月  <a href='${env.bopsRoot}/bops/zhe/taoke_report_task.htm?m=$dateUtils.format($next,"yyyyMM")' title='$dateUtils.format($next,"yyyy")年$dateUtils.format($next,"MM")月 '>&gt;&gt;</a>
+        </div>
+    	<div style="margin:0 auto ;padding:0 auto;text-align:center;width:800px;">
+    	<table width="800" >
+    		<tr>
+        		<th>日</th>
+    			<th>一</th>
+        		<th>二</th>
+    			<th>三</th>
+        		<th>四</th>
+    			<th>五</th>
+    			<th>六</th>
+        	</tr>
+    		#foreach($count in [0..4])
+    		<tr height="50">
+				#foreach($countWeek in [0..6])
+    			<td align="center">
+					#set($item = "")
+					#set($item = $!taskCalendar[$count][$countWeek])
+					#if($item && $item != "")
+                        $dateUtils.format($item.date , 'dd')
+						#if($item.task)
+							#set($task = $item.task)
+							<img src="${env.ddzStaticroot}/img/info.png" title="#ESC_HTML($!{task.runoutData})"/>
+							<div>
+    						#if($task.isSuccess == "T")
+                                <span class="settle_s">成功（$!task.successCount / $!task.reportMembCount）</span>
+    						#else
+    							<span class="settle_f">失败（$!task.successCount / $!task.reportMembCount）</span>
+							#end
+							</div>
+						#end
+					#end
+				</td>
+				#end
+            </tr>
+    		#end
+        </table>
+        </div>
+    </div>
+</div>

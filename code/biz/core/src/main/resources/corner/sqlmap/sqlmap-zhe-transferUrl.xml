@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="ddzTransferUrl">
+	<typeAlias alias="TA-DDZ-TRANSFER-URL"
+		type="com.doucome.corner.biz.dal.dataobject.DdzTransferUrlDO" />
+
+	<resultMap id="RM-DDZ-TRANSFER-URL" class="TA-DDZ-TRANSFER-URL">
+		<result property="id" column="ID" />
+		<result property="alipayId" column="ALIPAY_ID" jdbcType="VARCHAR" />
+		<result property="uid" column="UID" jdbcType="VARCHAR" />
+		<result property="numIid" column="NUM_IID"  />
+		<result property="commission" column="COMMISSION" jdbcType="DECIMAL" />
+		<result property="commissionRate" column="COMMISSION_RATE" jdbcType="DECIMAL" />
+		<result property="price" column="PRICE" jdbcType="DECIMAL" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertTransferUrl">
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+		INSERT INTO DDZ_TRANSFER_URL 
+			(ID,UID,ALIPAY_ID,NUM_IID,COMMISSION,COMMISSION_RATE,PRICE,GMT_CREATE)
+		VALUES 
+			(#id#,#uid#,#alipayId#,#numIid#,#commission#,#commissionRate#,#price#,now())
+	</insert>
+	
+</sqlMap>

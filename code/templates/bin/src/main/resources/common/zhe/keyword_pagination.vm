@@ -1,0 +1,92 @@
+######################
+##Parameters : 
+## totalPages : 总页数
+## page : 当前页
+## size ： 页大小
+## keyword : 关键字
+######################
+#set($totalPages = $decimalUtils.createInt($totalPages))
+#set($page = $decimalUtils.createInt($page , 1))
+#set($size = $decimalUtils.createInt($size, 20))
+
+#set($curPage = $page)
+
+#if($curPage < 1)
+	#set($curPage = 1) 
+#elseif($curPage > $totalPages)
+	#set($curPage = $totalPages)
+#end
+
+#set($rangeStart = 1)
+#set($rangeEnd = $totalPages)
+
+#set($prePage = ${curPage} - 1)
+#set($nextPage = ${curPage} + 1)
+
+#if($prePage < 1)
+	#set($prePage = 1) 
+#end
+#if($nextPage > $totalPages)
+	#set($nextPage = $totalPages) 
+#end
+
+<!--
+	totalPages : $totalPages
+    page : $page
+    size ：$size
+	prePage : $prePage
+	nextPage : $nextPage
+	curPage : $curPage
+-->
+
+<div class="pagination" id="pagination">
+	<form method="get" action="${env.ddzRoot}/zhe/keyword.htm" id="form_page">
+    	<input type="hidden" name="keyword" value="$!keyword">
+    	<input type="hidden" name="page" value="$page" id="page_num">
+		<div class="page-op">
+    		<span class="total-page">共 $totalPages 页</span>到<input type="text" name="beginPage" id="jumpto" autocomplete="off" value="$curPage">页
+    		<input type="submit" value="确定" id="jump-sub">
+    	</div>
+    </form>
+    
+	
+	<div class="page-bottom">
+		#if($page == 1)
+    	<span class="page-start">
+			<!--<span>上一页</span>-->
+		</span>
+		#else
+		<a href="javascrip:;" data-page="$prePage" class="page-prev">
+			<!--<span>上一页</span>-->
+		</a>
+		#end
+		
+		#set($toPage = 0 )
+		#set($_start = $curPage - 3)
+		#if($_start < 1)
+			#set ($_start = 1)
+		#end
+		#foreach($count in [0..5])
+        	#set($toPage = $_start + $count)
+        	#if($toPage>=$rangeStart && $toPage<=$rangeEnd) 
+            	#if($toPage == $curPage)
+            		<span class="page-cur">$toPage</span>
+            	#else
+					<a href="javascript:;" data-page="$toPage">$toPage</a>
+        		#end
+        	#end
+		#end
+		
+    	#if($toPage < $totalPages)
+    	<span class="page-break">...</span>
+		#end
+	    #if($curPage == $totalPages)
+		<span class="page-end">
+			<span>下一页</span>
+		</span>
+        #else
+		<a href="javascript:;" data-page="$nextPage" class="page-next">下一页</a>
+        #end
+    	
+	</div>
+</div>

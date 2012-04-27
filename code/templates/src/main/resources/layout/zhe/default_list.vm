@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	#parse("/common/zhe/head.vm")
+	<style >
+		.logo_s {
+            background : url("http://www.ht.dujiaok.com:803/corner/images/logo148x43.png") no-repeat 0 0 transparent ;
+            float: left;
+            height: 46px;
+            text-indent: -9999px;
+            width: 148px ;
+			margin-left:60px ;
+        }
+		
+		.w952 {
+            margin: 0 auto;
+            width: 1024px;
+        }
+		.content .search-content {
+            border: 1px solid #A3A3A3;
+            color: #999999;
+            float: left;
+            font-size: 12px;
+            height: 32px;
+            padding-left: 5px;
+            width: 545px;
+			margin-left : 40px;
+        }
+	
+		.keyword_list a,.keyword_list a:active,.keyword_list a:hover {
+			color : #ffffff ;
+			text-decoration : none ;
+		}
+		
+		.submit_list {
+			background-color : #4A8BF5;
+            float: left;
+            height: 23px;
+            width: 80px;
+			color : #ffffff ;
+			font-weight:bold;
+			text-align:center ;
+			padding-top : 7px;
+        }
+    </style>
+</head>
+<body>
+	
+	<div id="doc">
+		#parse("/common/zhe/top.vm")
+		<div id="content" class="content w952">
+			<div style="float:left ;padding:5px 0 0 0 ;">
+				<h1 style="width:180px;padding:5px;">
+					<a class="logo_s" href="${env.ddzRoot}/zhe/index.htm" title="µãµãÕÛ">µãµãÕÛ</a>
+				</h1>
+				<!-- JiaThis Button BEGIN -->
+				###parse("/common/zhe/jiathis.vm")
+				<!-- JiaThis Button END -->
+			</div>
+			<div style="float:left ;padding :15px 0 5px 5px ;">
+    			<form action="${env.ddzRoot}/zhe/search.htm" id="search_form" method="get">
+    				<div class="keyword_list">
+    					#if($keyword)
+    						#set($wd_text = $keyword)
+    					#else
+    						#set($wd_text = "Õ³Ìù:ÄãÏë¹ºÂòµÄÌÔ±¦±¦±´Ãû³Æ»ò±¦±´ÍøÖ·") 
+    					#end
+    					<input type="text" name="wd" value="$!wd_text" class="search-content" id="search_content" size="41" />
+						
+    					<a class="submit_list" style="margin: 2px 10px;" id="submit" href="javascript:;" data-url="${env.ddzRoot}/zhe/search.htm">²éÑ¯</a>
+    				</div>
+    			</form>
+			</div>
+			$screen_content
+		</div>
+		<div id="footer" class="footer w952"></div>
+	</div>
+	
+	#DDZ_JS(["lib/jquery-min.js","lib/jcarousel.js","lib/common.js","home/control/widget/index.js"])
+		
+	#parse("/common/zhe/google_analytics.vm")
+</body>
+</html>

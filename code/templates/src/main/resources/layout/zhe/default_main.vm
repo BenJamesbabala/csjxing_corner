@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	#parse("/common/zhe/head.vm")
+</head>
+<body>
+	
+	<div id="doc">
+		#parse("/common/zhe/top.vm")
+		<div id="content" class="content w952">
+			<div class="main-result">
+				<div class="dd-clr">
+					<h1>
+						<a class="logo" href="${env.ddzRoot}/zhe/index.htm" title="点点折">点点折</a>
+					</h1>
+					<!-- JiaThis Button BEGIN -->
+					#parse("/common/zhe/jiathis.vm")
+					<!-- JiaThis Button END -->
+				</div>
+				<form action="${env.ddzRoot}/zhe/search.htm" id="search_form" method="get">
+    				<div class="search">
+						#if($keyword)
+							#set($wd_text = $keyword)
+						#else
+							#set($wd_text = "粘贴:你想购买的淘宝宝贝名称或宝贝网址") 
+						#end
+    					<input type="text" name="wd" value="$!wd_text" class="search-content" id="search_content" />
+    					<a class="submit" id="submit" href="javascript:;" data-url="${env.ddzRoot}/zhe/search.htm"></a>
+    				</div>
+                </form>
+
+			</div>
+			
+			$screen_content
+		</div>
+		<div id="footer" class="footer w952"></div>
+	</div>
+	
+	#DDZ_JS(["lib/jquery-min.js","lib/jcarousel.js","lib/common.js","home/control/widget/index.js"])
+		
+	
+	
+	<script type="text/javascript" src="http://s.pc.qq.com/act/qpan/js/jquery-1.6.4.min.js?t=201109262002"></script>
+	<script type="text/javascript">
+	var $element = function(id){
+		return document.getElementById(id) ;
+	}
+	var $tagNames = function(name){
+		return document.getElementsByTagName(name) ;
+	}
+
+	
+	function slider(b) {
+    	var c = $("#what_tabs").find("li");
+    	var a = $("#what_bodys").find("div");
+    	var e = $("#what_bodys").find("img");
+    	var d = c.length;
+    	var next = 0;
+    	if (b == 0) {
+    		$.each(e, function(f, g) {
+    			if ($("#" + g.id).css("display").toString() == "inline") {
+    				b = f + 2
+    			}
+    		})
+    	}
+    	num_tmp = b;
+    	if (b == -1) {
+    		$.each(e, function(f, g) {
+    			if ($("#" + g.id).css("display").toString() == "inline") {
+    				b = f
+    			}
+    		})
+    	}
+    	if (b > d) {
+    		b = 1
+    	}
+    	next = b - 1;
+    	if (next == -1) {
+    		next = d - 1
+    	}
+    	$.each(c, function(f, g) {
+    		$(this).removeClass("cur");
+    		if (f == next) {
+    			$(this).addClass("cur")
+    		}
+    	});
+    	for (i = 1; i <= d; i++) {
+    		$("#what_tabs").removeClass("what" + i)
+    	}
+    	$("#what_tabs").addClass("what" + (next + 1));
+    	$.each(e, function(f, g) {
+    		$(this)[0].style.display = "none";
+    		if (f == next) {
+    			$(this)[0].style.display = ""
+    		}
+    	});
+    	$.each(a, function(f, g) {
+    		$(this)[0].style.display = "none";
+    		if (f == next) {
+    			$(this)[0].style.display = ""
+    		}
+    	});
+    	return false
+    }
+
+
+	slider(1) ;
+	
+    </script>
+	
+	#parse("/common/zhe/google_analytics.vm")
+	#parse("/common/zhe/jiathis_js.vm")
+</body>
+</html>

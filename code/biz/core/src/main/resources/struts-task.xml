@@ -1,0 +1,18 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	
+	<!-- 为了给task提供一个外部调用的入口 -->
+
+	<package name="task" namespace="/task/zhe" extends="default">
+				
+		<action name="syncReport" class="com.doucome.corner.task.zhe.action.SyncReportAction">
+			<interceptor-ref name="defaultStack" />
+			<result name="success" type="velocity">/task/zhe/syncReport.vm</result>
+		</action>
+		
+	</package>
+
+</struts>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="ddzUser">
+	<typeAlias alias="TA-ZHE-USER"
+		type="com.doucome.corner.biz.dal.dataobject.DdzUserDO" />
+
+	<resultMap id="RM-ZHE-USER" class="TA-ZHE-USER">
+		<result property="id" column="ID" />
+		<result property="uid" column="UID" jdbcType="VARCHAR" />
+		<result property="loginId" column="LOGIN_ID" jdbcType="VARCHAR" />
+		<result property="taobaoId" column="TAOBAO_ID" jdbcType="VARCHAR" />
+		<result property="mobile" column="MOBILE" jdbcType="VARCHAR" />
+		<result property="email" column="EMAIL" jdbcType="VARCHAR" />
+		<result property="gender" column="GENDER" jdbcType="VARCHAR" />
+		<result property="md5Password" column="MD5_PASSWORD" jdbcType="VARCHAR" />
+		<result property="userActive" column="USER_ACTIVE" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<select id="queryByUid" resultMap="RM-ZHE-USER">
+		SELECT
+			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DDZ_USER
+		WHERE 
+			UID = #uid#
+	</select>
+	
+	<select id="queryByLoginId" resultMap="RM-ZHE-USER">
+		SELECT
+			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DDZ_USER
+		WHERE 
+			LOGIN_ID = #loginId#
+	</select>
+	
+	<select id="queryByLoginIdAndPassword" resultMap="RM-ZHE-USER">
+		SELECT
+			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DDZ_USER
+		WHERE 
+			MD5_PASSWORD = #md5Password#
+		AND	
+			LOGIN_ID = #loginId#
+	</select>
+
+	<insert id="insertUser">
+		INSERT INTO DDZ_USER
+			(ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#uid#,#loginId#,#taobaoId#,#mobile#,#email#,#gender#,#md5Password#,#userActive#,now(),now())
+		<selectKey resultClass="java.lang.Integer" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+</sqlMap>

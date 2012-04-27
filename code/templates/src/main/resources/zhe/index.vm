@@ -1,0 +1,55 @@
+#set($layout="zhe/default_main.vm")
+
+<div style="height:100px;"></div>
+<div style="clear:both;">
+
+</div>
+
+<style>
+	.next {        
+        margin: -120px 150px 2px 0 ;
+		float:right;
+		width:27px;
+		height:37px;
+		background-position: -27px -500px ;
+		background-image: url("${env.ddzStaticroot}/img/btn.png");
+    }
+	.prev {
+        /*margin: 160px -300px 0 150px ;*/
+		margin:-120px -300px 0 150px ;
+		width:27px;
+		height:37px;
+		float:left;
+		background-position: 0 -500px;
+		background-image: url("${env.ddzStaticroot}/img/btn.png");
+    }
+	#what_tabs{
+		display:none;
+	}
+</style>
+<div class="" id="what_tabs">
+	<ul>
+		<li class="tab cur" ><a href="javascript:void(0);" title=""></a></li>
+		<li class="tab" ><a href="javascript:void(0);" title=""></a></li>
+		<li class="tab" ><a href="javascript:void(0);" title=""></a></li>
+		<li class="tab" ><a href="javascript:void(0);" title=""></a></li>
+		<li class="tab" ><a href="javascript:void(0);" title=""></a></li>
+	</ul>
+</div>
+<div id="what_bodys" class="" style="margin:0 10px auto; text-align:center;">
+    <img id="img_1" class="" style="display: inline;" alt="" src="${env.ddzStaticroot}/img/1.png" onclick="return slider(0);"></img>
+    <img id="img_2" class="" style="display: none;" alt="" src="${env.ddzStaticroot}/img/2.png" onclick="return slider(0);" ></img>
+    <img id="img_3" class="" style="display: none;" alt="" src="${env.ddzStaticroot}/img/3.png" onclick="return slider(0);" ></img>
+	<img id="img_4" class="" style="display: none;" alt="" src="${env.ddzStaticroot}/img/4.png" onclick="return slider(0);" ></img>
+    <img id="img_5" class="" style="display: none;" alt="" src="${env.ddzStaticroot}/img/5.png" onclick="return slider(0);"></img>	
+    <div class="plate_text" style="display: none;"></div>
+	<div class="plate_text" style="display: none;"></div>
+	<div class="plate_text" style="display: none;"></div>
+	<div class="plate_text" style="display: none;"></div>
+	<div class="plate_text" style="display: none;"></div>
+    <a class="prev" onclick="slider(-1);" href="javascript:void(0);" title=""></a>
+    <a class="next" onclick="slider(0);" href="javascript:void(0);" title=""></a>
+</div>
+		
+	
+ 

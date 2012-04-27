@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    
+<uris>
+	<uri id="ddzServer">
+		<path>
+		<![CDATA[
+		http://$corner_domainName:$corner_port
+		]]>
+		</path>
+	</uri>
+	
+	<uri id="ddzStaticServer">
+		<path>
+		<![CDATA[
+		${corner_static_url}
+		]]>
+		</path>
+	</uri>
+	
+	
+  	<uri id="taobaoLoginLink">
+  		<path>
+  		<![CDATA[
+  		${corner_api_taobao_login_url}?appkey=${corner_api_taobao_appkey}
+  		]]>
+  		</path>
+  	</uri>
+</uris>

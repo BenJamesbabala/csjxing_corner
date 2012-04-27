@@ -1,0 +1,115 @@
+#set($layout="zhe/default_main.vm")
+
+#if($item)
+    	
+    #if($item.shortUrlName)
+    	#set($itemClickUrl = "#GET_SHORT_URL($!item.shortUrlName)")
+    #elseif($item.clickUrl)
+    	#set($itemClickUrl = $item.clickUrl)
+    #else
+		#set($itemClickUrl = $item.detailUrl)
+	#end
+    <div class="item-nav dd-clr">
+    	<ul>
+    		<li class="w82">&nbsp;</li>
+    		<li class="w240">&nbsp;</li>
+    		<li class="w180">淘宝现价</li>
+    		<li class="w140">可为您返利</li>
+    	</ul>
+    </div>
+    <div class="item dd-clr">
+    	<ul>
+    		<li>
+    			<div class="img-container">
+    				<a href="$!itemClickUrl" title="$!item.title" target="_blank">
+    					<img src="$!item.sumPicUrl" alt="$!item.title" />
+    				</a>
+    			</div>
+    			<div class="title-container dd-gray">
+    				<p>
+    					<h1>
+    						<a href="$!itemClickUrl" class="title dd-gray" title="$!item.title" target="_blank">$!item.title</a>
+    					</h1>
+    				</p>
+    				<!--
+    				<p>
+    					<span class="place">浙江 嘉兴</span>
+    					<span class="trade-count">最近成交1笔</span>
+    				</p>
+    				<p>
+    					<a href="#" title="玖姿旗舰店" class="dd-gray">玖姿旗舰店</a>
+    					<img src="http://pics.taobaocdn.com/newrank/s_cap_3.gif" />
+    				</p>
+    				-->
+    			</div>
+    			<div class="current-price">
+    				<span class="f16">&yen;</span><span class="current-color">$!item.showPrice</span><br/>
+    			</div>
+    			<div class="discount-price">
+					<!--
+    				<span class="f18 yen-color">&yen;</span><span class="discount-color">$decimalUtils.format($!item.commission , '#####')<span class="f18">$decimalUtils.fractionFormat($!item.commission , '.00')</span></span>
+					-->
+					<!-- $!item.commissionRate |  $!item.commission -->
+					
+					#set($rate = $decimalUtils.divide($!item.userCommissionRate,"100.00"))
+					
+					<div><span class="f18 yen-color"></span><span class="discount-color">$decimalUtils.format($!rate , '####0.00')<span class="f18">%</span></span></div>
+					<div><span class="" style="font-size:9pt;color:#EE4D98;float:left;margin-left:30px;margin-top:-5px;margin-bottom:-20px;">返利：&yen;$decimalUtils.format($!item.userCommission , '####0.00')</span></div>
+    			</div>
+    		</li>
+    	</ul>
+    </div>
+    
+    #if($item.shortUrlName)
+        #if($alipayId)
+        <div class="show-url dd-gray" id="discount_url">
+        	<p class="dd-clr">
+        		<label class="show-label">为支付宝账号 “<span class="alipay-color dd-bold">$!alipayId</span>” 生成的折扣连接：</label>
+        		<a href="javascript:;" class="underline dd-gray" id="change_alipay">更改支付宝账号</a>
+        	</p>
+        	<p class="url dd-clr">
+        		<a href="$!itemClickUrl" class="f16 dd-bold underline" target="_blank">$!itemClickUrl</a>
+        		<i class="left-arrow"></i>
+        		<label class="f14 dd-bold fcolor3">点击链接，去淘宝购买</label>
+        	</p>
+        	<p class="dd-right tip">
+    			<!--
+        		<i class="light-icon"></i><a href="#" class="dd-gray">我什么时候能受到返利？</a>
+    			-->
+        	</p>
+        </div>
+    	<div class="input-alipay dd-clr dd-hide" id="alipay_input">
+        	<form method="get" action="${env.ddzRoot}/zhe/item.htm" name="alipay-form">
+        		<input type="hidden" name="id" value="$!id"/>
+        		<label>请输入支付宝账号：</label>
+        		<input type="text" name="alipayId" class="alipay-count"/>
+        		<input type="submit" value="" class="alipay-count-submit"/>
+        	</form>
+        </div>
+        #else
+        <div class="input-alipay dd-clr">
+        	<form method="get" action="${env.ddzRoot}/zhe/item.htm" name="alipay-form">
+        		<input type="hidden" name="id" value="$!id"/>
+        		<label>请输入支付宝账号：</label>
+        		<input type="text" name="alipayId" class="alipay-count"/>
+        		<input type="submit" value="" class="alipay-count-submit"/>
+        	</form>
+        </div>
+		#end
+	#end
+	
+
+#else
+	<div class="find-none dd-clr">
+		对不起，该商品木有折扣!
+	</div>
+	#if($recommendList)
+		<!--
+	<ul id="mycarousel" class="jcarousel-skin-tango">
+		#foreach($item in $recommendList)
+	    <li><a href="${env.ddzRoot}/zhe/item.htm?id=$!item.numIid"><img src="$item.getPic('210x210')" width="132" height="132" alt="$item.title" /></a></li>
+	    #end
+	 </ul>
+	 -->
+	#end
+#end

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="SHORT-URL">
+	<typeAlias alias="TA-SHORT-URL"
+		type="com.doucome.corner.biz.dal.dataobject.ShortUrlDO" />
+
+	<resultMap id="RM-SHORT-URL" class="TA-SHORT-URL">
+		<result property="id" column="ID" />
+		<result property="shorten" column="SHORTEN" jdbcType="VARCHAR" />
+		<result property="url" column="URL" jdbcType="VARCHAR" />
+		<result property="md5Url" column="MD5_URL" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<select id="queryByShorten" resultMap="RM-SHORT-URL">
+		SELECT
+			ID,SHORTEN,URL,MD5_URL,GMT_CREATE
+		FROM 
+			SHORT_URL
+		WHERE 
+			SHORTEN = #shorten#
+	</select>
+	
+	<select id="queryByMd5Url" resultMap="RM-SHORT-URL">
+		SELECT 
+			ID,SHORTEN,URL,MD5_URL,GMT_CREATE
+		FROM 
+			SHORT_URL
+		WHERE 
+			MD5_URL = #md5Url#			
+	</select>
+	
+	<select id="queryByURL" resultMap="RM-SHORT-URL">
+		select
+			ID,SHORTEN,URL,MD5_URL,GMT_CREATE
+		FROM SHORT_URL
+		WHERE URL = #url#
+		LIMIT 1
+	</select>
+	
+	<insert id="insertShortUrl">
+		insert into SHORT_URL
+		(ID,SHORTEN,URL,MD5_URL,GMT_CREATE)
+		values
+		(#id#,#shorten#,#url#,#md5Url#,now())
+		<selectKey resultClass="java.lang.Integer" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+</sqlMap>

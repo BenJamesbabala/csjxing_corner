@@ -1,0 +1,22 @@
+{
+"update_url":"http://clients2.google.com/service/update2/crx", 
+  "name": "点点折",
+  "version": "0.20",
+  "description":"点点折返利",
+  "background_page": "bg.html",
+  "icons":{"16":"16.png","48":"48.png","24":"24.png","32":"32.png","128":"128.png"},
+  "browser_action": {
+        "default_icon": "16.png"
+  }, 
+  "permissions": ["tabs",
+    "notifications",
+    "idle",
+    "http://*/",
+    "https://*/"
+ ],
+ "content_scripts": [
+    {
+      "matches": ["http://item.tmall.com/*","http://item.taobao.com/*","http://detail.tmall.com/*","http://item.taobao.com/*"],
+      "js": ["hello.js"]
+    }]
+}

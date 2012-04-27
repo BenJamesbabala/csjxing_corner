@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="GBK"?>
+<toolbox>
+	<tool>
+		<key>dateUtils</key>
+		<scope>application</scope>
+		<class>com.doucome.corner.web.common.toolbox.DateUtilsToolbox</class>
+	</tool>
+	<tool>
+		<key>env</key>
+		<scope>application</scope>
+		<class>com.doucome.corner.web.common.toolbox.EnvPropertiesToolbox</class>
+	</tool>
+	
+	<tool>
+		<key>stringUtils</key>
+		<scope>application</scope>
+		<class>com.doucome.corner.web.common.toolbox.StringUtilsToolbox</class>
+	</tool>
+	
+	<tool>
+		<key>decimalUtils</key>
+		<scope>application</scope>
+		<class>com.doucome.corner.web.common.toolbox.DecimalUtilsToolbox</class>
+	</tool>
+	
+	<tool>
+		<key>staticVerUtils</key>
+		<scope>application</scope>
+		<class>com.doucome.corner.web.common.toolbox.StaticVersionToolbox</class>
+	</tool>
+		
+</toolbox> 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rules>
+	<rule startCommission="5.00"  endCommission="10.00" eatRate="5" />
+	<rule startCommission="10.00" endCommission="20.00" eatRate="6" />
+	<rule startCommission="20.00" endCommission="30.00" eatRate="7" />
+	<rule startCommission="30.00" endCommission="40.00" eatRate="8" />
+	<rule startCommission="40.00" endCommission="50.00" eatRate="9" />
+	<rule startCommission="50.00" endCommission="10000.00" eatRate="9" />
+</rules>

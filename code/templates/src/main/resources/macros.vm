@@ -1,0 +1,25 @@
+
+
+#macro(ESC_HTML $txt)
+	#if($txt)
+	$stringUtils.escapeHtml($txt)
+	#end
+#end
+
+#macro(ESC_JS $txt)
+	#if($txt)
+	$stringUtils.escapeJS($txt)
+	#end
+#end
+
+#macro(DDZ_SHORT_URL $shorten)
+	#if($shorten)
+		${env.ddzRoot}/s/$!shorten
+	#end
+#end
+
+#macro(DDZ_ITEM_URL $itemId)
+	#if($itemId)
+		${env.ddzRoot}/zhe/item/$!itemId
+	#end
+#end

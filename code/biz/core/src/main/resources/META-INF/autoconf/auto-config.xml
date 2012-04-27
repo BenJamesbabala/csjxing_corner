@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	- 自动配置描述文件
+	-
+	- @author Michael Zhou
+-->
+<config description="自动配置">
+	<group name="common config">
+		<property name="corner.output" description="应用程序的输出目录"  defaultValue="/home/${corner_unix_user}/output"/>
+		<property name="corner.production" description="生产模式"  defaultValue="false">
+			<validator name="choice" choice="true,false"/>
+		</property>
+		<property name="corner.loggingRoot" defaultValue="${corner_output}/logs"  description="日志"></property>
+		<property name="corner.loggingLevel" defaultValue="info"  description="日志输出级别"></property>
+	</group>
+
+	<group name="database">
+		<property name="corner.database.driver.url" description="mtrade数据库的url" defaultValue="jdbc:mysql://110.76.47.90:3306/corner_dev?useUnicode=true&amp;characterEncoding=gbk&amp;autoReconnect=true"/>
+		<property name="corner.database.driver.username" description="mtrade数据库的username" defaultValue="trek"/>
+		<property name="corner.database.driver.password" description="mtrade数据库的password" defaultValue="trek"/>
+	</group>
+	
+	<group name="web">
+		<property name="corner.static.url" defaultValue="http://www.ht.dujiaok.com:803/corner" description="static"></property>
+		<property name="corner.domainName" defaultValue="diandianzhe.com" description="domain"></property>
+		<property name="corner.port" defaultValue="80" description="port">
+			<validator name="number"></validator>
+		</property>
+		<property name="corner.appserver.port" defaultValue="8080" description="appserver port">
+			<validator name="number"></validator>
+		</property>
+		<property name="corner.ddz.domainName" defaultValue="diandianzhe.com" description="点点折域名"></property>
+		<property name="corner.surl.url" defaultValue="http://${corner_domainName}:${corner_port}" description="短url"></property>
+	</group>
+	
+		
+	<group name="taobao">
+		<property name="corner.api.taobao.login.url" defaultValue="http://container.api.taobao.com/container" description="taobao登陆"/>
+		<property name="corner.api.taobao.nickname" defaultValue="doucome2012" description="taobao账号"></property>
+		<property name="corner.api.taobao.url" defaultValue="http://gw.api.taobao.com/router/rest" description="api接口url"></property>
+		<property name="corner.api.taobao.appkey" defaultValue="12560092" description="taobao app key"></property>
+		<property name="corner.api.taobao.secret" defaultValue="a6ff439175e1fbf47fc881af2ed8c07b" description="app Secret"></property>
+		<property name="corner.api.taobaoke.appkey" defaultValue="12560096" description="taobao app key"></property>
+		<property name="corner.api.taobaoke.secret" defaultValue="728a24ae73d6e2ec887063fd9c21ddb2" description="app Secret"></property>
+		<property name="corner.api.taobaoke.topSession" defaultValue="61014291f0c03166c4ef66621c52fb7925b831668de14e0855844858" description="topSession"/>
+	</group>
+	
+	<group name="util">
+		<property name="corner.cookie.entrypt.secretKey" defaultValue="IHsd*0sz." description="cookie加密密钥"></property>
+	</group>
+	
+	<group name="task">
+		<property name="corner.task.ddz.syncReport.cronExpression" defaultValue="0 5 9 * * ?" description="点点折从同步淘宝客报表"></property>
+	</group>
+	
+	<group name="pay">
+	    <property name="corner.alipay.count.limit" defaultValue="20" description="支付宝向多人付款人数上限" />
+	</group>
+	
+	<script>
+		<generate template="commonConfig.properties.vm" destfile="commonConfig.properties" charset="GBK" />
+		<generate template="struts.xml.vm" destfile="struts.xml" charset="GBK" />
+		<generate template="log4j.xml" destfile="log4j.xml" charset="GBK" />
+		<generate template="uris.xml" destfile="corner/bean/uris.xml" charset="GBK" />
+	</script>
+</config>
+
+
