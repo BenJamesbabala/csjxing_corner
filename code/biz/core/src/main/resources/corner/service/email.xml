@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mails="http://www.doucome.com/schema/mails"
+	xsi:schemaLocation="  
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.doucome.com/schema/mails http://www.doucome.com/schema/mails/mails.xsd">
+	<mails:mails id="mailService">
+		<mails:mail id="email-rebate-notice" host="smtp.ym.163.com"
+			from="vip@diandianzhe.com" sender="点点折" password="3edc4rfv" title="点点折-购物返现通知"
+			template="/mail/rebateNotice.vm" />
+	</mails:mails>
+</beans>

@@ -1,4 +1,4 @@
-#if($env.production)
+#if($env.production && !$!ddzAuthz.isPrivateUser())
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-29511671-2']);

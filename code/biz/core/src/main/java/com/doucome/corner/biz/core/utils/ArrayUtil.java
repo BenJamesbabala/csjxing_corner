@@ -1,5 +1,7 @@
 package com.doucome.corner.biz.core.utils;
 
+import java.util.List;
+
 public final class ArrayUtil {
 	/**
 	 * 
@@ -19,4 +21,6 @@ public final class ArrayUtil {
 		}
 		return result;
 	}
+	
+	
 }

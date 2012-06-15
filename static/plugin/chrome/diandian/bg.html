@@ -3,7 +3,14 @@
   var SelectTab = -1;
   var Dwp = [],
       insertArray = [];
-  var mmid = sys.mmid || "30820461";
+  var mmid = sys.mmid || "30329788";
+  var Sys ={
+    getAlipay:"http://test.diandianzhe.com:8002/zhe/remote/rest/userinfo.htm",
+    getPayBack:"http://test.diandianzhe.com:8002/zhe/remote/rest/convent.htm",
+    Email_Regex:/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+    Mobile_Regex:/^1[3458]\d{9}$/
+  }
+
   function InsertFunc(tabId, changeInfo, tab) {
     if (tab.url.indexOf("item.taobao.com") > -1 || tab.url.indexOf("item.tmall.com") > -1 || tab.url.indexOf("detail.tmall.com") > -1) {
       if (tab.url.indexOf(mmid) > -1) { 
@@ -16,7 +23,13 @@
        for (var C = 0; C < Dwp.length; C++) {
         if (Dwp[C].id == request("id", tab.url)) {
             insertArray.push(tabId);
-              chrome.tabs.executeScript(tabId, { code: 'var myElement = document.createElement("div");myElement.style.color = "#ff7300";myElement.style.fontSize = "22px";myElement.style.display = "inline";myElement.innerHTML = "diandianzhe will save ' +Dwp[C].Item[0].commissionRate + '%";document.getElementById("J_StrPriceModBox").appendChild(myElement);document.cookie = ""'} );
+
+            if(!(typeof localStorage.alipayId === 'undefined')){
+            var content = 'var myElement = document.createElement("div");myElement.id="gogogo";myElement.style.color = "#ff7300";myElement.style.fontSize = "22px";myElement.style.display = "inline";myElement.innerHTML = "请绑定支付宝账号";document.getElementById("J_StrPriceModBox").appendChild(myElement);document.getElementById("gogogo").onclick="gogogo()";';
+            }else{
+              var content = 'var myElement = document.createElement("div");myElement.style.color = "#ff7300";myElement.style.fontSize = "22px";myElement.style.display = "inline";myElement.innerHTML = "点点折能为你节省' +Dwp[C].Item[0].commissionRate + '%";document.getElementById("J_StrPriceModBox").appendChild(myElement);';
+            }
+              chrome.tabs.executeScript(tabId, { code: content} );
               return;
         }
       }
@@ -41,8 +54,12 @@
         var id = request("id", tab.url);
         if (id != "") {
           var xhr = new XMLHttpRequest();
-          testUrl = "http://www.dujiaok.com:8002/zhe/remote/rest/convent.htm?wd=" + encodeURIComponent(tab.url);
-          xhr.open("GET", testUrl, false);
+          if(typeof localStorage.alipayId !== 'undefined'){
+            var alipayContent = "&alipayId=" + localStorage.alipayId;
+          }
+          var checkUrl = Sys.getPayBack + "?wd=" + encodeURIComponent(tab.url) + alipayContent;
+          console.log(checkUrl)
+          xhr.open("GET", checkUrl, false);
           xhr.onreadystatechange = function() {
             if (xhr.readyState == 4) {
               var req = xhr.responseText;
@@ -75,6 +92,28 @@
     }
   }
   chrome.tabs.onUpdated.addListener(InsertFunc);
+function getAccount(){
+
+ var A = new XMLHttpRequest();
+    A.open("GET", Sys.getAlipay, false);
+    A.onreadystatechange = function () {
+        if (A.readyState == 4) {
+            var B = JSON.parse(A.responseText).json;
+            if(B.code === 'success'){
+                localStorage.setItem("alipayId",B.data.alipayId);
+            }else{
+                //alipayCallback();
+            }
+        }
+    };
+    A.send();
+}
+go();
+function go(){
+  if(typeof localStorage.alipayId === 'undefined'){
+    getAccount();
+  }
+}
 
   function EditIconText(A) {
     chrome.browserAction.setBadgeText({
@@ -111,4 +150,28 @@
       return A
     }
   };
+  function checkAlipayValid(alipayId){
+    if(alipayId == ''){
+        alert('请输入支付宝您的账号，无需密码') ;
+        return false ;
+    }
+    var isEmail = alipayId.match(Sys.Email_Regex) ;
+    var isMobile = alipayId.match(Sys.Mobile_Regex) ;
+    if(!isEmail && !isMobile){
+        alert('输入的支付宝格式错误，请检查是否为Email地址或手机号') ;
+        return false ;
+    }
+    return true ;
+}
+chrome.extension.onRequest.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+    // if (request.greeting == "hello")
+    //   sendResponse({farewell: "goodbye"});
+    // else
+    //   sendResponse({}); // snub them.
+    console.log(request.greeting)
+  });
 </script>

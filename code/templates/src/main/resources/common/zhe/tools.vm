@@ -1,0 +1,25 @@
+
+<div class="tool">
+	<div class="w1024">
+		<ul>
+			<li class="tool-left">
+				<a href="#" id="diandianFavorite">
+    				<p class="tool-title f22">收藏点点折</p>
+    				<p class="tool-content f14">将点点折加为收藏</p>
+				</a>
+			</li>
+			<li class="tool-center tool-item-rborder">
+				<a target="_blank" href="${env.ddzRoot}/zhe/help/faq.htm">
+					<p class="tool-title f22">帮助中心</p>
+					<p class="tool-content f14">常见问题FAQ</p>
+				</a>
+			</li>
+			<li class="tool-right tool-item-rborder">
+				<a href="#" id="toolFeedback">
+    				<p class="tool-title f22">意见反馈</p>
+    				<p class="tool-content f14">提交您的建议</p>
+                </a>
+			</li>
+		</ul>
+	</div>
+</div>

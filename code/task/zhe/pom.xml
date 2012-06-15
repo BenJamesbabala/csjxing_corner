@@ -31,6 +31,21 @@
 			<artifactId>corner.web.common</artifactId>
 			<version>${pom.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.web.bops</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.templates</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.web.zhe</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>opensymphony</groupId>
@@ -38,6 +53,123 @@
 		</dependency>
 	</dependencies>
 
-
+	<properties>
+        <uberjar_final_name>${pom.artifactId}-uber.jar</uberjar_final_name>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeTypes>jar</includeTypes>
+                    <overWriteSnapshots>true</overWriteSnapshots>
+                    <type>jar</type>
+                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>assembly-package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+							    <mkdir dir="${release_directory}"/>
+                                <zip destfile="${release_directory}/${uberjar_final_name}">
+                                    <zipfileset dir="${project.build.outputDirectory}/com" includes="**" prefix="WORLDS-INF/classes/com"/>
+                                    <zipfileset dir="${project.build.directory}/lib" includes="**" prefix="WORLDS-INF/lib"/>
+                                    <zipfileset dir="${project.build.outputDirectory}/META-INF" includes="**" prefix="META-INF"/>
+                                    <zipfileset dir="${project.build.outputDirectory}/bin" includes="**"  prefix="bin"/>
+                                </zip>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+	    <profile>
+            <id>release</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>release</value>
+                </property>
+            </activation>
+            <properties>
+                <release_directory>${project.parent.build.directory}</release_directory>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>!release</value>
+                </property>
+            </activation>
+            <properties>
+                <release_directory>${project.build.directory}</release_directory>
+            </properties>
+            <build>
+                <plugins>
+                	<plugin>
+						<groupId>com.doucome.maven.plugins</groupId>
+						<artifactId>maven-autoconf-plugin</artifactId>
+						<version>0.4</version>
+						<executions>
+							<execution>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>config</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<destFiles>
+								<destFile>${release_directory}/${uberjar_final_name}</destFile>
+							</destFiles>
+							<includeDescriptorPatterns>
+								<includeDescriptorPattern>META-INF/autoconf/auto-config.xml</includeDescriptorPattern>
+							</includeDescriptorPatterns>
+						</configuration>
+					</plugin>                		
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack-package</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <unzip dest="${project.build.directory}/task" src="${project.build.directory}/${uberjar_final_name}"/>
+                                         <chmod dir="${project.build.directory}/expand/bin" includes="**" perm="755"/>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

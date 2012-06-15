@@ -3,17 +3,16 @@ package com.doucome.corner.biz.zhe.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.doucome.corner.biz.core.enums.AlipayStatusEnum;
-import com.doucome.corner.biz.core.enums.SettleStatusEnums;
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.model.page.QueryResult;
 import com.doucome.corner.biz.core.taobao.model.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.DdzTaokeReportDAO;
+import com.doucome.corner.biz.dal.DdzTaokeReportSettleDAO;
+import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
@@ -23,6 +22,8 @@ public class DdzTaokeReportServiceImpl implements DdzTaokeReportService {
 
 	@Autowired
 	private DdzTaokeReportDAO ddzTaokeReportDAO ;
+	@Autowired
+	private DdzTaokeReportSettleDAO ddzTaokeReportSettleDAO;
 	
 	private static final Log log = LogFactory.getLog(DdzTaokeReportServiceImpl.class);
 	
@@ -56,49 +57,70 @@ public class DdzTaokeReportServiceImpl implements DdzTaokeReportService {
         return new QueryResult<DdzTaokeReportDO>(items, pagination, totalRecords);
 	}
 	
+    @Override
+    public List<DdzTaokeReportDO> getReports(TaokeReportSearchCondition searchCondition) {
+        List<DdzTaokeReportDO> items = ddzTaokeReportDAO.selectReportsWithPagination(searchCondition, 1,
+                                                                                     Integer.MAX_VALUE);
+        return items;
+    }
+	
 	@Override
-	public QueryResult<AlipayItemDO> getAlipayItemWithPagination(Pagination pagination) {
+	public int updateTaokeReportSettleStatusBySettleReport(List<DdzTaokeReportDO> reportDOs) {
+		if (reportDOs == null || reportDOs.size() == 0) {
+			return 0;
+		}
 		try {
-			int totalRecord = ddzTaokeReportDAO.countAlipayItem();
-			if (totalRecord <= 0) {
-				return new QueryResult<AlipayItemDO>(new ArrayList<AlipayItemDO>(), pagination, totalRecord);
-			}
-			List<AlipayItemDO> payItems = this.ddzTaokeReportDAO.getAlipayItemWithPagination(pagination);
-			return new QueryResult<AlipayItemDO>(payItems, pagination, totalRecord);
+			return ddzTaokeReportDAO.updateSettleStatusBySettleReport(reportDOs);
 		} catch (Exception e) {
-			log.error("get alipay item failed", e);
+			log.error("update report settle status by settle report failed: " + reportDOs.toString(), e);
+			return -1;
+		}
+	}
+	
+	@Override
+	public List<AlipayItemDO> getUnMergedReportSettleInfo(Pagination pagination) {
+		try {
+			return ddzTaokeReportDAO.getUnMergedReportSettleInfo(pagination);
+		} catch (Exception e) {
+			log.error(e);
 			return null;
 		}
 	}
 	
 	@Override
-	public int updateTaokeReportSettleStatus(List<String> reportIds, SettleStatusEnums settleStatus,
-			     String internalBatchNO) {
-		if (reportIds == null || reportIds.size() == 0 || settleStatus == null
-			  || StringUtils.isEmpty(internalBatchNO)) {
-			return -1;
+	public int updateTaokeReportSettleId(List<Long> reportIds, Long settleId) throws Exception {
+		if(reportIds == null || reportIds.size() == 0) {
+			return 0;
 		}
 		try {
-			return ddzTaokeReportDAO.updateTaokeReportSettleStatus(reportIds, settleStatus.getValue(), internalBatchNO);
+			return ddzTaokeReportDAO.updateTaokeReportSettleId(reportIds, settleId);
 		} catch (Exception e) {
-			log.error("update report settle status failed: " + reportIds + ", " + settleStatus, e);
+			log.error(e);
 			return -1;
-			
 		}
+	}
+
+	@Override
+	public QueryResult<DdzTaokeReportSettleDO> getSettlesWithPagination(DdzTaokeReportSettleSearchCondition searchCondition,Pagination pagination) {
+		int totalRecords = ddzTaokeReportSettleDAO.countSettlesWithPagination(searchCondition) ;
+        if (totalRecords <= 0) {
+            return new QueryResult<DdzTaokeReportSettleDO>(new ArrayList<DdzTaokeReportSettleDO>(), pagination, totalRecords);
+        }
+        List<DdzTaokeReportSettleDO> items = ddzTaokeReportSettleDAO.selectSettlesWithPagination(searchCondition, pagination.getStart(), pagination.getSize());
+        return new QueryResult<DdzTaokeReportSettleDO>(items, pagination, totalRecords);
+		
 	}
 	
-	public int updateTaokeReportAlipayResult(List<String> reportIds, AlipayStatusEnum alipayStatus,
-			     String alipayBatchNO){
-		if (reportIds == null || reportIds.size() == 0 || alipayStatus == null) {
-			return -1;
-		}
-		try {
-			return ddzTaokeReportDAO.updateTaokeReportAlipayResult(reportIds, alipayStatus.getValue(), alipayBatchNO);
-		} catch (Exception e) {
-			log.error(String.format("update report alipay status failed: [%s] [%s] [%s] ",
-					       reportIds, alipayStatus.toString(), alipayBatchNO), e);
-			return -1;
-			
-		}
-	}
+	@Override
+    public List<DdzTaokeReportSettleDO> getSettleReports(DdzTaokeReportSettleSearchCondition searchCondition) {
+        List<DdzTaokeReportSettleDO> items = ddzTaokeReportSettleDAO.selectSettlesWithPagination(searchCondition, 1,
+                                                                                     Integer.MAX_VALUE);
+        return items;
+    }
+
+	@Override
+	public List<DdzTaokeReportDO> getReportsBySettleId(Integer settleId) {
+		return ddzTaokeReportDAO.selectReportsBySettleId(settleId) ;
+	}	
+	
 }

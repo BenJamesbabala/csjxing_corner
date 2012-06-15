@@ -18,16 +18,28 @@ public interface DdzAuthz {
     public boolean isLogin();
 
     /**
-     * 获取用户的支付宝id
+     * 获取用户生成折扣的支付宝id（前台使用）
      * 
      * @return
      */
     public String getAlipayId();
 
-    public String getUid(); 
+    /**
+     * 登录名，仅作展示使用
+     * 
+     * @return
+     */
+    public String getLoginId();
 
     /**
-     * 获取帐号信息
+     * 当前登录用户的uid
+     * 
+     * @return
+     */
+    public String getUid();
+
+    /**
+     * 获取用户的帐号信息（后台使用）
      * 
      * @return
      */
@@ -39,5 +51,11 @@ public interface DdzAuthz {
      * @return
      */
     public DdzUserDO getUser();
+    
+    /**
+     * 是否内部用户
+     * @return true:是/false：否
+     */
+    public boolean isPrivateUser();
 
 }

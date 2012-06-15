@@ -1,0 +1,88 @@
+
+
+.myhome-table {
+	width:100%;
+}
+
+.myhome-table tr a:link, .myhome-table tr a:visited {
+	color: #34869B;
+	text-decoration: none;
+}
+.myhome-table tr a:hover {
+	color: #ff6a00;
+	text-decoration: none;
+}
+.myhome-table .nav .left, .myhome-table .nav .right{
+	background: url("../../../../img/myhome.png") no-repeat scroll 999px 999px transparent;
+}
+.myhome-table .title, .myhome-table .nav p{
+	background: url("../../../../img/myhome-rep.png") no-repeat scroll 999px 999px transparent;
+}
+.myhome-table .nav {
+	border-bottom: 4px solid #ff6a00;
+	height: 30px;
+	width: 100%;
+}
+.myhome-table .nav ol li {
+	float: left;
+	margin-right: 2px;
+}
+.myhome-table .nav s {
+	display: inline-block;
+    height: 30px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 8px;
+    float: left;
+}
+.myhome-table .nav p {
+	height: 30px;
+	line-height:28px;
+	background-position: 0 -50px;
+	background-repeat: repeat-x;
+	float: left;
+	color: #4d4d4d;
+	padding: 0 4px;
+}
+.myhome-table .nav .left {
+	background-position: 0 0;
+}
+.myhome-table .nav .right {
+	background-position: 0 -50px;
+}
+
+.myhome-table .nav .current p {
+	background-position: 0 -100px;
+	color: #FFF;
+	font-weight: 700;
+}
+.myhome-table .nav .current .left {
+	background-position: 0 -100px;
+}
+.myhome-table .nav .current .right {
+	background-position: 0 -150px;
+}
+.myhome-table table {
+	background-color: #FFF;
+	width: 100%
+}
+
+.myhome-table table tr{
+	height: 32px;
+}
+.myhome-table table .title {
+	background-position: 0 -50px;
+	background-repeat: repeat-x;
+	height: 32px;
+}
+
+.myhome-table .first {
+	border-left: 1px solid #CCCCCC;
+}
+.myhome-table .last {
+	border-right: 1px solid #CCCCCC;
+}
+.myhome-table th, .myhome-table td{
+	line-height: 24px;
+	border-bottom: 1px solid #CCCCCC;
+}

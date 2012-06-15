@@ -1,0 +1,45 @@
+#set($layout="zhe/default_list.vm")
+
+#set($title = $keyword)
+
+<style >
+	.s8-alipay-input{
+		 border: 1px solid #BBBBBB;
+		 height: 26px;
+		 padding: 0 5px;
+		 font-weight:bold;
+	}
+</style>
+<input type="hidden" id="ddzRoot" value="${env.ddzRoot}" />
+<div style="text-align:left;margin-bottom:50px;">
+	
+    <div class="s8-search-tips">
+        <ul>
+			<li class="s8-search-tips">1、您正在搜索关键字“<b>$!keyword</b>”，结果将转入淘宝网搜索页</li>
+			<li class="s8-search-tips">2、淘宝网搜索页点击购买，同样可以获得返利</li>
+		</ul>
+	</div>
+	
+	#if(!$alipayId) #set($buyClass = "dd-hide") #end
+	
+	<div class="s8-search-tips $!buyClass" id="s8_alipay_buy">
+        <div>3、您当前接受返利的支付宝账号为：<b id="s8_alipay_buy_alipayId">$alipayId</b>  &nbsp;<a href="javascript:;" id="s8_change_alipay">修改</a></div>
+		<div class="taobaos8">
+			<a href="$!s8Url" class="taobaos8_btn" target="_blank">去淘宝搜索页</a>
+        </div>
+    </div>
+	
+	#if($alipayId) #set($inputClass = "dd-hide") #end
+	<div class="s8-search-tips $!inputClass" id="s8_alipay_input">
+		<form action="${env.ddzRoot}/zhe/gos8.htm" method="GET" id="s8_alipay_form" target="_blank">
+			
+			<input type="hidden" name="keyword" value="$!keyword"/>
+            <div>请输入接收返利的支付宝账号： <input type="text" id="alipayInput" name="alipayId" class="s8-alipay-input" > &nbsp;
+                    <span><a href="javascript:;" id="s8_cancel_alipay" class="$buyClass">返回</a></span>
+			</div>
+			<div class="taobaos8"><a href="javascript:;" id="s8_alipaySubmit" class="taobaos8_btn">去淘宝搜索页</a></div>
+		 </form>
+	</div>
+	
+	
+</div>

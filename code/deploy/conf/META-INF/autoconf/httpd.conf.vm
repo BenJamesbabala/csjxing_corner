@@ -4,6 +4,7 @@ ServerRoot "${corner_output}"
 DocumentRoot "${corner_htdocs_home}"
 ServerName ${corner_domainName}
 ServerName ${corner_ddz_domainName}
+ServerName diandainzhe.com
 
 DefaultLanguage cn
 AddDefaultCharset GBK
@@ -32,9 +33,9 @@ KeepAliveTimeout 25
 # Assume no memory leaks at all
 MaxRequestsPerChild 20000
 
-LogFormat "%h %{ORIG_CLIENT_IP}i %l %u %t \"%m /%{HOST}i%U%q %H\" %>s %b %D \"%{Referer}i\" \"%{User-Agent}i\" %{ali_beacon_id}n - \"a=%{ali_apache_track}n; b=-; c=%{ali_resin_trace}n\" %{ali_server_name}n"   cookie_log
-## CustomLog "|/usr/alibaba/cronolog/sbin/cronolog ${corner_output}/logs/cookie_logs/%w/cookie_log" cookie_log
-CustomLog "|/usr/bin/logger -p local1.info" cookie_log
+LogFormat "%h %{ORIG_CLIENT_IP}i %l %u %t \"%m /%{HOST}i%U%q %H\" %>s %b %D \"%{Referer}i\" \"%{User-Agent}i\"" cookie_log
+CustomLog "|/usr/sbin/cronolog ${corner_output}/logs/cookie_logs/%w_cookie_log" cookie_log
+
 ErrorLog  "${corner_output}/logs/apache_error.log"
 
 <Directory />
@@ -59,6 +60,12 @@ DirectoryIndex index.html
 NameVirtualHost *
 
 <VirtualHost *>
+	RewriteEngine on
+    RewriteCond %{HTTP_HOST} ^diandainzhe.com [NC,OR]
+RewriteRule ^(.*)$ http://${corner_ddz_domainName}$1 [L,R=301]
+</VirtualHost>
+
+<VirtualHost *>
     ServerAdmin ${corner_unix_user}
     ServerName ${corner_ddz_domainName}
 	DocumentRoot "${corner_htdocs_home}"
@@ -77,8 +84,8 @@ SetOutputFilter DEFLATE
 </Location>
 
 #if("${corner_production}" =="true")
-ErrorDocument 404 http://www.diandianzhe.com
-ErrorDocument 509 http://www.diandianzhe.com
+ErrorDocument 404 http://www.diandianzhe.com/zhe/error.htm
+ErrorDocument 509 http://www.diandianzhe.com/zhe/error.htm
 #end
 
 ##Include mod_jk's specific configuration file-zgl

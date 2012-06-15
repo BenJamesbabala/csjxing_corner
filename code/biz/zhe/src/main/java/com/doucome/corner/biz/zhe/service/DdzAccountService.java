@@ -1,5 +1,8 @@
 package com.doucome.corner.biz.zhe.service;
 
+import com.doucome.corner.biz.core.model.page.Pagination;
+import com.doucome.corner.biz.core.model.page.QueryResult;
+import com.doucome.corner.biz.dal.condition.DdzAccountSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.DdzAccountDO;
 
 /**
@@ -28,4 +31,12 @@ public interface DdzAccountService {
     public DdzAccountDO insertOrUpdateAccount(String uid, String alipayId);
 
     public void updateDdzAccount(DdzAccountDO accountDO);
+    
+    /**
+     * ≤È—ØAccount
+     * @param searchCondition
+     * @param pagination
+     * @return
+     */
+    QueryResult<DdzAccountDO> getAccountsWithPagination(DdzAccountSearchCondition searchCondition , Pagination pagination) ;
 }

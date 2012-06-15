@@ -77,7 +77,6 @@
 	</div>
 	
 	#DDZ_JS(["lib/jquery-min.js","lib/jcarousel.js","lib/common.js","home/control/widget/index.js"])
-		
-	#parse("/common/zhe/google_analytics.vm")
+	
 </body>
 </html>

@@ -6,6 +6,7 @@ import com.doucome.corner.biz.core.constant.DecimalConstant;
 import com.doucome.corner.biz.core.enums.TaobaoPicEnums;
 import com.doucome.corner.biz.core.taobao.dto.TaobaoItemDTO;
 import com.doucome.corner.biz.core.taobao.dto.TaobaokeItemDTO;
+import com.doucome.corner.biz.core.taobao.enums.TaobaoSellerStartCreditEnums;
 import com.doucome.corner.biz.core.utils.ReflectUtils;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.UserCommission;
@@ -168,7 +169,17 @@ public class TaobaokeItemFacade {
     }
     
     public String getPic(String type){
-    	return TaobaoPicUtils.findPic(this.picUrl, TaobaoPicEnums._210x210) ;
+    	return TaobaoPicUtils.findPic(this.picUrl, TaobaoPicEnums.toTaobaoPicEnums(type)) ;
+    }
+    
+    public String getSellerCreditScorePic(){
+    	int i = 0 ;
+    	if(this.sellerCreditScore != null){
+    		long l = this.sellerCreditScore ;
+    		i = (int)l;
+    	}
+    	String pic = TaobaoSellerStartCreditEnums.fromCode(i).getPic();
+    	return "http://pics.taobaocdn.com/newrank/" + pic + ".gif" ;
     }
     
     /**

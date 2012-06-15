@@ -9,6 +9,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -23,21 +25,25 @@ import com.doucome.corner.biz.core.taobao.dto.TaobaokeReportMemberDTO;
 import com.doucome.corner.biz.core.taobao.fields.TaobaokeFields;
 import com.doucome.corner.biz.core.taobao.model.TaobaokeDate;
 import com.doucome.corner.biz.core.utils.DecimalUtils;
+import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzAccountDO;
 import com.doucome.corner.biz.dal.dataobject.DdzSyncReportTaskDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
+import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
 import com.doucome.corner.biz.zhe.enums.OutCodeEnums;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.UserCommission;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
 import com.doucome.corner.biz.zhe.service.DdzSyncReportTaskService;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportService;
+import com.doucome.corner.biz.zhe.service.DdzTaokeReportSettleService;
 import com.doucome.corner.biz.zhe.utils.OutCodeUtils;
 import com.doucome.corner.biz.zhe.utils.OutCodeUtils.OutCode;
 import com.doucome.corner.task.zhe.TaskService;
 import com.doucome.corner.task.zhe.model.SyncReportCodeEnums;
 import com.doucome.corner.task.zhe.model.SyncReportRunResult;
 import com.doucome.corner.task.zhe.model.SyncReportRunResult.Page;
+import com.doucome.corner.task.zhe.model.SyncReportRunResult.SettleReportResult;
 import com.doucome.corner.task.zhe.utils.TaskUtils;
 
 /**
@@ -65,6 +71,9 @@ public class SyncReportTaskService implements TaskService {
 	@Autowired
 	private DdzEatDiscountRule ddzEatDiscountRule ;
 	
+	@Autowired
+	private DdzTaokeReportSettleService ddzTaokeReportSettleService;
+	
 	/**
 	 * task interval
 	 */
@@ -74,7 +83,7 @@ public class SyncReportTaskService implements TaskService {
 		/**
 		 * 跑前2天的数据
 		 */
-		Date date = TaskUtils.getLastLateDate() ;
+		Date date = TaskUtils.getToSyncDate() ;
 		
 		TaobaokeDate taobaokeDate = new TaobaokeDate(date) ; 
 		
@@ -119,6 +128,8 @@ public class SyncReportTaskService implements TaskService {
 			//同步报表到数据库
 			int successCount = syncEveryReport(taobaoReportList) ;
 			returnObject.setSuccessCount(successCount) ;
+			SettleReportResult settleReportResult = createSettleReport();
+			returnObject.setSettleReportResult(settleReportResult);
 		}
 		
 		if(!CollectionUtils.isEmpty(returnObject.getFailPages())){
@@ -232,6 +243,7 @@ public class SyncReportTaskService implements TaskService {
 						UserCommission userCommission = DdzEatDiscountRule.calcUserCommissions(ddzEatDiscountRule, item.getCommission() , newCommissionRate , item.getRealPayFee()) ;
 						report.setUserCommission(userCommission.getCommission()) ;
 						report.setUserCommissionRate(DecimalUtils.divide(userCommission.getCommissionRate(),DecimalConstant.HUNDRED)) ;
+						report.setSettleFee(report.getUserCommission());
 					} else {
 						syncReportLog.error("cant find account from outCode : " + outCode) ;
 					}
@@ -244,4 +256,98 @@ public class SyncReportTaskService implements TaskService {
 		return successCount ;
 	}
 	
+	/**
+	 * 生成taoke报表结算记录
+	 * @return .
+	 */
+	public SettleReportResult createSettleReport() {
+		SettleReportResult result = new SettleReportResult();
+		result.setTotalCount(0);
+		result.setSuccCount(0);
+//		while(true) {
+		Pagination pagination = new Pagination(1, 1000);
+		List<AlipayItemDO> payItemDOs = ddzTaokeReportService.getUnMergedReportSettleInfo(pagination);
+		if (payItemDOs == null) {
+			syncReportLog.error("----fetch the taoke report failed.");
+			result.setTotalCount(-1);
+			result.setSuccCount(-1);
+			return result;
+		}
+		if (payItemDOs.size() == 0) {
+		    return result;
+		}
+		result.setTotalCount(payItemDOs.size());
+		int succCount = 0;
+		for (AlipayItemDO payItemDO: payItemDOs) {
+			syncReportLog.error("----create settle report: " + payItemDO.toString());
+			Long settleId = -1L;
+			try {
+				settleId = insertSettleReport(payItemDO);
+			} catch (Exception e) {
+				syncReportLog.error(e);
+				continue;
+			}
+			syncReportLog.error(String.format("----set settle report [%d] report [%s] settle_id succ",
+					              settleId, payItemDO.getIds()));
+			succCount++; 
+		}
+//		}
+		result.setSuccCount(succCount);
+		syncReportLog.error(String.format("succ create [%s] settle report", result.toString()));
+		return result;
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRES_NEW,
+			isolation = Isolation.DEFAULT,
+			rollbackFor = Exception.class)
+	public Long insertSettleReport(AlipayItemDO payItemDO) throws Exception {
+		List<Long> reportIds = convert(payItemDO.getIds());
+		if (reportIds == null) {
+			syncReportLog.error("----unexcepted report id: " + payItemDO.getIds());
+			return -1L;
+		}
+		DdzTaokeReportSettleDO settleDO = new DdzTaokeReportSettleDO();
+		settleDO.setSettleAlipay(payItemDO.getAccount());
+		settleDO.setSettleFee(payItemDO.getAmount());
+		settleDO.setSettleStatus(SettleStatusEnums.UNSETTLE.getValue());
+		Long settleId = ddzTaokeReportSettleService.insertSettleReport(settleDO);
+		if (settleId == -1) {
+			syncReportLog.error("----insert merged taoke settle report failed: " + payItemDO);
+			return settleId;
+		}
+		
+		int count = ddzTaokeReportService.updateTaokeReportSettleId(reportIds, settleId);
+		if (count == -1) {
+			String temp = String.format("----set report [%s] settle_id failed, delete related settle report[%d]",
+		                    payItemDO.getIds(), settleId);
+			syncReportLog.error(temp);
+			//rollback transaction
+			throw new Exception(temp);
+		}
+		if (count != reportIds.size()) {
+			String temp = String.format("----set report [%s] settle_id, but actual update [%d] report." +
+		              " reset the report settle_id to null", payItemDO.getIds(), count);
+			syncReportLog.error(temp);
+			//rollback transaction
+			throw new Exception(temp);
+		}
+		return settleId;
+	}
+	
+	private List<Long> convert(String reportIds) {
+		List<Long> result = new ArrayList<Long>();
+		if (StringUtils.isEmpty(reportIds)) {
+			return result;
+		}
+		String[] temps = reportIds.split(",");
+		for (String temp: temps) {
+			try {
+				result.add(Long.valueOf(temp.trim()));
+			} catch (Exception e) {
+				log.error(e);
+				return null;
+			}
+		}
+		return result;
+	}
 }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="ddzRecommend">
+	<typeAlias alias="TA-ddzRecommend"
+		type="com.doucome.corner.biz.dal.dataobject.DdzRecommendDO" />
+
+	<resultMap id="RM-ddzRecommend" class="TA-ddzRecommend">
+		<result property="id" column="ID" />
+		<result property="batchNo" column="BATCH_NO" jdbcType="VARCHAR" />
+		<result property="numIid" column="NUM_IID" />
+		<result property="categoryId" column="CATEGORY_ID" />
+		<result property="commission" column="COMMISSION" jdbcType="DECIMAL" />
+		<result property="commissionRate" column="COMMISSION_RATE" jdbcType="DECIMAL" />
+		<result property="itemPrice" column="ITEM_PRICE" jdbcType="DECIMAL" />
+		<result property="itemTitle" column="ITEM_TITLE" jdbcType="VARCHAR" />
+		<result property="itemPicUrl" column="ITEM_PIC_URL" jdbcType="VARCHAR" />
+		<result property="recommendType" column="RECOMMEND_TYPE" jdbcType="VARCHAR" />
+		<result property="isDisplay" column="IS_DISPLAY" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="insertRecommend" >
+		INSERT INTO DDZ_RECOMMEND
+			(ID,BATCH_NO,NUM_IID,CATEGORY_ID,COMMISSION,COMMISSION_RATE,ITEM_PRICE,ITEM_TITLE,ITEM_PIC_URL,RECOMMEND_TYPE,IS_DISPLAY,GMT_CREATE,GMT_MODIFIED)
+		VALUES 
+			(#id#,#batchNo#,#numIid#,#categoryId#,#commission#,#commissionRate#,#itemPrice#,#itemTitle#,#itemPicUrl#,#recommendType#,#isDisplay#,NOW(),NOW())
+		<selectKey resultClass="java.lang.Integer" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<update id="updateRecommendDisplayById">
+		UPDATE 
+			DDZ_RECOMMEND
+		SET 
+			IS_DISPLAY = #isDisplay#,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
+	</update>
+	
+	<select id="queryRecommends" resultMap="RM-ddzRecommend">
+		SELECT 
+			ID,BATCH_NO,NUM_IID,CATEGORY_ID,COMMISSION,COMMISSION_RATE,ITEM_PRICE,ITEM_TITLE,ITEM_PIC_URL,RECOMMEND_TYPE,IS_DISPLAY,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DDZ_RECOMMEND
+		WHERE
+			RECOMMEND_TYPE = #recommendType#
+		AND
+			IS_DISPLAY = 'T'
+		AND
+			BATCH_NO = #batchNo#
+	</select>
+	
+	<select id="queryRecommendsWithPagination" resultMap="RM-ddzRecommend">
+		SELECT 	
+			ID,BATCH_NO,NUM_IID,CATEGORY_ID,COMMISSION,COMMISSION_RATE,ITEM_PRICE,ITEM_TITLE,ITEM_PIC_URL,RECOMMEND_TYPE,IS_DISPLAY,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DDZ_RECOMMEND
+		WHERE 
+			1=1
+		<isNotEmpty property="recommendType" prepend="AND">
+			<![CDATA[
+			RECOMMEND_TYPE = #recommendType#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="batchNo" prepend="AND">
+			<![CDATA[
+			BATCH_NO = #batchNo#
+			]]>
+		</isNotEmpty>
+		ORDER BY GMT_CREATE DESC LIMIT #start# , #size#
+	</select>
+	
+	<select id="countRecommendsWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(ID)
+		FROM 
+			DDZ_RECOMMEND
+		WHERE 
+			1=1
+		<isNotEmpty property="recommendType" prepend="AND">
+			<![CDATA[
+			RECOMMEND_TYPE = #recommendType#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="batchNo" prepend="AND">
+			<![CDATA[
+			BATCH_NO = #batchNo#
+			]]>
+		</isNotEmpty>
+	</select>
+	
+</sqlMap>

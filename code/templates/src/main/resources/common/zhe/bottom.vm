@@ -1,0 +1,26 @@
+<div class="bottom  dd-clr w790" id="bottom">
+	
+	<div class="friendlinks">
+    	友情链接：
+		<a target="_blank" title="淘宝网" href="http://www.taobao.com/">淘宝网</a>		
+		<a target="_blank" title="阿里巴巴" href="http://1688.com/">阿里巴巴</a>		
+		<a target="_blank" title="米胖网" href="http://mipang.com/">米胖网</a>
+		<a href="http://www.5w.com/" title="5w导航" target="_blank">5w导航</a>
+    </div>
+	
+	<div class="copyright">
+		<p>关注点点折： 
+          <a rel="nofollow" title="新浪微博" href="http://weibo.com/diandianzhe"><i class="social_gray sina" target="_blank"></i></a>
+		  
+		  &nbsp;&nbsp;&nbsp;
+			<span>Copyright &copy; 2012 <a href="http://diandianzhe.com/">点点折网</a></span>
+			<a href="http://www.miibeian.gov.cn/" target="_blank" title="浙ICP备12014043">浙ICP备12014043号-1</a>
+		</p>
+    </div>
+</div>
+#if($!ddzAuthz.isPrivateUser())
+	#parse("/common/bottomhost.vm")
+#end
+#parse("/common/zhe/google_analytics.vm")
+#parse("/common/zhe/baidu_tongji.vm")
+#parse("/common/zhe/feedback.vm")

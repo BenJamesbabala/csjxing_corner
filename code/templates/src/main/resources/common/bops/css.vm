@@ -9,8 +9,10 @@ body {
 	width:1100px ;
 }
 
-.bops table{ border-collapse:collapse;}
-.bops th {text-align:center ;font-weight:bold;}
+.bops table{ 
+	border-collapse:collapse;
+}
+.bops th {text-align:center ;font-weight:bold;background-color:#eeeeee;height:30px;}
 .bops th,.bops td{ border:1px solid #bbb;font-size:12px;padding:2px 5px;}
 
 .left_menu {

@@ -1,0 +1,30 @@
+#set($layout="error/default.vm")
+<div class="content error404">
+	<h2>抱歉！找不到您要的页面…</h2>
+	<div class="tip-normal fn-clear">
+		<h3>最可能的原因是：</h3>
+		<ul>
+			<li>
+				<s></s>
+				<span>地址中存在错误。</span>
+			</li>
+			<li>
+				<s></s>
+				<span>链接已过期。</span>
+			</li>
+		</ul>
+	</div>
+	<div class="tip-normal fn-clear">
+		<h3>点击以下链接继续浏览点点折：</h3>
+		<ul>
+			<li>
+				<s></s>
+				<a href="${env.ddzRoot}">返回点点折首页 (${env.ddzRoot}/zhe/item.htm)</a>
+			</li>
+			<li>
+				<s></s>
+				<a href="${env.ddzRoot}/zhe/my.htm">返回我的点点折首页</a>
+			</li>
+		</ul>
+	</div>
+</div>

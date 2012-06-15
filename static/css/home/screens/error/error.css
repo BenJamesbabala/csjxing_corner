@@ -1,0 +1,70 @@
+body {
+    color: #4D4D4D;
+    font: 12px Tahoma,Helvetica,Arial,Simsun;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #000000;
+    font-size: 100%;
+    font-weight: bold;
+}
+.error-page a:link, .error-page a:visited {
+    color: #34869B;
+    text-decoration: none;
+}
+.error-page a:hover {
+    color: #FF6A00;
+}
+.tip-normal li s{
+	background: url("../../../../../img/common-icon.png") no-repeat scroll 999px 999px transparent;
+}
+.error-page {
+    margin: 0 auto;
+    width: 950px;
+}
+.content{
+	border-top: 1px solid #FFFFFF;
+	margin: 40px auto 60px auto;
+	height: 205px;
+	width: 594px;
+	padding: 50px 0 0 305px;
+	background: #fff url("../../../../../img/bg-404.jpg") no-repeat 0 0;	
+}
+.tip-normal {
+    margin-left: 24px;
+    margin-top: 6px;
+}
+
+.error404 .tip-normal {
+    margin-top: 16px;
+}
+
+.error404 h2{
+	visibility: hidden;
+}
+.error404 h3{
+	font-weight: 500;
+}
+.error404 .tip-normal{
+	margin-top: 16px;
+}
+.error404 .tip-normal ul{
+	margin-top: 6px;
+	padding-left: 0px;
+}
+
+.tip-normal li {
+    margin-bottom: 3px;
+    margin-right: 40px;
+}
+.tip-normal li s {
+	display: inline-block;
+    float: left;
+    overflow: hidden;
+    vertical-align: middle;
+	width:16px;
+	height:16px;
+	background-position: -193px -272px;
+}
+li {
+    list-style: none outside none;
+}

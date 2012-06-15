@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.doucome.corner.biz.core.utils.MD5Util;
 import com.doucome.corner.biz.dal.BopsAdminDAO;
 import com.doucome.corner.biz.dal.dataobject.BopsAdminDO;
+import com.doucome.corner.biz.zhe.service.DdzReportMailService;
 import com.doucome.corner.web.bops.authz.BopsSessionOperator;
-import com.doucome.corner.web.common.action.BasicAction;
 
 /**
  * 类LoginAction.java的实现描述：后台登陆

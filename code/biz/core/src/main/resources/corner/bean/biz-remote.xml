@@ -10,18 +10,21 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
 	default-autowire="byName">
-
-
-	<bean id="taobaoClient" class="com.taobao.api.DefaultTaobaoClient" scope="prototype">
-		<constructor-arg index="0" value="${corner.api.taobao.url}"/>
-		<constructor-arg index="1" value="${corner.api.taobao.appkey}"/>
-		<constructor-arg index="2" value="${corner.api.taobao.secret}"/>
+	
+	<!-- 淘宝通用应用 -->
+	<bean id="taobaoClientWrapper" class="com.doucome.corner.biz.core.service.taobao.TaobaoClientWrapper">
+		<property name="serverUrl" value="${corner.api.taobao.url}"/>
+		<property name="appKeys" value="${corner.api.taobao.appkey}" />
+		<property name="appSecrets" value="${corner.api.taobao.secret}" />
 	</bean>
 	
-	<bean id="taobaokeClient" class="com.taobao.api.DefaultTaobaoClient" scope="prototype">
-		<constructor-arg index="0" value="${corner.api.taobao.url}"/>
-		<constructor-arg index="1" value="${corner.api.taobaoke.appkey}"/>
-		<constructor-arg index="2" value="${corner.api.taobaoke.secret}"/>
+	<!-- 淘宝客应用 -->
+	<bean id="taobaokeClientWrapper" class="com.doucome.corner.biz.core.service.taobao.TaobaoClientWrapper">
+		<property name="serverUrl" value="${corner.api.taobao.url}"/>
+		<property name="appKeys" value="${corner.api.taobaoke.appkeys}"/>
+		<property name="appSecrets" value="${corner.api.taobaoke.secrets}"/>
+		<property name="topSessions" value="${corner.api.taobaoke.topSessions}" />
 	</bean>
+	
 
 </beans>

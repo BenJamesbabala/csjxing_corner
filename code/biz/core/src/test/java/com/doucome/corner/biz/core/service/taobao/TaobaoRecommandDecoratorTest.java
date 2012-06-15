@@ -24,9 +24,8 @@ public class TaobaoRecommandDecoratorTest extends AbstractBaseJUnit4Test  {
 		
 		TaobaoRecommendItemCondition condition = new TaobaoRecommendItemCondition() ;
 		condition.setCount(10L) ;
-		condition.setItemId(9841891789L) ;
 		condition.setRecommendType(TaobaoRecommendTypeEnums.SAME_STYLE) ;
-		List<TaobaoFavoriteItemDTO> items = taobaoRecommandDecorator.getRecommandItems(condition) ;
+		List<TaobaoFavoriteItemDTO> items = taobaoRecommandDecorator.getRecommandItemsByItem(9841891789L , condition) ;
 		
 		
 		int a = 5 ;

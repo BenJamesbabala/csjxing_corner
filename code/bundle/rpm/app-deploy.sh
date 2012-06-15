@@ -8,10 +8,10 @@ function deploy_template() {
 }
 
 function deploy_task() {
-  echo "skip deploy task ."
-  # deploy_template
-  # mkdir -p $TASK_HOME 
-  # cp -r $TARGET/mobiletrade.task.*-1.0-SNAPSHOT.jar $TASK_HOME 
+  echo "run app-deploy.sh  deploy_task  target = $TARGET and task_home=$TASK_HOME"
+  mkdir -p $TASK_HOME 
+  deploy $TARGET/corner.task.zhe-uber.jar $TASK_HOME
+  chmod 755 $TASK_HOME/bin/*
 }
 
 function deploy_war() {

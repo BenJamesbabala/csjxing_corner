@@ -1,0 +1,21 @@
+<div class="menu">
+	<div class="menu-title font-strong">
+		<h4>我的应用</h4>
+	</div>
+    <div class="memu-list">
+    	<ul>
+    		<li>
+    			<a> <div class="dakuan-icon dd-left"></div> <span class="dd-left">返现记录</span> <div class=" dd-clear"></div> </a>
+    		</li>
+    		<li>
+    			<a> <div class="dakuan-icon dd-left"></div> <span class="dd-left">个人信息</span> <div class=" dd-clear"></div> </a>
+    		</li>
+    		<li>
+    			<a> <div class="dakuan-icon dd-left"></div> <span class="dd-left">修改手机</span> <div class=" dd-clear"></div> </a>
+    		</li>
+    		<li>
+    			<a> <div class="dakuan-icon dd-left"></div> <span class="dd-left">修改邮箱</span> <div class=" dd-clear"></div> </a>
+    		</li>
+    	</ul>
+    </div>
+</div>

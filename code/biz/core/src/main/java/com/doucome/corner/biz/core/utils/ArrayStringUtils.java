@@ -1,5 +1,9 @@
 package com.doucome.corner.biz.core.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -38,5 +42,19 @@ public class ArrayStringUtils {
 			}
 		}
 		return strConcat.toString() ;
+	}
+	
+	public static List<String> toList(String str){
+		String[] arr = toArray(str) ;
+		if(ArrayUtils.isEmpty(arr)){
+			return null ;
+		}
+		List<String> list = new ArrayList<String>() ;
+		for(String s : arr){
+			if(StringUtils.isNotBlank(s)){
+				list.add(s) ;
+			}
+		}
+		return list ;
 	}
 }

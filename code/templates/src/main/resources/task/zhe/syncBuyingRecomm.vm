@@ -1,0 +1,2 @@
+#set($layout="null.vm")
+$runResult

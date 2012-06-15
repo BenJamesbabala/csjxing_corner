@@ -10,8 +10,10 @@ public class JsonModel<T> {
 	public static final String CODE_SUCCESS = "success";
 	public static final String CODE_FAIL = "fail";
 	public static final String CODE_AUTH_FAIL = "auth_fail";
-	public static final String CODE_FAIL_NO_DATA = "no_data";
-	public static final String CODE_FAIL_UNEXPECTED = "unexpected";
+	public static final String CODE_NO_DATA = "no_data";
+	public static final String CODE_UNEXPECTED = "unexpected";
+	public static final String CODE_ILL_ARGS = "ill_args";
+	public static final String CODE_ALIPAY_ERR = "alipay_err" ;
 	
 	private String code;
 	

@@ -17,6 +17,10 @@ public class TaobaokeItemDTO extends AbstractModel {
 	public TaobaokeItemDTO(TaobaokeItem item){
 		ReflectUtils.reflectTo(item, this) ;
 	}
+	
+	public TaobaokeItemDTO(){
+		
+	}
 
 	/**
 	 * 淘宝客佣金比率，比如：1234.00代表12.34% ,比如：500.00

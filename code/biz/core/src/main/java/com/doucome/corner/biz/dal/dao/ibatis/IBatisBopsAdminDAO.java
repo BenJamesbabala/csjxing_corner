@@ -19,7 +19,7 @@ public class IBatisBopsAdminDAO extends SqlMapClientDaoSupport implements BopsAd
 
     @Override
     public BopsAdminDO queryByAdminIdAndPass(String adminId, String password) {
-        Map map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>();
         map.put("adminId", adminId);
         map.put("password", password);
         return (BopsAdminDO) this.getSqlMapClientTemplate().queryForObject(QUERY_BY_ADMINID_AND_PASS, map);

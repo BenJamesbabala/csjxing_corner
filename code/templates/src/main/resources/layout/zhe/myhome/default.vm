@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		#parse("/common/zhe/head.vm")
+		#DDZ_CSS(["home/screens/myhome/common.css","home/screens/myhome/table.css"])
+	</head>
+	<body>
+		<div class="ddz">
+			#parse("/common/zhe/top.vm")
+		</div>
+		<div class="myhome ddz clearfix">
+   			#parse("/common/zhe/search_input.vm")
+			$screen_content
+		</div>
+		#parse("/common/zhe/bottom.vm")
+		#DDZ_JS(["lib/jquery-min.js","lib/common.js","home/control/widget/index.js"])
+	</body>
+</html>

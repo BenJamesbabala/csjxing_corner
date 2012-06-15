@@ -24,4 +24,19 @@
 		<property name="cronExpression" value="${corner.task.ddz.syncReport.cronExpression}" />
 	</bean>
 	
+	
+	
+	
+	<!-- Sync report -->
+	<bean id="syncBuyingRecommendTaskService" class="com.doucome.corner.task.zhe.syncBuyingRecomm.SyncBuyingRecommendTaskService"></bean>
+	<bean id="syncBuyingRecommendJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" autowire="no">
+		<property name="targetObject" ref="syncBuyingRecommendTaskService" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="syncBuyingRecommendTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="syncBuyingRecommendJob" />
+		<property name="cronExpression" value="${corner.task.ddz.syncBuyingRecommend.cronExpression}" />
+	</bean>
+	
 </beans>

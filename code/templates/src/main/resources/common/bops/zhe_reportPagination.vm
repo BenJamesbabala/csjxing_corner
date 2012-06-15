@@ -85,11 +85,9 @@
     	
 	</div>
 	
-	<form method="get" action="${env.bopsRoot}/bops/zhe/taoke_report.htm" id="form_page">
+	<form method="get" action="${env.bopsRoot}/bops/zhe/taoke_report_settle.htm" id="form_page">
 		<input type="hidden" name="settleAlipay" value="$!settleAlipay" />
 		<input type="hidden" name="settleStatus" value="$!settleStatus" />
-		<input type="hidden" name="gmtPaidStart" value="$!gmtPaidStart" />
-		<input type="hidden" name="gmtPaidEnd" value="$!gmtPaidEnd" />
 		<input type="hidden" name="size" value="$!size" />
 		<div class="page-op">
     		<span class="total-page">¹² $totalPages Ò³</span>µ½<input type="text" name="page" id="jumpto" autocomplete="off" value="$!curPage">Ò³

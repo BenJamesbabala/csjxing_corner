@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	- 自动配置描述文件
+	-
+-->
+<config description="自动配置">
+
+	<group name="soft home" description="环境设置">
+        <property name="corner.unix.user" defaultValue="admin" description="Linux下运行的用户,为apache使用"/>
+    </group>
+    
+    <group name="server env" description="路径的设置">
+        <property name="corner.javahome" defaultValue="/usr/corner/java" description="运行JBOSS的JDK"/>
+    </group>
+    
+	<group name="common config">
+		<property name="corner.output" description="应用程序的输出目录"  defaultValue="/home/${corner_unix_user}/output"/>
+		<property name="corner.production" description="生产模式"  defaultValue="false">
+			<validator name="choice" choice="true,false"/>
+		</property>
+		<property name="corner.loggingRoot" defaultValue="${corner_output}/logs"  description="日志"></property>
+		<property name="corner.loggingLevel" defaultValue="info"  description="日志输出级别"></property>
+	</group>
+	
+	<group name="task">
+		<property name="corner.task.ddz.syncReport.cronExpression" defaultValue="0 5 9 * * ?" description="点点折从同步淘宝客报表"></property>
+	</group>
+	
+	<script>
+		<generate template="bin/env.sh.vm" destfile="bin/env.sh" charset="GBK" />
+		<generate template="bin/startSendReportMails.sh" destfile="bin/startSendReportMails.sh" charset="GBK" />
+	</script>
+</config>
+
+

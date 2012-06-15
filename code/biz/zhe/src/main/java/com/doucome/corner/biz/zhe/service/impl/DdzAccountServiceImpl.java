@@ -1,9 +1,15 @@
 package com.doucome.corner.biz.zhe.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
+import com.doucome.corner.biz.core.model.page.Pagination;
+import com.doucome.corner.biz.core.model.page.QueryResult;
 import com.doucome.corner.biz.core.utils.UidCreateUtil;
 import com.doucome.corner.biz.dal.DdzAccountDAO;
+import com.doucome.corner.biz.dal.condition.DdzAccountSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.DdzAccountDO;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
 
@@ -62,6 +68,10 @@ public class DdzAccountServiceImpl implements DdzAccountService {
 
     @Override
     public DdzAccountDO insertOrUpdateAccount(String uid, String alipayId) {
+        if (StringUtils.isBlank(alipayId)) {
+            return null;
+        }
+
         DdzAccountDO accountDO = queryAccountDOByUid(uid);
         if (accountDO != null) {
             return accountDO;
@@ -83,5 +93,16 @@ public class DdzAccountServiceImpl implements DdzAccountService {
             ddzAccountDAO.updateAccount(accountDO);
         }
     }
+
+	@Override
+	public QueryResult<DdzAccountDO> getAccountsWithPagination(DdzAccountSearchCondition searchCondition, Pagination pagination) {
+		int totalRecords = ddzAccountDAO.countAccountsWithPagination(searchCondition) ;
+        if (totalRecords <= 0) {
+            return new QueryResult<DdzAccountDO>(new ArrayList<DdzAccountDO>(), pagination, totalRecords);
+        }
+        List<DdzAccountDO> items = ddzAccountDAO.queryAccountsWithPagination(searchCondition, pagination.getStart(), pagination.getSize()) ;
+        return new QueryResult<DdzAccountDO>(items, pagination, totalRecords);
+		
+	}
 
 }

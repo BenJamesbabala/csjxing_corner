@@ -6,7 +6,7 @@ import com.doucome.corner.biz.core.utils.JacksonHelper;
 import com.doucome.corner.biz.core.utils.MD5Util;
 
 /**
- * 类DdzAuthzTemp.java的实现描述：TODO 类实现描述
+ * 类DdzAuthzTemp.java的实现描述：登录信息
  * 
  * @author ib 2012-4-1 上午12:06:25
  */
@@ -59,7 +59,9 @@ public class DdzAuthzTemp {
     private String createSignature() {
         StringBuilder builder = new StringBuilder();
         builder.append(uid);
+        builder.append('|');
         builder.append(password);
+        builder.append('|');
         builder.append(loginTime);
         return MD5Util.getMD5(builder.toString());
     }

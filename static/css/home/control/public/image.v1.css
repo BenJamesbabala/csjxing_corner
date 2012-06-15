@@ -1,0 +1,122 @@
+.tb-login,
+.header-logo,
+.header-logo-bubble,
+.tool-left-icon,
+.tool-center-icon,
+.tool-right-icon,
+.main-result-ipt,
+.main-result-buy,
+.item-buy-go,
+.tool-item-title-arrow,
+.item-price-discount-ipt,
+.item-price-discount,
+.tool-item-arrow,
+.search,
+.logo,
+.content .submit,
+.alipay-count-submit,
+.show-url .left-arrow,
+.light-icon,
+.page-op #jump-sub,
+.pagination .page-start,
+.pagination .page-next,
+.pagination a.page-prev,
+.pagination .page-end,
+.list-top-search button ,
+.end{
+	background-image: url(../../../../img/btn.v1.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: inline-block;
+}
+
+.jcarousel-skin-tango,
+.end{
+	background-image: url(../../../../img/carousel.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: inline-block;
+	margin-left:156px;
+}
+
+.bglight{
+	background-image: url(../../../../img/bglight.jpg);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: inline-block;
+}
+
+.list-top-logo
+{
+	background-image: url(../../../../img/logo_200x100.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: inline-block;
+}
+
+.list-top-search,
+.list-search-filter-check,
+.list-search-order-down,
+.list-search-keyword-submit,
+.list-search-order-up,
+.list-search-order-default
+{
+	background-image: url(../../../../img/bglist.v1.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: inline-block;	
+}
+.list-search-keyword,
+.list-search-order
+{
+	background-image: url(../../../../img/bglist_kwd.png);
+	background-repeat: repeat-x;
+	background-color: transparent;
+	display: inline-block;	
+}
+.tool .tool-left,.tool .tool-center,.tool .tool-right {
+	background-image: url(../../../../img/imgb.png);
+	background-repeat: no-repeat;
+	display: inline-block;
+}
+.step1{
+	background-image: url(../../../../img/new.png);
+	display: inline-block;
+}
+.step2{
+	background-image: url(../../../../img/new1.png);
+	display: inline-block;
+}
+.newGuide{
+	background-image: url(../../../../img/newGuide.png);
+	display: inline-block;
+}
+.step3{
+	background-image: url(../../../../img/new2.png);
+	display: inline-block;
+}
+.step4{
+	background-image: url(../../../../img/new3.png);
+	display: inline-block;
+}
+.step5{
+	background-image: url(../../../../img/new4.png);
+	display: inline-block;
+}
+.step6{
+	background-image: url(../../../../img/new5.png);
+	display: inline-block;
+}
+.bottom i.social_gray{
+	background-image: url(../../../../img/social_ico.gif) ;
+	background-repeat: no-repeat;
+	background-color: transparent;
+    display: inline-block;
+}
+
+.taobaos8 a {
+	background-image: url(../../../../img/tborange.png);
+	display: inline-block;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}

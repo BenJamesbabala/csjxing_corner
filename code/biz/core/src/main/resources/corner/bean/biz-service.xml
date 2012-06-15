@@ -9,43 +9,51 @@
 			http://roma.alibaba.com/schema http://roma.alibaba.com/schema/roma-component.xsd
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
-			default-autowire="byName" >
+	default-autowire="byName">
 
 	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-
-    <property name="velocityProperties">
-
-      <props>
-
-        <prop key="resource.loader">class</prop>
-
-        <prop key="class.resource.loader.class">org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader</prop>
-
-        <prop key="velocimacro.library"/>
-
-      </props>
-
-    </property>
-
-  </bean>
-
+		<property name="velocityProperties">
+			<props>
+				<prop key="resource.loader">class</prop>
+				<prop key="class.resource.loader.class">org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+				</prop>
+				<prop key="velocimacro.library" />
+			</props>
+		</property>
+	</bean>
 	
+	<bean id="taokeApiLimitRetryInterceptor" class="com.doucome.corner.biz.core.interceptor.TaokeApiLimitRetryInterceptor"></bean>
+	
+	<bean id="taobaokeProxyFactoryBean" class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
+        <property name="interceptorNames">
+           <value>taokeApiLimitRetryInterceptor</value>
+        </property>
+    </bean>
+
 	<bean id="taobaokeServiceDecorator" class="com.doucome.corner.biz.core.service.taobao.TaobaokeServiceDecoratorImpl">
-		<property name="topSession" value="${corner.api.taobaoke.topSession}" />
-		<property name="nickname" value="${corner.api.taobao.nickname}"/>
+		<property name="nickname" value="${corner.api.taobao.nickname}" />
+		<property name="taobaoClientWrapper" ref="taobaokeClientWrapper" />
 	</bean>
-	
+
 	<bean id="taobaoServiceDecorator" class="com.doucome.corner.biz.core.service.taobao.TaobaoServiceDecoratorImpl">
-		<property name="nickname" value="${corner.api.taobao.nickname}"/>
+		<property name="nickname" value="${corner.api.taobao.nickname}" />
+		<property name="taobaoClientWrapper" ref="taobaoClientWrapper" />
 	</bean>
-	
-	<bean id="taobaoRecommandDecorator" class="com.doucome.corner.biz.core.service.taobao.TaobaoRecommandDecoratorImpl">
-		<property name="nickname" value="${corner.api.taobao.nickname}"/>
+
+	<bean id="taobaoRecommandDecorator"
+		class="com.doucome.corner.biz.core.service.taobao.TaobaoRecommandDecoratorImpl">
+		<property name="nickname" value="${corner.api.taobao.nickname}" />
+		<property name="taobaoClientWrapper" ref="taobaokeClientWrapper" />
 	</bean>
-	
-	<bean id="shortUrlService" class="com.doucome.corner.biz.core.service.impl.ShortUrlServiceImpl"></bean>
-	
-	<bean id="velocityMergeService" class="com.doucome.corner.biz.core.service.impl.VelocityMergeServiceImpl" >
-		<property name="defaultEncoding" value="GBK"/>
+
+	<bean id="shortUrlService"
+		class="com.doucome.corner.biz.core.service.impl.ShortUrlServiceImpl"></bean>
+
+	<bean id="velocityMergeService"
+		class="com.doucome.corner.biz.core.service.impl.VelocityMergeServiceImpl">
+		<property name="defaultEncoding" value="GBK" />
 	</bean>
+	<bean id="sendMailService"
+		class="com.doucome.corner.biz.core.mail.impl.SendMailServiceImpl" />
+	<bean id="ddzReportMailService" class="com.doucome.corner.biz.zhe.service.impl.DdzReportMailServiceImpl" />
 </beans>

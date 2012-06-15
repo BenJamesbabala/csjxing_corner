@@ -1,83 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="gbk">
 	#parse("/common/zhe/head.vm")
-	<style >
-		.logo_s {
-            background : url("http://www.ht.dujiaok.com:803/corner/images/logo148x43.png") no-repeat 0 0 transparent ;
-            float: left;
-            height: 46px;
-            text-indent: -9999px;
-            width: 148px ;
-			margin-left:60px ;
-        }
-		
-		.w952 {
-            margin: 0 auto;
-            width: 1024px;
-        }
-		.content .search-content {
-            border: 1px solid #A3A3A3;
-            color: #999999;
-            float: left;
-            font-size: 12px;
-            height: 32px;
-            padding-left: 5px;
-            width: 545px;
-			margin-left : 40px;
-        }
-	
-		.keyword_list a,.keyword_list a:active,.keyword_list a:hover {
-			color : #ffffff ;
-			text-decoration : none ;
-		}
-		
-		.submit_list {
-			background-color : #4A8BF5;
-            float: left;
-            height: 23px;
-            width: 80px;
-			color : #ffffff ;
-			font-weight:bold;
-			text-align:center ;
-			padding-top : 7px;
-        }
-    </style>
 </head>
 <body>
-	
-	<div id="doc">
+	<div class="ddz">
 		#parse("/common/zhe/top.vm")
-		<div id="content" class="content w952">
-			<div style="float:left ;padding:5px 0 0 0 ;">
-				<h1 style="width:180px;padding:5px;">
-					<a class="logo_s" href="${env.ddzRoot}/zhe/index.htm" title="点点折">点点折</a>
-				</h1>
-				<!-- JiaThis Button BEGIN -->
-				###parse("/common/zhe/jiathis.vm")
-				<!-- JiaThis Button END -->
-			</div>
-			<div style="float:left ;padding :15px 0 5px 5px ;">
-    			<form action="${env.ddzRoot}/zhe/search.htm" id="search_form" method="get">
-    				<div class="keyword_list">
-    					#if($keyword)
-    						#set($wd_text = $keyword)
-    					#else
-    						#set($wd_text = "粘贴:你想购买的淘宝宝贝名称或宝贝网址") 
-    					#end
-    					<input type="text" name="wd" value="$!wd_text" class="search-content" id="search_content" size="41" />
-						
-    					<a class="submit_list" style="margin: 2px 10px;" id="submit" href="javascript:;" data-url="${env.ddzRoot}/zhe/search.htm">查询</a>
-    				</div>
-    			</form>
-			</div>
-			$screen_content
-		</div>
-		<div id="footer" class="footer w952"></div>
+		#parse("/common/zhe/search_input.vm")
+		
+        <div class="list-content w990 clearfix">
+        #***
+        		<div class="list-search-filter">
+        			<div class="list-search-filter-top"><span class="list-search-filter-top-text">商品筛选</span></div>
+        			<div class="list-search-filter-title"><span class="list-search-filter-title-text">折扣率</span></div>
+        			<ul>
+        				<li><span class="#if($sort == 'credit_desc') list-search-filter-check #end""></span><a href="#SEARCH_URL()">不限</a></li>
+        				<li><span class="list-search-filter-check"></span><a href="#SEARCH_URL(['startCommissionRate:500','endCommissionRate:10000'])">大于5%</a></li>
+        				<li><span class="list-search-filter-check"></span><a href="#SEARCH_URL(['startCommissionRate:1000','endCommissionRate:10000'])">大于10%</a></li>
+        				<li><span class="list-search-filter-check"></span><a href="#SEARCH_URL(['startCommissionRate:3000','endCommissionRate:10000'])">大于30%</a></li>
+        				<li><span class="list-search-filter-check"></span><a href="#SEARCH_URL(['startCommissionRate:5000','endCommissionRate:10000'])">大于50%</a></li>
+        			</ul>
+        			<div class="list-search-filter-title"><span class="list-search-filter-title-text">信用</span></div>
+        			<ul>
+        				<li><span class="list-search-filter-check"></span><a href="">不限</a></li>
+        				<li><span class="list-search-filter-check"></span><a href="">钻石店铺</a></li>
+        				<li><span class="list-search-filter-check"></span><a href="">皇冠以上</a></li>
+        				<li><span class="list-search-filter-check"></span><a href="">金冠以上</a></li>
+        			</ul>
+        			<div class="list-search-filter-title"><span class="list-search-filter-title-text">店铺类型</span></div>
+        			
+        			<ul>
+        				<li><span class="list-search-filter-check"></span><a href="">全部店铺</a></li>
+        				<li><span class="list-search-filter-check"></span><a href="">淘宝商城</a></li>
+        			</ul>
+        		</div>
+        **#
+    		<div class="list-main">
+    			$screen_content
+    		</div>
+        </div>
+		
+		#parse("/common/zhe/bottom.vm")
 	</div>
 	
-	#DDZ_JS(["lib/jquery-min.js","lib/jcarousel.js","lib/common.js","home/control/widget/index.js"])
-		
+	
+
+	#DDZ_JS(["lib/jquery-min.js","lib/common.js","home/control/widget/index.js"])
 	#parse("/common/zhe/google_analytics.vm")
+
 </body>
 </html>

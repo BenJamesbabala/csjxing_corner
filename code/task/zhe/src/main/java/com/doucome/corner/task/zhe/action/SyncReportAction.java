@@ -63,7 +63,7 @@ public class SyncReportAction extends BasicAction {
 					int currMonth = c.get(Calendar.MONTH) ;
 					c.set(Calendar.DATE, 1) ;
 					Calendar daydayBefore = Calendar.getInstance() ;
-					daydayBefore.setTime(TaskUtils.getLastLateDate()) ;
+					daydayBefore.setTime(TaskUtils.getToSyncDate()) ;
 					
 					while(true){
 						Date toSyncDate = c.getTime() ;
@@ -94,10 +94,6 @@ public class SyncReportAction extends BasicAction {
 		}
 		return SUCCESS ;
 	}
-	
-	
-
-
 
 	public Map<String, String> getRunoutResultMap() {
 		return runoutResultMap;

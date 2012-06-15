@@ -44,4 +44,10 @@ public class DateUtils {
 		
 		return date;
 	}
+	
+	public static Calendar getCalendar(Date date){
+		Calendar c = Calendar.getInstance() ;
+		c.setTime(date);
+		return c ;
+	}
 }

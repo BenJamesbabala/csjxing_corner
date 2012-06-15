@@ -1,0 +1,157 @@
+body {
+	background-color: #f0efeb;
+	font: 12px/1.5 Tahoma, Arial, "\5b8b\4f53", sans-serif;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, footer, header, hgroup, nav, section {
+	margin: 0;
+	padding: 0;
+}
+ol, ul {
+	list-style: none outside none;
+}
+.myhome {
+	width: 995px;
+	margin: 0 auto;
+	margin-bottom:20px;
+}
+.myhome a:link, .myhome a:visited {
+	color: #0088cc;
+}
+.myhome a:hover {
+	color: #ff6a00;
+}
+.user-info-box .user-info .mobile-notice s, .user-info-box .user-info .email-notice s {
+	background: url("../../../../img/myhome.png") no-repeat scroll 999px 999px transparent;
+}
+.main-container .menu .menu-title{
+	background: url("../../../../img/myhome-rep.png") no-repeat scroll 999px 999px transparent;
+}
+
+.font-strong {
+	font-size: 14px;
+	font-weight: 700;
+	color: #666666;
+	letter-spacing: 2px;
+}
+address, caption, cite, code, dfn, em, th, var {
+	font-style: normal;
+	font-weight: 500;
+}
+.global-separator {
+	color: #CCCCCC;
+	font-weight: normal;
+}
+.global-header-area {
+	height: 65px;
+	width: 100%;
+	margin: 0 auto;
+}
+.global-header-area .global-logo {
+	float: left;
+}
+.global-header-area .global-logo a {
+	background: url("../../../../img/logo_201x110.png") no-repeat scroll -7px -22px  transparent;
+	display: block;
+	width: 200px;
+	height: 68px;
+}
+.global-header-area .global-toplink {
+	float: right;
+	padding-right: 30px;
+	padding-top: 14px;
+	color: #666666;
+}
+.global-header-area .global-toplink a {
+	color: #666666;
+	display: inline-block;
+	padding: 0 6px;
+	text-decoration: none;
+}
+.user-info-box {
+	height: 70px;
+	width: 985px;
+	margin: 0 auto;
+	padding: 10px 0 10px 10px;
+	background: none repeat scroll 0 0 #F7F7F7;
+	border: 1px solid #CCCCCC;
+}
+.user-info-box .user-head {
+	float: left;
+}
+.user-info-box .user-head img{
+	border: 1px solid #CCCCCC;
+}
+.user-info-box .user-info {
+	float: left;
+	margin-left: 20px;
+}
+
+.user-info-box .user-info s {
+    display: inline-block;
+    height: 15px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 16px;
+}
+
+.user-info-box .user-info .tips {
+	color: #808080;
+}
+
+.user-info-box .user-info .account-id {
+	color: #ff6a00;
+}
+
+.user-info-box .user-info .mobile-notice, .user-info-box .user-info .email-notice{
+	color: #0088cc;
+	margin-left: 5px;
+}
+.user-info-box .user-info .mobile-notice s{
+	background-position: 0 -196px;
+}
+.user-info-box .user-info .email-notice s{
+	background-position: 0 -246px;
+}
+.main-container {
+	width: 100%;
+	margin: 0 auto;
+	margin-top: 10px
+}
+.main-container .menu {
+	float: left;
+	width: 190px;
+	border: 1px solid #CCCCCC;
+}
+.main-container .menu .menu-title {
+	height: 34px;
+	border-bottom: 1px solid #CCCCCC;
+	padding-left: 14px;
+	line-height: 34px;
+	background-position: 0 0;
+	background-repeat: repeat-x;
+}
+.main-container .menu .memu-list {
+	background-color: #FFF;
+}
+.main-container .menu .memu-list li {
+	height: 30px;
+	padding: 5px 0px 5px 14px;
+}
+.main-container .menu .memu-list li span {
+	margin-left: 10px;
+	font-size: 14px;
+	font-weight: 400;
+	color: #666666;
+	letter-spacing: 2px;
+	line-height: 24px;
+}
+.main-container .dakuan-icon {
+	background: url("../../../../img/fk.jpg") no-repeat scroll left top transparent;
+	width: 26px;
+	height: 26px;
+}
+.main-container .content {
+	float: left;
+	margin-left: 10px;
+	width: 977px;
+}

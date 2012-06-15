@@ -36,7 +36,7 @@ public class DefaultDdzSessionOperator implements DdzSessionOperator {
         authzContext.setUid(uid);
 
         DdzAccountDO accountDO = ddzAccountService.queryAccountDOByUid(uid);
-        if (accountDO != null) {
+        if (accountDO != null && StringUtils.isBlank(authzContext.getAlipayId())) {
             authzContext.setAlipayId(accountDO.getAlipayId());
         }
         authzContext.setAuthentication(true, true);
@@ -56,6 +56,13 @@ public class DefaultDdzSessionOperator implements DdzSessionOperator {
 
     public void setDdzAccountService(DdzAccountService ddzAccountService) {
         this.ddzAccountService = ddzAccountService;
+    }
+
+    @Override
+    public boolean unload() {
+        AuthzContext authzContext = AuthzContextHolder.getContext();
+        authzContext.setAuthentication(false, true);
+        return true;
     }
 
 }

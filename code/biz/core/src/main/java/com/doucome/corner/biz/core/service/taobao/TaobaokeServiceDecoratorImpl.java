@@ -29,11 +29,13 @@ import com.taobao.api.domain.TaobaokeShop;
 import com.taobao.api.request.TaobaokeCaturlGetRequest;
 import com.taobao.api.request.TaobaokeItemsConvertRequest;
 import com.taobao.api.request.TaobaokeItemsGetRequest;
+import com.taobao.api.request.TaobaokeListurlGetRequest;
 import com.taobao.api.request.TaobaokeReportGetRequest;
 import com.taobao.api.request.TaobaokeShopsConvertRequest;
 import com.taobao.api.response.TaobaokeCaturlGetResponse;
 import com.taobao.api.response.TaobaokeItemsConvertResponse;
 import com.taobao.api.response.TaobaokeItemsGetResponse;
+import com.taobao.api.response.TaobaokeListurlGetResponse;
 import com.taobao.api.response.TaobaokeReportGetResponse;
 import com.taobao.api.response.TaobaokeShopsConvertResponse;
 
@@ -57,7 +59,7 @@ public class TaobaokeServiceDecoratorImpl extends AbstractTaobaoService implemen
 		//req.setPid(taokeId) ;
 		req.setOuterCode(outCode);
 		try{
-			TaobaoClient taobaoClient = newTaobaokeClient() ;
+			TaobaoClient taobaoClient = taobaoClientWrapper.newClient() ;
 			TaobaokeShopsConvertResponse response = taobaoClient.execute(req);
 			boolean isSuccess = response.isSuccess() ;
 			if(isSuccess){
@@ -96,26 +98,27 @@ public class TaobaokeServiceDecoratorImpl extends AbstractTaobaoService implemen
 		//req.setPid(ni);
 		//req.setIsMobile(true);
 		try {
-			TaobaoClient taobaoClient = newTaobaokeClient() ;
+			TaobaoClient taobaoClient = taobaoClientWrapper.newClient() ;
 			TaobaokeItemsConvertResponse response = taobaoClient.execute(req);
 			boolean isSuccess = response.isSuccess() ;
-			if(isSuccess){
-				List<TaobaokeItemDTO> itemDTOs = new ArrayList<TaobaokeItemDTO>() ;
-				List<TaobaokeItem> items =  response.getTaobaokeItems() ;
-				if(!CollectionUtils.isEmpty(items)){
-					for(TaobaokeItem item : items){
-						TaobaokeItemDTO dto = new TaobaokeItemDTO(item) ;
-						itemDTOs.add(dto) ;
-					}
-				}
-				return itemDTOs ;
-				
+			if(!isSuccess){
+								
+				if(taobaoLog.isErrorEnabled()){
+					taobaoLog.error("input [" + ArrayStringUtils.toString(itemIds) + "|" + outCode +  "]  response : " + response.getBody()) ;
+				} 
+				throwTaobaoErrorResponse(response) ;
+				return null ;
 			}
-			if(taobaoLog.isErrorEnabled()){
-				taobaoLog.error("input [" + ArrayStringUtils.toString(itemIds) + "|" + outCode +  "]  response : " + response.getBody()) ;
-			} 
-			throwTaobaoErrorResponse(response) ;
-			return null ;
+						
+			List<TaobaokeItemDTO> itemDTOs = new ArrayList<TaobaokeItemDTO>() ;
+			List<TaobaokeItem> items =  response.getTaobaokeItems() ;
+			if(!CollectionUtils.isEmpty(items)){
+				for(TaobaokeItem item : items){
+					TaobaokeItemDTO dto = new TaobaokeItemDTO(item) ;
+					itemDTOs.add(dto) ;
+				}
+			}
+			return itemDTOs ;
 		} catch (ApiException e) {
 			throw new TaobaoRemoteException(e.getErrMsg() , e , e.getErrCode()) ;
 		}
@@ -148,9 +151,9 @@ public class TaobaokeServiceDecoratorImpl extends AbstractTaobaoService implemen
 		req.setPageNo(Long.valueOf(pagination.getPage()));
 		req.setPageSize(Long.valueOf(pagination.getSize()));
 		
-		TaobaoClient taobaoClient = newTaobaokeClient() ;
+		TaobaoClient taobaoClient = taobaoClientWrapper.newDefaultClient() ;
 		try{
-			TaobaokeReportGetResponse response = taobaoClient.execute(req , topSession);
+			TaobaokeReportGetResponse response = taobaoClient.execute(req , taobaoClientWrapper.defaultSession());
 			boolean isSuccess = response.isSuccess() ;
 			if(isSuccess){
 				
@@ -185,7 +188,7 @@ public class TaobaokeServiceDecoratorImpl extends AbstractTaobaoService implemen
 		req.setNick(nickname);
 		req.setPageNo(Long.valueOf(pagination.getPage()));
 		req.setPageSize(Long.valueOf(pagination.getSize()));
-		TaobaoClient taobaoClient = newTaobaokeClient() ;
+		TaobaoClient taobaoClient = taobaoClientWrapper.newClient() ;
 		try {
 			TaobaokeItemsGetResponse response = taobaoClient.execute(req) ;
 			boolean isSuccess = response.isSuccess() ;
@@ -225,7 +228,7 @@ public class TaobaokeServiceDecoratorImpl extends AbstractTaobaoService implemen
 		TaobaokeCaturlGetRequest req = new TaobaokeCaturlGetRequest();
 		ReflectUtils.reflectTo(condition, req) ;
 		req.setNick(nickname);
-		TaobaoClient taobaoClient = newTaobaokeClient() ;
+		TaobaoClient taobaoClient = taobaoClientWrapper.newClient() ;
 		try {
 			TaobaokeCaturlGetResponse response = taobaoClient.execute(req);
 			
@@ -246,6 +249,41 @@ public class TaobaokeServiceDecoratorImpl extends AbstractTaobaoService implemen
 		} catch (ApiException e) {
 			throw new TaobaoRemoteException(e.getErrMsg() , e , e.getErrCode()) ;
 		}
+	}
+
+	@Override
+	public String getListurl(String keyword, String outCode) {
+		
+		TaobaokeListurlGetRequest req = new TaobaokeListurlGetRequest();
+		req.setNick(nickname) ;
+		TaobaoClient taobaoClient = taobaoClientWrapper.newClient() ;
+		req.setQ(keyword);
+		req.setNick(nickname);
+		if(StringUtils.isNotBlank(outCode)){
+			req.setOuterCode(outCode);
+		}
+		
+		try {
+			TaobaokeListurlGetResponse response = taobaoClient.execute(req);
+			
+			boolean isSuccess = response.isSuccess() ;
+			if(isSuccess){
+				TaobaokeItem item = response.getTaobaokeItem() ;
+				if(item == null){
+					return null ;
+				}
+				return item.getKeywordClickUrl() ;
+			}
+			if(taobaoLog.isErrorEnabled()){
+				taobaoLog.error("input [" + keyword + "] response : " + response.getBody()) ;
+			} 
+			throwTaobaoErrorResponse(response) ;
+			return null ;
+			
+		} catch (ApiException e) {
+			throw new TaobaoRemoteException(e.getErrMsg() , e , e.getErrCode()) ;
+		}
+		
 	}
 
 	

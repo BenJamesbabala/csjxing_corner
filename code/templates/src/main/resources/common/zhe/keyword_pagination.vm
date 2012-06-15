@@ -39,53 +39,58 @@
 	curPage : $curPage
 -->
 
-<div class="pagination" id="pagination">
-	<form method="get" action="${env.ddzRoot}/zhe/keyword/$!keyword" id="form_page">
-    	<input type="hidden" name="page" value="$page" id="page_num">
-		<div class="page-op">
-    		<span class="total-page">共 $totalPages 页</span>到<input type="text" name="beginPage" id="jumpto" autocomplete="off" value="$curPage">页
-    		<input type="submit" value="确定" id="jump-sub">
+
+<div class="list-pagination">
+	<form method="get" action="${env.ddzRoot}/zhe/keyword.htm" id="form_page">
+		<input type="hidden" name="sort" value="$!sort"/>
+		<input type="hidden" name="keyword" value="#ESC_HTML($!keyword)"/>
+		<input type="hidden" name="startPrice" value="$!startPrice"/>
+		<input type="hidden" name="endPrice" value="$!endPrice"/>
+		
+		<div class="pagination-operation">
+    		<span class="pagination-total">共 $totalPages 页</span> 
+			到
+			<input type="text" name="page" id="paginationJump" size="4" autocomplete="off" value="$!page" class="pagination-operation-input" /> 
+			页 
+    		<input type="submit" value="确定" id="jump-sub" / >
     	</div>
     </form>
-    
 	
-	<div class="page-bottom">
-		#if($page == 1)
-    	<span class="page-start">
-			<!--<span>上一页</span>-->
-		</span>
-		#else
-		<a href="javascript:;" data-page="$prePage" class="page-prev">
-			<!--<span>上一页</span>-->
-		</a>
-		#end
-		
-		#set($toPage = 0 )
-		#set($_start = $curPage - 3)
-		#if($_start < 1)
-			#set ($_start = 1)
-		#end
-		#foreach($count in [0..5])
-        	#set($toPage = $_start + $count)
-        	#if($toPage>=$rangeStart && $toPage<=$rangeEnd) 
-            	#if($toPage == $curPage)
-            		<span class="page-cur">$toPage</span>
-            	#else
-					<a href="javascript:;" data-page="$toPage">$toPage</a>
-        		#end
-        	#end
-		#end
-		
-    	#if($toPage < $totalPages)
-    	<span class="page-break">...</span>
-		#end
-	    #if($curPage == $totalPages)
-		<span class="page-end">
-			<span>下一页</span>
-		</span>
-        #else
-		<a href="javascript:;" data-page="$nextPage" class="page-next">下一页</a>
-        #end
-    	
-	</div>
+	
+	#if($page == 1)
+	<span class="pagination-disable">上一页</span>
+	#else
+		#set($p = "page:" + $prePage)
+	<a class="" href="#SEARCH_URL([$p])">上一页</a>
+	#end
+	
+	#set($toPage = 0 )
+	#set($_start = $curPage - 3)
+	#if($_start < 1)
+		#set ($_start = 1)
+	#end
+	#foreach($count in [0..4])
+    	#set($toPage = $_start + $count)
+    	#if($toPage >= $rangeStart && $toPage <= $rangeEnd) 
+        	#if($toPage == $curPage)
+        		<span class="pagination-disable current">$toPage</span>
+        	#else
+				#set($p = "page:" + $toPage)
+				<a href="#SEARCH_URL([$p])">$toPage</a>
+    		#end
+    	#end
+	#end
+	
+	#if($toPage < $totalPages)
+		#set($p = "page:" + $totalPages)
+	<span>...</span><a class="" href="#SEARCH_URL([$p])">$totalPages</a>
+	#end
+	
+	#if($curPage == $totalPages)
+	<span class="pagination-disable">下一页</span>
+    #else
+		#set($p = "page:" + $nextPage)
+	<a href="#SEARCH_URL([$p])">下一页</a>
+    #end
+	
 </div>

@@ -17,6 +17,10 @@ public enum SettleStatusEnums {
 	 */
 	SETTLE_PENDING("P"),
 	/**
+	 *  »°œ˚£¨
+	 */
+	SETTLE_CANCEL("C"),
+	/**
 	 * Ω·À„ ß∞‹
 	 */
 	SETTLE_FAIL("F"), 

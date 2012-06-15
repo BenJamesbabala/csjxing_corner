@@ -29,4 +29,80 @@
 		</selectKey>
 	</insert>
 	
+	<select id="querySearchLog" resultMap="RM-DDZ-SEARCH-LOG">
+		SELECT 
+			ID,UID,ALIPAY_ID,
+			<isEqual property="isUniqueBrief" compareValue="true" >
+			DISTINCT 
+			</isEqual>
+			SEARCH_BRIEF,SEARCH_WAY,COMMISSION,COMMISSION_RATE,PRICE,GMT_CREATE
+		FROM 
+			DDZ_SEARCH_LOG
+		WHERE 1=1
+		<isNotEmpty property="gmtCreateStart" prepend="AND">
+			<![CDATA[
+			GMT_CREATE >= #gmtCreateStart#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="gmtCreateEnd" prepend="AND">
+			<![CDATA[
+			GMT_CREATE <= #gmtCreateEnd#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="alipayId" prepend="AND">
+			<![CDATA[
+			ALIPAY_ID <= #alipayId#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="searchWay" prepend="AND">
+			<![CDATA[
+			SEARCH_WAY = #searchWay#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="searchBrief" prepend="AND">
+			<![CDATA[
+			SEARCH_BRIEF = #searchBrief#
+			]]>
+		</isNotEmpty>
+		LIMIT #start# , #size#
+	</select>
+	
+	<select id="countSearchLog" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(
+			<isEqual property="isUniqueBrief" compareValue="true" >
+			DISTINCT 
+			</isEqual>
+			SEARCH_BRIEF
+			)
+		FROM 
+			DDZ_SEARCH_LOG
+		WHERE 1=1
+		<isNotEmpty property="gmtCreateStart" prepend="AND">
+			<![CDATA[
+			GMT_CREATE >= #gmtCreateStart#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="gmtCreateEnd" prepend="AND">
+			<![CDATA[
+			GMT_CREATE <= #gmtCreateEnd#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="alipayId" prepend="AND">
+			<![CDATA[
+			ALIPAY_ID <= #alipayId#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="searchWay" prepend="AND">
+			<![CDATA[
+			SEARCH_WAY = #searchWay#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="searchBrief" prepend="AND">
+			<![CDATA[
+			SEARCH_BRIEF = #searchBrief#
+			]]>
+		</isNotEmpty>
+	</select>
+	
 </sqlMap>

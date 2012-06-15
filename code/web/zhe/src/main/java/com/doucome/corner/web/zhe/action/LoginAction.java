@@ -2,8 +2,11 @@ package com.doucome.corner.web.zhe.action;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.doucome.corner.biz.core.constant.URIConstant;
 import com.doucome.corner.biz.core.service.impl.DefaultUriService;
+import com.doucome.corner.web.zhe.authz.DdzSessionOperator;
 
 /**
  * µÇÂ½
@@ -12,8 +15,8 @@ import com.doucome.corner.biz.core.service.impl.DefaultUriService;
  */
 @SuppressWarnings("serial")
 public class LoginAction extends DdzBasicAction {
-	
-
+	@Autowired
+    private DdzSessionOperator ddzSessionOperator;
 	@Override
 	public String execute() throws Exception {
 		return SUCCESS ;
@@ -31,5 +34,8 @@ public class LoginAction extends DdzBasicAction {
 		return null ;
 	}
 	
-	
+	public String doLogout() {
+	    ddzSessionOperator.unload();
+        return DDZ_INDEX;
+    }
 }

@@ -117,15 +117,12 @@ public class DdzTaokeReportDO extends AbstractModel {
 	 * 结算时间
 	 */
 	private Date gmtSettled;
-	
-	/**
-	 * 支付时的临时批次号
-	 */
-	private String payBatchno ;
 
 	private Date gmtCreate;
 
 	private Date gmtModified;
+	
+	private Long settleId;
 
 	public String getSettleTaobaoNick() {
 		return settleTaobaoNick;
@@ -153,14 +150,6 @@ public class DdzTaokeReportDO extends AbstractModel {
 
 	public int getId() {
 		return id;
-	}
-
-	public String getPayBatchno() {
-		return payBatchno;
-	}
-
-	public void setPayBatchno(String payBatchno) {
-		this.payBatchno = payBatchno;
 	}
 
 	public void setId(int id) {
@@ -325,5 +314,13 @@ public class DdzTaokeReportDO extends AbstractModel {
 
 	public void setSettleResult(String settleResult) {
 		this.settleResult = settleResult;
+	}
+
+	public Long getSettleId() {
+		return settleId;
+	}
+
+	public void setSettleId(Long settleId) {
+		this.settleId = settleId;
 	}
 }

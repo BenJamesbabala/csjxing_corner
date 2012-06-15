@@ -1,0 +1,14 @@
+
+<div class="list-top w990">
+	<div>
+        <a href="${env.ddzRoot}/zhe/index.htm"><div class="list-top-logo"></div></a>
+		<div class="list-top-search">
+			<form action="${env.ddzRoot}/zhe/search.htm" id="search_form" method="get">
+				#set($default_text = "粘贴:您想购买的淘宝宝贝名称或宝贝网址")
+				
+				<input type="text" name="wd" value="$!keyword" class="list-top-search-input" id="search_content" placeholder="$!default_text" />
+                <button id="submit" type="submit" >搜 索</button>
+            </form>
+		</div>
+	</div>
+</div>

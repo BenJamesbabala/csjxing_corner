@@ -21,15 +21,17 @@ corner.api.taobao.url = ${corner_api_taobao_url}
 corner.api.taobao.nickname = ${corner_api_taobao_nickname}
 corner.api.taobao.appkey = ${corner_api_taobao_appkey}
 corner.api.taobao.secret = ${corner_api_taobao_secret}
-corner.api.taobaoke.appkey = ${corner_api_taobaoke_appkey}
-corner.api.taobaoke.secret = ${corner_api_taobaoke_secret}
+corner.api.taobaoke.appkeys = ${corner_api_taobaoke_appkeys}
+corner.api.taobaoke.secrets = ${corner_api_taobaoke_secrets}
+corner.api.taobaoke.topSessions = ${corner_api_taobaoke_topSessions}
 corner.api.taobao.login.url = ${corner_api_taobao_login_url}
 
 ## ddz 
 corner.ddz.domainName = ${corner_ddz_domainName}
 
-corner.api.taobaoke.topSession = ${corner_api_taobaoke_topSession}
+
 
 ## task
 corner.task.ddz.syncReport.cronExpression = ${corner_task_ddz_syncReport_cronExpression}
+corner.task.ddz.syncBuyingRecommend.cronExpression = ${corner_task_ddz_syncBuyingRecommend_cronExpression}
 corner.alipay.count.limit = ${corner_alipay_count_limit}

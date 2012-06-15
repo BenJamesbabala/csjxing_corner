@@ -23,7 +23,7 @@
 		</action>
 		<action name="do_login" class="com.doucome.corner.web.bops.action.LoginAction"  method="doLogin">
 			<interceptor-ref name="bopsLoginStack" />
-			<result name="success" type="redirect">/bops/zhe/taoke_report.htm</result>
+			<result name="success" type="redirect">/bops/zhe/taoke_report_settle.htm</result>
 			<result name="error" type="velocity">/bops/login.vm</result>
 		</action>
 		<action name="logout" class="com.doucome.corner.web.bops.action.LoginAction"  method="doLogout">
@@ -33,15 +33,26 @@
 	</package>
 	
 	<package name="bops-zhe" namespace="/bops/zhe" extends="bops">
-		<action name="taoke_report" class="com.doucome.corner.web.bops.action.zhe.TaokeReportAction">
+		<action name="taoke_report_settle" class="com.doucome.corner.web.bops.action.zhe.TaokeReportSettleAction">
 			<interceptor-ref name="bopsDefaultStack" />
-			<result name="success" type="velocity">/bops/zhe/taokeReport.vm</result>
+			<result name="success" type="velocity">/bops/zhe/taokeReportSettle.vm</result>
 		</action>
 		
 		<action name="taoke_report_task" class="com.doucome.corner.web.bops.action.zhe.TaokeReportTaskAction">
 			<interceptor-ref name="bopsDefaultStack" />
 			<result name="success" type="velocity">/bops/zhe/taokeReportTask.vm</result>
 		</action>
+		
+		<action name="account_list" class="com.doucome.corner.web.bops.action.zhe.AccountListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/zhe/accountList.vm</result>
+		</action>
+		
+		<action name="buying_recommend" class="com.doucome.corner.web.bops.action.zhe.BuyingRecommendAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/zhe/buyingRecommend.vm</result>
+		</action>
+		
 	</package>
 	
 	<package name="bops-zhe-remote" namespace="/bops/zhe/remote" extends="struts-json">
@@ -54,10 +65,26 @@
 			 </interceptor-stack>
 		</interceptors>
 		
-		<action name="settle_report_ajax" class="com.doucome.corner.web.bops.action.zhe.TaokeReportSettleAction">
+		<action name="settle_report_ajax" class="com.doucome.corner.web.bops.action.zhe.TaokeReportSettleAjaxAction">
 			<interceptor-ref name="bopsDefaultStack" />
 			<result name="success" type="json" ></result>
 		</action>
+		
+		<action name="taoke_report_ajax" class="com.doucome.corner.web.bops.action.zhe.TaokeReportAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="buying_recomm_display_ajax" class="com.doucome.corner.web.bops.action.zhe.BuyingRecommDisplayAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="buying_recommend_refreshCache_ajax" class="com.doucome.corner.web.bops.action.zhe.BuyingRecommDisplayAjaxAction" method="refreshCache">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
 	</package>
 	
 </struts>

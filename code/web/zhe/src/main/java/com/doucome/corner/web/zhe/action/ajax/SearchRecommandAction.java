@@ -46,9 +46,8 @@ public class SearchRecommandAction extends BasicAction {
                 size = size > MAX_RECOMMAND_SIZE ? MAX_RECOMMAND_SIZE : size;
             }
             recommendCondition.setCount(size.longValue());
-            recommendCondition.setRecommendType(TaobaoRecommendTypeEnums.SAME_STYLE);
-            recommendCondition.setItemId(Long.valueOf(id));
-            List<TaobaoFavoriteItemDTO> recoList = taobaoRecommandDecorator.getRecommandItems(recommendCondition);
+            recommendCondition.setRecommendType(TaobaoRecommendTypeEnums.SAME_STYLE);            
+            List<TaobaoFavoriteItemDTO> recoList = taobaoRecommandDecorator.getRecommandItemsByItem(Long.valueOf(id) ,recommendCondition);
             List<TaobaokeItemFacade> recommendList = ddzTaobaoRecommendService.batchConventer(recoList, null);
             json.setData(recommendList);
             json.setCode(JsonModel.CODE_SUCCESS);

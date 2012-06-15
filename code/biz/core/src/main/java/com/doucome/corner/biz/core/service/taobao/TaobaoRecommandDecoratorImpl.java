@@ -17,8 +17,10 @@ import com.taobao.api.ApiException;
 import com.taobao.api.TaobaoClient;
 import com.taobao.api.domain.FavoriteItem;
 import com.taobao.api.domain.PromotionDisplayTop;
+import com.taobao.api.request.CategoryrecommendItemsGetRequest;
 import com.taobao.api.request.ItemrecommendItemsGetRequest;
 import com.taobao.api.request.UmpPromotionGetRequest;
+import com.taobao.api.response.CategoryrecommendItemsGetResponse;
 import com.taobao.api.response.ItemrecommendItemsGetResponse;
 import com.taobao.api.response.UmpPromotionGetResponse;
 
@@ -27,14 +29,14 @@ public class TaobaoRecommandDecoratorImpl extends AbstractTaobaoService implemen
 	private static final Log taobaoLog = LogFactory.getLog(LogConstant.taobao_log) ;
  		
 	@Override
-	public List<TaobaoFavoriteItemDTO> getRecommandItems(TaobaoRecommendItemCondition condition) {
+	public List<TaobaoFavoriteItemDTO> getRecommandItemsByItem(Long itemId , TaobaoRecommendItemCondition condition) {
 		ItemrecommendItemsGetRequest req = new ItemrecommendItemsGetRequest();
-		req.setItemId(condition.getItemId());
+		req.setItemId(itemId);
 		req.setRecommendType(condition.getRecommendType().getCode());
 		req.setCount(condition.getCount());
 		req.setExt(condition.getExt());
 		
-		TaobaoClient client= newTaobaoClient() ;
+		TaobaoClient client= taobaoClientWrapper.newClient() ;
 		
 		try{
 			ItemrecommendItemsGetResponse response = client.execute(req);
@@ -42,6 +44,41 @@ public class TaobaoRecommandDecoratorImpl extends AbstractTaobaoService implemen
 			if(isSuccess){
 				List<TaobaoFavoriteItemDTO> returnList = new ArrayList<TaobaoFavoriteItemDTO> () ;
 				List<FavoriteItem> list = response.getValues() ;
+				if(!CollectionUtils.isEmpty(list)){
+					for(FavoriteItem item : list){
+						TaobaoFavoriteItemDTO tfi = new TaobaoFavoriteItemDTO(item) ;
+						returnList.add(tfi) ;
+					}
+				}
+				return returnList ;
+			}
+			if(taobaoLog.isErrorEnabled()){
+				taobaoLog.error("input " + condition + "  response : " + response.getBody()) ;
+			} 
+			throwTaobaoErrorResponse(response) ;
+			return null ;
+			
+		}catch(ApiException e){
+			throw new TaobaoRemoteException(e.getErrMsg() , e , e.getErrCode()) ;
+		}
+	}
+	
+	@Override
+	public List<TaobaoFavoriteItemDTO> getRecommendItemsByCategory(Long categoryId, TaobaoRecommendItemCondition condition) {
+		CategoryrecommendItemsGetRequest req = new CategoryrecommendItemsGetRequest();
+		req.setCategoryId(categoryId) ;
+		req.setRecommendType(condition.getRecommendType().getCode());
+		req.setCount(condition.getCount());
+		req.setExt(condition.getExt());
+		
+		TaobaoClient client= taobaoClientWrapper.newClient() ;
+		
+		try{
+			CategoryrecommendItemsGetResponse response = client.execute(req);
+			boolean isSuccess = response.isSuccess() ;
+			if(isSuccess){
+				List<TaobaoFavoriteItemDTO> returnList = new ArrayList<TaobaoFavoriteItemDTO> () ;
+				List<FavoriteItem> list = response.getFavoriteItems() ;
 				if(!CollectionUtils.isEmpty(list)){
 					for(FavoriteItem item : list){
 						TaobaoFavoriteItemDTO tfi = new TaobaoFavoriteItemDTO(item) ;
@@ -69,7 +106,7 @@ public class TaobaoRecommandDecoratorImpl extends AbstractTaobaoService implemen
 		if(StringUtils.isNotBlank(channelKey)){
 			req.setChannelKey(channelKey);
 		}
-		TaobaoClient client= newTaobaoClient() ;
+		TaobaoClient client= taobaoClientWrapper.newClient() ;
 		try{
 			UmpPromotionGetResponse response = client.execute(req);
 			boolean isSuccess = response.isSuccess() ;
@@ -91,6 +128,10 @@ public class TaobaoRecommandDecoratorImpl extends AbstractTaobaoService implemen
 		}
 		
 	}
+
+	
+	
+	
 	
 	
 	

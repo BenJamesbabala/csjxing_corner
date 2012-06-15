@@ -26,6 +26,8 @@ public class SearchAction extends BasicAction  {
     private String mark;
     
     private String id ;
+    
+    private boolean userGuide ;
 
     /**
      * @see {@link UriTemplate}
@@ -34,15 +36,21 @@ public class SearchAction extends BasicAction  {
     public String execute() throws Exception {
         if (StringUtils.isNotBlank(wd)) {
             URLModel model = HttpUrlHelper.parseURL(wd);
-            if (model != null) { // taobao url
+            if (model != null) {
+                // taobao url
                 id = TaobaoUrlUtils.parseItemId(model);
-                return SearchWayEnums.ITEM.getValue();
-            } else { // keywords
-            	wd = URLEncoder.encode(wd, Constant.ENCODING) ;
-            	String md5 = MD5Util.getMD5(wd);
-            	mark = StringUtils.substring(md5, 26).toLowerCase();
-                return SearchWayEnums.KEYWORD.getValue();
+                if (StringUtils.isNotBlank(id)) {
+                	if(userGuide){
+                		return "itemGuide" ;
+                	}
+                    return SearchWayEnums.ITEM.getValue();
+                }
             }
+            // keywords
+            wd = URLEncoder.encode(wd, Constant.ENCODING);
+            String md5 = MD5Util.getMD5(wd);
+            mark = StringUtils.substring(md5, 26).toLowerCase();
+            return SearchWayEnums.KEYWORD.getValue();
         }
         return SearchWayEnums.KEYWORD.getValue();
     }
@@ -64,7 +72,17 @@ public class SearchAction extends BasicAction  {
     
 
     
-    public String getMark() {
+    public boolean isUserGuide() {
+		return userGuide;
+	}
+
+
+	public void setUserGuide(boolean userGuide) {
+		this.userGuide = userGuide;
+	}
+
+
+	public String getMark() {
         return mark;
     }
 

@@ -1,35 +1,30 @@
 package com.doucome.corner.web.bops.action.zhe;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.doucome.corner.biz.core.enums.SettleStatusEnums;
+import com.doucome.corner.biz.core.model.page.Pagination;
+import com.doucome.corner.biz.core.model.page.QueryResult;
+import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleSearchCondition;
+import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportService;
 import com.doucome.corner.web.bops.action.BopsBasicAction;
-import com.doucome.corner.web.bops.model.JsonModel;
+import com.opensymphony.xwork2.ModelDriven;
 
 /**
- * 
- * @author shenjia.caosj 2012-4-22
+ * 淘宝客报表
+ * @author shenjia.caosj 2012-4-17
  *
  */
 @SuppressWarnings("serial")
-public class TaokeReportSettleAction extends BopsBasicAction{
+public class TaokeReportSettleAction extends BopsBasicAction implements ModelDriven<DdzTaokeReportSettleSearchCondition>{
+	
+	private int page = 1;
+	
+	private int size = 20 ;
+	
+	private DdzTaokeReportSettleSearchCondition  condition = new DdzTaokeReportSettleSearchCondition() ;
 
-	private JsonModel<Integer> json = new JsonModel<Integer>();
-	
-	/**
-	 * 批量修改的Report id
-	 */
-	private String ids ;
-	
-	/**
-	 * 结算后的值
-	 */
-	private String settleTo ;
+	private QueryResult<DdzTaokeReportSettleDO> settleResult ;
 	
 	@Autowired
 	private DdzTaokeReportService ddzTaokeReportService ;
@@ -37,42 +32,47 @@ public class TaokeReportSettleAction extends BopsBasicAction{
 	@Override
 	public String execute() throws Exception {
 		
-		String[] idArray = StringUtils.split(ids , ",") ;
-		if(idArray == null || idArray.length <= 0){
-			json.setCode(JsonModel.CODE_ILL_ARGS) ;
-			json.setDetail("input ids is null .") ;
-			return SUCCESS ;
-		}
+		Pagination pagination = new Pagination(page , size);
 		
-		SettleStatusEnums status = SettleStatusEnums.fromValue(settleTo) ;
+		settleResult = ddzTaokeReportService.getSettlesWithPagination(condition, pagination) ;
 		
-		if(status != SettleStatusEnums.SETTLE_FAIL && status != SettleStatusEnums.SETTLE_SUCCESS){
-			json.setCode(JsonModel.CODE_ILL_ARGS) ;
-			json.setDetail("input settleTo is not right .") ;
-			return SUCCESS ;
-		}
-		List<String> idList = new ArrayList<String>() ;
-		for(String id : idArray){
-			if(StringUtils.isNumeric(id)){
-				idList.add(id) ;
-			}
-		}
-		int count = ddzTaokeReportService.updateTaokeReportSettleStatus(idList, status , null) ;
-		json.setCode(JsonModel.CODE_SUCCESS) ;
-		json.setData(count) ;
+		page = settleResult.getPagination().getPage() ;
+		
 		return SUCCESS ;
 	}
 
-	public void setIds(String ids) {
-		this.ids = ids;
+	@Override
+	public DdzTaokeReportSettleSearchCondition getModel() {
+		return condition ;
 	}
 
-	public void setSettleTo(String settleTo) {
-		this.settleTo = settleTo;
+	/**
+	 * --------------------------------------------------------------------------
+	 */
+	public int getPage() {
+		return page;
 	}
 
-	public JsonModel<Integer> getJson() {
-		return json;
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	
+
+	public DdzTaokeReportSettleSearchCondition getCondition() {
+		return condition;
+	}
+
+	public void setCondition(DdzTaokeReportSettleSearchCondition condition) {
+		this.condition = condition;
+	}
+
+	public QueryResult<DdzTaokeReportSettleDO> getSettleResult() {
+		return settleResult;
 	}
 	
 	

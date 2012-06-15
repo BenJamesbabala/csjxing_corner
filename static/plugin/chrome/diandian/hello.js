@@ -28,3 +28,28 @@
 //     else
 //       sendResponse({}); // snub them.
 //   });
+document.body.onclick = function(ev){
+	if(ev.target.id === "gogogo"){
+		var B = document.createElement("div");
+             B.id = "flgmsgshow";
+             html = '<div class=fl360-login" style=" z-index:99999;font:14px/1.6em \u5fae\u8f6f\u96c5\u9ed1,\u5b8b\u4f53; color:#000; position:fixed; top:40px; right:10px; width:280px; padding:10px; background:#f5f5f5; border:5px solid #e5e5e5;">\
+             			<div class="inner">\
+             				<div class="text" style="margin-bottom:10px;">\
+             					<p class="p" style="margin:0; text-indent:1em;">请输入支付宝账号</p>\
+             				</div>\
+             				<div class="bt" style="style="text-indent:1em;">\
+             					<input id="alipayId" name="alipayId" type="text" class="alipayId"/>\
+                    			<a href="javascript:;" id="commitAlipay" onclick="commitAlipay()" class="a">确定</a>\
+             				</div>\
+             			</div>\
+             		</div>';
+             B.innerHTML = html;
+             document.body.insertBefore(B, null);
+	}else if(ev.target.id === "commitAlipay"){
+		console.log(document.getElementById("alipayId").value)
+		chrome.extension.sendRequest({greeting: document.getElementById("alipayId").value}, function(response) {
+		   console.log(response.farewell);
+		}); 
+	}
+}
+

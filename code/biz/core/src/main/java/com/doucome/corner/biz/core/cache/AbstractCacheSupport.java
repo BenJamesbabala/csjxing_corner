@@ -3,6 +3,7 @@ package com.doucome.corner.biz.core.cache;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -59,6 +60,17 @@ public class AbstractCacheSupport implements InitializingBean {
 			throw new IllegalStateException("regionName is Blank !");
 		}
 	}
+	
+	protected String buildCachekeyWithArgs(String... args){
+		String regionName = getRegionName() ;
+		String key = regionName ;
+		if(!ArrayUtils.isEmpty(args)) {
+			for(String a : args){
+				key += "_" + a ;
+			}
+		}
+		return key ;
+	}
 
 	/**
 	 * 缓存对象
@@ -67,7 +79,7 @@ public class AbstractCacheSupport implements InitializingBean {
 	 * 
 	 * @param <T>
 	 */
-	static class InternalStoreItem<T> implements Serializable {
+	public static class InternalStoreItem<T> implements Serializable {
 		private static final long serialVersionUID = 1L;
 		private Date gmtCreate; // 缓存修改时间
 		private T item; // 缓存数据item

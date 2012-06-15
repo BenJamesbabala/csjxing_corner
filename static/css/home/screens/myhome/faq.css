@@ -1,0 +1,308 @@
+body {
+	background-color: #f0efeb;
+	font: 12px/1.5 Tahoma, Arial, "\5b8b\4f53", sans-serif;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, footer, header, hgroup, nav, section {
+	margin: 0;
+	padding: 0;
+}
+ol, ul {
+	list-style: none outside none;
+}
+.myhome {
+	width: 995px;
+	margin: 0 auto;
+}
+
+.myhome a:hover {
+	color: #ff6a00;
+}
+.user-info-box .user-info .mobile-notice s, .user-info-box .user-info .email-notice s {
+	background: url("../../../../img/myhome.png") no-repeat scroll 999px 999px transparent;
+}
+.main-container .menu .menu-title{
+	background: url("../../../../img/myhome-rep.png") no-repeat scroll 999px 999px transparent;
+}
+
+.font-strong {
+	font-size: 14px;
+	font-weight: 700;
+	color: #666666;
+	letter-spacing: 2px;
+}
+address, caption, cite, code, dfn, em, th, var {
+	font-style: normal;
+	font-weight: 500;
+}
+.global-separator {
+	color: #CCCCCC;
+	font-weight: normal;
+}
+.global-header-area {
+	height: 65px;
+	width: 100%;
+	margin: 0 auto;
+}
+.global-header-area .global-logo {
+	float: left;
+}
+.global-header-area .global-logo a {
+	background: url("../../../../img/logo_201x110.png") no-repeat scroll -7px -22px  transparent;
+	display: block;
+	width: 200px;
+	height: 68px;
+}
+.global-header-area .global-toplink {
+	float: right;
+	padding-right: 30px;
+	padding-top: 14px;
+	color: #666666;
+}
+.global-header-area .global-toplink a {
+	color: #666666;
+	display: inline-block;
+	padding: 0 6px;
+	text-decoration: none;
+}
+.user-info-box {
+	height: 70px;
+	width: 985px;
+	margin: 0 auto;
+	padding: 10px 0 10px 10px;
+	background: none repeat scroll 0 0 #F7F7F7;
+	border: 1px solid #CCCCCC;
+}
+.user-info-box .user-head {
+	float: left;
+}
+.user-info-box .user-head img{
+	border: 1px solid #CCCCCC;
+}
+.user-info-box .user-info {
+	float: left;
+	margin-left: 20px;
+}
+
+.user-info-box .user-info s {
+    display: inline-block;
+    height: 15px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 16px;
+}
+
+.user-info-box .user-info .tips {
+	color: #808080;
+}
+
+.user-info-box .user-info .account-id {
+	color: #ff6a00;
+}
+
+.user-info-box .user-info .mobile-notice, .user-info-box .user-info .email-notice{
+	color: #0088cc;
+	margin-left: 5px;
+}
+.user-info-box .user-info .mobile-notice s{
+	background-position: 0 -196px;
+}
+.user-info-box .user-info .email-notice s{
+	background-position: 0 -246px;
+}
+.main-container {
+	margin: 0 auto;
+	margin-top: 10px;
+	text-align:left;
+}
+.main-container .menu {
+	float: left;
+	width: 190px;
+	border: 1px solid #CCCCCC;
+}
+.main-container .menu .menu-title {
+	height: 34px;
+	border-bottom: 1px solid #CCCCCC;
+	padding-left: 14px;
+	line-height: 34px;
+	background-position: 0 0;
+	background-repeat: repeat-x;
+}
+.main-container .menu .memu-list {
+	background-color: #FFF;
+}
+.main-container .menu .memu-list li {
+	background: url("../../../../img/FAQ2.png") no-repeat scroll  12px -568px transparent;
+    padding-left: 15px;  
+}
+
+.faq_gou {
+    background: url("../../../../img/FAQ2.png") no-repeat scroll -4px -419px transparent;
+    height: 15px;
+    padding-left: 20px;
+	
+}
+
+
+.main-container .menu .memu-list li span {
+	margin-left: 10px;
+	font-size: 14px;
+	font-weight: 400;
+	color: #666666;
+	letter-spacing: 2px;
+	line-height: 24px;
+}
+.main-container .dakuan-icon {
+	background: url("../../../../img/fk.jpg") no-repeat scroll left top transparent;
+	width: 26px;
+	height: 26px;
+}
+.main-container .content {
+	float: left;
+	margin-left: 10px;
+	width: 792px;
+}
+
+
+/*faq*/
+
+body{
+	color: #333333;
+    font-family: Arial,Verdana;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+a{
+    color: #333333;
+    line-height: 28px;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #333333;
+}
+
+.main-container .menu {
+    border: 1px solid #CCCCCC;
+    float: left;
+    width: 260px;
+}
+
+
+.main-container .content {
+    float: left;
+    margin-left: 10px;
+    width: 625px;
+}
+
+.myhome-table {
+	width:100%;
+}
+
+
+.myhome-table .nav .left, .myhome-table .nav .right{
+	background: url("../../../../img/myhome.png") no-repeat scroll 999px 999px transparent;
+}
+.myhome-table .title, .myhome-table .nav p{
+	background: url("../../../../img/myhome-rep.png") no-repeat scroll 999px 999px transparent;
+}
+.myhome-table .nav {
+	border-bottom: 4px solid #ff6a00;
+	height: 30px;
+	width: 100%;
+}
+.myhome-table .nav ol li {
+	float: left;
+	margin-right: 2px;
+}
+.myhome-table .nav s {
+	display: inline-block;
+    height: 30px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 8px;
+    float: left;
+}
+.myhome-table .nav p {
+	height: 30px;
+	line-height:28px;
+	background-position: 0 -50px;
+	background-repeat: repeat-x;
+	float: left;
+	color: #4d4d4d;
+	padding: 0 4px;
+}
+.myhome-table .nav .left {
+	background-position: 0 0;
+}
+.myhome-table .nav .right {
+	background-position: 0 -50px;
+}
+
+.myhome-table .nav .current p {
+	background-position: 0 -100px;
+	color: #FFF;
+	font-weight: 700;
+}
+.myhome-table .nav .current .left {
+	background-position: 0 -100px;
+}
+.myhome-table .nav .current .right {
+	background-position: 0 -150px;
+}
+.myhome-table table {
+	background-color: #FFF;
+	width: 100%
+}
+
+.myhome-table table tr{
+	height: 32px;
+}
+.myhome-table table .title {
+	background-position: 0 -50px;
+	background-repeat: repeat-x;
+	height: 32px;
+}
+
+.myhome-table .first {
+	border-left: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+}
+.myhome-table .last {
+	border-right: 1px solid #CCCCCC;
+}
+.myhome-table th, .myhome-table td{
+	line-height: 24px;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+
+.faq-content {
+	line-height: 30px;
+	padding: 5px 27px;
+	text-align: left;
+	width: 660px;
+}
+
+.faq-line{
+	border-bottom: 1px solid #CCCCCC;
+	height: 1px;
+}
+
+p{ margin-left: 21px;}
+
+.main-container .menu .memu-list li span {
+    color: gray;
+    font-size: 14px;
+    font-weight: 100;
+    letter-spacing: 3px;
+    line-height: 24px;
+    margin-bottom: 8px;
+}
+
+.faq-h2{
+	color: #000000;
+    font-size: 16px;
+}
+
+

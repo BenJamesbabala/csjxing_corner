@@ -2,11 +2,10 @@ package com.doucome.corner.biz.zhe.service;
 
 import java.util.List;
 
-import com.doucome.corner.biz.core.enums.AlipayStatusEnum;
-import com.doucome.corner.biz.core.enums.SettleStatusEnums;
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.model.page.QueryResult;
 import com.doucome.corner.biz.core.taobao.model.TaokeReportSearchCondition;
+import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
@@ -33,34 +32,62 @@ public interface DdzTaokeReportService {
 	 * @return
 	 */
 	DdzTaokeReportDO getReportById(Long reportId);
+	
+	/**
+	 * 
+	 * @param settleId
+	 * @return
+	 */
+	List<DdzTaokeReportDO> getReportsBySettleId(Integer settleId) ;
+	
 	/**
 	 * 查询报表
 	 * @param searchCondition
 	 * @param pagination
 	 * @return
 	 */
-	QueryResult<DdzTaokeReportDO> getReportsWithPagination(TaokeReportSearchCondition searchCondition , Pagination pagination) ;
+	QueryResult<DdzTaokeReportDO> getReportsWithPagination(TaokeReportSearchCondition searchCondition, Pagination pagination) ;
+
+    /**
+     * 查询报表
+     * 
+     * @param searchCondition
+     * @param pagination
+     * @return
+     */
+    List<DdzTaokeReportDO> getReports(TaokeReportSearchCondition searchCondition);
+
+	/**
+	 * 根据结算结果更新报表
+	 * @param settleDOs
+	 * @return
+	 */
+	int updateTaokeReportSettleStatusBySettleReport(List<DdzTaokeReportDO> reportDOs);
 	/**
 	 * 
 	 * @param pagination
 	 * @return
 	 */
-	QueryResult<AlipayItemDO> getAlipayItemWithPagination(Pagination pagination);
-	/**
-	 * 更新淘客报表结算状态.
-	 * @param taokeReportIds 淘客报表id.
-	 * @param settleStatus 
-	 * @return
-	 */
-	int updateTaokeReportSettleStatus(List<String> reportIds, SettleStatusEnums settleStatus, String internalBatchNO);
+	List<AlipayItemDO> getUnMergedReportSettleInfo(Pagination pagination);
 	/**
 	 * 
-	 * @param reportIds
-	 * @param alipayStatus
-	 * @param alipayBatchNO
+	 * @param ids
 	 * @return
 	 */
-	int updateTaokeReportAlipayResult(List<String> reportIds, AlipayStatusEnum alipayStatus, String alipayBatchNO);
+	int updateTaokeReportSettleId(List<Long> reportIds, Long settleId) throws Exception ;
 	
-	
+	/**
+	 * 查询结算记录
+	 * @param searchCondition
+	 * @param pagination
+	 * @return
+	 */
+	QueryResult<DdzTaokeReportSettleDO> getSettlesWithPagination(DdzTaokeReportSettleSearchCondition searchCondition, Pagination pagination) ;
+
+    /**
+     * @param searchCondition
+     * @return
+     */
+    List<DdzTaokeReportSettleDO> getSettleReports(DdzTaokeReportSettleSearchCondition searchCondition);
+    
 }

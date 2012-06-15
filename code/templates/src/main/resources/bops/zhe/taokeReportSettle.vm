@@ -1,0 +1,234 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "淘宝客报表结算")
+<style>
+	#parse("/common/bops/page_css.vm")
+	
+	.darkGray {
+		color:#555555;
+	}
+	
+</style>
+
+#set($page = $settleResult.pagination.page)
+#set($totalPages = $settleResult.pagination.totalPages)
+#set($size = $settleResult.pagination.size)
+
+<div class="bops">
+	<form action="${env.bopsRoot}/bops/zhe/taoke_report_settle.htm" method="GET">
+    	<div style="padding:10px;margin-top:15px;border-top:1px solid #aaaaaa;border-bottom:1px solid #aaaaaa;text-align:center;">
+			结算批号： <input  type="text" name="settleBatchno" value="$!settleBatchno" />
+			&nbsp;&nbsp;
+			支付宝 ：<input  type="text" name="settleAlipay" value="$!settleAlipay" />
+			&nbsp;&nbsp;
+    		结算状态：
+    		<select name="settleStatus">
+                <option value="" #if($settleStatus == "") selected #end>全部</option>
+    			<option value="U" #if($settleStatus == "U") selected #end>未结算</option>
+    			<option value="P" #if($settleStatus == "P") selected #end>结算中</option>
+    			<option value="F" #if($settleStatus == "F") selected #end>失败</option>
+    			<option value="S" #if($settleStatus == "S") selected #end>成功</option>
+            </select>
+			&nbsp;&nbsp;
+			
+    		<input type="submit" value="查询" />
+    	</div>
+	
+    </form>
+	
+	#if($settleResult.totalRecords > 0)
+	
+    	#parse("/common/bops/zhe_reportPagination.vm")
+        
+        <table width="1080" style="font-size:14px;" id="settleTable">
+        	<tr>
+        		<th width="30">序号</th>
+				<th width="110">结算批号</th>
+				<th width="100">支付宝批号</th>
+				<th width="120">支付宝</th>
+				<th width="80">结算金额</th>
+				<th width="50">状态</th>
+				<th width="60">支付宝状态</th>
+				<th width="120">结算时间</th>
+        		<th width="40">操作</th>
+				<th width="30">选择</th>
+        	</tr>
+        	
+            #foreach($settle in $settleResult.items)
+        		#set($idx = (($page-1)*$size) + $velocityCount )
+        		#if($settle.settleStatus == "U")
+        			#set($settleClass = "settle_u")
+        		#elseif($settle.settleStatus == "S")
+        			#set($settleClass = "settle_s")
+        		#elseif($settle.settleStatus == "P")
+        			#set($settleClass = "settle_p")
+        		#elseif($settle.settleStatus == "F")
+        			#set($settleClass = "settle_f")
+        		#else
+        			#set($settleClass = "settle_f")
+        		#end
+        		
+        		<tr>
+            		<td align="center">$idx</td>
+					<td>
+						<div class="darkGray">$!settle.settleBatchno</div>
+					</td>
+					<td>
+						<div class="darkGray">$!settle.alipayBatchno</div>
+					</td>
+					<td>$!settle.settleAlipay</td>
+					<td>
+                        <span class="$settleClass B">&yen; $decimalUtils.format($!settle.settleFee,'0.00')</span>
+        			</td>
+        			<td align="center">
+        				#if($settle.settleStatus == "U")
+        					<span class="$settleClass">未结算</span>
+        				#elseif($settle.settleStatus == "S")
+        					<span class="$settleClass">成功</span>
+        				#elseif($settle.settleStatus == "P")
+        					<span class="$settleClass">结算中</span>
+        				#elseif($settle.settleStatus == "F")
+        					<span class="$settleClass">失败</span>
+						#elseif($settle.settleStatus == "C")
+        					<span class="$settleClass">取消</span>
+        				#else
+        					<span class="settle_f">异常（$settle.settleStatus）</span>
+        				#end
+        			</td>
+					<td align="center">
+						#if($settle.settleStatus == "F")
+        					<span class="settle_f">失败</span>
+        				#elseif($settle.settleStatus == "S")
+        					<span class="darkGray">成功</span>
+						#end
+					</td>
+					<td align="center">
+                        <div>$!dateUtils.format($!settle.gmtSettled , 'yyyy-MM-dd HH:mm')</div>
+    				</td>
+        			<td align="center">
+        				<a href="javascript:;" onclick="showDetail($settle.id);">显示详细</a>
+        			</td>
+					<td align="center">
+        				<input type="checkbox" value="$!settle.id" class="clsBatchSettle" id="settle$settle.id" name="clsBatchSettle"/>
+                    </td>
+            	</tr>
+				<tr style="display:none;" id="tr_$settle.id" align="center">
+                    <td></td><td colspan="9" id="td_$settle.id"></td>
+                </tr>
+        	#end
+           
+        </table>
+        
+        <div style="width:98%;margin-top:20px;text-align:right;">
+            <span class="btn_s"><a href="javascript:;" onclick="settle('S');">批量成功</a></span>
+            
+            <span class="btn_f"><a href="javascript:;" onclick="settle('F');">批量失败</a></span>
+    	</div>
+        #parse("/common/bops/zhe_reportPagination.vm")
+	#else
+		没有查询到记录
+	#end
+</div>
+	
+#DDZ_JS(["lib/jquery-min.js"])
+
+<script type="text/javascript">
+
+	var settle = function(status){
+		
+		var url = "${env.bopsRoot}/bops/zhe/remote/settle_report_ajax.htm";
+		var idString = "" ;
+		var allInput = $(".clsBatchSettle") ;
+		var selectedCount = 0 ;
+		for(var i=0 ;i<allInput.length ;i++){
+			var input = allInput[i] ;
+			if(input.type == "checkbox" && input.checked == true){
+				var id = input.value ;
+				idString += id + "," ;
+				selectedCount += 1 ;
+			}
+		}
+		
+		if(selectedCount <= 0){
+			alert('没有选择的记录') ;
+			return ;
+		}
+		
+		if(!confirm('确定批量改变[' + selectedCount + ']笔记录的状态？')){
+			return ;
+		}
+		
+		$.ajax({
+			url: url ,
+			type : "POST" ,
+			data : { ids: idString , settleTo: status },
+			success : function(data){
+				var json = data.json ;
+				var code = json.code ;
+				var data = json.data ;
+				var detail = json.detail ;
+				if(code == 'success') { 
+					alert('状态改变完成，成功[' + data + ']笔记录');
+					window.location.reload() ;
+				} else {
+					alert('状态改变失败. 原因：' + detail ) ;
+				}
+			} , 
+			error : function(data){
+				alert('error ! ' + data) ;
+			}
+		}) ;
+	};
+	
+	var showDetail = function(id){
+		var url = "${env.bopsRoot}/bops/zhe/remote/taoke_report_ajax.htm"
+		var tr = $("#tr_" + id) ;
+		var td = $("#td_" + id) ;
+		tr.show() ;
+		var content = '' ;
+		$.ajax(
+			{
+				url: url ,
+    			type : "POST" ,
+    			data : { settleId: id },
+    			success : function(data){
+    				var json = data.json ;
+    				var code = json.code ;
+    				var data = json.data ;
+    				var detail = json.detail ;
+					
+    				if(code == 'success') {
+						var tbHtml = '' ;
+						if(data.length > 0){
+    						tbHtml = '<table><tr><td>序号</td><td>标题</td><td>outCode</td><td>价格</td><td>报表佣金</td><td>用户佣金</td><tr>'
+    						
+    						for(var i=0 ;i<data.length;i++){
+    							var report = data[i] ;
+        						tbHtml = tbHtml + '<tr><td>' + (i+1) + '</td><td>' +  report.itemTitle + '</td><td>' + report.outCode + '</td><td>' + report.realPayFee + 
+    								'</td><td>' + report.commission + '<span class=F10> (' + report.commissionRate*100 + '%) </span>' +  
+									'</td><td>' + report.userCommission + '<span class=F10> (' +  report.userCommissionRate*100 + '%) </span></td></tr>' ;
+    						}
+    						
+        					
+    						tbHtml = tbHtml + '</table>' ;
+						}else{
+							tbHtml = '没有符合条件的记录.' ;
+						}
+						td.html(tbHtml);
+						
+    				} else {
+    					alert('结算失败. 原因：' + detail ) ;
+    				}
+    			} , 
+    			error : function(data){
+    				alert('error ! ' + data) ;
+    			}
+			}
+		);
+	};
+	
+	var toPage = function(page , size){
+		var element = document.getElementById("jumpto") ;
+		element.value = page ;
+		document.getElementById("form_page").submit() ;
+	};
+</script>

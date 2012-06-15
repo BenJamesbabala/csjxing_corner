@@ -1,4 +1,11 @@
 /*=pagination*/
+.page-op #jump-sub, .pagination .page-start, .pagination .page-next, .pagination a.page-prev, .pagination .page-end {
+    background-color: transparent;
+    background-image: url("../../../../../img/page.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
 .pagination{
 	font-family:Tahoma;
 	font-size:12px;
@@ -22,6 +29,7 @@
 	vertical-align:middle;
 	white-space:nowrap;
 	font-size:14px;
+	text-decoration: none;
 }
 .pagination .page-start{
 	width:24px;
@@ -92,7 +100,7 @@
 }
 
 .page-op #jump-sub{
-	background-position: 0 -310px;
+	background-position: 0 -100px;
 	border:0 none;
 	height:25px;
 	margin:0 0 2px 5px;
@@ -107,14 +115,63 @@
 	font-weight:bold;
 }
 .pagination .page-start {
-	background-position: 9px -473px;
+	background-position: 9px -52px;
 }
 .pagination .page-next {
-	background-position: 48px -434px;
+	background-position: 48px -12px;
 }
 .pagination a.page-prev {
-	background-position: 6px -413px;
+	background-position: 6px 8px;
 }
 .pagination .page-end {
-	background-position: 45px -453px;
+	background-position: 45px -32px;
+}
+
+
+.ddz .list-pagination {
+	width:100%;
+	float:left;
+	height:30px;
+	margin:10px 0;
+	text-align:right;
+	padding-top:5px;
+	text-decoration: none;
+}
+
+.ddz .list-pagination .pagination-operation{	
+    color: #777777;
+    float: right;
+    margin: -2px 0 0 10px ;
+}
+
+.ddz .list-pagination .pagination-operation-input {	
+    border: 1px solid #7F9DB9;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    width:30px;
+}
+
+.ddz .list-pagination .pagination-total {
+	margin:0 5px;
+}
+
+.ddz .list-pagination .pagination-disable{
+	border:1px solid #bbbbbb ;
+	
+	padding:3px 7px;
+	color:#bbbbbb;
+	font-weight:bold;
+}
+
+.ddz .list-pagination a{
+	border:1px solid #777777 ;
+	padding:3px 7px;
+	color:#666666;
+	font-weight:bold;
+}
+
+.ddz .list-pagination .current {
+	border:1px solid #fc57a0 ;
+	color:#fc57a0;
 }

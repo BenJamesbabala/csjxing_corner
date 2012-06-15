@@ -51,4 +51,53 @@
 		set UID=#uid#,GMT_MODIFIED=now()
 		where ACCOUNT_ID=#accountId#
 	</update>
+	
+	<select id="queryAccountsWithPagination" resultMap="RM-ZHE-ACCOUNT">
+		SELECT 	
+			ID,ACCOUNT_ID,ALIPAY_ID,UID,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DDZ_ACCOUNT
+		WHERE 
+			1=1
+		<isNotEmpty property="gmtCreateStart" prepend="AND">
+			<![CDATA[
+			GMT_CREATE >= #gmtCreateStart#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="gmtCreateEnd" prepend="AND">
+			<![CDATA[
+			GMT_CREATE <= #gmtCreateEnd#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="alipayId" prepend="AND">
+			<![CDATA[
+			ALIPAY_ID = #alipayId#
+			]]>
+		</isNotEmpty>
+		ORDER BY GMT_CREATE DESC LIMIT #start# , #size#
+	</select>
+	
+	<select id="countAccountsWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(ID)
+		FROM 
+			DDZ_ACCOUNT
+		WHERE 
+			1=1
+		<isNotEmpty property="gmtCreateStart" prepend="AND">
+			<![CDATA[
+			GMT_CREATE >= #gmtCreateStart#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="gmtCreateEnd" prepend="AND">
+			<![CDATA[
+			GMT_CREATE <= #gmtCreateEnd#
+			]]>
+		</isNotEmpty>
+		<isNotEmpty property="alipayId" prepend="AND">
+			<![CDATA[
+			ALIPAY_ID = #alipayId#
+			]]>
+		</isNotEmpty>
+	</select>
 </sqlMap>

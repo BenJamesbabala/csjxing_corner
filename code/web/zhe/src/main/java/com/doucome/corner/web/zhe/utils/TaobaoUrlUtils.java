@@ -21,7 +21,13 @@ public class TaobaoUrlUtils {
 			itemId = params.get("item_id") ;
 		}
 		if(StringUtils.isBlank(itemId)){
-			itemId = params.get(("itemid")) ;
+			itemId = params.get("itemid") ;
+		}
+		if(StringUtils.isBlank(itemId)){
+			itemId = params.get("mallstitemid") ;
+		}
+		if(StringUtils.isBlank(itemId)){
+			itemId = params.get("default_item_id") ;
 		}
 		if(StringUtils.isBlank(itemId)){
 			return null ;

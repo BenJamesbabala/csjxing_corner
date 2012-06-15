@@ -12,9 +12,12 @@ public class TaobaokeFields {
 		TaokeItemConst.commission_rate,
         TaokeItemConst.commission_volume, 
         TaokeItemConst.price, 
+        TaokeItemConst.nick,
         TaokeItemConst.num_iid, 
         TaokeItemConst.pic_url,
-        TaokeItemConst.title 
+        TaokeItemConst.title ,
+        TaokeItemConst.volume,
+        TaokeItemConst.seller_credit_score,
     };
 	
 	public static final String[] taoke_report_memb_fields = new String[]{

@@ -19,19 +19,24 @@ import com.doucome.corner.web.zhe.context.AuthzContextModelEnum;
  */
 public class DefaultAuthzImpl implements DdzAuthz {
 
-	@Autowired
+    @Autowired
     private DdzAccountService ddzAccountService;
 
-	@Autowired
+    @Autowired
     private DdzUserService    ddzUserService;
- 
+
     @Override
     public DdzAccountDO getAccount() {
         AuthzContext authzContext = AuthzContextHolder.getContext();
         DdzAccountDO accountDO = (DdzAccountDO) authzContext.getModel(AuthzContextModelEnum.DDZ_ACCOUNT_MODEL);
         if (accountDO == null) {
-            String alipayId = authzContext.getAlipayId();
-            accountDO = ddzAccountService.queryAccountDOByAlipayId(alipayId);
+            String uid = authzContext.getUid();
+            if (StringUtils.isNotEmpty(uid)) {
+                accountDO = ddzAccountService.queryAccountDOByUid(uid);
+            } else {
+                String alipayId = authzContext.getAlipayId();
+                accountDO = ddzAccountService.queryAccountDOByAlipayId(alipayId);
+            }
             if (accountDO != null) {
                 authzContext.setModel(AuthzContextModelEnum.DDZ_ACCOUNT_MODEL, accountDO);
             }
@@ -60,6 +65,12 @@ public class DefaultAuthzImpl implements DdzAuthz {
     }
 
     @Override
+    public String getLoginId() {
+        AuthzContext authzContext = AuthzContextHolder.getContext();
+        return authzContext.getLoginId();
+    }
+
+    @Override
     public boolean isLogin() {
         return AuthzContextHolder.getContext().isAuthentication();
     }
@@ -68,10 +79,13 @@ public class DefaultAuthzImpl implements DdzAuthz {
         return AuthzContextHolder.getContext().getUid();
     }
 
+    @Override
+    public boolean isPrivateUser() {
+        return AuthzContextHolder.getContext().isPrivateUser();
+    }
+
     /**
      * ------------------------------------------------
      */
-
- 
 
 }

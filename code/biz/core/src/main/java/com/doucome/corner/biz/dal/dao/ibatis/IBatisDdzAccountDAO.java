@@ -1,8 +1,14 @@
 package com.doucome.corner.biz.dal.dao.ibatis;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
+import com.doucome.corner.biz.core.utils.NumberUtils;
 import com.doucome.corner.biz.dal.DdzAccountDAO;
+import com.doucome.corner.biz.dal.condition.DdzAccountSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.DdzAccountDO;
 
 /**
@@ -43,5 +49,26 @@ public class IBatisDdzAccountDAO extends SqlMapClientDaoSupport implements DdzAc
         getSqlMapClientTemplate().update(UPDATE_ACCOUNT, accountDO);
 
     }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DdzAccountDO> queryAccountsWithPagination(DdzAccountSearchCondition searchCondition, int start, int size) {
+		Map<String,Object> condition = new HashMap<String,Object>() ;
+		condition.put("gmtCreateStart", searchCondition.getGmtCreateStart()) ;
+		condition.put("gmtCreateEnd", searchCondition.getGmtCreateEnd()) ;
+		condition.put("alipayId", searchCondition.getAlipayId()) ;
+		condition.put("start", start-1) ;
+		condition.put("size", size) ;
+		return getSqlMapClientTemplate().queryForList("ZHE_ACCOUNT.queryAccountsWithPagination" , condition) ;
+	}
+
+	@Override
+	public int countAccountsWithPagination(DdzAccountSearchCondition searchCondition) {
+		Map<String,Object> condition = new HashMap<String,Object>() ;
+		condition.put("gmtCreateStart", searchCondition.getGmtCreateStart()) ;
+		condition.put("gmtCreateEnd", searchCondition.getGmtCreateEnd()) ;
+		condition.put("alipayId", searchCondition.getAlipayId()) ;
+		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("ZHE_ACCOUNT.countAccountsWithPagination" , condition)) ;
+	}
 
 }

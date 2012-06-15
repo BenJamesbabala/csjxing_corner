@@ -1,0 +1,40 @@
+.my-user-info .title {
+	background: url("../../../../img/myhome-rep.png") no-repeat scroll 999px 999px transparent;
+}
+.my-user-info {
+	border: 1px solid #CCCCCC;
+	height: 500px;
+	width: 790px;
+	line-height: 28px;
+	background-color: #FFF;
+}
+
+.my-user-info .title {
+	height: 34px;
+	background-position: 0 0;
+	background-repeat: repeat-x;
+	border-bottom: 1px solid #CCCCCC;
+	padding-left: 10px;
+	line-height: 32px;
+	color: #666666;
+}
+.info-detail {
+	padding-top: 15px;
+	padding-left: 25px;
+}
+.ui-dlist {
+    color: #808080;
+    display: inline-block;
+}
+
+.ui-dlist-tit {
+    float: left;
+    text-align: left;
+    width: 100px;
+}
+
+.ui-dlist-det {
+    float: left;
+    text-align: left;
+    width: 600px;
+}

@@ -17,10 +17,12 @@
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-account.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-shortUrl.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-report.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-report-settle.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-searchLog.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-transferUrl.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-user.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-syncReportTask.xml" />
-  	
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-recommend.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-recommendTask.xml" />
   	
 </sqlMapConfig>

@@ -28,7 +28,7 @@ public class TaobaoServiceDecoratorImpl extends AbstractTaobaoService implements
 		req.setFields(ArrayStringUtils.toString(fields));
 		req.setNick(nick);
 		try{
-			TaobaoClient client = newTaobaoClient() ;
+			TaobaoClient client = taobaoClientWrapper.newClient() ;
 			UserGetResponse response = client.execute(req , sessionKey);
 			boolean isSuccess = response.isSuccess() ;
 			if(isSuccess){
@@ -54,7 +54,7 @@ public class TaobaoServiceDecoratorImpl extends AbstractTaobaoService implements
 		req.setFields(ArrayStringUtils.toString(fields));
 		req.setNumIid(numIid);
 		try {
-			TaobaoClient client= newTaobaoClient() ;
+			TaobaoClient client= taobaoClientWrapper.newClient() ;
 			ItemGetResponse response = client.execute(req);
 			boolean isSuccess = response.isSuccess() ;
 			if(isSuccess){

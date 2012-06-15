@@ -6,141 +6,151 @@ import com.doucome.corner.biz.core.model.AbstractModel;
 
 public class DdzUserDO extends AbstractModel {
 
-	/**
-	 * PK
-	 */
-	private int id;
+    /**
+     * PK
+     */
+    private int    id;
 
-	/**
-	 * UserId
-	 */
-	private String uid;
+    /**
+     * UserId
+     */
+    private String uid;
 
-	/**
-	 * loginId µãµãÕÛµÇÂ½ÕËºÅ£¬ºÍÌÔ±¦ÕËºÅÒ»Öª
-	 */
-	private String loginId;
+    /**
+     * loginId µãµãÕÛµÇÂ½ÕËºÅ£¬ºÍÌÔ±¦ÕËºÅÒ»Öª
+     */
+    private String loginId;
 
-	/**
-	 * mobile
-	 */
-	private String mobile;
+    /**
+     * mobile
+     */
+    private String mobile;
 
-	/**
-	 * email
-	 */
-	private String email;
+    /**
+     * email
+     */
+    private String email;
 
-	/**
-	 * taobaoµÇÂ½ÕËºÅ
-	 */
-	private String taobaoId;
+    /**
+     * taobaoµÇÂ½ÕËºÅ
+     */
+    private String taobaoId;
 
-	/**
-	 * ÐÔ±ð
-	 */
-	private String gender;
+    /**
+     * ÐÔ±ð
+     */
+    private String gender;
 
-	/**
-	 * MD5 password
-	 */
-	private String md5Password;
+    /**
+     * MD5 password
+     */
+    private String md5Password;
 
-	/**
+    /**
 	 * 
 	 */
-	private String userActive;
+    private String userActive;
 
-	private Date gmtCreate;
+    private Date   gmtCreate;
 
-	private Date gmtModified;
+    private Date   gmtModified;
 
-	public Date getGmtCreate() {
-		return gmtCreate;
-	}
+    private Date   gmtLastLogin;
 
-	public void setGmtCreate(Date gmtCreate) {
-		this.gmtCreate = gmtCreate;
-	}
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
 
-	public Date getGmtModified() {
-		return gmtModified;
-	}
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
 
-	public void setGmtModified(Date gmtModified) {
-		this.gmtModified = gmtModified;
-	}
+    public Date getGmtModified() {
+        return gmtModified;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getUid() {
-		return uid;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
+    public String getUid() {
+        return uid;
+    }
 
-	public String getLoginId() {
-		return loginId;
-	}
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
-	}
+    public String getLoginId() {
+        return loginId;
+    }
 
-	public String getMobile() {
-		return mobile;
-	}
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+    public String getMobile() {
+        return mobile;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getTaobaoId() {
-		return taobaoId;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setTaobaoId(String taobaoId) {
-		this.taobaoId = taobaoId;
-	}
+    public String getTaobaoId() {
+        return taobaoId;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public void setTaobaoId(String taobaoId) {
+        this.taobaoId = taobaoId;
+    }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	public String getMd5Password() {
-		return md5Password;
-	}
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-	public void setMd5Password(String md5Password) {
-		this.md5Password = md5Password;
-	}
+    public String getMd5Password() {
+        return md5Password;
+    }
 
-	public String getUserActive() {
-		return userActive;
-	}
+    public void setMd5Password(String md5Password) {
+        this.md5Password = md5Password;
+    }
 
-	public void setUserActive(String userActive) {
-		this.userActive = userActive;
-	}
+    public String getUserActive() {
+        return userActive;
+    }
+
+    public void setUserActive(String userActive) {
+        this.userActive = userActive;
+    }
+
+    public Date getGmtLastLogin() {
+        return gmtLastLogin;
+    }
+
+    public void setGmtLastLogin(Date gmtLastLogin) {
+        this.gmtLastLogin = gmtLastLogin;
+    }
 
 }

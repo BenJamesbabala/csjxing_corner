@@ -16,6 +16,7 @@ import com.doucome.corner.web.bops.authz.BopsAuthz;
 import com.doucome.corner.web.bops.authz.model.BopsAuthzTemp;
 import com.doucome.corner.web.bops.context.AuthzContext;
 import com.doucome.corner.web.bops.context.AuthzContextHolder;
+import com.doucome.corner.web.common.constant.CookieConstants;
 import com.doucome.corner.web.common.cookie.BopsCookieNameConstants;
 import com.doucome.corner.web.common.cookie.CookieHelper;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -28,30 +29,39 @@ import com.opensymphony.xwork2.interceptor.PreResultListener;
 @SuppressWarnings("serial")
 public class SetContextInterceptor extends AbstractInterceptor {
 
-    private static final Log log                 = LogFactory.getLog(SetContextInterceptor.class);
+    private static final Log log = LogFactory.getLog(SetContextInterceptor.class);
     @Autowired
     private EncryptBean      cookieEncryptBean;
     @Autowired
     private BopsAuthz        bopsAuthz;
     private String           domain;
-    private static final int EXPIRY_TIME_YEAR    = 3600 * 24 * 365;
-    private static final int EXPIRY_TIME_SESSION = -1;
 
     @Override
     public String intercept(ActionInvocation invocation) throws Exception {
-        // ActionContext context = invocation.getInvocationContext();
-        prepare();
+        try {
+            prepare();
+        } catch (Exception e) {
+            log.error("prepare authz fail.", e);
+        }
         try {
             invocation.addPreResultListener(new PreResultListener() {
 
                 @Override
                 public void beforeResult(ActionInvocation invocation, String resultCode) {
-                    change(ServletActionContext.getResponse());
+                    try {
+                        change(ServletActionContext.getResponse());
+                    } catch (Exception e) {
+                        log.error("change cookie fail.", e);
+                    }
                 }
             });
             return invocation.invoke();
         } finally {
-            clean();
+            try {
+                clean();
+            } catch (Exception e) {
+                log.error("clean context fail.", e);
+            }
         }
     }
 
@@ -61,8 +71,8 @@ public class SetContextInterceptor extends AbstractInterceptor {
 
         String tempEntrypt = CookieHelper.readCookie(cookies, BopsCookieNameConstants.BOPS_TEMP);
         if (StringUtils.isNotBlank(tempEntrypt)) {
-            String tempJson = cookieEncryptBean.decode(tempEntrypt);
             try {
+                String tempJson = cookieEncryptBean.decode(tempEntrypt);
                 BopsAuthzTemp authzTemp = JacksonHelper.fromJSON(tempJson, BopsAuthzTemp.class);
                 if (authzTemp != null) {
                     if (authzTemp.checkSignature()) {
@@ -70,7 +80,8 @@ public class SetContextInterceptor extends AbstractInterceptor {
                         authzContext.setAuthentication(true, false);
                     } else {
                         CookieHelper.writeCookie(ServletActionContext.getResponse(), domain,
-                                                 BopsCookieNameConstants.BOPS_TEMP, null, EXPIRY_TIME_SESSION);
+                                                 BopsCookieNameConstants.BOPS_TEMP, null,
+                                                 CookieConstants.EXPIRY_TIME_SESSION);
                     }
                 }
             } catch (Exception e) {
@@ -98,9 +109,10 @@ public class SetContextInterceptor extends AbstractInterceptor {
                 authzTemp.generateSignature();
                 String ddzTemp = cookieEncryptBean.encode(authzTemp.toString());
                 CookieHelper.writeCookie(response, domain, BopsCookieNameConstants.BOPS_TEMP, ddzTemp,
-                                         EXPIRY_TIME_SESSION);
+                                         CookieConstants.EXPIRY_TIME_SESSION);
             } else {
-                CookieHelper.writeCookie(response, domain, BopsCookieNameConstants.BOPS_TEMP, null, EXPIRY_TIME_SESSION);
+                CookieHelper.writeCookie(response, domain, BopsCookieNameConstants.BOPS_TEMP, null,
+                                         CookieConstants.EXPIRY_TIME_SESSION);
             }
         }
     }

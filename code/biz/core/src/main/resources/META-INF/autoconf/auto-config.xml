@@ -40,9 +40,9 @@
 		<property name="corner.api.taobao.url" defaultValue="http://gw.api.taobao.com/router/rest" description="api接口url"></property>
 		<property name="corner.api.taobao.appkey" defaultValue="12560092" description="taobao app key"></property>
 		<property name="corner.api.taobao.secret" defaultValue="a6ff439175e1fbf47fc881af2ed8c07b" description="app Secret"></property>
-		<property name="corner.api.taobaoke.appkey" defaultValue="12560096" description="taobao app key"></property>
-		<property name="corner.api.taobaoke.secret" defaultValue="728a24ae73d6e2ec887063fd9c21ddb2" description="app Secret"></property>
-		<property name="corner.api.taobaoke.topSession" defaultValue="61014291f0c03166c4ef66621c52fb7925b831668de14e0855844858" description="topSession"/>
+		<property name="corner.api.taobaoke.appkeys" defaultValue="12625755,12625759,12625761,12625762,12625763" description="taobao app key"></property>
+		<property name="corner.api.taobaoke.secrets" defaultValue="d879c3f2f42db9311e735f6a94f96eee,20d1948b04620af5585ee73b17e639cd,b779110214f9416e8a9656f6252d8ef8,4d0468a570dd867b529005eca1f52d8a,a1af4a29017ac117509ccab0e13a0b0d" description="app Secret"></property>
+		<property name="corner.api.taobaoke.topSessions" defaultValue="61014291f0c03166c4ef66621c52fb7925b831668de14e0855844858,N/A,N/A,N/A,N/A" description="topSession"/>
 	</group>
 	
 	<group name="util">
@@ -50,11 +50,9 @@
 	</group>
 	
 	<group name="task">
+		<property name="corner.taskhome" defaultValue="/home/${corner_unix_user}/task" description="任务的home目录"></property>
 		<property name="corner.task.ddz.syncReport.cronExpression" defaultValue="0 5 9 * * ?" description="点点折从同步淘宝客报表"></property>
-	</group>
-	
-	<group name="pay">
-	    <property name="corner.alipay.count.limit" defaultValue="20" description="支付宝向多人付款人数上限" />
+		<property name="corner.task.ddz.syncBuyingRecommend.cronExpression" defaultValue="0 5 4 * * ?" description="点点折从同步第二天的推荐数据"></property>
 	</group>
 	
 	<script>

@@ -5,35 +5,42 @@
 ## size ： 页大小
 ## pageURL ： 跳转地址
 ######################
-
+#DDZ_CSS(["home/control/widget/page/page.css"])
 #set($pageItem = $pageUtils.getPageDisplayItem($totalRecords,$page,$size))
 #set($pageURL = $pageUtils.getPageURL($pageURL))
 #set($urlPath = $stringUtils.substringBefore($pageURL,'?'))
 #set($urlPram = $stringUtils.substringAfter($pageURL,'?'))
-<div class="pagination" id="pagination">
+<div class="list-pagination" id="pagination">
 	<form method="get" action="$urlPath" id="form_page">
 		$stringUtils.escapeHiddenInputs($urlPram)
-		<div class="page-op">
-    		<span class="total-page">共$pageItem.totalPage 页</span>
-			到<input type="text" name="page" id="jumpto" autocomplete="off" value="$pageItem.currPage">页
-    		<input type="submit" value="确定" id="jump-sub">
+		<div class="pagination-operation">
+			<span class="pagination-total">共 $pageItem.totalPage 页</span> 
+			到
+			<input type="text" name="page" id="paginationJump" class="pagination-operation-input" autocomplete="off" value="$pageItem.currPage" />
+			页
+    		<input type="submit" value="确定" id="jump-sub" />
     	</div>
     </form>
     
 	<div class="page-bottom">
 		#if($pageItem.hasPrevItem)
-			<a href="$urlPath/${pageItem.prevPage}?$urlPram" class="page-prev"></a>
+			<a class="" href="$urlPath/${pageItem.prevPage}?$urlPram">上一页</a>
+		#else
+			<span class="pagination-disable">上一页</span>
 		#end
     	#foreach($pageIndex in [$pageItem.startPageIndex..$pageItem.endPageIndex])
 			#if($pageIndex == $pageItem.currPage)
-                <span class="page-cur">${pageIndex}</span>
+                <span class="pagination-disable current">${pageIndex}</span>
 			#else
 				<a href="$urlPath/${pageIndex}?$urlPram">${pageIndex}</a>
 			#end
 		#end
 		#if($pageItem.hasNextItem)
 			<span class="page-break">...</span>
+			<a class="" href="$urlPath/${pageItem.totalPage}?$urlPram">$pageItem.totalPage</a>
 			<a href="$urlPath/${pageItem.nextPage}?$urlPram" class="page-next">下一页</a>
+		#else
+			<span class="pagination-disable">下一页</span>
 		#end
     </div>
 </div>

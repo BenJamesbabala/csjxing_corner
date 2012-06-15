@@ -20,7 +20,7 @@ public interface TaobaoRecommandDecorator {
 	 * @return
 	 * @throws TaobaoRemoteException
 	 */
-	List<TaobaoFavoriteItemDTO> getRecommandItems(TaobaoRecommendItemCondition condition) throws TaobaoRemoteException ;
+	List<TaobaoFavoriteItemDTO> getRecommandItemsByItem(Long itemId , TaobaoRecommendItemCondition condition) throws TaobaoRemoteException ;
 	
 	/**
 	 * 商品优惠详情查询 
@@ -29,4 +29,13 @@ public interface TaobaoRecommandDecorator {
 	 * @return
 	 */
 	TaobaoPromotionDisplayDTO getPromotionUmp(Long itemId ,String channelKey) ;
+	
+	/**
+	 * 获得推荐商品
+	 * @param categoryId
+	 * @param condition
+	 * @return
+	 */
+	List<TaobaoFavoriteItemDTO> getRecommendItemsByCategory(Long categoryId , TaobaoRecommendItemCondition condition) ;
+	
 }

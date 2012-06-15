@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.core.service.impl.DefaultUriService;
@@ -30,6 +31,13 @@ public abstract class DdzBasicAction extends BasicAction {
 	public DdzAuthz getDdzAuthz() {
 		return ddzAuthz;
 	}
-
+	
+	/**
+	 *  «∑Ò”–÷ß∏∂±¶’À∫≈
+	 * @return
+	 */
+	public String getAlipayAccount(){
+		return ddzAuthz.getAlipayId() ;
+	}
     
 }

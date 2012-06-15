@@ -53,6 +53,7 @@ public class PageDisplayItem {
             if (totalPage <= DEFAULT_ITEM_SIZE) {
                 startPageIndex = 1;
                 endPageIndex = totalPage;
+
             } else {
                 hasNextItem = true;
                 nextPage = currPage + 1;
@@ -71,6 +72,13 @@ public class PageDisplayItem {
                 endPageIndex = totalPage;
                 startPageIndex = totalPage - DEFAULT_ITEM_SIZE + 1;
             }
+        }
+        
+        if (endPageIndex < 1) {
+            endPageIndex = 1;
+        }
+        if (totalPage < 1) {
+            totalPage = 1;
         }
     }
 

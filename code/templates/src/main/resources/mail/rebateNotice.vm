@@ -1,18 +1,121 @@
-<table>
-    <tr>
-		<td>
-        Hi~
-        </td>
-    </tr>
-    <tr>
-        <td>你购买的${!order} 返利啦！
-			<br/>
-			一共${!price}元
-        </td>
-    </tr>
-    <tr align="right">
-		<td>
-			点点折返利
-		</td>
-    </tr>
-</table>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="gbk" />
+		<title>点点折-购物返利通知</title>
+		<style type="text/css">
+			body {
+			}
+			.ddz-mail {
+				width: 770px;
+				margin: 20px auto;
+			}
+			.thanks {
+				padding-left: 32px;
+			}
+			.bill-list th {
+				background-color: #FF6A00;
+				height: 36px;
+				border: 1px solid #CCCCCC;
+				color: #FFF;
+			}
+			.bill-list tr a:link, .bill-list tr a:visited {
+				color: #666666;
+				text-decoration: none;
+			}
+			.bill-list tr a:hover {
+				color: #FF6A00;
+				text-decoration: none;
+			}
+			.bill-list tr {
+				color: #666666;
+			}
+			.color-green {
+				color: #45A022;
+			}
+			.color-blue {
+				color: #0000EE;
+			}
+			.remark {
+				color: #FF6A00;
+				font-weight: bold;
+			}
+			.remarks ul li {
+				list-style: none outside none;
+				margin-left: -30px;
+				line-height: 28px;
+			}
+			.signature {
+				float: right;
+			}
+			a:link, a:visited {
+				color: #0000EE;
+			}
+			.ddz-logo a{
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="ddz-mail">
+			<div class="ddz-logo">
+				<a href="http://diandianzhe.com?trace_log=reportemail" target="_blank"><img src="http://static.diandianzhe.com:803/corner_test/img/logo_white_200x60.png" border="0"/></a>
+			</div>
+			<div>
+				<p>
+					$!username，您好
+				</p>
+				<p class="thanks">
+					感谢您使用点点折，本期返利金额合计：$!decimalUtils.formatPrice($!{settleDO.settleFee})元，以下是您的购物返利记录: 
+				</p>
+				<table class="bill-list" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<th width="160">确认收货时间</th>
+						<th width="140">商品名称</th>
+						<th width="60">数量</th>
+						<th width="80">成交价格</th>
+						<th width="80">返利比例</th>
+						<th width="80">返利金额</th>
+						<th width="160">结算时间</th>
+					</tr>
+					#if($reportDOs)
+						#foreach($report in $reportDOs)
+        					<tr align="center">
+        						<td>$dateUtils.format($report.gmtPaid, "yyyy-MM-dd hh:mm:ss")</td>
+        						<td><a href="http://diandianzhe.com/zhe/item/${report.numIid}?trace_log=reportemail">$report.itemTitle</a></td>
+        						<td>${report.itemNum}</td>
+        						<td>&yen;${report.realPayFee}</td>
+        						<td class="color-green">$!decimalUtils.formatRatio(${report.userCommissionRate})</td>
+        						<td class="color-green">&yen;$!decimalUtils.formatPrice(${report.settleFee})</td>
+        						<td>$dateUtils.format($!{settleDO.gmtSettled}, "yyyy-MM-dd hh:mm:ss")</td>
+        					</tr>
+						#end
+					#end
+				</table>
+			</div>
+			<div class="remarks">
+				<p class="remark">
+					[备注]
+				</p>
+				<ul>
+					<li>
+						1.以上返利金额已经汇入您的支付宝账号：<span class="color-blue">$!alipayId</span>，请及时登录支付宝系统查询。
+					</li>
+					<li>
+						2.本记录清单由系统自动生成，实际金额以支付宝到账金额为准。
+					</li>
+					<li>
+						3.详细返利情况请到<a href="http://diandianzhe.com/zhe/my.htm?trace_log=reportemail" target="_blank">点点折</a>登录查询。
+					</li>
+					<li>
+						4.若有任何疑问请发邮件至 <a href="mailto:vip@diandianzhe.com">vip@diandianzhe.com</a> 咨询。
+					</li>
+				</ul>
+			</div>
+			<p class="signature">
+				【新浪微博:<a href="http://weibo.com/diandianzhe" target="_blank">@点点折网</a>】折扣尽享,点缀生活
+			</p>
+		</div>
+		<img style="display:none;" src="http://diandianzhe.com/zhe/click.htm?type=settle_report_mail&id=$!{settleDO.id}&email=$!{emailAddress}"/>
+	</body>
+</html>

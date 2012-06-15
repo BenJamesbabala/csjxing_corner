@@ -17,6 +17,11 @@ public class TaobaoRemoteException extends RuntimeException{
 		super(message);
 	}
 
+	public TaobaoRemoteException(String message , String errCode){
+		super(message);
+		this.errCode = errCode ;
+	}
+	
 	public TaobaoRemoteException(String message, Throwable cause){
 		super(message, cause);
 	}

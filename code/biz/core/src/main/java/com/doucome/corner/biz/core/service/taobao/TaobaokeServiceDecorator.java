@@ -85,6 +85,12 @@ public interface TaobaokeServiceDecorator {
 	 */
 	String getCaturl(TaokeCaturlCondition condition ) ;
 	
-	
+	/**
+	 * ≤È—ØS8¡¥Ω”
+	 * @param keyword
+	 * @param outCode
+	 * @return
+	 */
+	String getListurl(String keyword , String outCode) ;
 	
 }

@@ -67,6 +67,14 @@ public class AuthzContext {
         user.setUid(uid);
     }
 
+    public String getLoginId() {
+        return user.getLoginId();
+    }
+
+    public void setLoginId(String loginId) {
+        user.setLoginId(loginId);
+    }
+
     public String getDdzTemp() {
         return user.getDdzTemp();
     }
@@ -75,18 +83,33 @@ public class AuthzContext {
         user.setDdzTemp(ddzTemp);
     }
 
+    public boolean isPrivateUser() {
+        return user.isPrivateUser();
+    }
+
+    public void setPrivateUser(boolean isPrivateUser) {
+        user.setPrivateUser(isPrivateUser);
+    }
+
     private class UserAuthzContext {
 
         /**
          * notTruts 支付宝账号（非登陆后获取到的关联支付宝）
          */
-        private String alipayId;
+        private String  alipayId;
         /**
          * uid
          */
-        private String uid;
+        private String  uid;
 
-        private String ddzTemp;
+        private String  loginId;
+
+        private String  ddzTemp;
+
+        /**
+         * 是否内部人员
+         */
+        private boolean isPrivateUser;
 
         public String getAlipayId() {
             return alipayId;
@@ -94,6 +117,14 @@ public class AuthzContext {
 
         public void setAlipayId(String alipayId) {
             this.alipayId = alipayId;
+        }
+
+        public String getLoginId() {
+            return loginId;
+        }
+
+        public void setLoginId(String loginId) {
+            this.loginId = loginId;
         }
 
         public String getUid() {
@@ -110,6 +141,14 @@ public class AuthzContext {
 
         public void setDdzTemp(String ddzTemp) {
             this.ddzTemp = ddzTemp;
+        }
+
+        public boolean isPrivateUser() {
+            return isPrivateUser;
+        }
+
+        public void setPrivateUser(boolean isPrivateUser) {
+            this.isPrivateUser = isPrivateUser;
         }
 
     }

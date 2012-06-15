@@ -18,5 +18,7 @@
 	<bean id="ddzTransferUrlDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzTransferUrlDAO"/>
 	<bean id="ddzUserDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzUserDAO"/>
 	<bean id="ddzSyncReportTaskDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzSyncReportTaskDAO"/>
-	<bean id="alipayDao" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisAlipayDAO"/>
+	<bean id="ddzTaokeReportSettleDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzTaokeReportSettleDAO"/>
+	<bean id="ddzRecommendDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzRecommendDAO"/>
+	<bean id="ddzRecommendTaskDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzRecommendTaskDAO"/>
 </beans>

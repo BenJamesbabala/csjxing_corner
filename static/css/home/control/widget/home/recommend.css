@@ -1,0 +1,334 @@
+
+.mod-index h2, #tdSuperPrice h2, .btn03 b, #tdSuperPrice .deal-list li b {
+    background-image: url("../../../../../img/tj_title.png");
+    background-repeat: no-repeat;
+}
+
+.ico-sp, .ico-circle, .ico-help, .ico-help1, .ico-more1, .ico-right, #fxIntroNav li.current a, .btn02 b, .ico-down, #hotShopNav .tab-nav span, #hotShopNav .btn-city-all, .ico-b-down, .ico-btn-pre, .ico-btn-next, .ico-category1, .ico-category2, .ico-category3, .ico-category4, .ico-category5, .ico-category6, .ico-category7, .ico-category8, .ico-more-up, .ico-more-down, .shop-archives-comment-icon i, .ico-juan, .ico-new, .ico-edit-new, .ico-edit-notice, .ico-2double, .icon-union, .ico-time, .discount-s-sina, .discount-s-netease, #backToTop a, .ico-success, .login-tiparea-top, .login-tiparea-bottom, .login-tiparea .error-state, .login-tiparea-close, #fwlink .links-list-introduce i, .ico-sort-up, .ico-sort-down, .dico-tips1, .ico-succed, .gs-close, .ico-buttons a, .jcarousel-prev b, .jcarousel-next b, .in-ico-btn1-pre b, .in-ico-btn1-next b {
+    background-image: url("../../../../../img/tj_ico.png");
+    background-repeat: no-repeat;
+}
+
+.recommend {
+	width:960px;
+	margin: 30px 0 0 50px;
+}
+
+.mod-index h2 {
+    height: 33px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-indent: -9999px;
+}
+
+#tdSuperPrice .hd {
+    position: relative;
+}
+#tdSuperPrice .ico-buttons {
+    right: -10px;
+    top: 15px;
+}
+#tdSuperPrice .ico-buttons a {
+    margin-right: 10px;
+}
+#tdSuperPrice h2 {
+    background-position: 0 -155px;
+    height: 35px;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 160px;
+}
+#tdSuperPrice .deal-list {
+    height: 146px;
+    position: relative;
+    top: 0;
+}
+#tdSuperPrice .deal-list ul {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #ECECEC #ECECEC #ECECEC -moz-use-text-color;
+    border-style: solid solid solid none;
+    border-width: 1px 1px 1px 0;
+    float: left;
+    height: 140px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+#tdSuperPrice .deal-list li {
+    float: left;
+    height: 140px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+#tdSuperPrice .deal-list .deal-list-ctn img{
+    /*border-left: 1px solid #ECECEC;*/
+    width:160px;
+    height:160px;
+    margin:0;
+    padding:0;
+}
+#tdSuperPrice .deal-list li a {
+    display: block;
+    height: 140px;
+    width: 100%;
+}
+#tdSuperPrice .deal-list li img {
+    display: block;
+    /*height: 140px;*/
+    margin: 0 auto;
+    /*width: 195px;*/
+}
+#tdSuperPrice .deal-list li b {
+    height: 20px;
+    overflow: hidden;
+    position: absolute;
+    right: 8px;
+    text-indent: -999em;
+    top: 8px;
+    width: 20px;
+    z-index: 5;
+}
+#tdSuperPrice .deal-list li b.tips-1 {
+    background-position: 0 -280px;
+}
+#tdSuperPrice .deal-list li b.tips-2 {
+    background-position: -30px -280px;
+}
+#tdSuperPrice .deal-list li b.tips-3 {
+    background-position: -60px -280px;
+}
+#tdSuperPrice .deal-list li b.tips-4 {
+    background-position: -90px -280px;
+}
+#tdSuperPrice .deal-list li b.tips-5 {
+    background-position: -120px -280px;
+}
+#tdSuperPrice .deal-list li b.tips-6 {
+    background-position: 0 -310px;
+}
+#tdSuperPrice .deal-list li b.tips-7 {
+    background-position: -30px -310px;
+}
+#tdSuperPrice .deal-list li b.tips-8 {
+    background-position: -60px -310px;
+}
+#tdSuperPrice .deal-list li b.tips-9 {
+    background-position: -90px -310px;
+}
+#tdSuperPrice .deal-list li b.tips-10 {
+    background-position: -120px -310px;
+}
+#tdSuperPrice .deal-list li b.tips-11 {
+    background-position: 0 -340px;
+}
+#tdSuperPrice .deal-list li b.tips-12 {
+    background-position: -30px -340px;
+}
+#tdSuperPrice .deal-list li b.tips-13 {
+    background-position: -60px -340px;
+}
+#tdSuperPrice .deal-list li b.tips-14 {
+    background-position: -90px -340px;
+}
+#tdSuperPrice .deal-list li b.tips-15 {
+    background-position: -120px -340px;
+}
+
+
+
+
+
+
+
+
+.ico-down {
+    background-position: right -215px;
+    padding-right: 30px;
+}
+.ico-more-up {
+    background-position: right -251px;
+    padding-right: 15px;
+}
+.ico-more-down {
+    background-position: right -276px;
+    padding-right: 15px;
+}
+.ico-b-down {
+    background-position: 0 -300px;
+}
+.ico-btn-pre, .ico-btn-next {
+    background-position: 5px -462px;
+    height: 30px;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 15px;
+}
+.ico-btn-next {
+    background-position: -15px -462px;
+}
+.ico-buttons {
+    position: absolute;
+}
+.ico-buttons a {
+    background-position: 0 -450px;
+    float: left;
+    height: 10px;
+    margin-right: 10px;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: 10px;
+}
+.ico-buttons a.current {
+    background-position: -20px -450px;
+}
+.ico-buttons-b {
+    bottom: 8px;
+    position: absolute;
+    right: 10px;
+}
+.ico-buttons-b a {
+    color: #FFFFFF;
+    cursor: pointer;
+    float: left;
+    font-size: 20px;
+    height: 36px;
+    line-height: 35px;
+    margin-right: 5px;
+    padding-right: 1px;
+    text-align: center;
+    width: 35px;
+}
+.ico-buttons-b a:hover, .ico-buttons-b a.current {
+    color: #FFFFFF;
+    font-size: 22px;
+    line-height: 36px;
+    text-decoration: none;
+}
+.jcarousel-prev, .jcarousel-next, .in-ico-btn1-pre, .in-ico-btn1-next {
+    cursor: pointer;
+    height: 45px;
+    margin-top: -23px;
+    position: absolute;
+    top: 50%;
+    width: 36px;
+    z-index: 9;
+}
+.jcarousel-prev, .jcarousel-next {
+    /*background-color: #F5F5F5;*/
+    border-radius: 0 3px 3px 0;
+}
+.jcarousel-next {
+    border-radius: 3px 0 0 3px;
+}
+.jcarousel-prev {
+    left: 0;
+}
+.in-ico-btn1-pre {
+    left: 3px;
+}
+.jcarousel-next {
+    right: 0;
+}
+.in-ico-btn1-next {
+    right: 3px;
+}
+
+.jcarousel-prev b, .jcarousel-next b, .in-ico-btn1-pre b, .in-ico-btn1-next b {
+    height: 28px;
+    margin: 10px 0 0 8px ;
+    overflow: hidden;
+    position: absolute;
+    text-indent: -999em;
+    width: 19px;
+}
+.jcarousel-prev b {
+    background-position: 0 -2140px;
+}
+.jcarousel-prev:hover b {
+    background-position: 0 -2175px;
+}
+.jcarousel-next b {
+    background-position: -21px -2140px;
+}
+.jcarousel-next:hover b {
+    background-position: -21px -2175px;
+}
+.in-ico-btn1-pre b {
+    background-position: 0 -2210px;
+}
+.in-ico-btn1-pre:hover b {
+    background-position: 0 -2245px;
+}
+.in-ico-btn1-next b {
+    background-position: -21px -2210px;
+}
+.in-ico-btn1-next:hover b {
+    background-position: -21px -2245px;
+}
+
+#mycarousel{
+    overflow: hidden;
+}
+#mycarousel li{
+   width: 160px;
+}
+#mycarousel ul{
+    border-color:#f0efeb;
+}
+
+.recomm_top  {
+	height:22px;
+	width:100%;
+	position:absolute;
+	font-family:Arial;
+	left:0;
+}
+
+.recomm_top .commission {
+	color:#ffffff;
+	font-size:14px;
+	font-weight:bold;
+	margin-left:5px;
+}
+.recomm_top .alipay {
+	color:#ffffff;
+	font-size:14px;
+}
+.recomm_top .price{
+	color:#ffffff;
+	font-size:12px;
+	/*text-decoration:line-through;*/
+}
+.recomm_top_1 {
+	background-color:#dcc671;
+}
+.recomm_top_2 {
+	background-color:#c5aea8;
+}
+.recomm_top_3 {
+	background-color:#efac53;
+}
+.recomm_top_4 {
+	background-color:#de5c68;
+}
+.recomm_top_5 {
+	background-color:#8290b7;
+}
+.recomm_top_6 {
+	background-color:#9b9b9b;
+}
+.recomm_top_7 {
+	background-color:#676767;
+}
+.recomm_top_8 {
+	background-color:#7a8eb1;
+}
+.recomm_top_9 {
+	background-color:#6c6364;
+}

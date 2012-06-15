@@ -13,6 +13,17 @@
 			<result name="success" type="velocity">/task/zhe/syncReport.vm</result>
 		</action>
 		
+		<action name="syncBuyingRecomm" class="com.doucome.corner.task.zhe.action.SyncBuyingRecommendAction">
+			<interceptor-ref name="defaultStack" />
+			<result name="success" type="velocity">/task/zhe/syncBuyingRecomm.vm</result>
+		</action>
 	</package>
+	
+	<package name="settle" namespace="/zhe/settle" extends="struts-json">
+        <action name="createSettleReport" class="com.doucome.corner.task.zhe.action.CreateSettleReportAction">
+            <result name="success" type="json"></result>
+            <result name="error" type="json"></result>
+        </action>       
+    </package>
 
 </struts>

@@ -3,6 +3,7 @@ package com.doucome.corner.web.zhe.action.ajax;
 import java.io.IOException;
 import java.net.URLEncoder;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -46,6 +47,12 @@ public class AlipayAcctStatusCheckAction extends DdzBasicAction {
 			acctype = "email" ;
 		}else if(ValidateUtil.checkIsMobile(acctname)){
 			acctype = "mobile" ;
+		}
+		
+		if(StringUtils.isBlank(acctname)){
+			json.setCode(JsonModel.CODE_ILL_ARGS) ;
+			json.setDetail("input acctname cant be blank.") ;
+			return SUCCESS ;
 		}
 		
 		String acctnameEnc = URLEncoder.encode(acctname,"utf-8") ;

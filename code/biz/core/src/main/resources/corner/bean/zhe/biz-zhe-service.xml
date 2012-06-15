@@ -29,10 +29,13 @@
 	
 	<bean id="ddzTaobaoRegisterService" class="com.doucome.corner.biz.zhe.service.impl.DdzTaobaoRegisterServiceImpl"/>
 	
-	<bean id="keywordsFilterService" class="com.doucome.corner.biz.zhe.service.impl.KeywordsFilterServiceImpl"/>
+	<bean id="ddzRecommendService" class="com.doucome.corner.biz.zhe.service.impl.DdzRecommendServiceImpl"></bean>
 	
-	<bean id="alipayService" class="com.doucome.corner.biz.zhe.service.impl.pay.AlipayServiceImpl">
-	    <property name="pageSize" value="${corner.alipay.count.limit}" />
+	<bean id="ddzRecommendTaskService" class="com.doucome.corner.biz.zhe.service.impl.DdzRecommendTaskServiceImpl"></bean>
+	
+	<bean id="keywordsFilterService" class="com.doucome.corner.biz.zhe.service.impl.KeywordsFilterServiceImpl"/>
+		
+	<bean id="ddzTaokeReportSettleService" class="com.doucome.corner.biz.zhe.service.impl.DdzTaokeReportSettleServiceImpl">
 	    <property name="productionMode" value="${corner.production}" />
 	</bean>
 	

@@ -8,95 +8,113 @@ import com.doucome.corner.biz.core.model.AbstractModel;
 
 public class TaokeReportSearchCondition extends AbstractModel {
 
-	private Date gmtPaidStart;
+    private Date     gmtPaidStart;
 
-	private Date gmtPaidEnd;
+    private Date     gmtPaidEnd;
 
-	private String settleStatus;
+    private String   settleStatus;
 
-	private String settleUid;
+    private String[] settleStatusList;
 
-	private String settleTaobaoNick;
+    private String   settleUid;
 
-	private String settleAlipay;
+    private String   settleTaobaoNick;
 
-	private Date gmtSettledStart;
+    private String   settleAlipay;
 
-	private Date gmtSettledEnd;
-	
-	private String payBatchno ;
-	
-	
+    private Date     gmtSettledStart;
 
-	public String getPayBatchno() {
-		return payBatchno;
-	}
+    private Date     gmtSettledEnd;
 
-	public void setPayBatchno(String payBatchno) {
-		this.payBatchno = StringUtils.trim(payBatchno);
-	}
+    private String   payBatchno;
 
-	public String getSettleUid() {
-		return settleUid;
-	}
+    private Long     settleId;
 
-	public void setSettleUid(String settleUid) {
-		this.settleUid = StringUtils.trim(settleUid);
-	}
+    public Long getSettleId() {
+        return settleId;
+    }
 
-	public String getSettleAlipay() {
-		return settleAlipay;
-	}
+    public void setSettleId(Long settleId) {
+        this.settleId = settleId;
+    }
 
-	public void setSettleAlipay(String settleAlipay) {
-		this.settleAlipay = StringUtils.trim(settleAlipay);
-	}
+    public String getPayBatchno() {
+        return payBatchno;
+    }
 
-	public Date getGmtPaidStart() {
-		return gmtPaidStart;
-	}
+    public void setPayBatchno(String payBatchno) {
+        this.payBatchno = StringUtils.trim(payBatchno);
+    }
 
-	public void setGmtPaidStart(Date gmtPaidStart) {
-		this.gmtPaidStart = gmtPaidStart;
-	}
+    public String getSettleUid() {
+        return settleUid;
+    }
 
-	public Date getGmtPaidEnd() {
-		return gmtPaidEnd;
-	}
+    public void setSettleUid(String settleUid) {
+        this.settleUid = StringUtils.trim(settleUid);
+    }
 
-	public void setGmtPaidEnd(Date gmtPaidEnd) {
-		this.gmtPaidEnd = gmtPaidEnd;
-	}
+    public String getSettleAlipay() {
+        return settleAlipay;
+    }
 
-	public String getSettleStatus() {
-		return settleStatus;
-	}
+    public void setSettleAlipay(String settleAlipay) {
+        this.settleAlipay = StringUtils.trim(settleAlipay);
+    }
 
-	public void setSettleStatus(String settleStatus) {
-		this.settleStatus = StringUtils.trim(settleStatus);
-	}
+    public Date getGmtPaidStart() {
+        return gmtPaidStart;
+    }
 
-	public Date getGmtSettledStart() {
-		return gmtSettledStart;
-	}
+    public void setGmtPaidStart(Date gmtPaidStart) {
+        this.gmtPaidStart = gmtPaidStart;
+    }
 
-	public void setGmtSettledStart(Date gmtSettledStart) {
-		this.gmtSettledStart = gmtSettledStart;
-	}
+    public Date getGmtPaidEnd() {
+        return gmtPaidEnd;
+    }
 
-	public Date getGmtSettledEnd() {
-		return gmtSettledEnd;
-	}
+    public void setGmtPaidEnd(Date gmtPaidEnd) {
+        this.gmtPaidEnd = gmtPaidEnd;
+    }
 
-	public void setGmtSettledEnd(Date gmtSettledEnd) {
-		this.gmtSettledEnd = gmtSettledEnd;
-	}
+    public String[] getSettleStatusList() {
+        return settleStatusList;
+    }
 
-	public String getSettleTaobaoNick() {
-		return settleTaobaoNick;
-	}
+    public void setSettleStatusList(String[] settleStatusList) {
+        this.settleStatusList = settleStatusList;
+    }
 
-	public void setSettleTaobaoNick(String settleTaobaoNick) {
-		this.settleTaobaoNick = StringUtils.trim(settleTaobaoNick);
-	}
+    public String getSettleStatus() {
+        return settleStatus;
+    }
+
+    public void setSettleStatus(String settleStatus) {
+        this.settleStatus = StringUtils.trim(settleStatus);
+    }
+
+    public Date getGmtSettledStart() {
+        return gmtSettledStart;
+    }
+
+    public void setGmtSettledStart(Date gmtSettledStart) {
+        this.gmtSettledStart = gmtSettledStart;
+    }
+
+    public Date getGmtSettledEnd() {
+        return gmtSettledEnd;
+    }
+
+    public void setGmtSettledEnd(Date gmtSettledEnd) {
+        this.gmtSettledEnd = gmtSettledEnd;
+    }
+
+    public String getSettleTaobaoNick() {
+        return settleTaobaoNick;
+    }
+
+    public void setSettleTaobaoNick(String settleTaobaoNick) {
+        this.settleTaobaoNick = StringUtils.trim(settleTaobaoNick);
+    }
 }

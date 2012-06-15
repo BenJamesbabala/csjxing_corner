@@ -6,6 +6,7 @@
 ## pageURL ： 跳转地址
 ######################
 
+#DDZ_CSS(["home/control/widget/page/page.css"])
 #set($pageItem = $pageUtils.getPageDisplayItem($totalRecords,$page,$size))
 #set($pageURL = $pageUtils.getPageURL($pageURL))
 #set($urlPath = $stringUtils.substringBefore($pageURL,'?'))
@@ -15,8 +16,8 @@
 		$stringUtils.escapeHiddenInputs($urlPram)
 		<div class="page-op">
     		<span class="total-page">共$pageItem.totalPage 页</span>
-			到<input type="text" name="page" id="jumpto" autocomplete="off" value="$pageItem.currPage">页
-    		<input type="submit" value="确定" id="jump-sub">
+			到<input type="text" name="page" id="jumpto" autocomplete="off" value="$pageItem.currPage" />页
+    		<input type="submit" value="确定" id="jump-sub" />
     	</div>
     </form>
     

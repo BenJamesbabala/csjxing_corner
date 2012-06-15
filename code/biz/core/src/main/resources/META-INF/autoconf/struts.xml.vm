@@ -38,9 +38,10 @@
 		</interceptors>
 		 
 		<global-results>
-			<result name="exception">/common/error.htm</result>
+			<result name="exception" type="velocity">/zhe/error/404.vm</result>
 			<result name="memberLogin" type="redirect">/member/login.htm?Done=${Done}</result>
 			<result name="adminLogin" type="redirect">/bops/login.htm?Done=${Done}</result>
+			<result name="ddzIndex" type="redirect">/zhe/index.htm</result>
 			
 		</global-results>
 

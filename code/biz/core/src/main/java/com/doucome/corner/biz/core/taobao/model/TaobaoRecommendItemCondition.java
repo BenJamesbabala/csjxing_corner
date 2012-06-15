@@ -3,11 +3,6 @@ package com.doucome.corner.biz.core.taobao.model;
 import com.doucome.corner.biz.core.taobao.enums.TaobaoRecommendTypeEnums;
 
 public class TaobaoRecommendItemCondition {
-
-	/**
-	 * itemId
-	 */
-	private Long itemId ;
 	
 	/**
 	 * type
@@ -17,20 +12,12 @@ public class TaobaoRecommendItemCondition {
 	/**
 	 * 返回结果数量
 	 */
-	private Long count ;
+	private Long count = 20L;
 	
 	/**
 	 * 额外的参数信息 
 	 */
 	private String ext ;
-
-	public Long getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
-	}
 
 	public TaobaoRecommendTypeEnums getRecommendType() {
 		return recommendType;

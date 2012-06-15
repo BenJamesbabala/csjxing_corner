@@ -8,6 +8,8 @@ package com.doucome.corner.web.zhe.authz;
 public interface DdzSessionOperator {
 
     public boolean load(String uid);
+    
+    public boolean unload();
 
     public void setAlipayId(String alipayId);
 }

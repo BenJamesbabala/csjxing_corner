@@ -1,11 +1,11 @@
 package com.doucome.corner.biz.core.service.impl;
 
 import org.apache.commons.lang.text.StrBuilder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.Template;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.core.service.VelocityMergeService;
@@ -17,7 +17,7 @@ import com.doucome.corner.biz.core.service.VelocityMergeService;
  */
 public class VelocityMergeServiceImpl implements VelocityMergeService{
 
-    private static final Logger LOG = LoggerFactory.getLogger(VelocityMergeServiceImpl.class);
+    private static final Log log = LogFactory.getLog(VelocityMergeServiceImpl.class);
 
     private String              defaultEncoding;
     @Autowired
@@ -58,7 +58,7 @@ public class VelocityMergeServiceImpl implements VelocityMergeService{
             t.merge(context, builder.asWriter());
             return builder.toString();
         } catch (Exception e) {
-            LOG.error("Unable to render Velocity Template, '" + finalLocation + "'", e);
+            log.error("Unable to render Velocity Template, '" + finalLocation + "'", e);
             throw e;
         }
     }

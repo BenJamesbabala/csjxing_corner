@@ -1,9 +1,11 @@
 package com.doucome.corner.biz.dal.dao.ibatis;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.orm.ibatis.SqlMapClientCallback;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.doucome.corner.biz.core.model.page.Pagination;
@@ -13,6 +15,7 @@ import com.doucome.corner.biz.dal.DdzTaokeReportDAO;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
+import com.ibatis.sqlmap.client.SqlMapExecutor;
 
 /**
  * IBatisDdzTaokeReportDAO
@@ -49,19 +52,13 @@ public class IBatisDdzTaokeReportDAO extends SqlMapClientDaoSupport implements D
 		condition.put("settleAlipay", searchCondition.getSettleAlipay()) ;
 		condition.put("settleTaobaoNick", searchCondition.getSettleTaobaoNick()) ;
 		condition.put("settleUid", searchCondition.getSettleUid()) ;
-		condition.put("payBatchno", searchCondition.getPayBatchno()) ;
+		condition.put("settleId", searchCondition.getSettleId());
+		condition.put("settleStatusList", searchCondition.getSettleStatusList()) ;
+		
+		//condition.put("payBatchno", searchCondition.getPayBatchno()) ;
 		condition.put("start", start-1) ;
 		condition.put("size", size) ;
 		return getSqlMapClientTemplate().queryForList("ddzReport.selectReportsWithPagination" , condition) ;
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<AlipayItemDO> getAlipayItemWithPagination(Pagination pagination) {
-		Map<String, Object> condition = new HashMap<String, Object>();
-		condition.put("start", pagination.getStart() - 1) ;
-		condition.put("size", pagination.getSize()) ;
-		return getSqlMapClientTemplate().queryForList("ddzReport.getAlipayItemWithPagination" , condition);
 	}
 
 	@Override
@@ -76,35 +73,61 @@ public class IBatisDdzTaokeReportDAO extends SqlMapClientDaoSupport implements D
 		condition.put("settleAlipay", searchCondition.getSettleAlipay()) ;
 		condition.put("settleTaobaoNick", searchCondition.getSettleTaobaoNick()) ;
 		condition.put("settleUid", searchCondition.getSettleUid()) ;
+		condition.put("settleId", searchCondition.getSettleId());
+		condition.put("settleStatusList", searchCondition.getSettleStatusList()) ;
 		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("ddzReport.countReportsWithPagination" , condition)) ;
 	}
 	
-	@Override
-	public Integer countAlipayItem() {
-		return (Integer) getSqlMapClientTemplate().queryForObject("ddzReport.countAlipayItem");
-	}
 	
 	@Override
-	public int updateTaokeReportSettleStatus(List<String> reportIds, String settleStatus, String internalBatchNO) {
-		if (reportIds == null || reportIds.size() == 0 || settleStatus == null) {
+	public int updateSettleStatusBySettleReport(final List<DdzTaokeReportDO> reportDOs) {
+		if (reportDOs == null || reportDOs.size() == 0) {
 			return 0;
 		}
+		return this.getSqlMapClientTemplate().execute(new SqlMapClientCallback<Integer>() {
+
+			@Override
+			public Integer doInSqlMapClient(SqlMapExecutor executor)
+					throws SQLException {
+				executor.startBatch();
+				for (DdzTaokeReportDO reportDO : reportDOs) {
+					executor.update("ddzReport.updateSettleStatusBySettleReport", reportDO);
+				}
+				return executor.executeBatch();
+			}
+		});
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AlipayItemDO> getUnMergedReportSettleInfo(Pagination pagination) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("reportIds", reportIds);
-		params.put("settleStatus", settleStatus);
-		params.put("internalBatchNO", internalBatchNO);
-		return this.getSqlMapClientTemplate().update("ddzReport.updateTaokeReportSettleStatus", params);
+		params.put("start", pagination.getStart() - 1);
+		params.put("size", pagination.getSize());
+		return this.getSqlMapClientTemplate().queryForList("ddzReport.getUnMergedReportSettleInfo", params);
 	}
 	
 	@Override
-	public int updateTaokeReportAlipayResult(List<String> reportIds, String status, String alipayBatchNO) {
-		if (reportIds == null || reportIds.size() == 0 || status == null) {
-			return -1;
-		}
+	public int updateTaokeReportSettleId(List<Long> reportIds, Long settleId) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("reportIds", reportIds);
-		params.put("alipayStatus", status);
-		params.put("alipayBatchNO", alipayBatchNO);
-		return this.getSqlMapClientTemplate().update("ddzReport.updateTaokeReportAlipayResult", params);
+		params.put("settleId", settleId);
+		return this.getSqlMapClientTemplate().update("ddzReport.updateTaokeReportSettleId", params);
 	}
+
+	@Override
+	public int updateTaokeReportSettleStatus(List<Integer> settleIds,String settleStatus) {
+		Map<String,Object> condition = new HashMap<String,Object>() ;
+		condition.put("settleIds", settleIds) ;
+		condition.put("settleStatus", settleStatus) ;
+		return getSqlMapClientTemplate().update("ddzReport.updateTaokeSettleStatusBySettleIds" , condition) ;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DdzTaokeReportDO> selectReportsBySettleId(Integer settleId) {
+		return getSqlMapClientTemplate().queryForList("ddzReport.selectReportsBySettleId" , settleId) ;
+	}
+	
+	
 }

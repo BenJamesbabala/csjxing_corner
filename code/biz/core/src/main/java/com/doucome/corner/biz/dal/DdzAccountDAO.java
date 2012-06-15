@@ -1,5 +1,8 @@
 package com.doucome.corner.biz.dal;
 
+import java.util.List;
+
+import com.doucome.corner.biz.dal.condition.DdzAccountSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.DdzAccountDO;
 
 /**
@@ -18,4 +21,20 @@ public interface DdzAccountDAO {
     public void insertAccount(DdzAccountDO accountDO);
     
     public void updateAccount(DdzAccountDO accountDO);
+    
+    /**
+     * ≤È—Øaccount
+     * @param searchCondition
+     * @param start
+     * @param size
+     * @return
+     */
+    List<DdzAccountDO> queryAccountsWithPagination(DdzAccountSearchCondition searchCondition , int start , int size ) ;
+    
+    /**
+     * count account
+     * @param searchCondition
+     * @return
+     */
+    int countAccountsWithPagination(DdzAccountSearchCondition searchCondition) ;
 }

@@ -1,0 +1,89 @@
+#set($layout="zhe/myhome/default.vm")
+#set($title = "我的点点折")
+
+<div class="main-container">
+	##parse("/common/zhe/myhome/menu.vm")
+	<div class="content myhome-table">
+		<div class="nav">
+			<ol>
+				<li #if(!$statuses) class="current" #end>
+					<a href="${env.ddzRoot}/zhe/my.htm" title="全部"> 
+						<s class="left"></s>
+    					<p>
+    						全部
+    					</p> <s class="right"></s> 
+					</a>
+				</li>
+				<li #if($statuses == "P,F,U") class="current" #end>
+					<a href="${env.ddzRoot}/zhe/my.htm?statuses=P,F,U" title="待返利"> 
+    					<s class="left"></s>
+    					<p>
+							待返利
+						</p>
+					<s class="right"></s>
+                    </a>
+				</li>
+				<li #if($statuses == "S") class="current" #end>
+					<a href="${env.ddzRoot}/zhe/my.htm?statuses=S" title="已返利"> 
+    					<s class="left"></s>
+    					<p>
+							已返利
+						</p>
+					<s class="right"></s>
+                    </a>
+				</li>
+			</ol>
+		</div>
+		<table cellpadding="0" cellspacing="0" border="0">
+			<tr align="center" class="title">
+				<th class="width-144">确认收货时间</th>
+				<th class="width-192">商品名称</th>
+				<th class="width-96">数量</th>
+				<th class="width-144">成交价格</th>
+				<th class="width-96">折扣</th>
+				<th class="width-96">返现</th>
+				<th>状态</th>
+			</tr>
+			#if(!$alipayId)
+				<tr><td colspan="7"><div class="tip-angle-content">您的淘宝帐号没有绑定支付宝帐号，不能查询返现记录</div></td></tr>
+			#elseif($collectionUtils.isEmpty($itemList.items))
+                <tr><td colspan="7"><div class="tip-angle-content">没有返现记录</div></td></tr>
+			#else
+				#foreach($item in $itemList.items)
+					<tr align="center">
+    					<td class="first">$dateUtils.format($item.gmtCreate , "yyyy-MM-dd hh:mm:ss")</td>
+						<td class="color-blue">
+							<a title="$!item.itemTitle" href="http://item.taobao.com/item.htm?id=$!item.numIid" target="_blank">$!item.itemTitle</a>
+						</td>
+        				<td>$!item.itemNum</td>
+						#if($item.settleStatus == "S")
+    						#set($_td_color = "color-green")
+        				#else
+    						#set($_td_color = "color-oran")
+        				#end
+						<td class="color-gray"><strong>&yen;$!item.payPrice</strong></td>
+						<td class="$_td_color"><strong>$!decimalUtils.formatRatio($!item.commissionRate)</strong></td>
+						<td class="$_td_color"><strong>&yen;$!decimalUtils.formatPrice($!item.userCommission)</strong></td>
+        				#if($item.settleStatus == "S")
+    						<td class="last">已返利</td>
+        				#else
+    						<td class="last">待返利</td>
+        				#end
+    				</tr>
+				#end
+			#end
+		</table>
+		##分页
+		#if(!$collectionUtils.isEmpty($itemList.items))
+    		#set($page = $itemList.pagination.page)
+            #set($size = $itemList.pagination.size)
+            #set($totalRecords = $itemList.totalRecords)
+            #if($totalRecords>($itemList.pagination.totalPages * $size))
+            	#set($totalRecords=($itemList.pagination.totalPages * $size))
+            #end
+    		
+    		#set($pageURL=${env.ddzRoot} + "/zhe/my.htm")
+    		#parse("/common/zhe/page.vm")
+		#end
+	</div>
+</div>

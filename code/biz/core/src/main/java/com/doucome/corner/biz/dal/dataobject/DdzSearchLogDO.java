@@ -28,6 +28,8 @@ public class DdzSearchLogDO extends AbstractModel {
 	private BigDecimal commissionRate;
 
 	private BigDecimal price;
+	
+	private String searchTitle ;
 
 	private Date gmtCreate;
 
@@ -102,6 +104,14 @@ public class DdzSearchLogDO extends AbstractModel {
 
 	public void setGmtCreate(Date gmtCreate) {
 		this.gmtCreate = gmtCreate;
+	}
+
+	public String getSearchTitle() {
+		return searchTitle;
+	}
+
+	public void setSearchTitle(String searchTitle) {
+		this.searchTitle = searchTitle;
 	}
 
 }

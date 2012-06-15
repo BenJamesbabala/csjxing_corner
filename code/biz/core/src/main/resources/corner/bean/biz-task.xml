@@ -27,6 +27,7 @@
 		<property name="triggers">
 			<list>
 				<ref  bean="syncReportTrigger"/>
+				<ref  bean="syncBuyingRecommendTrigger"/>
 			</list>
 		</property>
 		<property name="applicationContextSchedulerContextKey">

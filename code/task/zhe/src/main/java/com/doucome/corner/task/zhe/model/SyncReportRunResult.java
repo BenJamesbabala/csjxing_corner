@@ -3,6 +3,8 @@ package com.doucome.corner.task.zhe.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import com.doucome.corner.biz.core.model.AbstractModel;
 import com.doucome.corner.biz.core.utils.JacksonHelper;
 
@@ -32,6 +34,10 @@ public class SyncReportRunResult {
 	 * 同步失败的页数
 	 */
 	private List<Page> failPages;
+	/**
+	 * 生成的结算报表信息.
+	 */
+	private SettleReportResult settleReportResult; 
 
 	public SyncReportCodeEnums getCode() {
 		return code;
@@ -75,6 +81,14 @@ public class SyncReportRunResult {
 
 	public void setFailPages(List<Page> failPages) {
 		this.failPages = failPages;
+	}
+
+	public SettleReportResult getSettleReportResult() {
+		return settleReportResult;
+	}
+
+	public void setSettleReportResult(SettleReportResult settleReportResult) {
+		this.settleReportResult = settleReportResult;
 	}
 
 	public static void main(String[] args) {
@@ -128,6 +142,41 @@ public class SyncReportRunResult {
 			this.size = size;
 		}
 
+	}
+	
+	public static class SettleReportResult {
+		private int totalCount;
+		private int succCount;
+		
+		public SettleReportResult() {
+			this(0, 0);
+		}
+		
+		public SettleReportResult(int totalCount, int succCount) {
+			this.totalCount = totalCount;
+			this.succCount = succCount;
+		}
+		
+		public int getTotalCount() {
+			return totalCount;
+		}
+		
+		public void setTotalCount(int totalCount) {
+			this.totalCount = totalCount;
+		}
+		
+		public int getSuccCount() {
+			return succCount;
+		}
+		
+		public void setSuccCount(int succCount) {
+			this.succCount = succCount;
+		}
+		
+		@Override
+		public String toString() {
+			return ToStringBuilder.reflectionToString(this);
+		}
 	}
 
 	@Override

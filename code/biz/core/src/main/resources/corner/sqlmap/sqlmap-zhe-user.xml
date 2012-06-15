@@ -16,20 +16,51 @@
 		<result property="userActive" column="USER_ACTIVE" jdbcType="VARCHAR" />
 		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
 		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtLastLogin" column="GMT_LAST_LOGIN" jdbcType="TIMESTAMP" />
 	</resultMap>
 	
 	<select id="queryByUid" resultMap="RM-ZHE-USER">
 		SELECT
-			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED
+			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
 		FROM 
 			DDZ_USER
 		WHERE 
 			UID = #uid#
 	</select>
 	
+	<update id="updateUser" parameterClass="TA-ZHE-USER">
+		update DDZ_USER
+		set GMT_MODIFIED = now()
+		<isNotEmpty property="taobaoId" prepend=",">
+			TAOBAO_ID = #taobaoId#
+		</isNotEmpty>
+		<isNotEmpty property="mobile" prepend=",">
+			MOBILE = #mobile#
+		</isNotEmpty>
+		<isNotEmpty property="email" prepend=",">
+			EMAIL = #email#
+		</isNotEmpty>
+		<isNotEmpty property="gender" prepend=",">
+			GENDER = #gender#
+		</isNotEmpty>
+		<isNotEmpty property="md5Password" prepend=",">
+			MD5_PASSWORD = #md5Password#
+		</isNotEmpty>
+		<isNotEmpty property="userActive" prepend=",">
+			USER_ACTIVE = #userActive#
+		</isNotEmpty>
+		where UID = #uid#
+	</update>
+	
+	<update id="updateLastLoginTime">
+		update DDZ_USER
+		set GMT_MODIFIED = now(),GMT_LAST_LOGIN = now()
+		where UID = #uid#
+	</update>
+	
 	<select id="queryByLoginId" resultMap="RM-ZHE-USER">
 		SELECT
-			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED
+			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
 		FROM 
 			DDZ_USER
 		WHERE 
@@ -38,7 +69,7 @@
 	
 	<select id="queryByLoginIdAndPassword" resultMap="RM-ZHE-USER">
 		SELECT
-			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED
+			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
 		FROM 
 			DDZ_USER
 		WHERE 
@@ -49,9 +80,9 @@
 
 	<insert id="insertUser">
 		INSERT INTO DDZ_USER
-			(ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED)
+			(ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN)
 		VALUES
-			(#id#,#uid#,#loginId#,#taobaoId#,#mobile#,#email#,#gender#,#md5Password#,#userActive#,now(),now())
+			(#id#,#uid#,#loginId#,#taobaoId#,#mobile#,#email#,#gender#,#md5Password#,#userActive#,now(),now(),now())
 		<selectKey resultClass="java.lang.Integer" keyProperty="id">
     		<![CDATA[
 				SELECT LAST_INSERT_ID() AS ID

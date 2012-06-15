@@ -82,4 +82,21 @@ public class ValidateUtil {
     public static boolean checkEmailFormat(String email) {
         return !(StringUtils.isBlank(email) || email.length() > 50 || !checkIsEmail(email));
     }
+    
+    /**
+     *  «∑Ò «÷ß∏∂±¶
+     * @param alipay
+     * @return
+     */
+    public static boolean checkIsAlipay(String alipay){
+    	if(StringUtils.isBlank(alipay)){
+    		return false ;
+    	}
+    	
+    	if(!checkIsEmail(alipay) && !checkIsMobile(alipay)){
+    		return false ;
+    	}
+    	
+    	return true ;
+    }
 }

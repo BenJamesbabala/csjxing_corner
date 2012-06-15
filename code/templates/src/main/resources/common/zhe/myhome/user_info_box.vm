@@ -1,0 +1,19 @@
+<div class="user-info-box">
+	<div class="user-head">
+		<img width="66" height="66" alt="头像" src="${env.ddzStaticroot}/img/default-face.png">
+	</div>
+	<div class="user-info">
+		<p class="font-strong">
+			$!{ddzAuthz.loginId}
+		</p>
+		<p class="font-strong">
+			您好！
+		</p>
+    	<div>
+    		<span class="tips">您当前绑定的支付宝帐号为：</span>
+    		<span class="account-id">$!{ddzAuthz.alipayId}</span>
+    		<span class="mobile-notice"><s></s><a href="#">短信通知</a></span>
+    		<span class="email-notice"><s></s><a href="#">邮件通知</a></span>
+    	</div>
+	</div>
+</div>

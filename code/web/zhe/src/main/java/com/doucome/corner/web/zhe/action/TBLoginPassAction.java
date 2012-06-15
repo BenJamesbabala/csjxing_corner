@@ -37,6 +37,8 @@ public class TBLoginPassAction extends DdzBasicAction implements ModelDriven<Top
 
     private static final Log         taobao_log           = LogFactory.getLog(LogConstant.taobao_log);
 
+    private static final Log         signin_log           = LogFactory.getLog(LogConstant.signin_log);
+
     private TopCallbackParameter     topCallbackParameter = new TopCallbackParameter();
 
     @Autowired
@@ -85,6 +87,7 @@ public class TBLoginPassAction extends DdzBasicAction implements ModelDriven<Top
                         ddzAccountService.insertOrUpdateAccount(user.getUid(), tbUserDTO.getAlipayAccount());
                     }
                     ddzSessionOperator.load(user.getUid());
+                    doSomethingAfterLogin(user);
                     return SUCCESS;
                 }
             }
@@ -97,9 +100,36 @@ public class TBLoginPassAction extends DdzBasicAction implements ModelDriven<Top
         }
         return SUCCESS;
     }
-    
-    public String tbkLogin(){
-    	return SUCCESS ;
+
+    /**
+     * 登陆之后的后置事务
+     * 
+     * @param user
+     */
+    public void doSomethingAfterLogin(DdzUserDO user) {
+        ddzUserService.updateLastLoginTime(user.getUid());
+        signinLog(user, true);
+    }
+
+    public void signinLog(DdzUserDO user, boolean isSuccess) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("{ip:[");
+        builder.append(getRequest().getRemoteAddr());
+        builder.append("],uid:");
+        builder.append(user.getUid());
+        builder.append(", loginId:");
+        builder.append(user.getLoginId());
+        if (isSuccess) {
+            builder.append("  [success]");
+        } else {
+            builder.append("  [fail]");
+        }
+        builder.append("}");
+        signin_log.info(builder.toString());
+    }
+
+    public String tbkLogin() {
+        return SUCCESS;
     }
 
     /**

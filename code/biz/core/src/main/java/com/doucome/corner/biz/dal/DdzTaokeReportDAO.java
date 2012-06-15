@@ -2,7 +2,6 @@ package com.doucome.corner.biz.dal;
 
 import java.util.List;
 
-import com.doucome.corner.biz.core.enums.AlipayStatusEnum;
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.taobao.model.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
@@ -35,6 +34,14 @@ public interface DdzTaokeReportDAO {
 	 * @return
 	 */
 	DdzTaokeReportDO getReportById(Long reportId);
+	
+	/**
+	 * 根据SettleId查询报表
+	 * @param settleId
+	 * @return
+	 */
+	List<DdzTaokeReportDO> selectReportsBySettleId(Integer settleId) ;
+	
 	/**
 	 * 报表查询
 	 * @param searchCondition
@@ -43,39 +50,37 @@ public interface DdzTaokeReportDAO {
 	 * @return
 	 */
 	List<DdzTaokeReportDO> selectReportsWithPagination(TaokeReportSearchCondition searchCondition , int start , int size ) ;
-	
+	/**
+	 * 
+	 * @param pagination
+	 * @return
+	 */
+	List<AlipayItemDO> getUnMergedReportSettleInfo(Pagination pagination);
 	/**
 	 * 
 	 * @param searchCondition
 	 * @return
 	 */
 	int countReportsWithPagination(TaokeReportSearchCondition searchCondition) ;
+	
 	/**
 	 * 
-	 * @param pagination
+	 * @param settleDOs
 	 * @return
 	 */
-	List<AlipayItemDO> getAlipayItemWithPagination(Pagination pagination);
+	int updateSettleStatusBySettleReport(List<DdzTaokeReportDO> settleDOs);
 	/**
 	 * 
-	 * @param pagination
+	 * @param ids
 	 * @return
 	 */
-	Integer countAlipayItem();
+	int updateTaokeReportSettleId(List<Long> reportIds, Long settleId);
+	
 	/**
-	 * 更新淘客报表结算状态.
-	 * @param taokeReportIds 淘客报表id.
-	 * @param settleStatus 
+	 * 
+	 * @param reportIds
+	 * @param settleStatus
 	 * @return
 	 */
-	int updateTaokeReportSettleStatus(List<String> reportIds, String settleStatus, String internalBatchNO);
-	/**
-	 * 更新淘客报表支付宝支付状态.
-	 * @param reportIds .
-	 * @param status .
-	 * @param alipayBatchNO .
-	 * @return
-	 */
-	int updateTaokeReportAlipayResult(List<String> reportIds, String status, String alipayBatchNO);
-
+	int updateTaokeReportSettleStatus(List<Integer> settleIds , String settleStatus) ;
 }

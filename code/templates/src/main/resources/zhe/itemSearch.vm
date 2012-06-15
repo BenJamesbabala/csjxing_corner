@@ -1,4 +1,5 @@
 #set($layout="zhe/default_main.vm")
+#set($title = $item.title)
 
 #if($item)
     	
@@ -9,96 +10,83 @@
     #else
 		#set($itemClickUrl = $item.detailUrl)
 	#end
-    <div class="item-nav dd-clr">
-    	<ul>
-    		<li class="w82">&nbsp;</li>
-    		<li class="w240">&nbsp;</li>
-    		<li class="w180">淘宝现价</li>
-    		<li class="w140">可为您返利</li>
-    	</ul>
-    </div>
-    <div class="item dd-clr">
-    	<ul>
-    		<li>
-    			<div class="img-container">
-    				<a href="$!itemClickUrl" title="$!item.title" target="_blank">
-    					<img src="$!item.sumPicUrl" alt="$!item.title" />
-    				</a>
-    			</div>
-    			<div class="title-container dd-gray">
-    				<p>
-    					<h1>
-    						<a href="$!itemClickUrl" class="title dd-gray" title="$!item.title" target="_blank">$!item.title</a>
-    					</h1>
-    				</p>
-    				<!--
-    				<p>
-    					<span class="place">浙江 嘉兴</span>
-    					<span class="trade-count">最近成交1笔</span>
-    				</p>
-    				<p>
-    					<a href="#" title="玖姿旗舰店" class="dd-gray">玖姿旗舰店</a>
-    					<img src="http://pics.taobaocdn.com/newrank/s_cap_3.gif" />
-    				</p>
-    				-->
-    			</div>
-    			<div class="current-price">
-    				<span class="f16">&yen;</span><span class="current-color">$decimalUtils.format($!item.showPrice,'######0.00')</span><br/>
-    			</div>
-    			<div class="discount-price">
-					<!--
-    				<span class="f18 yen-color">&yen;</span><span class="discount-color">$decimalUtils.format($!item.commission , '#####')<span class="f18">$decimalUtils.fractionFormat($!item.commission , '.00')</span></span>
-					-->
-					<!-- $!item.commissionRate |  $!item.commission -->
-					
-					#set($rate = $decimalUtils.divide($!item.userCommissionRate,"100.00"))
-					
-					<div><span class="f18 yen-color"></span><span class="discount-color">$decimalUtils.format($!rate , '####0.00')<span class="f18">%</span></span></div>
-					<div><span class="" style="font-size:9pt;color:#EE4D98;float:left;margin-left:30px;margin-top:-5px;margin-bottom:-20px;">返利：&yen;$decimalUtils.format($!item.userCommission , '####0.00')</span></div>
-    			</div>
-    		</li>
-    	</ul>
-    </div>
     
-    #if($item.clickUrlShorten)
         #if($alipayId)
-        <div class="show-url dd-gray" id="discount_url">
-        	<p class="dd-clr">
-        		<label class="show-label">为支付宝账号 “<span class="alipay-color dd-bold">$!alipayId</span>” 生成的折扣连接：</label>
-        		<a href="javascript:;" class="underline dd-gray" id="change_alipay">更改支付宝账号</a>
-        	</p>
-        	<p class="url dd-clr">
-        		<a href="$!itemClickUrl" class="f16 dd-bold underline" target="_blank">$!itemClickUrl</a>
-        		<i class="left-arrow"></i>
-        		<label class="f14 dd-bold fcolor3">点击链接，去淘宝购买</label>
-        	</p>
-        	<p class="dd-right tip">
-    			<!--
-        		<i class="light-icon"></i><a href="#" class="dd-gray">我什么时候能受到返利？</a>
-    			-->
-        	</p>
-        </div>
-    	<div class="input-alipay dd-clr dd-hide" id="alipay_input">
-        	<form method="get" action="${env.ddzRoot}/zhe/item.htm" name="alipay-form" id="alipay_form">
-        		<input type="hidden" name="id" value="$!id"/>
-        		<label>请输入支付宝账号：</label>
-        		<input type="text" name="alipayId" class="alipay-count"  id="alipayInput" />
-        		<input type="submit" value="" class="alipay-count-submit" id="alipaySubmit"/ />
-        	</form>
-        </div>
-        #else
-        <div class="input-alipay dd-clr">
-        	<form method="get" action="${env.ddzRoot}/zhe/item.htm" name="alipay-form" id="alipay_form">
-        		<input type="hidden" name="id" value="$!id"/>
-        		<label>请输入支付宝账号：</label>
-        		<input type="text" name="alipayId" class="alipay-count" id="alipayInput" />
-        		<input type="submit" value="" class="alipay-count-submit" id="alipaySubmit"/>
-        	</form>
-        </div>
+			#set($cssName = "main-result-buy")
+		#else
+			#set($cssName = "main-result-ipt")
 		#end
-	#end
-	
-
+		
+		<div class="$cssName dd-clr" id="item-show">
+			#if($guideVar.step3)
+			<div class="step3 dd-hide" id="step3"></div>
+			#end
+        	<div></div>
+        	<div class="item-view">
+                <ul>
+                	<li>
+                		<div class="item-img-view">
+                			<a href="$!itemClickUrl" title="$!item.title" class="gtrack" gtrack="zhe/taobao/item/$!item.numIid?from=imgUrl" target="_blank"> <img src="$!item.sumPicUrl" alt="$!item.title" /> </a>
+                		</div>
+                		<div class="item-title-view dd-gray">
+                			<a href="$!itemClickUrl" title="$!item.title" class="gtrack" gtrack="zhe/taobao/item/$!item.numIid?from=titleUrl" target="_blank">$!item.title</a>
+                		</div>
+                		<div class="discount-rate-view">
+							#set($rate = $decimalUtils.formatTaobaoRate($!item.userCommissionRate))
+                			<span class="discount-rate-num-int-view">$decimalUtils.format($rate ,"0")</span>
+							<span class="discount-rate-num-float-view">$decimalUtils.fractionFormat($!rate,".00")</span>
+                			<span class="discount-rate-percent-view">%</span>
+                		</div>
+                		<div class="item-price-view">
+                            <span class="item-price-origin-view">原价:$decimalUtils.format($!item.showPrice,'######0.00')</span>
+                			<span class="item-price-discount-view item-price-discount">返利:<strong>&yen;$decimalUtils.formatPrice($!item.userCommission)</strong></span>
+                		</div>
+                	</li>
+                </ul>
+        	</div>
+			##显示折扣链接
+            <div class="item-buy">
+            	<div class="alipay-text-buy">
+            		为支付宝账号 “<strong>$!alipayId</strong>” 生成的折扣链接：
+            	</div>
+            	<div class="alipay-text-change">
+            		<a href="javascript:;" id="change_alipay"><strong>更改支付宝账号>></strong></a>
+				</div>
+            	<div class="item-buy-url">
+            		<a href="$!itemClickUrl" id="buy_go_url" target="_blank" class="gtrack" gtrack="zhe/taobao/item/$!item.numIid?from=buyUrl"><strong>$!itemClickUrl</strong></a>
+            	</div>
+            	<div class="item-buy-go"></div>
+            </div>
+			##显示输入支付宝的页面
+            <div class="item-ipt">
+				<form method="get" action="${env.ddzRoot}/zhe/item.htm" name="alipay-form" id="alipay_form">
+					<input type="hidden" name="id" value="$!id"/>
+					#if($userGuide)
+						<input type="hidden" name="userGuide" value="true"/>
+					#end
+                   	<div class="alipay-text-ipt  mfu">
+                   		<strong>请输入支付宝账号：</strong>
+                   	</div>
+                   	<div class="alipay-input-ipt">
+                   		<input class="alipay-input-ipt" type="text" name="alipayId" id="alipayInput" />
+                   	</div>
+					<a href="#" id="alipaySubmit">
+                       	<div class="alipay-submit-ipt">
+                       	</div>
+					</a>
+                </form>
+            </div>
+			#if($guideVar.step4 && $userGuide)
+			<div class="step4 dd-hide" id="step4"></div>
+			#end
+			#if($userGuide)
+			<div class="step5 dd-hide" id="step5"></div>
+			<div class="step6 dd-hide" id="step6"></div>
+			#end
+        </div>
+		
+		
+		
 #else
 	<div class="find-none dd-clr">
 		对不起，该商品木有折扣!
