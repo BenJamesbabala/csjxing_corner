@@ -19,6 +19,5 @@
 	<bean id="ddzUserDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzUserDAO"/>
 	<bean id="ddzSyncReportTaskDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzSyncReportTaskDAO"/>
 	<bean id="ddzTaokeReportSettleDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzTaokeReportSettleDAO"/>
-	<bean id="ddzRecommendDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzRecommendDAO"/>
-	<bean id="ddzRecommendTaskDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzRecommendTaskDAO"/>
+	<bean id="ddzConfigDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzConfigDAO"/>
 </beans>

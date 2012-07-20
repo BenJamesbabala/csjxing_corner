@@ -44,6 +44,11 @@ public class DdzTaokeReportDO extends AbstractModel {
 	 * 商品ID
 	 */
 	private Long numIid;
+	
+	/**
+	 * 图片地址
+	 */
+	private String picUrl ;
 
 	/**
 	 * 标题
@@ -148,6 +153,14 @@ public class DdzTaokeReportDO extends AbstractModel {
 		this.userCommissionRate = userCommissionRate;
 	}
 
+	public String getPicUrl() {
+		return picUrl;
+	}
+
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -204,7 +217,7 @@ public class DdzTaokeReportDO extends AbstractModel {
 		this.payPrice = payPrice;
 	}
 
-	public long getNumIid() {
+	public Long getNumIid() {
 		return numIid;
 	}
 

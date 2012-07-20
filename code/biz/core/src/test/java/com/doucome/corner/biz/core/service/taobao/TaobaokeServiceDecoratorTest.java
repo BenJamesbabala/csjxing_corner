@@ -3,6 +3,7 @@ package com.doucome.corner.biz.core.service.taobao;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.http.impl.cookie.DateUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,7 +17,7 @@ import com.doucome.corner.biz.core.taobao.dto.TaobaokeReportMemberDTO;
 import com.doucome.corner.biz.core.taobao.model.TaobaokeDate;
 import com.doucome.corner.biz.core.taobao.model.TaokeCaturlCondition;
 import com.doucome.corner.biz.core.taobao.model.TaokeItemSearchCondition;
-import com.doucome.corner.test.AbstractBaseJUnit4Test;
+import com.doucome.corner.unittest.AbstractBaseJUnit4Test;
 
 @ContextConfiguration(locations = { "classpath:biz-core-test.xml" })
 public class TaobaokeServiceDecoratorTest extends AbstractBaseJUnit4Test {
@@ -57,11 +58,14 @@ public class TaobaokeServiceDecoratorTest extends AbstractBaseJUnit4Test {
 	}
 
 	@Test
-	public void test_getReport(){
+	public void test_getReport() throws Exception{
 		/**
 		 * http://www.dujiaok.com/home/index.htm?top_appkey=12512482&top_parameters=ZXhwaXJlc19pbj0zMTUzNjAwMSZpZnJhbWU9MSZyZV9leHBpcmVzX2luPTAmcmVmcmVzaF90b2tlbj02MTAxNjI1YWE4Y2QxMzI1YWM1YmFiMGE4MTZmNWEyZTQxMzI1NzRjZmJhNTIxMjY2NDQyOTg5JnRzPTEzMzA2ODQwOTYzNTYmdmlzaXRvcl9pZD02NjQ0Mjk4OSZ2aXNpdG9yX25pY2s9Ymx1ZWNvbA%253D%253D&top_session=6100325c033f0978829e8328831d34a011c96d656a530a466442989&top_sign=toCJIM8uRvGVYo%252BXpl7V%252Bg%253D%253D
 		 */
-		QueryResult<TaobaokeReportMemberDTO> result = taobaokeServiceDecorator.getReport(new TaobaokeDate(new Date()), new String[]{
+		
+		Date d = DateUtils.parseDate("2012-05-28", new String[]{"yyyy-MM-dd"}) ;
+		
+		QueryResult<TaobaokeReportMemberDTO> result = taobaokeServiceDecorator.getReport(new TaobaokeDate(d), new String[]{
 			TaokeReportMembConst.item_num , 
 			TaokeReportMembConst.item_title ,
 			TaokeReportMembConst.commission_rate ,

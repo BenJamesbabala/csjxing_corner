@@ -34,25 +34,18 @@ public class SearchAction extends BasicAction  {
      */
     @Override
     public String execute() throws Exception {
-        if (StringUtils.isNotBlank(wd)) {
-            URLModel model = HttpUrlHelper.parseURL(wd);
-            if (model != null) {
-                // taobao url
-                id = TaobaoUrlUtils.parseItemId(model);
-                if (StringUtils.isNotBlank(id)) {
-                	if(userGuide){
-                		return "itemGuide" ;
-                	}
-                    return SearchWayEnums.ITEM.getValue();
-                }
+    	URLModel model = HttpUrlHelper.parseURL(wd);
+        if (model != null) {
+            // taobao url
+            id = TaobaoUrlUtils.parseItemId(model);
+            if (StringUtils.isNotBlank(id)) {
+            	if(userGuide){
+            		return "itemGuide" ;
+            	}
             }
-            // keywords
-            wd = URLEncoder.encode(wd, Constant.ENCODING);
-            String md5 = MD5Util.getMD5(wd);
-            mark = StringUtils.substring(md5, 26).toLowerCase();
-            return SearchWayEnums.KEYWORD.getValue();
         }
-        return SearchWayEnums.KEYWORD.getValue();
+        
+        return SearchWayEnums.ITEM.getValue();
     }
 
 

@@ -26,5 +26,9 @@
 			<artifactId>corner.biz.zhe</artifactId>
 			<version>${pom.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
 	</dependencies>
 </project>

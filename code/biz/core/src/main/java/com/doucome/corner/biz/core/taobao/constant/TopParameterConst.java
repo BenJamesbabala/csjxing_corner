@@ -27,6 +27,8 @@ public class TopParameterConst {
 	 */
 	public static final String visitor_nick = "visitor_nick" ;
 	
+	public static final String nick = "nick" ;
+	
 	/**
 	 * 当前用户角色
 	 */

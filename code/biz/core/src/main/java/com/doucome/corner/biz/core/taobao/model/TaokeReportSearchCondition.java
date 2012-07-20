@@ -1,6 +1,8 @@
 package com.doucome.corner.biz.core.taobao.model;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -25,10 +27,33 @@ public class TaokeReportSearchCondition extends AbstractModel {
     private Date     gmtSettledStart;
 
     private Date     gmtSettledEnd;
+    
+    private Date 	 gmtCreateStart ;
+    
+    private Date 	 gmtCreateEnd ;
 
     private String   payBatchno;
 
     private Long     settleId;
+    
+    public Map<String,Object> toMap(){
+    	Map<String,Object> condition = new HashMap<String,Object>() ;
+    	condition.put("gmtPaidStart", gmtPaidStart) ;
+    	condition.put("gmtPaidEnd", gmtPaidEnd) ;
+    	condition.put("settleStatus", settleStatus) ;
+    	condition.put("settleStatusList", settleStatusList) ;
+    	condition.put("settleUid", settleUid) ;
+    	condition.put("settleTaobaoNick", settleTaobaoNick) ;
+    	condition.put("settleAlipay", settleAlipay) ;
+    	condition.put("gmtSettledStart", gmtSettledStart) ;
+    	condition.put("gmtSettledEnd", gmtSettledEnd) ;
+    	condition.put("gmtCreateStart", gmtCreateStart) ;
+    	condition.put("gmtCreateEnd", gmtCreateEnd) ;
+    	condition.put("payBatchno", payBatchno) ;
+    	condition.put("settleId", settleId) ;
+    	
+    	return condition ;
+    }
 
     public Long getSettleId() {
         return settleId;
@@ -117,4 +142,21 @@ public class TaokeReportSearchCondition extends AbstractModel {
     public void setSettleTaobaoNick(String settleTaobaoNick) {
         this.settleTaobaoNick = StringUtils.trim(settleTaobaoNick);
     }
+
+	public Date getGmtCreateStart() {
+		return gmtCreateStart;
+	}
+
+	public void setGmtCreateStart(Date gmtCreateStart) {
+		this.gmtCreateStart = gmtCreateStart;
+	}
+
+	public Date getGmtCreateEnd() {
+		return gmtCreateEnd;
+	}
+
+	public void setGmtCreateEnd(Date gmtCreateEnd) {
+		this.gmtCreateEnd = gmtCreateEnd;
+	}
+    
 }

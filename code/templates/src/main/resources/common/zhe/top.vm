@@ -3,12 +3,14 @@
 		<a class="header-logo" href="${env.ddzRoot}/zhe/index.htm" title="点点折 省钱不止一点点"></a>
 		<span class="header-logo-bubble"></span>
 		<span class="header-left">
+			#**
 			#if($!{ddzAuthz.isLogin()})
 				您好，<a href="${env.ddzRoot}/zhe/my.htm">$!{ddzAuthz.loginId}</a>
 				&nbsp;&nbsp;<a href="${env.ddzRoot}/zhe/logout.htm">退出</a>
 			#else
 				<a href="${env.ddzRoot}/zhe/tblogin.htm">查看返利记录</a>
 			#end
+			**# 
 		</span>
 		<span class="header-right">
 			<iframe width="136" height="24" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0" scrolling="no" border="0" src="http://widget.weibo.com/relationship/followbutton.php?language=zh_cn&width=136&height=24&uid=2698347393&style=2&btn=light&dpc=1"></iframe>			

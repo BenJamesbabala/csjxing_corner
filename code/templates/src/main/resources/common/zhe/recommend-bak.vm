@@ -1,0 +1,59 @@
+
+#if(!$collectionUtils.isEmpty($buyingRecommendList))
+
+#DDZ_CSS(["home/control/widget/home/recommend.css"])
+
+<style>
+	
+	
+</style>
+
+<div class="mod mod-index" id="tdSuperPrice" style="text-align:left;"> 
+    <div class="hd">
+      <h2>今日超值推荐</h2>
+	  <!--
+                    <div class="ico-buttons">
+                      <a hidefocus="true" href="javascript:void(0);" class="">1</a>
+                      <a hidefocus="true" href="javascript:void(0);" class="current">2</a>
+                      <a hidefocus="true" href="javascript:void(0);" class="">3</a>
+                  </div>
+		-->
+          </div>
+    <div class="bd">
+        <div class="deal-list"  id="mycarousel">
+			<!--
+                     <a hidefocus="true" title="上一组" class="in-ico-btn-pre" href="javascript:void(0);"><b>上一组</b></a>
+					 <a hidefocus="true" title="下一组" class="in-ico-btn-next" href="javascript:void(0);"><b>下一组</b></a>
+			-->
+					 <ul class="clearfix" style="overflow: hidden;">
+						#foreach($item in $buyingRecommendList)
+						<li class="">
+						  #set($idx = $velocityCount)
+						  #if($idx > 9)
+							#set($topcls = "recomm_top_" + ($idx - 9))
+						  #else
+							#set($topcls  = "recomm_top_" + $idx)
+							
+						  #end
+						  <div class="recomm_top $topcls">
+							<div>
+							<span class="price">$item.privateSettleAlipay 刚省了 </span><span class="commission">&yen;$decimalUtils.format($item.originUserCommission,'0.0')</span></div>
+						  </div>
+                          <div class="deal-list-ctn">
+                            <a target="_blank" href="${env.ddzRoot}/zhe/item/$!item.numIid?tracelog=index_rmd" title="$!item.itemTitle">
+                              <!--<b class="tips-$velocityCount">$velocityCount</b>-->							  
+							  <div>
+								<img width="160" height="160" alt="$!item.itemTitle" src="$item.getPicUrl('160x160')" data-pinit="registered"></img>
+                              </div>
+                            </a>
+                          </div>
+                        </li>
+						#end
+            		</ul>
+        </div>
+    </div>
+</div>
+
+
+
+#end

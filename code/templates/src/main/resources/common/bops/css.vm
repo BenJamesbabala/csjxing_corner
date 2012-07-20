@@ -3,6 +3,19 @@ body {
 	witdh: 100% ;
 }
 
+ul {
+	margin:0 ;
+	padding:0 ;
+}
+
+ul li , ol li {
+	list-style:none ;
+}
+
+.dd-hide {
+	display : none ;
+}
+
 .bops {
 	float:right:
 	text-align:left;
@@ -110,5 +123,76 @@ body {
 	font-size : 14px;
 	padding:3px;
 	background-color : #eeeeee;
+}
+
+
+/**********************************/
+
+	
+.layer_tips_version {
+    border-color: #f8e2ae;
+    border-radius: 6px 6px 6px 6px;
+    border-style: solid;
+    border-width: 1px 1px 2px;
+    color: #666666;
+    padding: 0;
+}
+
+
+
+.layer_tips_bg {
+    background: none repeat scroll 0 0 #fefff2;
+    border-radius: 6px 6px 6px 6px;
+    height: 100%;
+    overflow: hidden;
+    padding: 0 ;
+}
+
+.layer_tips .arrow_up {
+	background-position: -20px 0;
+    height: 10px;
+    left: 20px;
+    margin: 7px auto 0;
+    overflow: hidden;
+    position: absolute;
+    top: -17px;
+    width: 19px;
+}
+
+.layer_tips .arrow_down {
+	background-position: 0 0;
+    bottom: -10px;
+    height: 10px;
+    left: 20px;
+    margin: 7px auto 0;
+    overflow: hidden;
+    position: absolute;
+    width: 19px;
+}
+
+.layer_tips ul {
+	margin:5px 10px;
+}
+
+.layer_tips .arrow_left {
+	background-position: 0 -20px;
+    bottom: 5px;
+    height: 19px;
+    left: -10px;
+    margin: 7px auto 0;
+    overflow: hidden;
+    position: absolute;
+    width: 10px;
+}
+
+.layer_tips_version li.btn {
+    text-align: right;
+}
+
+.layer_tips .arrow_up , .layer_tips .arrow_down , .layer_tips .arrow_left , .layer_tips .arrow_right {
+	background-image: url(http://style.diandianzhe.com/corner/img/layer_arrow.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+    display: inline-block;
 }
 

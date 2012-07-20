@@ -1,6 +1,7 @@
 package com.doucome.corner.biz.core.utils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 import org.apache.commons.lang.StringUtils;
@@ -12,10 +13,19 @@ public class DecimalTool extends DecimalUtils {
 
     public static String format(BigDecimal decimal, String pattern) {
         if (decimal == null) {
-            return "";
+            decimal = new BigDecimal(0) ;
         }
         DecimalFormat f = new DecimalFormat(pattern);
         return f.format(decimal);
+    }
+    
+    public static String integerPart(BigDecimal decimal){
+    	if(decimal == null){
+    		return "" ;
+    	}
+    	DecimalFormat f = new DecimalFormat("0");
+    	f.setRoundingMode(RoundingMode.DOWN) ;
+    	return f.format(decimal);
     }
 
     /**

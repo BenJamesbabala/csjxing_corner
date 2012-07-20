@@ -1,0 +1,4 @@
+#set($layout="default.vm")
+#foreach($cfg in $configs)
+	<a href="${env.ddzRoot}/zhe/keyword/m/1?keyword=$stringUtils.urlEncode($cfg.value)">$cfg.value</a>
+#end

@@ -46,6 +46,10 @@ public class EnvPropertiesToolbox {
 		return DefaultUriService.getFactoryURI(URIConstant.DDZ_STATIC_SERVER) ;
 	}
 	
+	public String getDdzHelproot(){
+		return DefaultUriService.getFactoryURI(URIConstant.DDZ_HELP_SERVER) ;
+	}
+	
 	public String getSurlRoot(){
 		return DefaultUriService.getFactoryURI(URIConstant.SURL_SERVER) ;
 	}

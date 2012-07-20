@@ -29,6 +29,10 @@ public enum SettleStatusEnums {
 	 * 结算成功
 	 */
 	SETTLE_SUCCESS("S") ,
+	/**
+	 * 延迟结算
+	 */
+	DELAY_SETTLE("D") ,
 	
 	UNKNOWN("") ,
 	;
@@ -46,7 +50,7 @@ public enum SettleStatusEnums {
 	public static SettleStatusEnums fromValue(String value){
 		for(SettleStatusEnums e : SettleStatusEnums.values()){
 			if(StringUtils.equals(e.getValue(), value)){
-				return e ;
+				return e;
 			}
 		}
 		return UNKNOWN ;

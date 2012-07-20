@@ -21,7 +21,7 @@
   	<uri id="taobaoLoginLink">
   		<path>
   		<![CDATA[
-  		${corner_api_taobao_login_url}?appkey=${corner_api_taobao_appkey}
+  		${corner_api_taobao_login_url}?response_type=user&client_id=${corner_api_taobao_appkey}&redirect_uri=http://${corner_domainName}:${corner_port}/zhe/tblogin_pass.htm
   		]]>
   		</path>
   	</uri>

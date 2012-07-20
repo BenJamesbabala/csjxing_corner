@@ -9,13 +9,13 @@
 				</a>
 			</li>
 			<li class="tool-center tool-item-rborder">
-				<a target="_blank" href="${env.ddzRoot}/zhe/help/faq.htm">
+				<a target="_blank" href="${env.ddzHelproot}/help/help.html" gtrack="virtual/zhe/help">
 					<p class="tool-title f22">帮助中心</p>
 					<p class="tool-content f14">常见问题FAQ</p>
 				</a>
 			</li>
 			<li class="tool-right tool-item-rborder">
-				<a href="#" id="toolFeedback">
+				<a href="http://weibo.com/diandianzhe" id="toolFeedback" target="_blank">
     				<p class="tool-title f22">意见反馈</p>
     				<p class="tool-content f14">提交您的建议</p>
                 </a>

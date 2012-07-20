@@ -1,254 +1,176 @@
 #set($layout="zhe/default_list.vm")
+<div style="height:40px;">
+</div>
 #DDZ_CSS(["home/screens/myhome/faq.css"])
 <div class="main-container w990">
     <div class="menu">
-        <div class="menu-title font-strong">
-            <h4 align="left "  style="font-size: 20px;" >帮助中心</h4>
-        </div>
-        <div class="memu-list">
-            <ul>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q1">什么是返利?</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q2">哪些网购商品可以享受返利？</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q3">怎样知道商品有没有返利?</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q4">点点折支持商品关键字搜索吗？</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q5">怎样计算返利金额？</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q6">返利比率是固定的吗？</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q7">这些情况下还能享受返利吗？</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q8">我什么时候能收到返利？</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q9">哪些商品不会返利?</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q10">如何查看我的返利记录？</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q11">返利链接有效期是多久？</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q12">收不到点点折返利通知邮件怎么办？</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="dd-left">
-                            <a href="#q13">为什么在后台中无法查到返利记录？</a>
-                        </span>
-                        <div class=" dd-clear"></div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    	<div id="helpMenu" class="helpMenu">
+    	    <h2>帮助中心</h2>
+    	    <h4>
+    	    	<a href="#" onclick="javascript:display('content1')">什么是返利?</a>
+    	    	<a href="#" onclick="javascript:display('content2')">使用点点折安全吗？</a>
+    	    	<a href="#" onclick="javascript:display('content3')">哪些网购商品可以享受返利？</a>
+    	    	<a href="#" onclick="javascript:display('content4')">聚划算的商品如何返利？</a>
+    	    	<a href="#" onclick="javascript:display('content5')">哪些商品不会有返利?</a>
+    	    	<a href="#" onclick="javascript:display('content6')">如何查询商品是否有返利?</a>
+    	    	<a href="#" onclick="javascript:display('content7')">点点折支持商品关键字搜索吗？</a>
+    	    	<a href="#" onclick="javascript:display('content8')">怎样计算返利金额？</a>
+    	    	<a href="#" onclick="javascript:display('content9')">返利比率是固定的吗？</a>
+    	    	<a href="#" onclick="javascript:display('content10')">以下情况还能享受返利吗？</a>
+    	    	<a href="#" onclick="javascript:display('content11')">点点折返利链接有效期是多久？</a>
+                <a href="#" onclick="javascript:display('content12')">我什么时候能收到返利？</a>
+                <a href="#" onclick="javascript:display('content13')">如何查看我的返利明细？</a>
+                <a href="#" onclick="javascript:display('content14')">返利结算后，点点折会通知我吗？</a>
+                <a href="#" onclick="javascript:display('content15')">收不到点点折通知邮件怎么办？</a>
+                <a href="#" onclick="javascript:display('content16')">购买后收不到返利怎么办？</a>
+    	    </h4>	
+    	</div>
     </div>
-    <div class="content myhome-table">
-        <table cellpadding="0" cellspacing="0" border="0">
-            <tr align="center" class="title">
-                <th class="width-144"></th>
-            </tr>
-            <tr align="center">
-                <td class="first">
-                    <div class="faq-content">
-                        <h2 id="q1"  class="faq-h2" >
-                            <em class="faq_gou"></em>
-                            什么是返利？</h2>
-                            <p>
-                                返利是付费推广机制的一种形式，简单讲就是很多商家在商品利润中预留了一部分给推广者。点点折则是让买家自己以推广者的身份购买，享受商家提供的推广回报获取现金返还，简称返利。</p>
-                                <div class="faq-line"></div>
-                                <h2 id="q2" class="faq-h2" >
-                                    <em class="faq_gou"></em>
-                                    哪些网购商品可以享受返利？</h2>
-                                    <p>
-                                        目前只支持淘宝网的商品返利。后续会接入更多商家。
-                                    </p>
-                                    <div class="faq-line"></div>
-                                    <h2 id="q3" class="faq-h2" >
-                                        <em class="faq_gou"></em>
-                                        怎样知道商品有没有返利？</h2>
-                                        <p>
-                                            您只需将在淘宝网挑好的商品链接复制到点点折搜索框，点击查询就能获得返利信息。
-                                        </p>
-                                        <div class="faq-line"></div>
-                                        <h2 id="q4"  class="faq-h2" >
-                                            <em class="faq_gou"></em>
-                                            点点折支持商品关键字搜索吗？</h2>
-                                            <p>
-                                                可以。请直接填写商品名称搜索。
-                                            </p>
-                                            <div class="faq-line"></div>
-                                            <h2 id="q5"  class="faq-h2"  >
-                                                <em class="faq_gou"></em>
-                                                怎样计算返利金额?</h2>
-                                                <p>
-                                                    返利金额=实际支付金额(不含运费)*返利比率
-                                                </p>
-                                                <div class="faq-line"></div>
-                                                <h2 id="q6"  class="faq-h2" >
-                                                    <em class="faq_gou"></em>
-                                                    返利比率是固定的吗？</h2>
-                                                    <p>
-                                                        返利比率会根据商家的设置上下浮动，查询结果信息仅供参考，实际返利比率以下订单时商家设定的实际值为准。
-                                                    </p>
-                                                    <div class="faq-line"></div>
-                                                    <h2 id="q7"  class="faq-h2" >
-                                                        <em class="faq_gou"></em>
-                                                        我什么时候能收到返利？</h2>
-                                                        <p>在您确认收货后的10-15日内系统会自动结算，所结款项直接汇入您的支付宝账户。请留意邮件和短信通知。
-                                                        </p>
-                                                        <div class="faq-line"></div>
-                                                        <h2 id="q8"  class="faq-h2" >
-                                                            <em class="faq_gou"></em>
-                                                            哪些商品不会返利？</h2>
-                                                            <p>
-                                                                根据淘宝网相关规定虚拟商品都不参加返利推广，以下虚拟商品类目供参考：<br>
-                                                                    移动/联通/小灵通充值中心<br>
-                                                                        手机号码/套餐/增值业务<br>
-                                                                            网络游戏点卡<br>
-                                                                                网游垂直市场根类目<br>
-                                                                                    网游装备/游戏币/帐号/代练<br>
-                                                                                        腾讯QQ专区<br>
-                                                                                            网络会员卡/付费卡<br>
-                                                                                                充值平台软件/加款卡<br>
-                                                                                                    Skype充值专区<br>
-                                                                                                        网络电话卡<br>
-                                                                                                            软件cd-key/序列号<br>
-</p>
-<div class="faq-line"></div>
-<h2 id="q9"  class="faq-h2" >
-    <em class="faq_gou"></em>
-    如何查看我的返利记录？</h2>
-    <p>
-        打开点点折，点击登录。
-        进入“我的点点折”即可查看详细返利记录。
-    </p>
-    <div class="faq-line"></div>
-    <h2 id="q10"  class="faq-h2" >
-        <em class="faq_gou"></em>
-        以下情况还能享受返利吗？</h2>
-        <p>
-            1）、商家已有打折促销等优惠。 <br>
-            答：可以。<br>
-            返利收入= 实际支付金额x返利比率。<br>
-            例：您查询到的宝贝折扣为10%，宝贝原价为150元，商家促销价为100元，则您的实际返利收入为：100×10%=10元。 <br>
-            2）、拍下返利宝贝后，掌柜改价。<br> 
-            答：可以。<br>
-            返利收入= 实际支付金额（不含运费）x返利比率。 <br>
-            3）、通过点点折生成返利链到淘宝页面后，用购物车合并付款。<br> 
-            答：可以。 <br>
-            只要使用返利链接，无论是直接购买还是加入购物车，均可享受返利。<br>
-            若购买多个返利商品时，建议将它们逐个生成返利链接，加入购物车一起付款。<br>
-            4）、用点点折生成了链接，拍下后并未马上付款 <br>
-            答：可以。 <br>
-            拍下商品后未马上付款，过段时间从已买到宝贝里统一付款也能继续享受返利。<br>
-        </p>
-		<div class="faq-line"></div>
-<h2 id="q11"  class="faq-h2" >
-    <em class="faq_gou"></em>
-    返利链接有效期是多久？</h2>
-    <p>
-        答：15天
-    </p>
-	<div class="faq-line"></div>
-<h2 id="q12"  class="faq-h2" >
-    <em class="faq_gou"></em>
-    收不到点点折返利通知邮件怎么办？</h2>
-    <p>
-        1、请确认邮件是否在垃圾箱中。<br>
-2、请确认您未将help@diandianzhe.com列入黑名单。<br>
-3、如仍未到邮件，请登录点点折核对您的邮箱地址。建议使用163，QQ，新浪，搜狐，hotmail和Gmail邮箱。<br>
-
-    </p>
-	<div class="faq-line"></div>
-<h2 id="q13"  class="faq-h2" >
-    <em class="faq_gou"></em>
-    为什么在后台中无法查到返利记录？？</h2>
-    <p>
-        请先自我排查以下情况，以下任何一种情况都可能造成订单丢失：<br> 
-1、没有通过点点折的折扣链接进入淘宝购物 <br>
-2、购买的商品为虚拟商品（与淘宝签有合作协议，没有返利） <br>
-3、未确认收货<br>
-4、在A电脑查完折扣却在B电脑购买（换电脑购买需重新生成折扣链接）<br>
-5、通过点点折进入淘宝后未立即下单购买，又浏览了一些其他可能的推广链接或者网站。<br>
-6、电脑安装了其他返利软件或浏览器插件（可能返还到这些软件提供商，无法从点点折获得折扣）<br>
-7、没有正确填写支付宝账号。<br>
-    </p>
-		
+    
+    <dl id="content1" class="content">
+    	<dt><em class="faq-gou"></em>什么是返利？</dt>
+    	<dd>返利是付费推广机制的一种形式，简单讲就是很多商家在商品利润中预留了一部分给推广者。点点折则是让买家自己以推广者的身份购买，享受商家提供的推广回报获取现金返还，简称返利。</dd>
+    </dl>
+    <dl id="content2" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>使用点点折安全吗？</dt>
+    	<dd>信赖点点折的三个理由：<br />
+			1、零风险：无需注册，简单三步快速享受返利。点点折只是将普通商品网址转换为淘宝指定的返利链接，用户下单及支付流程全部在淘宝网完成，和正常购买操作完全一样，因此不存在任何账户和资金安全问题。
+			<br />
+			2、更专业：点点折由原阿里巴巴技术团队打造，网站已经国家工业和信息部核准并办理备案，公司运作模式被百度、网易、新浪、腾讯新闻网等多家权威媒体报道。
+			<br />
+			3、最省钱：点点折承诺将最大的实惠留给用户，返现比例是同类网站中最高的。大家都省钱，才是真的省钱。
+		</dd>
+    </dl>
+    <dl id="content3" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>哪些网购商品可以享受返利？</dt>
+    	<dd>目前支持淘宝网(含淘宝集市，天猫，聚划算)的商品返利，我们正在逐步引入更多商家。</dd>
+    </dl>
+    <dl id="content4" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>聚划算的商品如何返利？</dt>
+    	<dd>聚划算商品返利步骤：
+	    	<br />
+			1、先找到聚划算商品的“商品详情”按钮，点击进入商品详情页。
+			<br />
+			2、把商品详情的链接拷贝到点点折查询。
+			<br />
+			3、从点点折生成的返利链接去商品页。
+			<br />
+			4、在商品页，找到聚划算参团入口：点击进入，正常参团购买就能拿到返利啦。
+			<br />
+			详细图文操作请看：<a href="http://weibo.com/2698347393/ypXesc7Ab" target="_blank">http://weibo.com/2698347393/ypXesc7Ab</a>。
+		</dd>
+    </dl>
+    <dl id="content5" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>哪些商品不会有返利？</dt>
+    	<dd>根据淘宝网相关规定，虚拟商品均不参加返利推广，因此均无返利，以下虚拟商品类目仅供参考：
+    	    <ul>
+    	    	<li>移动/联通/小灵通充值中心</li>
+    	    	<li>手机号码/套餐/增值业务</li>
+    	    	<li>网络游戏点卡</li>
+    	    	<li>网游垂直市场根类目</li>
+    	    	<li>网游装备/游戏币/帐号/代练</li>
+    	    	<li>腾讯QrQ专区</li>
+    	    	<li>网络会员卡/付费卡</li>
+    	    	<li>充值平台软件/加款卡</li>
+    	    	<li>Skype充值专区</li>
+    	    	<li>网络电话卡</li>
+    	    	<li>软件cd-key/序列号</li>
+    	    </ul>
+    	</dd>
+    </dl>
+    <dl id="content6" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>如何查询商品是否有返利？</dt>
+    	<dd>您只需将在淘宝网挑好的商品链接复制到点点折搜索框，点击查询按钮即可获取返利比率及金额。</dd>
+    </dl>
+    <dl id="content7" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>点点折支持商品关键字搜索吗？</dt>
+    	<dd>
+    		2012年6月1日起，淘宝网规定所有返利网均不能向用户提供关键字搜索查询返利的服务，如果用户输入关键字查询，系统将给予提示。按照关键字搜索返利物品，请直接访问淘宝搜索页。
+		</dd>
+    </dl>
+    <dl id="content8" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>怎样计算返利金额?</dt>
+    	<dd>返利金额=实际支付金额(不含运费)*返利比率</dd>
+    </dl>
+    <dl id="content9" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>返利比率是固定的吗？</dt>
+    	<dd>返利比率会根据商家的设置上下浮动，查询结果信息仅供参考，实际返利比率以下订单时商家设定的实际值为准。</dd>
+    </dl>
+    <dl id="content10" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>以下情况还能享受返利吗？</dt>
+    	<dd>
+			1、商家已有打折促销等优惠。
+			<br />答：可以。 返利收入= 实际支付金额x返利比率。 例如：您查询到的宝贝折扣为10%，宝贝原价为150元，商家促销价为100元，则您的实际返利收入为：100×10%=10元。 
+			<br />2、拍下返利宝贝后，掌柜改价。
+			<br />答：可以。返利收入= 实际支付金额（不含运费）x返利比率。 
+			<br />3、在同一家店铺购买多件商品，但只有第1件商品通过点点折生成了返利链接。
+			<br />答：可以。只要用户通过第1件商品的返利链接进入该店铺继续购物，后续购买的所有产品都无需再到点点折生成链接，即可全部享受应得返利。
+			<br />4、通过点点折生成返利链到淘宝页面后，用购物车合并付款。
+			<br />答：可以。只要使用返利链接，无论是直接购买还是加入购物车，均可享受返利。 若购买多个返利商品（非同一店铺）时，建议将它们逐个生成返利链接，加入购物车一起付款 5）通过点点折生成了返利链接，拍下后并未马上付款。  答：可以。  拍下商品后未马上付款，在有效时间（15天）内从已买到宝贝里统一付款仍能继续享受返利。			    
+	    </dd>
+    </dl>
+    <dl id="content11" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>点点折的返利链接有效期是多久？</dt>
+    	<dd>答：15天</dd>
+    </dl>
+    <dl id="content12" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>我什么时候能收到返利？</dt>
+    	<dd>	
+			1、小额返利（返利金额〈50元），用户确认收货后3个工作日内即可收到返利，所结款项直接汇入您的支付宝账户。请留意邮件和短信通知。 
+			<br />2、大额返利（返利金额≥50元），需经淘宝及支付宝确认账户信用后方可结款，通常为确认收货15-30个工作日左右，此期间返利关联交易若发生退款，该返利记录将自动取消。请留意邮件和短信通知。
+		</dd>
+    </dl>
+    <dl id="content13" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>如何查看我的返利明细？</dt>
+    	<dd>为简化操作，点点折暂时取消了淘宝帐号登录环节，用户只需输入支付宝帐号，返利金额将在确认收货后3个工作日内自动结算至该支付宝账户，请留意邮件和短信通知，或登录支付宝账户查看入账记录。下一个版本，我们将直接引入支付宝帐号登录，届时将支持明细查询。</dd>
+    </dl>
+    <dl id="content14" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>返利结算后，点点折会通知我吗？</dt>
+    	<dd>
+    		会的。点点折返利通知方式有两种：
+			<br />1、邮件。如果支付宝账号是邮箱，会直接发电子邮件到该地址。
+			<br />2、短信。如果支付宝账号是手机号码，会以短信方式通知到此号码。 
+			<br />邮件和短信会在返利到帐后自动发送，请留意查收。
+		</dd>
+    </dl>
+    <dl id="content15" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>收不到点点折通知邮件怎么办？</dt>
+    	<dd>    
+			1、请确认邮件是否在垃圾箱中。
+			<br />2、请确认您未将vip@diandianzhe.com列入黑名单。
+			<br />3、如仍未到邮件，请登录点点折核对您的邮箱地址。建议使用163，QQ，新浪，搜狐，hotmail和Gmail邮箱。
+			<br />4、如上述情况均不存在，请通过以下任一方式联系点点折客服：
+			<br />1）发送电子邮件到：vip@diandianzhe.com
+			<br />2）新浪微博私信 @点点折网
+    	    
+    	</dd>
+    </dl>
+    <dl id="content16" class="content fd-hide">
+    	<dt><em class="faq-gou"></em>购买后收不到返利怎么办？</dt>
+    	<dd>
+    		请先自我排查以下情况，以下任何一种情况都可能造成订单丢失：
+    		<br />1、通过点点折生成链接后未立即下单，中途更换或关闭了浏览器，或使用了最初的淘宝购物链接下单。
+			<br />2、未正确填写支付宝账号。
+			<br />3、未确认收货。
+			<br />4、购买的商品为虚拟商品（与淘宝签有合作协议，没有返利）。
+			<br />5、在A电脑查完折扣却在B电脑购买（换电脑购买需重新生成折扣链接）。
+			<br />6、电脑安装了其他返利软件或浏览器插件。
+			<br />温馨提醒：
+			<br />数据显示，在没有收到返利的用户中，90%来自以上原因1和2， 请点心们尽量避免犯同样的错误哦。
+			<br />如上述情况均不存在，请通过以下任一方式联系点点折客服：
+			<br />1、发送电子邮件到：vip@diandianzhe.com
+			<br />2、新浪微博私信 @点点折网
+    	</dd>
+    </dl>
 </div>
-</td>
-</tr>
-</table>
-</div>
-</div>
+<script type="text/javascript">
+	var curId = "content1";
+	
+	function display(id) {
+	    var temp = document.getElementById(curId);
+	    temp.className += " fd-hide";
+	    temp = document.getElementById(id);
+	    temp.className = temp.className.replace((new RegExp("(^|\\s)fd-hide(\\s|$)"))," ");
+	    curId = id;
+	}
+</script>

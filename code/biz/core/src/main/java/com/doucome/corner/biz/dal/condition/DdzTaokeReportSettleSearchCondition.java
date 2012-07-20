@@ -1,8 +1,12 @@
 package com.doucome.corner.biz.dal.condition;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+
+import com.doucome.corner.biz.core.model.OrderAndSortModel;
 
 /**
  * 报表结算查询
@@ -10,9 +14,11 @@ import org.apache.commons.lang.StringUtils;
  * @author shenjia.caosj 2012-5-6
  */
 public class DdzTaokeReportSettleSearchCondition {
+	
+	private static final String[]  orderOptions = new String[]{"settle_fee"} ;
 
     /**
-     * 结算状态 U|P|F|S
+     * 结算状态 U|P|F|S|C
      */
     private String  settleStatus;
 
@@ -40,6 +46,16 @@ public class DdzTaokeReportSettleSearchCondition {
      * 结算end
      */
     private Date    gmtSettledEnd;
+    
+    /**
+     * 创建时间（start）
+     */
+    private Date gmtCreateStart ;
+    
+    /**
+     * 创建时间（end）
+     */
+    private Date gmtCreateEnd ;
 
     /**
      * 结算批号
@@ -50,6 +66,33 @@ public class DdzTaokeReportSettleSearchCondition {
      * 多少天内打款
      */
     private Integer settleInDays;
+    
+    /**
+     * 排序
+     */
+    private String order ;
+        
+    public Map<String,Object> toMap(){
+    	Map<String,Object> condition = new HashMap<String,Object>() ;
+		
+		condition.put("gmtSettledStart", this.getGmtSettledStart()) ;
+		condition.put("gmtSettledEnd", this.getGmtSettledEnd()) ;
+		condition.put("settleStatus", this.getSettleStatus()) ;
+		condition.put("settleAlipay", this.getSettleAlipay()) ;
+		condition.put("settleUid", this.getSettleUid()) ;
+		condition.put("emailStatus", this.getEmailStatus()) ;
+		condition.put("settleBatchno", this.getSettleBatchno()) ;
+		condition.put("settleInDays", this.getSettleInDays());
+		condition.put("gmtCreateStart", this.getGmtCreateStart()) ;
+		condition.put("gmtCreateEnd", this.getGmtCreateEnd()) ;
+		
+		OrderAndSortModel osm = new OrderAndSortModel(this.order, orderOptions) ;
+		if(osm.isFormat()){
+			condition.put("order", osm.getOrder()) ;
+			condition.put("sort", osm.getSort()) ;
+		}
+		return condition ;
+    }
 
     public String getSettleStatus() {
         return settleStatus;
@@ -115,4 +158,29 @@ public class DdzTaokeReportSettleSearchCondition {
         this.settleInDays = settleInDays;
     }
 
+	public Date getGmtCreateStart() {
+		return gmtCreateStart;
+	}
+
+	public void setGmtCreateStart(Date gmtCreateStart) {
+		this.gmtCreateStart = gmtCreateStart;
+	}
+
+	public Date getGmtCreateEnd() {
+		return gmtCreateEnd;
+	}
+
+	public void setGmtCreateEnd(Date gmtCreateEnd) {
+		this.gmtCreateEnd = gmtCreateEnd;
+	}
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
+	}
+
+	
 }

@@ -16,7 +16,7 @@ import com.doucome.corner.biz.core.taobao.model.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.DdzTaokeReportDAO;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
-import com.doucome.corner.test.AbstractBaseJUnit4Test;
+import com.doucome.corner.unittest.AbstractBaseJUnit4Test;
 
 @ContextConfiguration(locations={
 		"classpath:corner/bean/biz-common.xml" ,

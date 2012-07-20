@@ -12,6 +12,7 @@
 		<result property="gmtPaid" column="GMT_PAID" jdbcType="TIMESTAMP" />
 		<result property="payPrice" column="PAY_PRICE" jdbcType="DECIMAL" />
 		<result property="numIid" column="NUM_IID"  />
+		<result property="picUrl" column="PIC_URL" jdbcType="VARCHAR" />
 		<result property="itemTitle" column="ITEM_TITLE" jdbcType="VARCHAR" />
 		<result property="itemNum" column="ITEM_NUM"  />
 		<result property="categoryId" column="CATEGORY_ID"  />
@@ -37,9 +38,9 @@
 	
 	<insert id="insertReport">
 		INSERT INTO DDZ_TAOKE_REPORT
-			(ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_FEE,SETTLE_UID,SETTLE_TAOBAO_NICK,GMT_CREATE,GMT_MODIFIED)
+			(ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,PIC_URL,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_FEE,SETTLE_UID,SETTLE_TAOBAO_NICK,GMT_CREATE,GMT_MODIFIED)
 		VALUES
-			(#id#,#realPayFee#,#outCode#,#tradeId#,#gmtPaid#,#payPrice#,#numIid#,#itemTitle#,#itemNum#,#categoryId#,#commission#,#commissionRate#,#userCommission#,#userCommissionRate#,#sellerNick#,#settleAlipay#,#settleFee#,#settleUid#,#settleTaobaoNick#,now(),now())
+			(#id#,#realPayFee#,#outCode#,#tradeId#,#gmtPaid#,#payPrice#,#numIid#,#picUrl#,#itemTitle#,#itemNum#,#categoryId#,#commission#,#commissionRate#,#userCommission#,#userCommissionRate#,#sellerNick#,#settleAlipay#,#settleFee#,#settleUid#,#settleTaobaoNick#,now(),now())
 		<selectKey resultClass="java.lang.Integer" keyProperty="id">
     		<![CDATA[
 				SELECT LAST_INSERT_ID() AS ID
@@ -58,7 +59,7 @@
 	
 	<select id="getReportById" resultMap="RM-DDZ-REPORT">
 		SELECT 
-			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
+			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,PIC_URL,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
 			COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_UID,
 			SETTLE_TAOBAO_NICK,SETTLE_STATUS,SETTLE_FEE,GMT_CREATE,GMT_MODIFIED
 		FROM 
@@ -68,7 +69,7 @@
 	
 	<select id="selectReportsBySettleId" resultMap="RM-DDZ-REPORT">
 		SELECT 
-			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
+			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,PIC_URL,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
 			COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_UID,
 			SETTLE_TAOBAO_NICK,SETTLE_STATUS,SETTLE_FEE,GMT_CREATE,GMT_MODIFIED
 		FROM 
@@ -79,7 +80,7 @@
 	
 	<select id="selectReportsWithPagination" resultMap="RM-DDZ-REPORT">
 		SELECT 
-			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
+			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,PIC_URL,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
 			COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_UID,
 			SETTLE_TAOBAO_NICK,SETTLE_STATUS,SETTLE_FEE,GMT_CREATE,GMT_MODIFIED
 		FROM 
@@ -104,6 +105,16 @@
 				<isNotEmpty property="gmtSettledEnd" prepend="AND">
 					<![CDATA[
 					GMT_SETTLED <= #gmtSettledEnd#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateStart" prepend="AND">
+					<![CDATA[
+					GMT_CREATE >= #gmtCreateStart#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateEnd" prepend="AND">
+					<![CDATA[
+					GMT_CREATE <= #gmtCreateEnd#
 					]]>
 				</isNotEmpty>
 				<isNotEmpty property="settleStatus" prepend="AND">
@@ -172,6 +183,16 @@
 				<isNotEmpty property="gmtSettledEnd" prepend="AND">
 					<![CDATA[
 					GMT_SETTLED <= #gmtSettledEnd#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateStart" prepend="AND">
+					<![CDATA[
+					GMT_CREATE >= #gmtCreateStart#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateEnd" prepend="AND">
+					<![CDATA[
+					GMT_CREATE <= #gmtCreateEnd#
 					]]>
 				</isNotEmpty>
 				<isNotEmpty property="settleStatus" prepend="AND">

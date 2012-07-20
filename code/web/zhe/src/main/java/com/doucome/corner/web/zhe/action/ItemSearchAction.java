@@ -1,31 +1,23 @@
 package com.doucome.corner.web.zhe.action;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.doucome.corner.biz.core.exception.TaobaoRemoteException;
 import com.doucome.corner.biz.core.service.ShortUrlService;
-import com.doucome.corner.biz.core.service.taobao.TaobaoRecommandDecorator;
-import com.doucome.corner.biz.core.service.taobao.TaobaoServiceDecorator;
-import com.doucome.corner.biz.core.service.taobao.TaobaokeServiceDecorator;
-import com.doucome.corner.biz.core.taobao.dto.TaobaoItemDTO;
-import com.doucome.corner.biz.core.taobao.dto.TaobaokeItemDTO;
-import com.doucome.corner.biz.core.taobao.fields.TaobaoFields;
-import com.doucome.corner.biz.core.taobao.fields.TaobaokeFields;
 import com.doucome.corner.biz.core.utils.ValidateUtil;
 import com.doucome.corner.biz.dal.dataobject.DdzSearchLogDO;
-import com.doucome.corner.biz.zhe.buyingRecomm.BuyingRecommendService;
-import com.doucome.corner.biz.zhe.condition.EatDiscountCondition;
 import com.doucome.corner.biz.zhe.enums.OutCodeEnums;
 import com.doucome.corner.biz.zhe.enums.SearchWayEnums;
 import com.doucome.corner.biz.zhe.model.TaobaokeItemFacade;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
-import com.doucome.corner.biz.zhe.service.DdzEatDiscountService;
 import com.doucome.corner.biz.zhe.service.DdzSearchLogService;
-import com.doucome.corner.biz.zhe.service.DdzTaobaoRecommendService;
+import com.doucome.corner.biz.zhe.service.DdzTaobaokeService;
 import com.doucome.corner.biz.zhe.utils.OutCodeUtils;
+import com.doucome.corner.web.common.constant.CookieConstants;
+import com.doucome.corner.web.common.cookie.CookieHelper;
 import com.doucome.corner.web.zhe.authz.DdzSessionOperator;
 import com.doucome.corner.web.zhe.model.GuideVar;
 import com.opensymphony.xwork2.ModelDriven;
@@ -38,17 +30,6 @@ import com.opensymphony.xwork2.ModelDriven;
 @SuppressWarnings("serial")
 public class ItemSearchAction extends DdzBasicAction implements ModelDriven<TaobaokeItemFacade> {
 
-    private static final BigDecimal   ZERO     = new BigDecimal("0.00");
-
-    @Autowired
-    private TaobaokeServiceDecorator  taobaokeServiceDecorator;
-
-    @Autowired
-    private TaobaoRecommandDecorator  taobaoRecommandDecorator;
-
-    @Autowired
-    private DdzEatDiscountService     ddzEatDiscountService;
-
     @Autowired
     private ShortUrlService           shortUrlService;
 
@@ -60,14 +41,10 @@ public class ItemSearchAction extends DdzBasicAction implements ModelDriven<Taob
 
     @Autowired
     private DdzSessionOperator        ddzSessionOperator;
-
-    @Autowired
-    private DdzTaobaoRecommendService ddzTaobaoRecommendService;
-
-    @Autowired
-    private TaobaoServiceDecorator    taobaoServiceDecorator;
     
-
+    @Autowired
+    private DdzTaobaokeService	ddzTaobaokeService ;
+    
     private String                    id;
 
     private TaobaokeItemFacade        item;
@@ -81,7 +58,9 @@ public class ItemSearchAction extends DdzBasicAction implements ModelDriven<Taob
     private GuideVar                  guideVar = new GuideVar(false, false, false, true, true);
 
     private boolean                   userGuide;
-
+    
+    private boolean 				 isRecommend = false ;
+    
     @Override
     public String execute() throws Exception {
         if (StringUtils.isNotBlank(id)) {
@@ -91,52 +70,65 @@ public class ItemSearchAction extends DdzBasicAction implements ModelDriven<Taob
             }
             
             accountId = generateAccountId();
+            
+            //兼容以前商品推荐代码
+            
+            if ("vip@diandianzhe.com".equals(alipayId)) {
+            	CookieHelper.writeCookie(getResponse(), CookieConstants.DDZ_DEFAULT_DOMAIN, "__ddz_y_id", null,
+                        CookieConstants.EXPIRY_TIME_YEAR);
+            	alipayId = null;
+            }
+            
+            //推荐过来，但是有支付宝
+            if(isRecommend && StringUtils.isNotBlank(accountId)){
+            	return "redirectItem" ;
+            }
 
             String outCode = OutCodeUtils.encodeOutCode(accountId, OutCodeEnums.DDZ_ACCOUNT_ID);
 
-            // 转换商品
-            TaobaokeItemDTO internalItem = taobaokeServiceDecorator.conventItem(id, outCode,
-                                                                                TaobaokeFields.taoke_item_fields);
-            TaobaoItemDTO taobaoItem = null;
-            // 木有折扣或者item不存在
-            // 查不到商品或者折扣为0时 //查询推荐
-            if (internalItem == null) {
-                // 查询商品信息
-                taobaoItem = taobaoServiceDecorator.getItem(Long.valueOf(id), TaobaoFields.taobao_item_fields_short);
+            
+            item = ddzTaobaokeService.conventItem(id, outCode) ;
+            
+            if(item == null){ //木有折扣或者item不存在
+            	//查询商品信息
+            	try {
+            		item = ddzTaobaokeService.getTaobaoItem(id) ;
+            	}catch(TaobaoRemoteException e){
+            		if(StringUtils.equals(e.getErrCode(),TaobaoRemoteException.ERR_ITEM_NOT_FOUND)){
+            			//item不存在
+            			id = null ;
+            			return SUCCESS ;
+            		}
+            	}
             }
-
-            // 计算用户显示的折扣
-            EatDiscountCondition condition = new EatDiscountCondition();
-            condition.setNeedPromotionPrice(true);
-            if (taobaoItem != null) {
-                item = ddzEatDiscountService.eatDiscount(taobaoItem, condition);
-            } else {
-                item = ddzEatDiscountService.eatDiscount(internalItem, condition);
-                if (item != null) { // 生成短链
-                    String clickUrlShorten = shortUrlService.insertUrl(item.getClickUrl());
-                    item.setClickUrlShorten(clickUrlShorten);
-                }
-            }
-
+            
             if (item != null) {
-
-                // 记录日志
-                DdzSearchLogDO searchLog = new DdzSearchLogDO();
-                searchLog.setAlipayId(alipayId);
-                searchLog.setSearchBrief(id);
-                searchLog.setCommission(item.getCommission());
-                searchLog.setCommissionRate(item.getCommissionRate());
-                searchLog.setPrice(item.getPrice());
-                searchLog.setSearchTitle(item.getTitle()) ;
-                searchLog.setSearchWay(SearchWayEnums.ITEM.getValue());
-                ddzSearchLogService.createLog(searchLog);
+            	
+            	if(item.getCommission() != null){// 生成短链
+            		String clickUrlShorten = shortUrlService.insertUrl(item.getClickUrl());
+                    item.setClickUrlShorten(clickUrlShorten);
+            	}
+            	
+            	//记录日志
+            	dblog() ;
             }
 
         }
         
-        
-
         return SUCCESS;
+    }
+    
+    private void dblog(){
+    	// 记录日志
+        DdzSearchLogDO searchLog = new DdzSearchLogDO();
+        searchLog.setAlipayId(alipayId);
+        searchLog.setSearchBrief(id);
+        searchLog.setCommission(item.getCommission());
+        searchLog.setCommissionRate(item.getCommissionRate());
+        searchLog.setPrice(item.getPrice());
+        searchLog.setSearchTitle(item.getTitle()) ;
+        searchLog.setSearchWay(SearchWayEnums.ITEM.getValue());
+        ddzSearchLogService.createLog(searchLog);
     }
 
     public String generateAccountId() {
@@ -214,4 +206,9 @@ public class ItemSearchAction extends DdzBasicAction implements ModelDriven<Taob
         return guideVar;
     }
 
+	public void setIsRecommend(boolean isRecommend) {
+		this.isRecommend = isRecommend;
+	}
+ 
+    
 }

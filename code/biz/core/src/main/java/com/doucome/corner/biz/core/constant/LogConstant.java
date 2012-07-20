@@ -10,6 +10,8 @@ public class LogConstant {
      * 用户登录log
      */
     public static final String signin_log          = "signin-log";
+    
+    
     public static final String task_syncReport_log = "task-syncReport-log";
 
     /**
@@ -25,4 +27,9 @@ public class LogConstant {
 	public static final String recommend_log = "recommend-log" ;
 	
 	public static final String task_syncRecommend_log = "task-syncRecommend-log" ;
+	
+	/**
+	 * 短信日志
+	 */
+	public static final String sms_log = "sms-log" ;
 }

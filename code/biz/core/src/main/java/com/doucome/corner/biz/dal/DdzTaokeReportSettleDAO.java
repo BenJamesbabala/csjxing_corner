@@ -94,6 +94,14 @@ public interface DdzTaokeReportSettleDAO {
      * @return
      */
     int updateEmailStatus(List<Integer> settleIds ,String emailStatus) ;
+    
+    /**
+     * 更新短信状态
+     * @param settleIds
+     * @param mobileStatus
+     * @return
+     */
+    int updateMobileStatus(List<Integer> settleIds , String mobileStatus) ;
 
     /**
      * 统计某会员的结算费用
@@ -101,4 +109,12 @@ public interface DdzTaokeReportSettleDAO {
      * @return
      */
 	BigDecimal sumTotalSettleFee(String settleAlipay , String[] settleStatusList);
+
+	/**
+	 * 统计一个支付宝结算的次数
+	 * @param settleAlipay
+	 * @param settleStatus
+	 * @return
+	 */
+	int countTotalSettle(String settleAlipay, String[] settleStatus);
 }

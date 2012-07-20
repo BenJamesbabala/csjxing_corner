@@ -18,4 +18,9 @@
 		<property name="regionName" value="buying_recomm_item"/>
 	</bean>
 	
+	<bean id="brandsCache" class="com.doucome.corner.biz.zhe.cache.impl.BrandsCacheImpl">
+		<property name="cacheClient" ref="jvmCacheClient"/>
+		<property name="regionName" value="brands"/>
+	</bean>
+	
 </beans>

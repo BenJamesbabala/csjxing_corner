@@ -2,17 +2,53 @@
 <html>
 <head>
 	#parse("/common/zhe/head.vm")
-	<style >
-		
-    </style>
 </head>
 <body>
 	
 	<div class="ddz">
+		<style>
+    		
+    	</style>
+		<div id="ddDialogOverlay" class="dd-hide dd-dialog-overlay"></div>
+		<form target="_blank" action="${env.ddzRoot}/zhe/shop.htm" method="get" id="ddBrandsIptAlipayForm">
+    		<input type="hidden" name="sid" value="" class="brandsShopId"/>
+            <div class="dd-dialog dd-hide" id="ddInputDialog">
+                <div class="dd-dialog-head">
+                    <a href="javascript:;" id="ddDialogClose" data-dialogClose="ddInputDialog"><span class="dd-dialog-close"></span></a>
+        		</div>
+        		<div class="dd-dialog-content">
+					<div class="dd-dialog-content-top">&nbsp;</div>
+                    <div class="dd-dialog-slogan">&nbsp;</div>
+                    <div class="dd-dialog-desc">请输入您的支付宝账号，点击按钮直接访问店铺，在店铺内购买任何商品（无需单独查询生成链接），均自动返现到您的支付宝账号中。</div>
+        			<div class="dd-dialog-input"><input type="text" id="brandsAlipayInput" name="" class="alipay-input" placeholder="请输入支付宝账号"></div>
+        			<div class="mt20"><a href="javascript:;" class="dd-dialog-submit"></a></div>
+					<div class="dd-dialog-bottom">&nbsp;</div>
+				</div>
+        	</div>
+        	
+    	</form>
+    	<form target="_blank" action="${env.ddzRoot}/zhe/shop.htm" method="get" id="ddBrandsRedirectForm">
+    		<input type="hidden" name="sid" value="" class="brandsShopId"/>
+        	<div class="dd-dialog dd-hide" id="ddRedirectDialog">
+                <div class="dd-dialog-head">
+                    <a href="javascript:;" id="ddDialogClose" data-dialogClose="ddRedirectDialog"><span class="dd-dialog-close"></span></a>
+        		</div>
+        		<div class="dd-dialog-content">
+                    <div class="dd-dialog-content-top">&nbsp;</div>
+                    <div class="dd-dialog-slogan">&nbsp;</div>
+                    <div class="dd-dialog-desc">点击按钮直接访问店铺，在店铺内购买任何商品（无需单独查询生成链接），均自动返现到您的支付宝账号:</div>
+                    <div class="dd-dialog-desc"><span class="dd-brands-alipay" id="brandsAlipay">$!alipayAccount</span><span><a href="javascript:;" id="changeBrandsAlipay">更改</a></span></div>
+        			<div class="mt20"><a href="javascript:;" class="dd-dialog-submit"></a></div>
+                    <div class="dd-dialog-bottom">&nbsp;</div>
+                </div>
+        	</div>
+    	</form>
+		
 		<input type="hidden" id="ddzRoot" value="${env.ddzRoot}" />
+		<input type="hidden" id="alipayAccount" value="$!alipayAccount" />
 		#parse("/common/zhe/top.vm")
 		#parse("/common/zhe/tools.vm")
-		<div id="content" class="content w952 bglight">
+		<div id="content" class="w952 bglight content">
 			<div class="main">
 				<div class="dd-clr">
 					<h1>
@@ -21,7 +57,7 @@
 				</div>
 				<div class="search">
 					<form id="search_form" method="get" action="${env.ddzRoot}/zhe/search.htm">
-						#set($default_text = "粘贴:您想购买的淘宝宝贝名称或宝贝网址")
+						#set($default_text = "请粘贴你要购买的淘宝宝贝网址")
     					<input type="text" name="wd" value="$!keyword" class="search-input" id="search_content" placeholder="$!default_text"/>
     					<button class="list-top-search-submit" id="submit" type="submit">搜 索</button>
                     </form>
@@ -41,15 +77,15 @@
 					
             	</script>
         		<div></div>
+				<div class="errurl-prompt dd-hide" id="errurlPrompt"></div>
 				#if($guideVar.newGuide)
         		<a href="#" class="newGuide dd-hide" id="newGuide"></a>
 				#end
-				#if($guideVar.step1)
+				
         		<div class="step1 dd-hide" id="step1"></div>
-				#end
-				#if($guideVar.step2)
+				
         		<div class="step2 dd-hide" id="step2"></div>
-				#end
+				
         		<!-- end guide -->
         		
 				$screen_content
@@ -62,6 +98,6 @@
 	#DDZ_JS(["lib/jquery-min.js","lib/common.js","home/control/widget/index.js"])
 	#DDZ_JS(["lib/jcarousel.js"])
 	#parse("/common/zhe/google_analytics.vm")
-		
+	
 </body>
 </html>

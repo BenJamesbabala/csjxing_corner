@@ -1,5 +1,7 @@
 package com.doucome.corner.biz.core.service.taobao;
 
+import java.util.List;
+
 import com.doucome.corner.biz.core.taobao.dto.TaobaoItemDTO;
 import com.doucome.corner.biz.core.taobao.dto.TaobaoUserDTO;
 
@@ -29,4 +31,12 @@ public interface TaobaoServiceDecorator {
 	 * @return
 	 */
 	TaobaoItemDTO getItem(Long numIid , String[] fields) ;
+	
+	/**
+	 * 批量得到商品信息 
+	 * @param numIids
+	 * @param fields
+	 * @return
+	 */
+	List<TaobaoItemDTO> getListItems(String[] numIids ,String[] fields) ;
 }

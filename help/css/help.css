@@ -1,0 +1,75 @@
+.float b, .float .kf a, .float .backTop a, .helpMenu h3, .help .mddss li, .help dd li,
+.mainMenu a.current, .mainMenu a.current:hover, .idx1 .L dt, .idx1R dt, .idx1M .tabT{
+    background: url("../images/icon.gif") no-repeat scroll 0 0 transparent;
+}
+
+.mainMenu a.current, .mainMenu a.current:hover, .idx1 .L dt, .idx1R dt, .idx1M .tabTtl li, .idx1L .tabTtl li, .schL3 .ttl, .box230 .ttl, .leftMenu h3, .float .ttl{
+	background: url("../images/repeat.png") repeat scroll 0 0 transparent;
+}
+
+body, ul, ol, li, p, h1, h2, h3, h4, input, dl, dt, dd, td, th {font-family: Tahoma;font-size: 12px;list-style: none outside none;margin: 0;padding: 0;}
+a {color: #999999;cursor: pointer;text-decoration: none;}
+a:hover{text-decoration: underline;}
+img {border: medium none;vertical-align: top;}
+.w950 {margin: auto;overflow: hidden;width: 950px;}
+.mgt20 {margin-top: 20px;}
+.mgt10 {margin-top: 10px;}
+
+.R230, .L230 {overflow: hidden;width: 230px;}
+.L, .L710, .L230 {float: left;}
+.L710, .R710 {overflow: hidden;width: 710px;}
+.R, .R230, .R710 {float: right;}
+
+.head {background-color: #DAD9D4;height: 70px;text-align: left;width: 100%;}
+.box230 .ttl {background-position: 0 -67px;border-bottom: 1px solid #DCDCDC;color: #666666;height: 29px;line-height: 29px;padding-left: 15px;}
+.help .mddss .fax {background-position: 0 -892px;}
+.help .mddss .email {background-position: 0 -892px;}
+.help .mddss li {height: 14px;line-height: 14px;margin-bottom: 10px;padding-left: 20px;}
+.box230 {border: 1px solid #DCDCDC;width: 228px;}
+
+.help{ padding-bottom:50px;}
+.help a{color:#666;}
+.helpMenu{padding:9px;border:1px solid #DCDCDC;overflow:hidden;}
+.helpMenu h2{padding-bottom:12px; height:18px; line-height:18px; font-size:16px; font-weight:bold; color:#000;border-bottom:1px solid #DCDCDC;}
+.helpMenu h3{cursor:pointer;margin:20px 0 10px 0; padding-left:24px;height:16px;line-height:16px; font-size:14px; font-weight:normal; color:#000;background-position:8px -922px;}
+.helpMenu h3.click{background-position:8px -80px;}
+.helpMenu h4{ display:none;font-weight:normal;}
+.helpMenu h4.show{display:block;}
+.helpMenu h4 a{display:block; padding-left:35px; height:30px; line-height:30px;font-weight:normal;}
+.helpMenu h4 a:hover{ text-decoration:none; background:#F4FAED;}
+.help .mddss{padding:10px 15px;color:#666;}
+.help .mddss ul{margin:20px 12px;}
+.help .mddss li{margin-bottom:10px;padding-left:20px; height:14px; line-height:14px;}
+.help .mddss .tel{background-position:0 -837px;}
+.help .mddss .fax{background-position:0 -892px;}
+.help .mddss .email{background-position:0 -892px;}
+.help .mddss .zxzx{ display:block; margin:0 0 15px 48px; width:81px; height:23px;background-position:-472px -124px; overflow:hidden;}
+.helpSch{padding:15px 55px;border:1px solid #DCDCDC; overflow:hidden;}
+.helpSch input{ float:left;padding:8px 0 8px 10px; width:483px;height:14px;border:1px solid #D9D9D9;border-top:1px solid #C0C0C0;}
+.helpSch a{ float:left; margin-left:12px; width:91px; height:32px; background-position:-571px -126px;}
+.helpMain dl,.helpMain .first ul{float:left;width:300px;}
+.helpMain dl{padding:20px 0 0 24px;}
+.helpMain dl.first{float:none;padding-bottom:15px;width:695px;border-bottom:1px solid #DCDCDC; overflow:hidden;}
+.helpMain dt,.helpDtl dt{margin-bottom:15px;font-size:14px; font-weight:bold; color:#000;}
+.helpMain dd{margin-left:8px;}
+.helpMain .first ul.left{margin-right:67px; }
+.helpMain dd li{padding-left:13px; margin-bottom:15px; height:14px; line-height:14px;background-position:0 -947px;}
+.helpDtl{margin-left:20px;width:690px;color:#666;}
+.helpDtl dt{margin-bottom:20px;}
+.helpDtl dd{ line-height:30px;}
+.answer { line-height:30px; color: black; margin-left: 15px;}
+.userBar{color: #C2CED2;
+    width: 100%;
+    text-align:center;
+    background-color: #3E4A4D;
+    border-bottom: 1px solid #D7D7D7;
+    height: 32px;
+    text-align: left;}
+ .tool {
+    background-color: #DAD9D4;
+    height: 70px;
+    text-align: left;
+}
+.help_logo{ height: 54px; margin-left: 45%; margin-top:7px;}
+.head_logo_div{margin:  0 auto; width: 950px; height: 26px;}
+.head_logo{height: 26px;  }

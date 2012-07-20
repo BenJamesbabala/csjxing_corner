@@ -6,12 +6,10 @@
 .tool-right-icon,
 .main-result-ipt,
 .main-result-buy,
-.item-buy-go,
 .tool-item-title-arrow,
 .item-price-discount-ipt,
 .item-price-discount,
 .tool-item-arrow,
-.search,
 .logo,
 .content .submit,
 .alipay-count-submit,
@@ -23,8 +21,22 @@
 .pagination a.page-prev,
 .pagination .page-end,
 .list-top-search button ,
+.item-price-discount-allowance-gift ,
 .end{
 	background-image: url(../../../../img/btn.v1.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+	display: inline-block;
+}
+
+.search,
+.dd-brands-tab-down,
+.dd-buyings-tab-down,
+.dd-dialog-head,
+.dd-dialog-slogan,
+.dd-dialog-submit
+{
+	background-image: url(../../../../img/back.png);
 	background-repeat: no-repeat;
 	background-color: transparent;
 	display: inline-block;
@@ -83,6 +95,10 @@
 	background-image: url(../../../../img/new.png);
 	display: inline-block;
 }
+.errurl-prompt{
+	background-image: url(../../../../img/new_prompt.png);
+	display: inline-block;
+}
 .step2{
 	background-image: url(../../../../img/new1.png);
 	display: inline-block;
@@ -119,4 +135,30 @@
 	display: inline-block;
 	background-color: transparent;
 	background-repeat: no-repeat;
+}
+
+.layer_tips .arrow_up , .layer_tips .arrow_down {
+	background-image: url(../../../../img/layer_arrow.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+    display: inline-block;
+}
+
+.new-guide-40{
+	background-image: url(../../../../img/newGuide40.png);
+	background-repeat: no-repeat;
+	display: inline-block;
+}
+
+.item-price-view .pop-for-help i {
+	background-image: url(../../../../img/icon.gif);
+	background-repeat: no-repeat;
+	background-color: transparent;
+    display: inline-block;
+}
+.item-buy-go {
+	background-image: url(../../../../img/taobaobuy.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+    display: inline-block;
 }

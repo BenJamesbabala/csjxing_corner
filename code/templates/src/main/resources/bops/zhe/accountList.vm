@@ -1,13 +1,7 @@
 #set($layout="bops/default_bops.vm")
 #set($navigation = "账号查询")
-<style>
-	#parse("/common/bops/page_css.vm")
-	
-	.darkGray {
-		color:#555555;
-	}
-	
-</style>
+
+
 
 #set($page = $accountResult.pagination.page)
 #set($totalPages = $accountResult.pagination.totalPages)
@@ -17,8 +11,12 @@
 #set($searchUrl = ${env.ddzRoot}+"/bops/zhe/account_list.htm?") 
 #set($searchQuery = ["gmtCreateStart:$!dateUtils.format($!gmtCreateStart,'yyyy-MM-dd')","gmtCreateEnd:$!dateUtils.format($!gmtCreateEnd,'yyyy-MM-dd')","alipayId:$!alipayId","page:$!page"])
 
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="accountList"/>
 
 <div class="bops">
+	
+	
 	<form action="${env.bopsRoot}/bops/zhe/account_list.htm" method="GET">
     	<div style="padding:10px;margin-top:15px;border-top:1px solid #aaaaaa;border-bottom:1px solid #aaaaaa;text-align:center;">
 			#if($gmtCreateStart)
@@ -26,14 +24,14 @@
 			#else
 				#set($startDate = $dateUtils.now())
 			#end
-			起始时间： <input  type="text" name="gmtCreateStart" value="$!dateUtils.format($!startDate,'yyyy-MM-dd')" placeholder="yyyy-MM-dd" />
+			起始时间： <input  type="text" id="gmtCreateStart" name="gmtCreateStart" value="$!dateUtils.format($!startDate,'yyyy-MM-dd')" placeholder="yyyy-MM-dd" />
 			&nbsp;&nbsp;
 			#if($gmtCreateEnd)
 				#set($endDate = $gmtCreateEnd)
 			#else
 				#set($endDate = $dateUtils.now())
 			#end
-			结束时间：<input  type="text" name="gmtCreateEnd" value="$!dateUtils.format($!endDate,'yyyy-MM-dd')" placeholder="yyyy-MM-dd"/>
+			结束时间：<input  type="text" id="gmtCreateEnd" name="gmtCreateEnd" value="$!dateUtils.format($!endDate,'yyyy-MM-dd')" placeholder="yyyy-MM-dd"/>
 			&nbsp;&nbsp;
 			支付宝：<input  type="text" name="alipayId" value="$!alipayId" />
     		<input type="submit" value="查询" />
@@ -61,7 +59,7 @@
 						<div class="darkGray">$!item.accountId</div>
 					</td>
 					<td>
-						<div class="darkGray">$!item.alipayId</div>
+                        <div class="darkGray">$!item.alipayId <a href="javascript:;" data-alipay="$!item.alipayId"><img src="${env.ddzStaticroot}/img/info.png" title="点击查看支付宝详情"></img></a></div>
 					</td>
 					<td>$dateUtils.format($item.gmtCreate,'yyyy-MM-dd HH:mm:ss')</td>
             	</tr>
@@ -74,10 +72,19 @@
 		没有查询到记录
 	#end
 </div>
-	
-#DDZ_JS(["lib/jquery-min.js"])
 
-<script type="text/javascript">
+<div class="layer_tips layer_tips_version layer_tips_intro alipay_detail_tips dd-hide" id="alipay_detail_tips" >
+	<div class="layer_tips_bg">
+		<a class="W_close_color layer_tips_close" href="javascript:;" data-id="alipay_detail_tips"></a>
+		<div node-type="inner" class="layer_tips_cont">
+			<ul>
+                <li>支付宝：<span id="alipayAccount"></span></li>
+				<li>创建时间：<span id="createDate"></span></li>
+				<li>结算笔数：<span id="settleCount"></span></li>
+				<li>结算金额：<span id="totalSettleFee"></span></li>
+			</ul>
+		</div>
+		<span class="arrow_left" node-type="arrow" style=""></span>
+	</div>
+</div>
 
-	
-</script>

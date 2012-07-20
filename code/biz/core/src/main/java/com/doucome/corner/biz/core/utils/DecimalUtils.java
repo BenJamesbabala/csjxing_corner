@@ -1,8 +1,17 @@
 package com.doucome.corner.biz.core.utils;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class DecimalUtils {
+	
+	public static String format(BigDecimal d , String format){
+		if(d == null){
+			return null ;
+		}
+		DecimalFormat f = new DecimalFormat(format);
+        return f.format(d);
+	}
 
 	/**
 	 * ÅÐ¶Ï d1 ´óÓÚ d2

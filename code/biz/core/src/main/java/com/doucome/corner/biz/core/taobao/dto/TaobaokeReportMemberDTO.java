@@ -98,6 +98,19 @@ public class TaobaokeReportMemberDTO extends AbstractModel {
 	 * ¬Ùº“Í«≥∆,jayzhou
 	 */
 	private String sellerNick;
+	
+	/**
+	 * ±¶±¥Õº∆¨
+	 */
+	private String picUrl ;
+
+	public String getPicUrl() {
+		return picUrl;
+	}
+
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
+	}
 
 	public BigDecimal getRealPayFee() {
 		return realPayFee;

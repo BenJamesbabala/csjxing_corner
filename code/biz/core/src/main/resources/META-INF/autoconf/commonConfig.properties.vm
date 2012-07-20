@@ -4,6 +4,7 @@ corner.output = ${corner_output}
 corner.domainName = ${corner_domainName}
 corner.port = ${corner_port}
 corner.static.url = ${corner_static_url}
+corner.ddz.helpUrl = ${corner_ddz_helpUrl}
 corner.production = ${corner_production}
 
 corner.surl.url = ${corner_surl_url}

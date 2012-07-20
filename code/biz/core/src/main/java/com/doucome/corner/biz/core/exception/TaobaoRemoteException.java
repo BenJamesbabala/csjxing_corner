@@ -1,6 +1,8 @@
 package com.doucome.corner.biz.core.exception;
 
 public class TaobaoRemoteException extends RuntimeException{
+	
+	public static final String ERR_ITEM_NOT_FOUND = "530" ;
 
 	/**
 	 * 

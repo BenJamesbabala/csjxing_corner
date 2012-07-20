@@ -20,7 +20,10 @@ import com.doucome.corner.biz.core.enums.SettleStatusEnums;
 import com.doucome.corner.biz.core.enums.TrueFalseEnums;
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.model.page.QueryResult;
+import com.doucome.corner.biz.core.service.taobao.TaobaoServiceDecorator;
 import com.doucome.corner.biz.core.service.taobao.TaobaokeServiceDecorator;
+import com.doucome.corner.biz.core.taobao.constant.TaobaoItemConst;
+import com.doucome.corner.biz.core.taobao.dto.TaobaoItemDTO;
 import com.doucome.corner.biz.core.taobao.dto.TaobaokeReportMemberDTO;
 import com.doucome.corner.biz.core.taobao.fields.TaobaokeFields;
 import com.doucome.corner.biz.core.taobao.model.TaobaokeDate;
@@ -32,7 +35,7 @@ import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
 import com.doucome.corner.biz.zhe.enums.OutCodeEnums;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule;
-import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.UserCommission;
+import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.InternalCommission;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
 import com.doucome.corner.biz.zhe.service.DdzSyncReportTaskService;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportService;
@@ -61,6 +64,9 @@ public class SyncReportTaskService implements TaskService {
 	
 	@Autowired
 	private TaobaokeServiceDecorator taobaokeServiceDecorator ;
+	
+	@Autowired
+	private TaobaoServiceDecorator taobaoServiceDecorator ;
 	 
 	@Autowired
 	private DdzSyncReportTaskService ddzSyncReportTaskService ;
@@ -128,6 +134,7 @@ public class SyncReportTaskService implements TaskService {
 			//同步报表到数据库
 			int successCount = syncEveryReport(taobaoReportList) ;
 			returnObject.setSuccessCount(successCount) ;
+			//生成结算
 			SettleReportResult settleReportResult = createSettleReport();
 			returnObject.setSettleReportResult(settleReportResult);
 		}
@@ -161,13 +168,25 @@ public class SyncReportTaskService implements TaskService {
 		Long totalRecords = null ;
 		int page = 1  ;
 		while(true){
-			Pagination pagination = new Pagination(page, 40) ;
+			Pagination pagination = new Pagination(page, 20) ;
 			try {
 				
 				result = taobaokeServiceDecorator.getReport(date, TaobaokeFields.taoke_report_memb_fields , pagination) ;
-				if(result != null){
-					reportList.addAll(result.getItems()) ;
+				
+				List<TaobaokeReportMemberDTO> subReportList = result.getItems() ;
+				if(!CollectionUtils.isEmpty(subReportList)){
+					String[] numIids = parseNumiids(subReportList) ;
+					//批量获取宝贝图片
+					List<TaobaoItemDTO> itemList = null ;
+					try {
+						itemList = taobaoServiceDecorator.getListItems(numIids, new String[]{TaobaoItemConst.pic_url,TaobaoItemConst.num_iid}) ;
+					}catch(Exception e){
+						log.error(e.getMessage() , e) ;
+					}
+					matchPicUrl(itemList , subReportList) ;
+					reportList.addAll(subReportList) ;
 				}
+				
 			}catch(Exception e){
 				log.error(e.getMessage() , e) ;
 				syncReportLog.error("error get report . " + e.getMessage()) ;
@@ -184,7 +203,11 @@ public class SyncReportTaskService implements TaskService {
 				
 			
 			page += 1  ; // 下一页
-			
+			try {
+				Thread.sleep(300) ;
+			} catch (InterruptedException e) {
+				
+			}
 			if( page > totalPages ){
 				break ;
 			}		
@@ -200,6 +223,41 @@ public class SyncReportTaskService implements TaskService {
 		}
 		return reportList ;
 		
+	}
+	
+	private String[] parseNumiids(List<TaobaokeReportMemberDTO> reportList){
+		String[] numIids = new String[reportList.size()] ;
+		for(int i=0 ;i<reportList.size();i++){
+			numIids[i] = String.valueOf(reportList.get(i).getNumIid()) ;
+		}
+		return numIids ;
+	}
+	
+	private void matchPicUrl(List<TaobaoItemDTO> itemList , List<TaobaokeReportMemberDTO> toReportList){
+		if(CollectionUtils.isEmpty(itemList) || CollectionUtils.isEmpty(toReportList)){
+			return ;
+		}
+		if(itemList.size() != toReportList.size()){
+			//挨个比对
+			for(TaobaoItemDTO item : itemList){
+				Long numIid = item.getNumIid() ;
+				for(TaobaokeReportMemberDTO report : toReportList){
+					if(numIid.equals(report.getNumIid())){
+						report.setPicUrl(item.getPicUrl()) ;
+						break ;
+					}
+				}
+			}
+			return ;
+		}
+		for(int i=0;i<toReportList.size() ;i++){
+			TaobaokeReportMemberDTO report = toReportList.get(i) ;
+			TaobaoItemDTO item = itemList.get(i) ;
+			
+			if(report.getNumIid().equals(item.getNumIid())){
+				report.setPicUrl(item.getPicUrl()) ;
+			}
+ 		}
 	}
 	
 	/**
@@ -230,6 +288,7 @@ public class SyncReportTaskService implements TaskService {
 			report.setRealPayFee(item.getRealPayFee()) ;
 			report.setSellerNick(item.getSellerNick()) ;
 			report.setTradeId(item.getTradeId()) ;
+			report.setPicUrl(item.getPicUrl()) ;
 			String outCode = report.getOutCode() ;
 			//
 			if(StringUtils.isNotBlank(report.getOutCode())){
@@ -240,7 +299,7 @@ public class SyncReportTaskService implements TaskService {
 					if(acc != null){ //账号存在
 						report.setSettleAlipay(acc.getAlipayId()) ;
 						BigDecimal newCommissionRate = DecimalUtils.multiply(item.getCommissionRate(),DecimalConstant.HUNDRED) ;
-						UserCommission userCommission = DdzEatDiscountRule.calcUserCommissions(ddzEatDiscountRule, item.getCommission() , newCommissionRate , item.getRealPayFee()) ;
+						InternalCommission userCommission = DdzEatDiscountRule.calcUserCommissions(ddzEatDiscountRule, item.getCommission() , newCommissionRate , item.getRealPayFee()) ;
 						report.setUserCommission(userCommission.getCommission()) ;
 						report.setUserCommissionRate(DecimalUtils.divide(userCommission.getCommissionRate(),DecimalConstant.HUNDRED)) ;
 						report.setSettleFee(report.getUserCommission());

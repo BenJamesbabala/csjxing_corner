@@ -16,7 +16,8 @@
 			<map>
 				<entry key="ddzServer" value="http://${corner.ddz.domainName}:${corner.port}"/>
 				<entry key="ddzStaticServer" value="${corner.static.url}"/>
-				<entry key="taobaoLoginLink" value="${corner.api.taobao.login.url}?appkey=${corner.api.taobao.appkey}"/>
+				<entry key="ddzHelpServer" value="${corner.ddz.helpUrl}"/>
+				<entry key="taobaoLoginLink" value="${corner.api.taobao.login.url}?response_type=user&amp;client_id=${corner.api.taobao.appkey}&amp;redirect_uri=http://${corner.domainName}:${corner.port}/zhe/tblogin_pass.htm"/>
 				<entry key="surlServer" value="${corner.surl.url}"/>
 				<entry key="bopsServer" value="http://${corner.ddz.domainName}:${corner.port}"/>
 				<entry key="bopsLoginLink"  value="http://${corner.ddz.domainName}:${corner.port}/bops/login.htm" />

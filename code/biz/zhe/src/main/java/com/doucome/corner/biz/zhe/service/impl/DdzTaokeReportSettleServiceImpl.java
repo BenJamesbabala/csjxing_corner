@@ -2,11 +2,13 @@ package com.doucome.corner.biz.zhe.service.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.doucome.corner.biz.core.enums.SettleStatusEnums;
 import com.doucome.corner.biz.core.model.page.Pagination;
@@ -34,6 +36,8 @@ public class DdzTaokeReportSettleServiceImpl implements DdzTaokeReportSettleServ
 	private boolean productionMode;
 	
 	private static final Log log = LogFactory.getLog(DdzTaokeReportSettleServiceImpl.class);
+	
+	private static final Log settleResetLog = LogFactory.getLog("report-settle-log");
 	
 	@Override
 	public Long insertSettleReport(DdzTaokeReportSettleDO settleDO) {
@@ -128,9 +132,14 @@ public class DdzTaokeReportSettleServiceImpl implements DdzTaokeReportSettleServ
 
     @Override
     public int updateTaokeSettleStatus(List<Integer> settleIdList, SettleStatusEnums settleStatus) {
-        if (settleIdList.size() > 0) {
-          int count = ddzTaokeReportSettleDAO.updateSettleStatus(settleIdList, settleStatus.getValue());
-            ddzTaokeReportDAO.updateTaokeReportSettleStatus(settleIdList, settleStatus.getValue());
+        if (!CollectionUtils.isEmpty(settleIdList) && settleStatus != null) {
+        	settleResetLog.error(String.format("----reset setlle records %s to [%s]", settleIdList.toString(), settleStatus.getValue()));
+            int count = ddzTaokeReportSettleDAO.updateSettleStatus(settleIdList, settleStatus.getValue());
+            int count1 = ddzTaokeReportDAO.updateTaokeReportSettleStatus(settleIdList, settleStatus.getValue());
+            if (count1 < count) {
+            	settleResetLog.error(String.format("----there are some error with the settle data, can't find settle records %s related report records. status [%s]",
+            			     settleIdList.toString(), settleStatus.getValue()));
+            }
             return count;
         }
         return 0;
@@ -147,5 +156,10 @@ public class DdzTaokeReportSettleServiceImpl implements DdzTaokeReportSettleServ
 	@Override
 	public BigDecimal getTotalSettleFee(String settleAlipay,String[] settleStatus) {
 		return ddzTaokeReportSettleDAO.sumTotalSettleFee(settleAlipay ,settleStatus) ;
+	}
+
+	@Override
+	public int countTotalSettle(String settleAlipay, String[] settleStatus) {
+		return ddzTaokeReportSettleDAO.countTotalSettle(settleAlipay ,settleStatus) ;
 	}
 }

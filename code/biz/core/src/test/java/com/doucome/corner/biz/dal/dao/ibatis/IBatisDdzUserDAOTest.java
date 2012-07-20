@@ -8,7 +8,7 @@ import com.doucome.corner.biz.core.enums.GenderEnums;
 import com.doucome.corner.biz.core.enums.TrueFalseEnums;
 import com.doucome.corner.biz.dal.DdzUserDAO;
 import com.doucome.corner.biz.dal.dataobject.DdzUserDO;
-import com.doucome.corner.test.AbstractBaseJUnit4Test;
+import com.doucome.corner.unittest.AbstractBaseJUnit4Test;
 
 @ContextConfiguration(locations={
 		"classpath:corner/bean/biz-common.xml" ,

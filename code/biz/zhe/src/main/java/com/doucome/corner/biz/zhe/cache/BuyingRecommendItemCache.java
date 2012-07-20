@@ -2,16 +2,13 @@ package com.doucome.corner.biz.zhe.cache;
 
 import java.util.List;
 
-import com.doucome.corner.biz.core.cache.AbstractCacheSupport.InternalStoreItem;
-import com.doucome.corner.biz.dal.dataobject.DdzRecommendDO;
+import com.doucome.corner.biz.zhe.model.TaobaokeReportFacade;
 
 public interface BuyingRecommendItemCache {
 
-	void setCache(List<DdzRecommendDO> items) ;
+	void setCache(List<TaobaokeReportFacade> items) ;
 	
-	List<DdzRecommendDO> getItems() ;
-	
-	InternalStoreItem<List<DdzRecommendDO>> getInternalItems() ;
+	List<TaobaokeReportFacade> getItems() ;
 	
 	void clear() ;
 }

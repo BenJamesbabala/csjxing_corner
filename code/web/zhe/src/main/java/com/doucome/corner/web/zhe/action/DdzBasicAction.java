@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.core.service.impl.DefaultUriService;
@@ -37,7 +36,11 @@ public abstract class DdzBasicAction extends BasicAction {
 	 * @return
 	 */
 	public String getAlipayAccount(){
-		return ddzAuthz.getAlipayId() ;
+		String alipayId = ddzAuthz.getAlipayId() ;
+		if ("vip@diandianzhe.com".equals(alipayId)) {
+			return null;
+		}
+		return alipayId;
 	}
     
 }

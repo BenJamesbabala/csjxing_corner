@@ -10,8 +10,12 @@
 		<to type="forward">/surl/surl.htm?shorten=$1</to>
 	</rule>
 	<rule>
-		<from>/zhe/item/(\d+)</from>
+		<from>/zhe/item/(\d*)</from>
 		<to type="forward">/zhe/item.htm?id=$1</to>
+	</rule>
+	<rule>
+		<from>/site.do</from>
+		<to type="forward">zhe/sitemapUrl.htm</to>
 	</rule>
 	<rule>
 		<from>/zhe/keyword/(\w*)/(\d+)</from>

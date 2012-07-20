@@ -83,32 +83,16 @@ public class IBatisDdzTaokeReportSettleDAO extends SqlMapClientDaoSupport implem
 
 	@Override
 	public int countSettlesWithPagination(DdzTaokeReportSettleSearchCondition searchCondition) {
-		Map<String,Object> condition = new HashMap<String,Object>() ;
 		
-		condition.put("gmtSettledStart", searchCondition.getGmtSettledStart()) ;
-		condition.put("gmtSettledEnd", searchCondition.getGmtSettledEnd()) ;
-		condition.put("settleStatus", searchCondition.getSettleStatus()) ;
-		condition.put("settleAlipay", searchCondition.getSettleAlipay()) ;
-		condition.put("settleUid", searchCondition.getSettleUid()) ;
-		condition.put("emailStatus", searchCondition.getEmailStatus()) ;
-		condition.put("settleBatchno", searchCondition.getSettleBatchno()) ;
-		condition.put("settleInDays", searchCondition.getSettleInDays());
+		Map<String,Object> condition = searchCondition.toMap() ;
+		
 		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("ddzReportSettle.countSettlesWithPagination" , condition)) ;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<DdzTaokeReportSettleDO> selectSettlesWithPagination(DdzTaokeReportSettleSearchCondition searchCondition, int start, int size) {
-		Map<String,Object> condition = new HashMap<String,Object>() ;
-		
-		condition.put("gmtSettledStart", searchCondition.getGmtSettledStart()) ;
-		condition.put("gmtSettledEnd", searchCondition.getGmtSettledEnd()) ;
-		condition.put("settleStatus", searchCondition.getSettleStatus()) ;
-		condition.put("settleAlipay", searchCondition.getSettleAlipay()) ;
-		condition.put("settleUid", searchCondition.getSettleUid()) ;
-		condition.put("emailStatus", searchCondition.getEmailStatus()) ;
-		condition.put("settleBatchno", searchCondition.getSettleBatchno()) ;
-		condition.put("settleInDays", searchCondition.getSettleInDays());
+		Map<String,Object> condition = searchCondition.toMap() ;
 		condition.put("start", start-1) ;
 		condition.put("size", size) ;
 		return getSqlMapClientTemplate().queryForList("ddzReportSettle.selectSettlesWithPagination" , condition) ;
@@ -135,6 +119,14 @@ public class IBatisDdzTaokeReportSettleDAO extends SqlMapClientDaoSupport implem
         condition.put("emailStatus", emailStatus) ;
         return getSqlMapClientTemplate().update("ddzReportSettle.updateEmailStatus" , condition) ;
     }
+    
+    @Override
+	public int updateMobileStatus(List<Integer> settleIds, String mobileStatus) {
+    	Map<String,Object> condition = new HashMap<String,Object>() ;
+        condition.put("settleIds", settleIds) ;
+        condition.put("mobileStatus", mobileStatus) ;
+        return getSqlMapClientTemplate().update("ddzReportSettle.updateMobileStatus" , condition) ;
+	}
 
 	@Override
 	public BigDecimal sumTotalSettleFee(String settleAlipay , String[] settleStatusList) {
@@ -144,5 +136,15 @@ public class IBatisDdzTaokeReportSettleDAO extends SqlMapClientDaoSupport implem
 		return (BigDecimal)getSqlMapClientTemplate().queryForObject("ddzReportSettle.sumTotalSettleFee" , condition) ;
 		
 	}
+
+	@Override
+	public int countTotalSettle(String settleAlipay, String[] settleStatus) {
+		Map<String,Object> condition = new HashMap<String,Object>() ;
+        condition.put("settleAlipay", settleAlipay) ;
+        condition.put("settleStatus", settleStatus) ;
+		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("ddzReportSettle.countTotalSettle" , condition)) ;
+	}
+
+	
 	
 }

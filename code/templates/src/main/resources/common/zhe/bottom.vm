@@ -22,5 +22,6 @@
 	#parse("/common/bottomhost.vm")
 #end
 #parse("/common/zhe/google_analytics.vm")
-#parse("/common/zhe/baidu_tongji.vm")
-#parse("/common/zhe/feedback.vm")
+
+
+

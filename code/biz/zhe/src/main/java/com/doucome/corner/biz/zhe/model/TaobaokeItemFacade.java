@@ -4,12 +4,13 @@ import java.math.BigDecimal;
 
 import com.doucome.corner.biz.core.constant.DecimalConstant;
 import com.doucome.corner.biz.core.enums.TaobaoPicEnums;
+import com.doucome.corner.biz.core.model.AbstractModel;
 import com.doucome.corner.biz.core.taobao.dto.TaobaoItemDTO;
 import com.doucome.corner.biz.core.taobao.dto.TaobaokeItemDTO;
 import com.doucome.corner.biz.core.taobao.enums.TaobaoSellerStartCreditEnums;
 import com.doucome.corner.biz.core.utils.ReflectUtils;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule;
-import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.UserCommission;
+import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.InternalCommission;
 import com.doucome.corner.biz.zhe.utils.TaobaoPicUtils;
 
 /**
@@ -17,13 +18,24 @@ import com.doucome.corner.biz.zhe.utils.TaobaoPicUtils;
  * 
  * @author shenjia.caosj 2012-3-8
  */
-public class TaobaokeItemFacade {
-		
-	public TaobaokeItemFacade(TaobaokeItemDTO item){
+public class TaobaokeItemFacade extends AbstractModel {
+	
+	private InternalCommission internalUserCommission ;
+//		
+//	public TaobaokeItemFacade(TaobaokeItemDTO item){
+//		if(item != null){
+//			ReflectUtils.reflectTo(item, this) ;
+//			sumPicUrl = TaobaoPicUtils.findPic(picUrl, TaobaoPicEnums.SUM) ;
+//		}
+//	}
+	
+	public TaobaokeItemFacade(TaobaokeItemDTO item,DdzEatDiscountRule rule){
 		if(item != null){
 			ReflectUtils.reflectTo(item, this) ;
 			sumPicUrl = TaobaoPicUtils.findPic(picUrl, TaobaoPicEnums.SUM) ;
 		}
+
+		calcFacadeCommissions(rule) ;
 	}
 	
 	public TaobaokeItemFacade(TaobaoItemDTO item){
@@ -37,6 +49,25 @@ public class TaobaokeItemFacade {
 		
 	}
 
+	/**
+     * 计算实际显示的佣金和佣金比率
+     */
+    private void calcFacadeCommissions(DdzEatDiscountRule rule){
+    	
+    	//由于查询到的结果是  7000 表示70% ，所以要先除100，再X100
+    	BigDecimal _userCommissionRate = this.commissionRate.divide(DecimalConstant.HUNDRED) ;
+    	BigDecimal _userCommission = this.commission ;
+    	BigDecimal _price = this.promotionPrice == null ? this.price : this.promotionPrice ;
+    	
+    	InternalCommission userCommission = DdzEatDiscountRule.calcUserCommissions(rule, _userCommission, _userCommissionRate, _price) ;
+    	
+    	this.userCommission = userCommission.getCommission() ;
+    	this.userCommissionRate = userCommission.getCommissionRate().multiply(DecimalConstant.HUNDRED) ;
+    	
+    	this.internalUserCommission = userCommission ;
+    	
+    }
+	
 	/**
 	 * 商品url ,,http://item.taobao.com/item.htm?id=4947813209 	
 	 */
@@ -151,22 +182,12 @@ public class TaobaokeItemFacade {
      * 显示给用户的佣金比例
      */
     private BigDecimal userCommissionRate ;
-    
-    /**
-     * 计算实际显示的佣金和佣金比率
-     */
-    public void calcFacadeCommissions(DdzEatDiscountRule rule){
-    	
-    	//由于查询到的结果是  7000 表示70% ，所以要先除100，再X100
-    	BigDecimal _userCommissionRate = this.commissionRate.divide(DecimalConstant.HUNDRED) ;
-    	BigDecimal _userCommission = this.commission ;
-    	BigDecimal _price = this.promotionPrice == null ? this.price : this.promotionPrice ;
-    	
-    	UserCommission userCommission = DdzEatDiscountRule.calcUserCommissions(rule, _userCommission, _userCommissionRate, _price) ;
-    	
-    	this.userCommission = userCommission.getCommission() ;
-    	this.userCommissionRate = userCommission.getCommissionRate().multiply(DecimalConstant.HUNDRED) ;
-    }
+        
+    public InternalCommission getInternalUserCommission() {
+		return internalUserCommission;
+	}
+
+	
     
     public String getPic(String type){
     	return TaobaoPicUtils.findPic(this.picUrl, TaobaoPicEnums.toTaobaoPicEnums(type)) ;

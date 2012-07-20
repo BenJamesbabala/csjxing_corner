@@ -2,13 +2,8 @@ package com.doucome.corner.biz.zhe.service;
 
 import java.util.List;
 
-import com.doucome.corner.biz.core.enums.RecommendTypeEnums;
-import com.doucome.corner.biz.core.model.page.Pagination;
-import com.doucome.corner.biz.core.model.page.QueryResult;
-import com.doucome.corner.biz.core.taobao.dto.TaobaokeItemDTO;
-import com.doucome.corner.biz.dal.condition.DdzRecommendSearchCondition;
-import com.doucome.corner.biz.dal.dataobject.DdzRecommendDO;
-import com.doucome.corner.biz.zhe.model.RecommendBatchDate;
+import com.doucome.corner.biz.zhe.model.TaobaokeReportFacade;
+import com.doucome.corner.biz.zhe.model.TaobaokeShopFacade;
 
 /**
  * 推荐
@@ -16,39 +11,21 @@ import com.doucome.corner.biz.zhe.model.RecommendBatchDate;
  *
  */
 public interface DdzRecommendService {
+	
+	/**
+	 * 首页品牌
+	 * @param shopIdList
+	 * @param outCode
+	 * @return
+	 */
+	List<TaobaokeShopFacade> getIndexBrands() ;
 
-	/**
-	 * 新增推荐
-	 * @param recommend
-	 * @return
-	 */
-	int createRecommend(List<DdzRecommendDO> recommendList) ;
 	
 	/**
-	 * 更新推荐
-	 * @param id
-	 * @param isDisplay
+	 * 别人正在买
+	 * @param count
 	 * @return
 	 */
-	int updateRecommendDisplayById(int id , String isDisplay) ;
+	List<TaobaokeReportFacade> getBuyingItems(int count) ;
 	
-	/**
-	 * 准备别人正在买推荐数据
-	 */
-	List<TaobaokeItemDTO> prepareBuyingRecommends(RecommendBatchDate date) ;
-	
-	/**
-	 * 
-	 * @param date
-	 * @return
-	 */
-	List<DdzRecommendDO> getRecommends(RecommendBatchDate date , RecommendTypeEnums recommType) ;
-	
-	/**
-	 * 分页查询
-	 * @param condition
-	 * @param pagination
-	 * @return
-	 */
-	QueryResult<DdzRecommendDO> getRecommendsWithPagination(DdzRecommendSearchCondition condition , Pagination pagination) ;
 }

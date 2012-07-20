@@ -14,7 +14,6 @@ import com.doucome.corner.biz.dal.dataobject.DdzSearchLogDO;
 import com.doucome.corner.biz.zhe.enums.OutCodeEnums;
 import com.doucome.corner.biz.zhe.enums.SearchWayEnums;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
-import com.doucome.corner.biz.zhe.service.DdzEatDiscountService;
 import com.doucome.corner.biz.zhe.service.DdzSearchLogService;
 import com.doucome.corner.biz.zhe.service.KeywordsFilterService;
 import com.doucome.corner.biz.zhe.utils.OutCodeUtils;
@@ -46,8 +45,6 @@ public class S8SearchAction extends DdzBasicAction implements ModelDriven<TaokeI
 	@Autowired
 	private TaobaokeServiceDecorator taobaokeServiceDecorator;
 
-	@Autowired
-	private DdzEatDiscountService ddzEatDiscountService;
 
 	@Autowired
 	private DdzSearchLogService ddzSearchLogService;

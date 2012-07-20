@@ -1,59 +1,97 @@
-
-#if(!$collectionUtils.isEmpty($buyingRecommendList))
-
-#DDZ_CSS(["home/control/widget/home/recommend.css"])
-
-<style>
-	
-	
-</style>
-
-<div class="mod mod-index" id="tdSuperPrice" style="text-align:left;"> 
-    <div class="hd">
-      <h2>今日超值推荐</h2>
-	  <!--
-                    <div class="ico-buttons">
-                      <a hidefocus="true" href="javascript:void(0);" class="">1</a>
-                      <a hidefocus="true" href="javascript:void(0);" class="current">2</a>
-                      <a hidefocus="true" href="javascript:void(0);" class="">3</a>
-                  </div>
-		-->
-          </div>
-    <div class="bd">
-        <div class="deal-list"  id="mycarousel">
-			<!--
-                     <a hidefocus="true" title="上一组" class="in-ico-btn-pre" href="javascript:void(0);"><b>上一组</b></a>
-					 <a hidefocus="true" title="下一组" class="in-ico-btn-next" href="javascript:void(0);"><b>下一组</b></a>
-			-->
-					 <ul class="clearfix" style="overflow: hidden;">
-						#foreach($item in $buyingRecommendList)
-						<li class="">
-						  #set($idx = $velocityCount)
-						  #if($idx > 9)
-							#set($topcls = "recomm_top_" + ($idx - 9))
-						  #else
-							#set($topcls  = "recomm_top_" + $idx)
-							
-						  #end
-						  <div class="recomm_top $topcls">
-							<div>
-							<span class="price">$item.privateAlipay 刚省了 </span><span class="commission">&yen;$decimalUtils.format($item.userCommission,'#####0.0')</span></div>
-						  </div>
-                          <div class="deal-list-ctn">
-                            <a target="_blank" href="${env.ddzRoot}/zhe/item/$!item.recommend.numIid?tracelog=index_rmd" title="$!item.recommend.itemTitle">
-                              <!--<b class="tips-$velocityCount">$velocityCount</b>-->							  
-							  <div>
-								<img width="160" height="160" alt="$!item.recommend.itemTitle" src="$item.getItemPicUrl('160x160')" data-pinit="registered"></img>
-                              </div>
-                            </a>
-                          </div>
-                        </li>
+<div class="dd-recommend" id="ddRecomends">
+    <div class="dd-brands-tip"><!--<span class="darkgray">商家返利快速通道：</span><span class="gray">无需生成返利链接，全店商品自动返利。</span>-->&nbsp;</div>
+    <div class="dd-brands" id="ddBrands">
+			
+    		<div class="dd-brands-tab">
+    			<ul>
+    				<li>
+                        <span class="dd-brands-tab-down"></span>
+						品牌返利
+					</li>
+    				<!--
+    				<li class="r-border l-border">女装</li>
+    				<li class="r-border l-border">化妆品</li>
+    				<li class="r-border l-border">鞋包</li>
+    				<li class="l-border">男装</li>
+    				-->
+    			</ul>
+    		</div>
+    		<div class="dd-brands-panel">
+				#foreach($col in [0..2])
+					<ul class="dd-brands-list #if($col != 2) b-border #end">
+					#foreach($row in [0..4])
+						#set($index = 5*$col + $velocityCount - 1)
+						#if($brandsList.size() > $index)
+    						#set($brand = $brandsList[$index])
+    						#if($brand)
+    						<li>
+            					<a href="$!brand.clickUrl" data-shopId="$!brand.sid" target="_blank" data-brandsRecommend="" gtrack="virtual/zhe/brands/shop?sid=$!brand.sid">
+            						<img src="${env.ddzStaticroot}/img/brand/$!{brand.sid}.jpg" height="50" width="90" alt="$brandsList[$index].shopTitle" title="$brandsList[$index].shopTitle" />
+                                    <div class="dd-fanli-item-box">
+            							<div class="dd-fanli-item-text">返利</div><div class="dd-fanli-item-rate">$decimalUtils.format($brand.userCommissionRate,'0')%</div>
+            						</div>
+            					</a>
+                            </li>
+    						#end
 						#end
-            		</ul>
+					#end
+					</ul>
+				#end
+				
+                
+            </div>
+    		
+    		
+    	
+    </div>
+    #if($buyingRecommendList.size() > 6)
+    <div class="dd-buyings">
+    	<div class="dd-buyings-tab">
+    		<ul>
+    			<li class="r-border"><span class="dd-buyings-tab-down"></span>大家正在买...</li>
+    		</ul>
+    	</div>
+    	<div class="dd-buyings-panel">
+			<div class="dd-buyings-scroll">
+			
+			#foreach($buyItem in $buyingRecommendList)
+				#set($buyUserCommissionRate = $buyItem.userCommissionRate*100)
+                <div class="dd-buyings-list b-border">
+        			<div class="L dd-buyings-info">
+                        <div class="dd-buyings-infoName">$buyItem.privateSettleAlipay</div>
+        				<div class="dd-buyings-infoSaved">刚省了<span class="dd-buyings-infoCommssion">$decimalUtils.format($buyItem.originUserCommission,'0.0')元</span></div>
+        				<div class="dd-fanli-item-box">
+        					<div class="dd-fanli-item-text">返利</div><div class="dd-fanli-item-rate">$decimalUtils.format($buyUserCommissionRate,'0.0')%</div>
+        				</div>
+                    </div>
+        			<div class="R">
+        				<a href="${env.ddzRoot}/zhe/item/$!buyItem.numIid" target="_blank" gtrack="virtual/zhe/buyings/item?id=$!buyItem.numIid"><img src='$buyItem.getPicUrl("sum")' width="60" height="60" alt="$!buyItem.itemTitle" title="$!buyItem.itemTitle"/></a>
+                    </div>
+        		</div>
+			#end
+			#foreach($count in [0..3])
+				#set($buyItem = $buyingRecommendList[$count])
+				#if($buyItem)
+				#set($buyUserCommissionRate = $buyItem.userCommissionRate*100)
+                <div class="dd-buyings-list b-border">
+        			<div class="L dd-buyings-info">
+                        <div class="dd-buyings-infoName">$buyItem.privateSettleAlipay</div>
+        				<div class="dd-buyings-infoSaved">刚省了<span class="dd-buyings-infoCommssion">$decimalUtils.format($buyItem.originUserCommission,'0.0')元</span></div>
+        				<div class="dd-fanli-item-box">
+        					<div class="dd-fanli-item-text">返利</div><div class="dd-fanli-item-rate">$decimalUtils.format($buyUserCommissionRate,'0.0')%</div>
+        				</div>
+                    </div>
+        			<div class="R">
+                        <a href="${env.ddzRoot}/zhe/item/$!buyItem.numIid" target="_blank"><img src='$buyItem.getPicUrl("sum")' width="60" height="60" alt="$!buyItem.itemTitle" title="$!buyItem.itemTitle"/></a>
+                    </div>
+        		</div>
+				#end
+			#end
+            </div>
         </div>
     </div>
+	#end
+	
 </div>
 
-
-
-#end
+<div class="dd-recommend-bot"></div>

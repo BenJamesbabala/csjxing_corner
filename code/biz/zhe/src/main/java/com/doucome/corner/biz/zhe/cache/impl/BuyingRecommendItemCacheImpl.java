@@ -7,18 +7,18 @@ import org.apache.commons.lang.time.DateUtils;
 
 import com.doucome.corner.biz.cache.CacheClient;
 import com.doucome.corner.biz.core.cache.AbstractCacheSupport;
-import com.doucome.corner.biz.dal.dataobject.DdzRecommendDO;
 import com.doucome.corner.biz.zhe.cache.BuyingRecommendItemCache;
+import com.doucome.corner.biz.zhe.model.TaobaokeReportFacade;
 
 public class BuyingRecommendItemCacheImpl extends AbstractCacheSupport implements BuyingRecommendItemCache {
 
 	
 	
 	@Override
-	public void setCache(List<DdzRecommendDO> items) {
+	public void setCache(List<TaobaokeReportFacade> items) {
 		CacheClient cc = getCacheClient() ;
 		String key = buildCachekeyWithArgs("") ;
-		InternalStoreItem<List<DdzRecommendDO>> store = new InternalStoreItem<List<DdzRecommendDO>>() ; 
+		InternalStoreItem<List<TaobaokeReportFacade>> store = new InternalStoreItem<List<TaobaokeReportFacade>>() ; 
 		store.setGmtCreate(new Date()) ;
 		store.setItem(items) ;
 		
@@ -26,43 +26,37 @@ public class BuyingRecommendItemCacheImpl extends AbstractCacheSupport implement
 	}
 
 	@Override
-	public List<DdzRecommendDO> getItems() {
+	public List<TaobaokeReportFacade> getItems() {
 		CacheClient cc = getCacheClient() ;
 		String key = buildCachekeyWithArgs("") ;
-		Object o = cc.get(key) ;
-		if(o == null){
+		InternalStoreItem<List<TaobaokeReportFacade>> store = cc.get(key) ;
+		if(isExpire(store)) {
 			return null ;
 		}
-		InternalStoreItem<List<DdzRecommendDO>> store = (InternalStoreItem<List<DdzRecommendDO>>)o ;
-		//Calendar create = DateUtils.getCalendar(store.getGmtCreate()) ;
 		return store.getItem();
 	}
-
-	@Override
-	public InternalStoreItem<List<DdzRecommendDO>> getInternalItems() {
-		CacheClient cc = getCacheClient() ;
-		String key = buildCachekeyWithArgs("") ;
-		return cc.get(key) ;
-	}
-	
 	
 	/**
 	 * »º´æÊÇ·ñ¹ýÆÚ
 	 * @param internalItem
 	 * @return
 	 */
-	public static boolean isCacheExpire(InternalStoreItem<List<DdzRecommendDO>> internalItem){
-		if(internalItem == null){
+	public boolean isExpire(InternalStoreItem<List<TaobaokeReportFacade>> store){
+		if(store == null){
 			return true ;
 		}
-		Date gmtCreate = internalItem.getGmtCreate() ;
-		//
+		
+		Date gmtCreate = store.getGmtCreate() ;
 		if(gmtCreate == null){
 			return true ;
 		}
-		if(DateUtils.isSameDay(gmtCreate, new Date())){
+		
+		Date now = new Date() ;
+		
+		if(DateUtils.isSameDay(gmtCreate, now)){
 			return false ;
-		}		
+		}
+		
 		return true ;
 	}
 

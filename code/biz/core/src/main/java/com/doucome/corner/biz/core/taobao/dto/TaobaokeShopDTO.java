@@ -2,7 +2,9 @@ package com.doucome.corner.biz.core.taobao.dto;
 
 import java.math.BigDecimal;
 
+import com.doucome.corner.biz.core.constant.DecimalConstant;
 import com.doucome.corner.biz.core.model.AbstractModel;
+import com.doucome.corner.biz.core.utils.ReflectUtils;
 import com.taobao.api.domain.TaobaokeShop;
 
 /**
@@ -11,6 +13,13 @@ import com.taobao.api.domain.TaobaokeShop;
  *
  */
 public class TaobaokeShopDTO extends AbstractModel {
+	
+	public TaobaokeShopDTO(TaobaokeShop shop){
+		ReflectUtils.reflectTo(shop, this) ;
+		if(this.commissionRate != null){
+			this.commissionRate.divide(DecimalConstant.HUNDRED) ;
+		}
+	}
 	
 
 	/**
@@ -52,7 +61,7 @@ public class TaobaokeShopDTO extends AbstractModel {
 	 * 店铺内商品总数吗,100 	
 	 */
 	private Long auctionCount ;
-
+	
 	public Long getUserId() {
 		return userId;
 	}
@@ -117,15 +126,4 @@ public class TaobaokeShopDTO extends AbstractModel {
 		this.auctionCount = auctionCount;
 	}
 	
-	public void fromTaobaokeShop(TaobaokeShop item){
-		this.setAuctionCount(item.getAuctionCount()) ;
-		this.setClickUrl(item.getClickUrl()) ;
-		this.setCommissionRate(new BigDecimal(item.getCommissionRate())) ;
-		this.setSellerCredit(item.getSellerCredit()) ;
-		this.setShopTitle(item.getShopTitle()) ;
-		this.setShopType(item.getShopType()) ;
-		this.setTotalAuction(item.getTotalAuction()) ;
-		this.setUserId(item.getUserId()) ;
-		
-	}
 }

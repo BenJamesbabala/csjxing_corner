@@ -1,0 +1,74 @@
+#set($layout="zhe/default_main.vm")
+#set($title = $item.title)
+
+
+#if($item)
+    #set($userCommission = $!item.userCommission)
+	#set($userCommissionRate = $decimalUtils.formatTaobaoRate($!item.userCommissionRate))
+	
+	<input type="hidden" id="userCommissionRate" value="$!userCommissionRate" />
+	<input type="hidden" id="itemId" value="$!item.numIid" />
+	<input type="hidden" id="ddzRoot" value="${env.ddzRoot}" />
+	
+    #if($item.clickUrlShorten)
+    	#set($itemClickUrl = "#DDZ_SHORT_URL($item.clickUrlShorten)")
+    #elseif($item.clickUrl)
+    	#set($itemClickUrl = $item.clickUrl)
+    #else
+		#set($itemClickUrl = $item.detailUrl)
+	#end
+    
+        #if($alipayId)
+			#set($cssName = "main-result-buy")
+		#else
+			#set($cssName = "main-result-ipt")
+		#end
+		
+		<div class="main-result-buy dd-clr" id="item-show">
+        	<div></div>
+        	<div class="item-view dd-clr">
+                <ul>
+                	<li>
+                		<div class="item-img-view">
+                			<a href="$!itemClickUrl" title="$!item.title" class="gtrack" gtrack="zhe/taobao/item/$!item.numIid?from=imgUrl" target="_blank"> <img src="$!item.sumPicUrl" alt="$!item.title" /> </a>
+                		</div>
+                		<div class="item-title-view dd-gray">
+                			<a href="${env.ddzRoot}/zhe/item/${id}" title="$!item.title" class="gtrack" gtrack="zhe/taobao/item/$!item.numIid?from=titleUrl">$!item.title</a>
+                		</div>
+                		<div class="discount-rate-view">
+							
+                			<span class="discount-rate-num-int-view" id="maskCommissionRate">$decimalUtils.integerPart($userCommissionRate)<span class="discount-rate-num-float-view">$decimalUtils.fractionFormat($userCommissionRate,".0")</span></span>
+							
+                			<span class="discount-rate-percent-view">%</span>
+							
+                		</div>
+                		<div class="item-price-view">
+                            <span class="item-price-origin-view">原价:<span data-originPrice="" >$decimalUtils.format($!item.showPrice,'0.00')</span></span>
+                            <span class="item-price-discount-view item-price-discount">返利:<strong id="">&yen;<span data-userCommission="">$decimalUtils.formatPrice($!userCommission)</span></strong></span>
+                		</div>
+                	</li>
+                </ul>
+        	</div>
+			##显示折扣链接
+            <div class="item-buy dd-clr">
+                <span><div style="float:left;"><a href="javascript:;" class="new-guide-40" id="newGuide" title="一分钟了解点点折"></a></div><div style="float:left;" class='dd-learn-more'>一分钟了解点点折</div></span>
+            </div>
+            <div class="item-url-go"><a href="${env.ddzRoot}/zhe/item/${id}" title="现在就去生成返利链接" style="color:#4a4a4a;text-decoration:underline;">现在就去生成返利链接>></a></div>
+        </div>
+		
+		
+		
+#else
+	<div class="find-none dd-clr">
+		对不起，该商品木有折扣!
+	</div>
+	#if($recommendList)
+		<!--
+	<ul id="mycarousel" class="jcarousel-skin-tango">
+		#foreach($item in $recommendList)
+	    <li><a href="${env.ddzRoot}/zhe/item.htm?id=$!item.numIid"><img src="$item.getPic('210x210')" width="132" height="132" alt="$item.title" /></a></li>
+	    #end
+	 </ul>
+	 -->
+	#end
+#end

@@ -1,8 +1,16 @@
 #set($layout="zhe/default_main.vm")
 #set($title = $item.title)
 
+<div class="dd-item-main">
+
 #if($item)
-    	
+    
+	#set($userCommission = $!item.userCommission)
+	#set($userCommissionRate = $decimalUtils.formatTaobaoRate($!item.userCommissionRate))
+	
+	<input type="hidden" id="userCommissionRate" value="$!userCommissionRate" />
+	<input type="hidden" id="itemId" value="$!item.numIid" />
+	<input type="hidden" id="ddzRoot" value="${env.ddzRoot}" />
     #if($item.clickUrlShorten)
     	#set($itemClickUrl = "#DDZ_SHORT_URL($item.clickUrlShorten)")
     #elseif($item.clickUrl)
@@ -26,20 +34,21 @@
                 <ul>
                 	<li>
                 		<div class="item-img-view">
-                			<a href="$!itemClickUrl" title="$!item.title" class="gtrack" gtrack="zhe/taobao/item/$!item.numIid?from=imgUrl" target="_blank"> <img src="$!item.sumPicUrl" alt="$!item.title" /> </a>
+                			<a href="$!itemClickUrl" title="$!item.title" gtrack="virtual/zhe/taobao/item?id=$!item.numIid&from=imgUrl" target="_blank"> <img src="$!item.sumPicUrl" alt="$!item.title" /> </a>
                 		</div>
                 		<div class="item-title-view dd-gray">
-                			<a href="$!itemClickUrl" title="$!item.title" class="gtrack" gtrack="zhe/taobao/item/$!item.numIid?from=titleUrl" target="_blank">$!item.title</a>
+                			<a href="$!itemClickUrl" title="$!item.title" gtrack="virtual/zhe/taobao/item?id=$!item.numIid&from=titleUrl" target="_blank">$!item.title</a>
                 		</div>
                 		<div class="discount-rate-view">
-							#set($rate = $decimalUtils.formatTaobaoRate($!item.userCommissionRate))
-                			<span class="discount-rate-num-int-view">$decimalUtils.format($rate ,"0")</span>
-							<span class="discount-rate-num-float-view">$decimalUtils.fractionFormat($!rate,".00")</span>
+							
+                			<span class="discount-rate-num-int-view" id="maskCommissionRate">$decimalUtils.integerPart($userCommissionRate)<span class="discount-rate-num-float-view">$decimalUtils.fractionFormat($userCommissionRate,".0")</span></span>
+							
                 			<span class="discount-rate-percent-view">%</span>
+							
                 		</div>
                 		<div class="item-price-view">
-                            <span class="item-price-origin-view">原价:$decimalUtils.format($!item.showPrice,'######0.00')</span>
-                			<span class="item-price-discount-view item-price-discount">返利:<strong>&yen;$decimalUtils.formatPrice($!item.userCommission)</strong></span>
+                            <span class="item-price-origin-view">原价:<span data-originPrice="" >$decimalUtils.format($!item.showPrice,'0.00')</span></span>
+                            <span class="item-price-discount-view item-price-discount">返利:<strong id="itemUserCommissionShow">&yen;<span data-userCommission="">$decimalUtils.format($userCommission,'0.00')</span></strong></span>
                 		</div>
                 	</li>
                 </ul>
@@ -53,16 +62,25 @@
             		<a href="javascript:;" id="change_alipay"><strong>更改支付宝账号>></strong></a>
 				</div>
             	<div class="item-buy-url">
-            		<a href="$!itemClickUrl" id="buy_go_url" target="_blank" class="gtrack" gtrack="zhe/taobao/item/$!item.numIid?from=buyUrl"><strong>$!itemClickUrl</strong></a>
+            		<a href="$!itemClickUrl" id="buy_go_url" target="_blank" gtrack="virtual/zhe/taobao/item?id=$!item.numIid&from=buyUrl"><strong>$!itemClickUrl</strong></a>
             	</div>
             	<div class="item-buy-go"></div>
+				<div id="ckepop">
+					
+                    <span class="jiathis_txt alipay-text-buy">分享到：</span>
+                	<a class="jiathis_button_qzone" gtrack="virtual/zhe/item/share?id=$!item.numIid&btn=qzone"></a>
+                	<a class="jiathis_button_tsina" gtrack="virtual/zhe/item/share?id=$!item.numIid&btn=tsina"></a>
+                	<a class="jiathis_button_tqq" gtrack="virtual/zhe/item/share?id=$!item.numIid&btn=tqq"></a>
+                	<a class="jiathis_button_renren" gtrack="virtual/zhe/item/share?id=$!item.numIid&btn=renren"></a>
+                	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank" gtrack="virtual/zhe/item/share?id=$!item.numIid&btn=more">更多</a>					
+                </div>
             </div>
 			##显示输入支付宝的页面
             <div class="item-ipt">
 				<form method="get" action="${env.ddzRoot}/zhe/item.htm" name="alipay-form" id="alipay_form">
 					<input type="hidden" name="id" value="$!id"/>
 					#if($userGuide)
-						<input type="hidden" name="userGuide" value="true"/>
+						<input type="hidden" name="userGuide" value="true" id="userGuide"/>
 					#end
                    	<div class="alipay-text-ipt  mfu">
                    		<strong>请输入支付宝账号：</strong>
@@ -71,8 +89,7 @@
                    		<input class="alipay-input-ipt" type="text" name="alipayId" id="alipayInput" />
                    	</div>
 					<a href="#" id="alipaySubmit">
-                       	<div class="alipay-submit-ipt">
-                       	</div>
+                       	<div class="alipay-submit-ipt"></div>
 					</a>
                 </form>
             </div>
@@ -89,15 +106,26 @@
 		
 #else
 	<div class="find-none dd-clr">
-		对不起，该商品木有折扣!
+		对不起，您输入的淘宝商品链接错误！
 	</div>
-	#if($recommendList)
-		<!--
-	<ul id="mycarousel" class="jcarousel-skin-tango">
-		#foreach($item in $recommendList)
-	    <li><a href="${env.ddzRoot}/zhe/item.htm?id=$!item.numIid"><img src="$item.getPic('210x210')" width="132" height="132" alt="$item.title" /></a></li>
-	    #end
-	 </ul>
-	 -->
-	#end
 #end
+
+</div>
+
+#if($alipayId)
+<!-- JiaThis Button BEGIN -->
+<script type="text/javascript">
+
+var jiathis_config = {
+	imageUrl:"$!item.sumPicUrl",
+	title:"推荐我喜欢的这款 【$!item.title】，用 @点点折网 还能再省#if($userCommission > 0.1) $decimalUtils.format($!userCommission,"0")% #end，现在淘宝购物我都用一下这个工具，能省不少钱。快去看看吧",
+	summary:"",
+	imageUrl:"${env.ddzRoot}/zhe/itemRecommend.htm?id=$item.numIid",
+	url:"${env.ddzRoot}/zhe/itemRecommend.htm?id=$item.numIid",
+    evt: {"share":""}
+}
+</script>
+<script type="text/javascript" src="http://v2.jiathis.com/code/jia.js?uid=1334585669756178" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+#end
+

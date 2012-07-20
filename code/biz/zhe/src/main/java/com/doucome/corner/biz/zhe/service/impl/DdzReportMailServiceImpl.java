@@ -152,7 +152,9 @@ public class DdzReportMailServiceImpl implements DdzReportMailService {
             context.put("settleDO", settleDO);
             context.put("emailAddress", emailAddress);
             if (sendMailService.send("email-rebate-notice", emailAddress, context)) {
+                Thread.sleep(100);
                 sendMailService.send("email-rebate-notice", "diandianzhetest@163.com", context);
+                Thread.sleep(100);
                 reportMailLog.info("[success] send mail to " + emailAddress + " ,alipayId: "
                                    + settleDO.getSettleAlipay() + ", settleId: " + settleId + " ,username:" + userName);
                 return true;

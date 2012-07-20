@@ -1,0 +1,51 @@
+﻿.dingdan .odrTtl{height:20px;font-size:14px;font-weight:bold; color:#666;}
+.dingdan .odrTtl span{margin-right:100px;color:#00BB00;}
+.dingdan .odrTtl b{font-size:35px; color:#E8004C;}
+.dingdan .odrTtl b i{font-size:14px}
+.dingdan .product{ width:100%;}
+.dingdan .product td{padding:5px; line-height:26px; border:1px solid #DCDCDC;}
+.dingdan .product thead td{ font-weight:bold; text-align:center; background:#F3F6F8;}
+.dingdan .product input{width:20px; height:14px; border:1px solid #DCDCDC;}
+.dingdan .attPro input{ margin-right:10px; vertical-align:middle;}
+.dingdan .attPro .okjia{margin:0 30px;}
+.dingdan .attPro .orange{margin:0 3px;}
+.dingdan .attPro input{ margin-right:10px; vertical-align:middle;}
+.dingdan .contactInfo tr{height:30px;}
+.dingdan .contactInfo th{ padding-right:5px;width:100px; text-align:right; font-weight:normal;}
+.dingdan .L{ width:710px; overflow:hidden;}
+.dingdan .R{ width:230px; overflow:hidden;}
+.dingdan .contactInfo i{color:#f00;}
+.dingdan .contactInfo input{border:1px solid #DCDCDC;}
+.dingdan .contactInfo .w184{ width:184px; height:18px;}
+.dingdan .subContact{margin-top:10px; height:100%;border-top:1px solid #ccc; overflow:hidden;}
+.dingdan .operateInfo a,.dingdan .subContact a{color:#06c;}
+.dingdan .operateInfo .add{display:block;margin:20px 0 0 20px;color:#06c;}
+.dingdan .operateInfo input{vertical-align:top;vertical-align:baseline\9;}
+.dingdan .order{display:block; margin:20px 0; width:110px; height:40px; background-position:-141px -60px; overflow:hidden; }
+.dingdan .operateInfo label{ margin-left:5px;}
+.dingdan .moneyTotal{ width:228px; border:1px solid #249F00;}
+.dingdan .moneyTotal h3{ height:30px; line-height:30px; text-align:center;font-weight:normal; color:#fff; background:#249F00;}
+.dingdan .moneyTotal table{ margin:10px;}
+.dingdan .moneyTotal tr{ height:30px;}
+.dingdan .moneyTotal th{padding-right:5px;width:80px; text-align:right; font-weight:normal;}
+.dingdan .moneyTotal p{ margin:20px 0 20px 30px; line-height:26px; color:#999;}
+.dingdan .redTtl{ float:left; margin:2px 16px; font-size:22px;}
+.dingdan .pay{clear:left;}
+.dingdan .pay td,.dingdan .pay th{padding-top:20px;_padding-bottom:20px; vertical-align:top;border-bottom:1px solid #dcdcdc;}
+.dingdan .pay td{width:75px;}
+.dingdan .pay th{width:630px; text-align:left;}
+.dingdan .pay input{float:left;margin-right:7px;width:13px; height:13px;}
+.dingdan .pay img{float:left;margin:0 10px 20px 0;width:123px; height:30px; vertical-align:middle;border:1px solid #ddd;}
+.dingdan .pay .first img{border-width:2px;}
+.dingdan .pay img.click{border-color:#FF6500;}
+.dingdan .qrxd th,.dingdan .qrxd td{ padding:0; border-bottom:none;}
+.dingdan2 p{ margin-top:20px;}
+.dingdan3 .pgt20 td,.dingdan3 .pgt20 th{padding:20px 0 10px 0;}
+.payOffLine{float:left;margin:32px 0 0 20px; font-weight:normal; text-decoration:underline;}
+.offLineForm{ clear:both;_margin-top:20px; display:none; padding:22px; border:1px solid #ddd;color:#666;}
+.offLineForm h3{font-weight:normal;}
+.offLineForm p{ height:40px; line-height:40px; background:#F5F5F5;}
+.offLineForm p img{ margin:4px 18px 0 5px;border:1px solid #ddd;}
+.offLineForm p strong{margin-right:18px;}
+.dingdan .pay .order{float:left; width:130px;background-position:-409px -60px;}
+.contactInfo .order{ width:130px;background-position:-266px -60px;}

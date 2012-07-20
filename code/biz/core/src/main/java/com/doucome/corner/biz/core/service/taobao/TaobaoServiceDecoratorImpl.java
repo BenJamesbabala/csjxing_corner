@@ -1,7 +1,11 @@
 package com.doucome.corner.biz.core.service.taobao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.CollectionUtils;
 
 import com.doucome.corner.biz.core.constant.LogConstant;
 import com.doucome.corner.biz.core.exception.TaobaoRemoteException;
@@ -13,8 +17,10 @@ import com.taobao.api.TaobaoClient;
 import com.taobao.api.domain.Item;
 import com.taobao.api.domain.User;
 import com.taobao.api.request.ItemGetRequest;
+import com.taobao.api.request.ItemsListGetRequest;
 import com.taobao.api.request.UserGetRequest;
 import com.taobao.api.response.ItemGetResponse;
+import com.taobao.api.response.ItemsListGetResponse;
 import com.taobao.api.response.UserGetResponse;
 
 public class TaobaoServiceDecoratorImpl extends AbstractTaobaoService implements TaobaoServiceDecorator {
@@ -72,6 +78,38 @@ public class TaobaoServiceDecoratorImpl extends AbstractTaobaoService implements
 			throw new TaobaoRemoteException(e.getErrMsg() , e , e.getErrCode()) ;
 		}
 		
+	}
+
+	@Override
+	public List<TaobaoItemDTO> getListItems(String[] numIids, String[] fields) {
+		
+		
+		ItemsListGetRequest req=new ItemsListGetRequest();
+		req.setFields(ArrayStringUtils.toString(fields));
+		req.setNumIids(ArrayStringUtils.toString(numIids));
+		try {
+			TaobaoClient client= taobaoClientWrapper.newClient() ;
+			ItemsListGetResponse response = client.execute(req);
+			boolean isSuccess = response.isSuccess() ;
+			if(isSuccess){
+				List<Item> itemList = response.getItems() ;
+				List<TaobaoItemDTO> itemDTOList = new ArrayList<TaobaoItemDTO>() ; 
+				if(!CollectionUtils.isEmpty(itemList)){
+					for(Item item : itemList){
+						itemDTOList.add(new TaobaoItemDTO(item)) ;
+					}
+				}
+				return itemDTOList ;
+			}
+			
+			if(taobaoLog.isErrorEnabled()){
+				taobaoLog.error("input [" + numIids + "]  response : " + response.getMsg()) ;
+			} 
+			throwTaobaoErrorResponse(response) ;
+			return null ;
+		} catch (ApiException e){
+			throw new TaobaoRemoteException(e.getErrMsg() , e , e.getErrCode()) ;
+		}
 	}
 
 }

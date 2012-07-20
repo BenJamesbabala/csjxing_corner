@@ -20,11 +20,11 @@
 	<import resource="classpath:corner/bean/biz-remote.xml" />
 	<import resource="classpath:corner/bean/biz-uri.xml" />
 	<import resource="classpath:corner/bean/biz-util.xml" />
+	<import resource="classpath:corner/bean/biz-sms.xml" />
 	
 	<import resource="classpath:corner/bean/zhe/biz-zhe-service.xml" />
 	<import resource="classpath:corner/bean/zhe/biz-zhe-dao.xml" />
-	<import resource="classpath:corner/bean/zhe/biz-zhe-cache.xml" />
-	<import resource="classpath:corner/bean/zhe/biz-zhe-recommend.xml" />
+	<import resource="classpath:corner/bean/zhe/biz-zhe-cache.xml" />	
 	
 	<import resource="classpath:corner/bean/web/biz-web-service.xml" />
 	

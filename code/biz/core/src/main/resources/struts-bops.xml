@@ -53,6 +53,23 @@
 			<result name="success" type="velocity">/bops/zhe/buyingRecommend.vm</result>
 		</action>
 		
+		<action name="settle_sms_export" class="com.doucome.corner.web.bops.action.zhe.SettleSMSExportAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="excel" type="stream">
+				<param name="contentType">application/msexcel</param>
+				<param name="contentDisposition">attachment;filename=${fileName}</param>
+				<param name="bufferSize">4096</param>
+				<param name="inputStream">inputStream</param>
+			</result>
+			<result name="text" type="stream">
+				<param name="contentType">application/plain</param>
+				<param name="contentDisposition">attachment;filename=${fileName}</param>
+				<param name="bufferSize">4096</param>
+				<param name="inputStream">inputStream</param>
+			</result>
+			<result name="none" type="velocity">/bops/zhe/none.vm</result>
+		</action>
+		
 	</package>
 	
 	<package name="bops-zhe-remote" namespace="/bops/zhe/remote" extends="struts-json">
@@ -82,6 +99,11 @@
 		
 		<action name="buying_recommend_refreshCache_ajax" class="com.doucome.corner.web.bops.action.zhe.BuyingRecommDisplayAjaxAction" method="refreshCache">
 			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="alipay_detail_ajax" class="com.doucome.corner.web.bops.action.zhe.AlipayDetailAjaxAction">
+			<interceptor-ref name="bopsDefaultStack"></interceptor-ref>
 			<result name="success" type="json"></result>
 		</action>
 		

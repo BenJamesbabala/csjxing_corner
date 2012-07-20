@@ -6,7 +6,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.doucome.corner.biz.core.taobao.constant.TaobaoUserConstant;
 import com.doucome.corner.biz.core.taobao.dto.TaobaoUserDTO;
-import com.doucome.corner.test.AbstractBaseJUnit4Test;
+import com.doucome.corner.unittest.AbstractBaseJUnit4Test;
 
 @ContextConfiguration(locations = { "classpath:corner/bean/biz-remote.xml",
 		"classpath:corner/bean/biz-service.xml", "classpath:corner/bean/biz-common.xml", })

@@ -22,7 +22,6 @@
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-transferUrl.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-user.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-syncReportTask.xml" />
-  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-recommend.xml" />
-  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-recommendTask.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-config.xml" />
   	
 </sqlMapConfig>

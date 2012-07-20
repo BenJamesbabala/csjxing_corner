@@ -10,7 +10,7 @@ import com.doucome.corner.biz.core.model.AbstractModel;
 import com.doucome.corner.biz.core.utils.DecimalUtils;
 import com.doucome.corner.biz.dal.dataobject.DdzRecommendDO;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule;
-import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.UserCommission;
+import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.InternalCommission;
 import com.doucome.corner.biz.zhe.utils.TaobaoPicUtils;
 
 public class BuyingRecommendVO extends AbstractModel {
@@ -86,7 +86,7 @@ public class BuyingRecommendVO extends AbstractModel {
     	_userCommissionRate = DecimalUtils.divide(_userCommissionRate,new BigDecimal(100));
     	BigDecimal _price = this.recommend.getItemPrice() ;
     	
-    	UserCommission userCommission = DdzEatDiscountRule.calcUserCommissions(rule, _userCommission, _userCommissionRate, _price) ;
+    	InternalCommission userCommission = DdzEatDiscountRule.calcUserCommissions(rule, _userCommission, _userCommissionRate, _price) ;
     	
     	this.userCommission = userCommission.getCommission() ;
     	this.userCommissionRate = userCommission.getCommissionRate().multiply(DecimalConstant.HUNDRED) ;

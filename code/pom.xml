@@ -10,11 +10,15 @@
 	<name>corner_all</name>
 
 	<modules>
+		<module>./biz/common</module>
 		<module>./biz/core</module>
 		<module>./biz/zhe</module>
+		<module>./biz/sms</module>
+		<module>./biz/dcome</module>
 		<module>./web/zhe</module>
 		<module>./web/common</module>
 		<module>./web/bops</module>
+		<module>./web/dcome</module>
 		<module>./task/zhe</module>
 		<module>./bundle/war</module>
 		<module>./bundle/rpm</module>
@@ -256,6 +260,11 @@
 				<groupId>javax.mail</groupId>
 				<artifactId>mail</artifactId>
 				<version>1.4.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>3.8</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

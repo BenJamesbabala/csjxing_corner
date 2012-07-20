@@ -6,8 +6,9 @@ import java.util.Date;
 
 public class DateTool {
 
-    private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    private static final String DATE_FORMAT_2MM     = "yyyy-MM-dd HH:mm";
+    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT_2MM     = "yyyy-MM-dd HH:mm";
+    public static final String DATE_FORMAT_DAY     = "yyyy-MM-dd";
 
     public static String format(Date date, String format) {
         if (date == null) {

@@ -1,7 +1,6 @@
 package com.doucome.corner.biz.zhe.rule;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,12 +55,11 @@ public class DdzEatDiscountRule extends AbstractModel implements InitializingBea
         //System.out.println(rule);
         
         
-        ruleList.add(new Rule(new BigDecimal("5.00"), new BigDecimal("10.00"), new BigDecimal("5"))) ;
-        ruleList.add(new Rule(new BigDecimal("10.00"), new BigDecimal("20.00"), new BigDecimal("6"))) ;
-        ruleList.add(new Rule(new BigDecimal("20.00"), new BigDecimal("30.00"), new BigDecimal("7"))) ;
-        ruleList.add(new Rule(new BigDecimal("30.00"), new BigDecimal("40.00"), new BigDecimal("8"))) ;
-        ruleList.add(new Rule(new BigDecimal("40.00"), new BigDecimal("50.00"), new BigDecimal("9"))) ;
-        ruleList.add(new Rule(new BigDecimal("50.00"), new BigDecimal("1000000.00"), new BigDecimal("10"))) ;
+//        ruleList.add(new Rule(new BigDecimal("5.00"), new BigDecimal("20.00"), new BigDecimal("6"))) ;
+//        ruleList.add(new Rule(new BigDecimal("20.00"), new BigDecimal("40.00"), new BigDecimal("8"))) ;
+//        ruleList.add(new Rule(new BigDecimal("40.00"), new BigDecimal("10000000.00"), new BigDecimal("10"))) ;
+        
+          ruleList.add(new Rule(new BigDecimal("1.00"), new BigDecimal("10000000.00"), new BigDecimal("5"))) ;
         
 	}
 	
@@ -72,8 +70,35 @@ public class DdzEatDiscountRule extends AbstractModel implements InitializingBea
 	 * @param price 价格
 	 * @return UserCommission
 	 */
-	public static UserCommission calcUserCommissions(DdzEatDiscountRule rule , BigDecimal commission , BigDecimal commissionRate , BigDecimal price){
-		UserCommission uc = new UserCommission() ;
+	public static InternalCommission calcUserCommission(DdzEatDiscountRule rule , BigDecimal commissionRate){
+		InternalCommission uc = new InternalCommission() ;
+		BigDecimal eatRate = new BigDecimal("5") ;
+    	//淘宝默认的10%折扣
+    	BigDecimal taobaoDefaultRate = DdzEatDiscountRule.TAOBAO_DEFAULT_RATE ;
+    	
+    	//总的佣金比例
+    	BigDecimal totalRate = DecimalConstant.HUNDRED ;
+    	
+    	BigDecimal userRate = DecimalUtils.substract(totalRate , eatRate) ;
+    	userRate = DecimalUtils.substract(userRate, taobaoDefaultRate) ;
+    	
+    	
+    	uc.setCommissionRate(DecimalUtils.divide(DecimalUtils.multiply(commissionRate, userRate),DecimalConstant.HUNDRED)) ;
+    	
+    	uc.setDdzCommissionRate(DecimalUtils.divide(DecimalUtils.multiply(commissionRate, eatRate),DecimalConstant.HUNDRED)) ;
+    	
+    	return uc ;
+	}
+	
+	/**
+	 * 
+	 * @param commssion 原始佣金  如 12.50（单位 元，精确到小数点后2位）
+	 * @param commissionRate 原始佣金比例  如  （10.20，表示10.20%，精确到小数点后2位）
+	 * @param price 价格
+	 * @return UserCommission
+	 */
+	public static InternalCommission calcUserCommissions(DdzEatDiscountRule rule , BigDecimal commission , BigDecimal commissionRate , BigDecimal price){
+		InternalCommission uc = new InternalCommission() ;
 		Rule r = rule.getRule(commission) ;
     	//
     	BigDecimal eatRate = r.getEatUserRate() ;
@@ -87,11 +112,12 @@ public class DdzEatDiscountRule extends AbstractModel implements InitializingBea
     	BigDecimal userRate = DecimalUtils.substract(totalRate, taobaoDefaultRate) ;
     	userRate = DecimalUtils.substract(userRate , eatRate) ;
     	BigDecimal userRatePercent = DecimalUtils.divide(userRate, DecimalConstant.HUNDRED) ;
+    	BigDecimal eatRatePercent = DecimalUtils.divide(eatRate, DecimalConstant.HUNDRED) ;
     	BigDecimal userCommissionRate = DecimalUtils.multiply(commissionRate,userRatePercent) ;
-    	
+    	BigDecimal eatCommissionRate = DecimalUtils.multiply(commissionRate, eatRatePercent) ;
     	//设置精度，小数点后三位
     	if(userCommissionRate != null){
-    		userCommissionRate = userCommissionRate.setScale(1, RoundingMode.DOWN) ;
+//    		userCommissionRate = userCommissionRate.setScale(1, RoundingMode.DOWN) ;
     	}
     	
     	
@@ -100,14 +126,15 @@ public class DdzEatDiscountRule extends AbstractModel implements InitializingBea
     	BigDecimal userCommission = DecimalUtils.multiply(price , userCommissionRatePercent) ;
 		
     	if(userCommission != null){
-    		uc.setCommission(userCommission.setScale(2,RoundingMode.DOWN)) ;
+    		uc.setCommission(userCommission) ;
     		if(userCommission.compareTo(commission) == 1){
 	    		uc.setCommission(commission) ; //防止计算后的值大于返还的佣金
 	    	}
+    		uc.setDdzCommission(DecimalUtils.multiply(eatCommissionRate,price).divide(DecimalConstant.HUNDRED)) ;
     	}
     	if(userCommissionRate != null){
-	    	uc.setCommissionRate(userCommissionRate.setScale(2,RoundingMode.DOWN)) ;
-	    	
+	    	uc.setCommissionRate(userCommissionRate) ;
+	    	uc.setDdzCommissionRate(eatCommissionRate) ;
     	}
 		return uc ;
 	}
@@ -132,11 +159,43 @@ public class DdzEatDiscountRule extends AbstractModel implements InitializingBea
 		this.ruleList.add(rule) ;
 	}
 	
-	public static class UserCommission extends AbstractModel {
+	public static class InternalCommission extends AbstractModel {
 		
+		/**
+		 * 返回给用户的佣金比率
+		 */
 		private BigDecimal commissionRate ;
 		
+		/**
+		 * 返回给用户的佣金
+		 */
 		private BigDecimal commission ;
+		
+		/**
+		 * 点点折的佣金
+		 */
+		private BigDecimal ddzCommission ;
+		
+		/**
+		 * 点点折的佣金比率
+		 */
+		private BigDecimal ddzCommissionRate ;
+
+		public BigDecimal getDdzCommission() {
+			return ddzCommission;
+		}
+
+		public void setDdzCommission(BigDecimal ddzCommission) {
+			this.ddzCommission = ddzCommission;
+		}
+
+		public BigDecimal getDdzCommissionRate() {
+			return ddzCommissionRate;
+		}
+
+		public void setDdzCommissionRate(BigDecimal ddzCommissionRate) {
+			this.ddzCommissionRate = ddzCommissionRate;
+		}
 
 		public BigDecimal getCommissionRate() {
 			return commissionRate;

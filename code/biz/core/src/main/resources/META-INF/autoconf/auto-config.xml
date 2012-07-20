@@ -21,7 +21,8 @@
 	</group>
 	
 	<group name="web">
-		<property name="corner.static.url" defaultValue="http://www.ht.dujiaok.com:803/corner" description="static"></property>
+		<property name="corner.static.url" defaultValue="http://style.diandianzhe.com/corner" description="static"></property>
+		<property name="corner.ddz.helpUrl" defaultValue="http://help.diandianzhe.com" description="帮助中心URL"></property>
 		<property name="corner.domainName" defaultValue="diandianzhe.com" description="domain"></property>
 		<property name="corner.port" defaultValue="80" description="port">
 			<validator name="number"></validator>

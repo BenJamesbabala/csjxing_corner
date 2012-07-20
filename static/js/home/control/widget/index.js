@@ -1,5 +1,6 @@
 !(function($){
 	$.namespace("DD.Index");
+	var taobaoRecommend = 'http://item.taobao.com/item.html?id=16016359396' ; //淘宝推荐
 	var self = DD.Index;
 
 	$.extend(DD.Index,{
@@ -11,14 +12,194 @@
 			self._initCarousel();
 			self._initChangeAlipay();
 			self._initSubmitAlipay() ;
-			self._initKeywordSearchEvent();
 			self._initNewGuide();
 			self._initSaveDiandianzhe() ;
 			//初始化 google track
 			self._initGtrack();
+			//查询促销价格
+			self._initQueryPromotion();
+			//self._initShareAwardTips();
+			self._initRecommend();
+			self._initDdDialog();
+			self._initPlaceholder();
+		},
+		
+		_initRecommend:function(){
 			
-			self._initS8ChangeAlipay();
-			self._initS8SubmitAlipay();
+			var ddzRoot	= $("#ddzRoot").val() ;
+			
+			//更改支付宝
+			$("#changeBrandsAlipay").click(function(){
+				self.ddDialog("ddRedirectDialog",false) ;
+				self.ddDialog("ddInputDialog",true) ;
+			});
+						
+			//店铺click事件
+			$("[data-brandsRecommend]").click(function(){
+				var _alipayAccount = $("#alipayAccount").val() ;
+				var shopId = $(this).attr("data-shopId") ;
+				$(".brandsShopId").val(shopId) ;
+				if(_alipayAccount == ''){ //支付宝为空
+					self.ddDialog("ddInputDialog",true) ;
+				}else{
+					//直接跳转
+					self.ddDialog("ddRedirectDialog",true) ;
+				}
+				return false ;
+			});
+			
+			$('#ddBrandsIptAlipayForm').on('submit',function(){
+				var alipayInput = $("#brandsAlipayInput").val();
+				if(!self.submitAlipay("brandsAlipayInput")){
+					return false ;
+				}
+				var setAlipaySuccess = false ;
+				//设置支付宝
+				$.ajax({
+					url : ddzRoot + '/zhe/remote/rest/setAlipay.htm',
+					data : {alipayId:alipayInput} , 
+					async : false ,
+					type : "POST" ,
+					timeout : 500,
+					success : function(data){
+						try {
+							var code = data.json.code ;
+							if(code == 'success'){
+								setAlipaySuccess = true ;
+							} else {
+								alert('系统繁忙，请稍后在试') ;
+							}
+						}catch(e){
+							alert('系统繁忙，请稍后在试') ;
+						}
+					} ,
+					error : function(data){
+						alert('系统繁忙，请稍后在试') ;
+					}
+				});//end ajax
+				if(setAlipaySuccess){
+					self.ddDialog("ddInputDialog",false) ;
+					$("#shopForm").submit() ;
+					$("#alipayAccount").val(alipayInput) ;
+					$("#brandsAlipay").html(alipayInput) ;
+					return true ;
+				}
+				return false ;
+			}); //end $('#shopForm').on('submit',function(){
+			
+			$("#ddBrandsRedirectForm").on('submit',function(){
+				self.ddDialog("ddRedirectDialog",false) ;
+				return true ;
+			}) ;
+			
+			$("#ddRedirectDialog").find(".dd-dialog-submit").click(function(){
+				$("#ddBrandsRedirectForm").submit() ;
+			});
+			
+			$("#ddInputDialog").find(".dd-dialog-submit").click(function(){
+				$("#ddBrandsIptAlipayForm").submit() ;
+			});//end $("#ddInputDialog").find(".dd-dialog-submit").click(function(){
+			
+			var lineHeight = 79 ;
+			var buyingsScroll = function(){
+				//判断是否到达顶部
+			  	var marginTop = parseInt($('.dd-buyings-scroll').css('margin-top')) ;
+			  	if(marginTop > 0){
+			  		var buyItemCount = $(".dd-buyings-list").size() ;
+			  		var margin = (lineHeight*(buyItemCount-5)) + 78 ;
+			  		$('.dd-buyings-scroll').css("margin-top","-" + margin + "px") ;
+			  	}
+			} ;
+			
+			setInterval(function(){
+					$('.dd-buyings-scroll').animate({marginTop:'+='+lineHeight},800, buyingsScroll()) ;
+			} , 3000);
+			
+		},
+		
+		/**
+		 * 对话框
+		 */
+		_initDdDialog:function(){
+			//对话框关闭事件
+			$("[data-dialogClose]").click(function(){
+				var dialog = $(this).attr("data-dialogClose");
+				self.ddDialog(dialog,false) ;
+			});
+			
+			$("#ddDialogOverlay").css("height",$(document).height());
+		} ,
+		
+		ddDialog:function(id,isShow){
+			if(isShow == false){
+				$("#"+id).addClass("dd-hide") ;
+				$("#ddDialogOverlay").addClass("dd-hide") ;
+			}else{
+				
+				var winWidth = $("#"+id).width();
+				var winHeight = $("#"+id).height() ;
+				var clientWidth = $(window).width();
+				var clientHeight = $(window).height();
+				var top =  (clientHeight - winHeight)/2 + $(document).scrollTop() ;
+				var left = (clientWidth - winWidth)/2 + $(document).scrollLeft() ;
+				$("#"+id).css("top" , top < 0 ? 0 : top );
+				$("#"+id).css("left", left < 0 ? 0 : left  );
+				
+				$("#"+id).removeClass("dd-hide") ;
+				$("#ddDialogOverlay").removeClass("dd-hide") ;
+				
+				
+				
+			}
+		},
+		
+		/**
+		 * 查询促销价格
+		 */
+		_initQueryPromotion:function(){
+			var itemId = $("#itemId").val() ;
+			var userCommissionRate = $("#userCommissionRate").val() ;
+			var ddzRoot = $("#ddzRoot").val() ;
+			if(typeof(itemId) != 'undefined' && itemId != '' &&
+					typeof(userCommissionRate) != 'undefined' && userCommissionRate != '' && ddzRoot != ''){
+				$.ajax({
+						url : ddzRoot + '/zhe/remote/rest/query_promotion.htm',
+						data : {userCommissionRate:userCommissionRate,id:itemId} , 
+						type : "POST" ,
+						success : function(data){
+							try {
+								var code = data.json.code ;
+								if(code == 'success'){
+									var result = data.json.data ; 
+									if(result.hasPromotion){
+										$("[data-originPrice]").html(result.promotionPriceFormat) ;
+										$("[data-userCommission]").html(result.userCommissionFormat);
+									}
+								}
+							}catch(e){
+								
+							}
+							
+						} ,
+						error : function(data){
+							
+						}
+					});
+			}
+		} , 
+		
+		_initShareAwardTips:function(){
+			if($('#userGuide').val() != "true") { //没有新手指导的时候
+			  	$('#social_button_tips').fadeIn(1500).removeClass("dd-hide");
+			}
+			$("#item-price-discount-allowance-gift").hover(
+					function(){
+						$('#allowance_gift_tips').fadeIn(1000).removeClass("dd-hide");
+					},
+					function(){
+						$('#allowance_gift_tips').hide();
+					}
+			);
 		},
 		_initChangeAlipay:function(){
 			$("#change_alipay").on('click',function(){
@@ -28,7 +209,7 @@
 		},
 		_initSubmitAlipay:function(){
 			$('#alipay_form').on('submit',function(){
-				if(!self.submitAlipay()){
+				if(!self.submitAlipay("alipayInput")){
 					return false ;
 				}
 			});
@@ -38,156 +219,87 @@
 		},
 		_initSearchEvent:function(){
 			
-			var defaultText = '粘贴:您想购买的淘宝宝贝名称或宝贝网址' ;
-			
-			$('#search_content').on('focus',function(){
-				if($(this).val() == defaultText){
-					$(this).val("");
-				}
-			});
-
-			$('#search_content').on('blur',function(){
-				if($(this).val() === ""){
-					$(this).val(defaultText);
-				}
-			});
+			var defaultText = $("#search_content").attr("placeholder") ;
 			
 			$('#search_form').on('submit',function(){
 				var q = $("#search_content"),
 					u = $("#submit").data("url"),
 					wd = q.val() ;
+				//输入为空
 				if(wd == '' || wd == defaultText){
-					alert('请粘贴:您想购买的淘宝宝贝名称或宝贝网址') ;
+					alert('请粘贴你要购买的淘宝宝贝网址') ;
 					return false ;
 				}
-				return true ;
-			}) ;
-		},
-		_initS8ChangeAlipay:function(){
-			$("#s8_change_alipay").on('click',function(){
-				$("#s8_alipay_input").removeClass("dd-hide") ;
-				$("#s8_alipay_buy").addClass("dd-hide") ;
-			}) ;
-			
-			$("#s8_cancel_alipay").on('click',function(){
-				$("#s8_alipay_buy").removeClass("dd-hide") ;
-				$("#s8_alipay_input").addClass("dd-hide") ;
-			}) ;
-		} ,
-		_initS8SubmitAlipay:function(){
-			$('#s8_alipay_form').on('submit',function(){
-				if(!self.submitAlipay()){
-					return false ;
-				}
-				//ajax修改支付宝
-				var ddzRoot = $("#ddzRoot").val() ;
-				var alipayId = $('#alipayInput').val() ;
-				if(typeof(ddzRoot) != 'undefined'){
-					var url = ddzRoot + '/zhe/remote/rest/setAlipay.htm' ;
-					$.ajax({
-						url : url ,
-						data : {alipayId:alipayId} , 
-						async : true ,
-						type : "POST" ,
-						success : function(data){
-							try {
-								var code = data.json.code ;
-								if(code == 'success'){
-									//更新本地的支付宝
-									window.location.reload() ;
-								}
-							}catch(e){
-								alert('返回数据异常');
-							}
-							
-						} ,
-						error : function(data){
-							alert("更新支付宝失败") ;
+				//检查URL格式
+				wd = wd.toLowerCase() ;
+				var isTaobaoUrl = false  ;
+				var itemIdArray = ['id','itemid','item_id','mallstitemid','default_item_id'] ;
+				if(wd.indexOf('taobao.com') != -1 ||
+						wd.indexOf("tmall.com") != -1 ){
+					
+					for(var i = 0 ; i < itemIdArray.length ; i++){
+						var id = itemIdArray[i] + '=';
+						if(wd.indexOf(id) != -1){
+							isTaobaoUrl = true ;
+							break ;
 						}
-					});
-				}
-			});
-			$('#s8_alipaySubmit').on('click',function(){
-				$('#s8_alipay_form').submit();
-			});
-		},
-		/**
-		 * 关键字搜索->子搜索
-		 */
-		_initKeywordSearchEvent:function(){
-			
-			var keyword = $("#keyword") ;
-			var startPrice = $("#startPrice") ;
-			var endPrice = $("#endPrice") ;
-
-			if(typeof(keyword) == 'undefined' || typeof(startPrice) == 'undefined' || typeof(endPrice) == 'undefined' ){
-				return ;
-			}
-			
-			
-			
-			$('#keyword_filter_form').on('submit',function(){
+					}
+					
+				} 				
 				
-				if(keyword.val()==null || keyword.val()==""){
-					alert("请输入关键词");
+				if(!isTaobaoUrl){
+					//显示错误淘宝URL指引
+					
+					$('#search_content').val(" ");
+					$('#errurlPrompt').html("");
+					$('#errurlPrompt').fadeIn(1000).append('<div class="step-url" id="step-url">' + taobaoRecommend + '</div>');//把推荐的商品显示在图片的URL中
+					$('#ddRecomends').addClass("dd-hide"); //如果有别人正在买的话隐藏
+					$('#item-show').addClass("dd-hide") ;//如果有商品结果显示则隐藏
+					$('#newGuide').addClass("dd-hide") ;//隐藏新手引导按钮
+					$('#errurlPrompt').bind('click',function(){
+						$('#step-url').animate({
+						    left: '-=88',
+						    top:'-=98'
+						  }, 800, function() {
+						  	$('#step-url').remove();
+						  	$('#errurlPrompt').delay(500).animate({opacity:0},500,function(){
+						  		$('#errurlPrompt').hide() ;//为了去掉display:block效果
+						  		self._newGuideTwo();
+						  	})
+						  	$('#search_content').val(taobaoRecommend);
+
+						    // Animation complete.
+						  });
+					});
+					$('#search_form').append('<input type="hidden" name="userGuide" value="true" />') ;
 					return false ;
 				}
 				
-				var sPrice = startPrice.val() ;
-				var ePrice = endPrice.val() ;
-				if(sPrice=='' || isNaN(sPrice)){
-					sPrice = null ;
-				} else {
-					sPrice = parseInt(sPrice);
-				}
-				
-				
-				if(ePrice=='' || isNaN(ePrice)){
-					ePrice = null ;
-				} else {
-					ePrice = parseInt(ePrice);
-				}
-				
-				if(sPrice != null && sPrice < 0){
-					sPrice = sPrice * -1;
-				}
-				
-				if(ePrice != null && ePrice < 0){
-					ePrice = ePrice * -1;
-				}
-				
-				if(sPrice != null && ePrice != null && sPrice > ePrice){
-					var sPricetmp = sPrice ;
-					sPrice = ePrice ;
-					ePrice = sPricetmp ;
-				}
-				
-				startPrice.val(sPrice);
-				endPrice.val(ePrice) ;
 				return true ;
-			});
-			
-			$('#startPrice').on('keyup',function(){
-				if(isNaN(startPrice.val())){
-					startPrice.val(startPrice.val().replace(/\D/g,'')) ;
-				}
-			});
-			
-			$('#endPrice').on('keyup',function(){
-				if(isNaN(endPrice.val())){
-					endPrice.val(endPrice.val().replace(/\D/g,'')) ;
-				}
-			});
-			
-			var paginationJump = $('#paginationJump') ;
-			$('#paginationJump').on('keyup',function(){
-				if(isNaN(paginationJump.val())){
-					paginationJump.val(paginationJump.val().replace(/\D/g,'')) ;
-				}
-			});
-			
-			
+			}) ;
 		},
+		
+		/**
+		 * placeholder
+		 */
+		_initPlaceholder:function(){
+			$("[placeholder]").each(function(){
+				var text = $(this).attr("placeholder");
+				$(this).val(text) ;
+				$(this).on('focus',function(){
+					if($(this).val() == text){
+						$(this).val("");
+					}
+				});
+
+				$(this).on('blur',function(){
+					if($(this).val() === ""){
+						$(this).val(text);
+					}
+				});
+			});
+		},
+		
 		_initSaveDiandianzhe:function(){
 			if($("#diandianFavorite").length){
 				$("#diandianFavorite").click(
@@ -262,20 +374,23 @@
 		 * google track
 		 */
 		_initGtrack:function(){
-			$(".gtrack").on('click',function(){
+			
+			$("[gtrack]").bind('click',function(){
 				var gtrack = $(this).attr('gtrack') ;
 				if(gtrack != null){
+					//alert(gtrack) ;
 					if(typeof(_gaq) != 'undefined'){
 						_gaq.push(['_trackPageview',gtrack]); 
 					}
 				}
 			}) ;
+						
 		},	
 		/**
 		 * check alipay account
 		 */
-		submitAlipay:function(){
-			var alipayId = $('#alipayInput').val() ;
+		submitAlipay:function(elementId){
+			var alipayId = $('#'+elementId).val() ;
 			if(alipayId == ''){
 				alert('请输入支付宝您的账号，无需密码') ;
 				return false ;
@@ -342,8 +457,10 @@
 				if($('#newGuide').length){
 					$('#newGuide').removeClass('dd-hide');
 					$('#newGuide').bind('click',function(){
-						
-						$('#tdSuperPrice').addClass("dd-hide"); //如果有别人正在买的话隐藏
+						if ($('#item-show').length>0) {
+						    $('#item-show').addClass("dd-hide");
+						}
+						$('#ddRecomends').addClass("dd-hide"); //如果有别人正在买的话隐藏
 						
 						self._newGuideOne();
 						$('#newGuide').remove();
@@ -370,7 +487,7 @@
 		},
 		_newGuideOne:function(){
 			$('#search_content').val(" ");
-			$('#step1').fadeIn(1000).append('<div class="step-url" id="step-url">http://item.taobao.com/item.html?id=14119585739</div>');
+			$('#step1').fadeIn(1000).append('<div class="step-url" id="step-url">' + taobaoRecommend + '</div>');
 
 			$('#step1').bind('click',function(){
 				$('#step-url').animate({
@@ -381,7 +498,7 @@
 				  	$('#step1').delay(500).animate({opacity:0},500,function(){
 				  		self._newGuideTwo();
 				  	})
-				  	$('#search_content').val("http://item.taobao.com/item.html?id=14119585739");
+				  	$('#search_content').val(taobaoRecommend);
 
 				    // Animation complete.
 				  });

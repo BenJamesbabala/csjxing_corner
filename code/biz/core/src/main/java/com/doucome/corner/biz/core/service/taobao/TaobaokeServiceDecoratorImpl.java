@@ -57,7 +57,7 @@ public class TaobaokeServiceDecoratorImpl extends AbstractTaobaoService implemen
 		req.setNick(nickname);
 		req.setOuterCode(outCode) ;
 		//req.setPid(taokeId) ;
-		req.setOuterCode(outCode);
+		
 		try{
 			TaobaoClient taobaoClient = taobaoClientWrapper.newClient() ;
 			TaobaokeShopsConvertResponse response = taobaoClient.execute(req);
@@ -67,8 +67,7 @@ public class TaobaokeServiceDecoratorImpl extends AbstractTaobaoService implemen
 				List<TaobaokeShop> items =  response.getTaobaokeShops() ;
 				if(!CollectionUtils.isEmpty(items)){
 					for(TaobaokeShop item : items){
-						TaobaokeShopDTO dto = new TaobaokeShopDTO() ;
-						dto.fromTaobaokeShop(item) ;
+						TaobaokeShopDTO dto = new TaobaokeShopDTO(item) ;
 						itemDTOs.add(dto) ;
 					}
 				}

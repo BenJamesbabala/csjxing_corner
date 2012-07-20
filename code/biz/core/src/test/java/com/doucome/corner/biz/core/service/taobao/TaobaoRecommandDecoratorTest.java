@@ -10,7 +10,7 @@ import com.doucome.corner.biz.core.taobao.dto.TaobaoFavoriteItemDTO;
 import com.doucome.corner.biz.core.taobao.dto.TaobaoPromotionDisplayDTO;
 import com.doucome.corner.biz.core.taobao.enums.TaobaoRecommendTypeEnums;
 import com.doucome.corner.biz.core.taobao.model.TaobaoRecommendItemCondition;
-import com.doucome.corner.test.AbstractBaseJUnit4Test;
+import com.doucome.corner.unittest.AbstractBaseJUnit4Test;
 
 @ContextConfiguration(locations = { "classpath:corner/bean/biz-remote.xml",
 		"classpath:corner/bean/biz-service.xml", "classpath:corner/bean/biz-common.xml", })

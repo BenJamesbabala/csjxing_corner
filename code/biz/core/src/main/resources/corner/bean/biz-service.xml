@@ -37,7 +37,7 @@
 
 	<bean id="taobaoServiceDecorator" class="com.doucome.corner.biz.core.service.taobao.TaobaoServiceDecoratorImpl">
 		<property name="nickname" value="${corner.api.taobao.nickname}" />
-		<property name="taobaoClientWrapper" ref="taobaoClientWrapper" />
+		<property name="taobaoClientWrapper" ref="taobaokeClientWrapper" />
 	</bean>
 
 	<bean id="taobaoRecommandDecorator"
@@ -55,5 +55,10 @@
 	</bean>
 	<bean id="sendMailService"
 		class="com.doucome.corner.biz.core.mail.impl.SendMailServiceImpl" />
-	<bean id="ddzReportMailService" class="com.doucome.corner.biz.zhe.service.impl.DdzReportMailServiceImpl" />
+		
+	<bean id="smsBusinessConfig" class="com.doucome.corner.biz.core.sms.config.SmsBusinessConfig" init-method="init">
+		<property name="config"><value>classpath:/corner/bean/SmsBusiness.xml</value></property>
+	</bean>
+	
+	<bean id="sendSmsService" class="com.doucome.corner.biz.core.sms.SendSmsServiceImpl"></bean>
 </beans>

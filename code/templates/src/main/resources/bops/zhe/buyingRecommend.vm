@@ -1,13 +1,5 @@
 #set($layout="bops/default_bops.vm")
 #set($navigation = "别人正在买")
-<style>
-	#parse("/common/bops/page_css.vm")
-	
-	.darkGray {
-		color:#555555;
-	}
-	
-</style>
 
 #set($page = $recommendResult.pagination.page)
 #set($totalPages = $recommendResult.pagination.totalPages)
@@ -17,12 +9,13 @@
 #set($searchUrl = ${env.ddzRoot}+"/bops/zhe/buying_recommend.htm?")
 #set($searchQuery = ["batchNo:$!batchNo","recommendType:$!recommendType"])
 
-
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="buyingRecommend"/>
 
 <div class="bops">
 	<div style="padding:10px;margin-top:15px;border-top:1px solid #aaaaaa;border-bottom:1px solid #aaaaaa;text-align:center;">
             <div>缓存： #if($!cacheDate.item) 共 $!cacheDate.item.size() 项  at [$!dateUtils.format($cacheDate.gmtCreate , 'yyyy-MM-dd HH:mm:ss')] #else 没有缓存数据 #end</div>
-			操作完成后，请 <input type="button" onclick="refreshCache();" value="刷新缓存数据"/>
+			操作完成后，请 <input type="button" onclick="refreshCache();" value="刷新缓存数据" id="refreshCacheBtn"/>
     </div>
 		
 	<form action="${env.bopsRoot}/bops/zhe/buying_recommend.htm" method="GET">
@@ -59,7 +52,7 @@
 							#set($showText = "显示")
 						#end
 						
-                        $item.recommend.numIid<span><a href="javascript:;" onclick="setDisplay($item.recommend.id , '$isDisplay' , this)">$showText</a></span>
+                        $item.recommend.numIid<span><a href="javascript:;" data-display="$isDisplay" data-id="$item.recommend.id">$showText</a></span>
                     </div>
 					<div style="font-size:12px;width:120px;height:34px;overflow:hidden;#if($item.recommend.isDisplay != 'T') color:red;  #end" title="$item.recommend.itemTitle">
 						$item.recommend.itemTitle
@@ -76,60 +69,3 @@
 		没有查询到记录
 	#end
 </div>
-	
-#DDZ_JS(["lib/jquery-min.js"])
-
-<script type="text/javascript">
-
-	var setDisplay = function(id , display , element ){
-		
-		var url = "${env.bopsRoot}/bops/zhe/remote/buying_recomm_display_ajax.htm"
-						
-		$.ajax({
-			url: url ,
-			type : "POST" ,
-			data : { id: id , display: display },
-			success : function(data){
-				var json = data.json ;
-				var code = json.code ;
-				var data = json.data ;
-				var detail = json.detail ;
-				if(code == 'success') { 
-					$(element).html("已修改");
-				} else {
-					alert('失败. 原因：' + detail ) ;
-				}
-			} , 
-			error : function(data){
-				alert('error ! ' + data) ;
-			}
-		}) ;
-	}
-	
-	var refreshCache = function(){
-		if(!confirm('确认要重置缓存数据吗？')){
-			return ;
-		}
-		var url = "${env.bopsRoot}/bops/zhe/remote/buying_recommend_refreshCache_ajax.htm"
-		$.ajax({
-			url: url ,
-			type : "POST" ,
-			data : {},
-			success : function(data){
-				var json = data.json ;
-				var code = json.code ;
-				var data = json.data ;
-				var detail = json.detail ;
-				if(code == 'success') { 
-					alert('缓存数据已更新') ;
-				} else {
-					alert('失败. 原因：' + detail ) ;
-				}
-			} , 
-			error : function(data){
-				alert('error ! ' + data) ;
-			}
-		}) ;
-	}
-	
-</script>

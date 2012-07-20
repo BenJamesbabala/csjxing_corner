@@ -1,7 +1,7 @@
 #set($layout="zhe/default_main.vm")
-#if($corner_production != "true")
-<div class="recommend">
+#DDZ_CSS(["home/control/widget/home/recommend.css"])
+
 	#parse("/common/zhe/recommend.vm")
-</div>
-#end
+##parse("/common/zhe/brands.vm")
+
  

@@ -15,7 +15,7 @@ import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.dal.DdzTaokeReportSettleDAO;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
-import com.doucome.corner.test.AbstractBaseJUnit4Test;
+import com.doucome.corner.unittest.AbstractBaseJUnit4Test;
 
 @ContextConfiguration(locations={
 		"classpath:corner/bean/biz-common.xml" ,
@@ -23,7 +23,7 @@ import com.doucome.corner.test.AbstractBaseJUnit4Test;
 		"classpath:corner/bean/biz-dao.xml",
 		"classpath:corner/bean/biz-datasource.xml" ,
 	})
-public class DdzTaokeReportSettleDAOTest extends AbstractBaseJUnit4Test {
+public class DdzTaokeReportSettleDAOTest extends AbstractBaseJUnit4Test { 
 	@Autowired
 	private DdzTaokeReportSettleDAO ddzTaokeReportSettleDAO;
 	

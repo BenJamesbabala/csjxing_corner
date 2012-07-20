@@ -5,15 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.core.model.URLModel;
 import com.doucome.corner.biz.core.service.taobao.TaobaokeServiceDecorator;
-import com.doucome.corner.biz.core.taobao.dto.TaobaokeItemDTO;
-import com.doucome.corner.biz.core.taobao.fields.TaobaokeFields;
 import com.doucome.corner.biz.core.utils.HttpUrlHelper;
 import com.doucome.corner.biz.core.utils.ValidateUtil;
-import com.doucome.corner.biz.zhe.condition.EatDiscountCondition;
 import com.doucome.corner.biz.zhe.enums.OutCodeEnums;
 import com.doucome.corner.biz.zhe.model.TaobaokeItemFacade;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
-import com.doucome.corner.biz.zhe.service.DdzEatDiscountService;
+import com.doucome.corner.biz.zhe.service.DdzTaobaokeService;
 import com.doucome.corner.biz.zhe.utils.OutCodeUtils;
 import com.doucome.corner.web.common.action.BasicAction;
 import com.doucome.corner.web.zhe.model.JsonModel;
@@ -33,7 +30,7 @@ public class ConventItemAction extends BasicAction{
 	private TaobaokeServiceDecorator taobaokeServiceDecorator ;
 	
 	@Autowired
-	private DdzEatDiscountService ddzEatDiscountService ;
+	private DdzTaobaokeService ddzTaobaokeService ;
 	
 	@Autowired
 	private DdzAccountService ddzAccountService ;
@@ -62,10 +59,11 @@ public class ConventItemAction extends BasicAction{
 					outCode = OutCodeUtils.encodeOutCode(accId, OutCodeEnums.DDZ_ACCOUNT_ID) ;
 				}
 				
-				TaobaokeItemDTO dto = taobaokeServiceDecorator.conventItem(itemId, outCode ,TaobaokeFields.taoke_item_fields ) ;
-				EatDiscountCondition condition = new EatDiscountCondition()  ;
-	            condition.setNeedPromotionPrice(true) ;
-				TaobaokeItemFacade item = ddzEatDiscountService.eatDiscount(dto,condition) ;
+				//转换商品
+				TaobaokeItemFacade item = ddzTaobaokeService.conventItem(itemId, outCode) ;
+				
+				//查看活动价格
+				
 				json.setData(item);
 				json.setCode(JsonModel.CODE_SUCCESS) ;
 				if(item == null){

@@ -13,6 +13,11 @@ public class URIConstant {
 	public static final String DDZ_STATIC_SERVER = "ddzStaticServer" ;
 	
 	/**
+	 * µ„µ„’‚∞Ô÷˙
+	 */
+	public static final String DDZ_HELP_SERVER = "ddzHelpServer" ;
+	
+	/**
 	 * ∂ÃURL
 	 */
 	public static final String SURL_SERVER = "surlServer" ;

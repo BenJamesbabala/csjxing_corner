@@ -7,7 +7,7 @@
 <body>
 	<div class="ddz">
 		#parse("/common/zhe/top.vm")
-		#parse("/common/zhe/search_input.vm")
+		##parse("/common/zhe/search_input.vm")
 		
         <div class="list-content w990 clearfix">
         #***

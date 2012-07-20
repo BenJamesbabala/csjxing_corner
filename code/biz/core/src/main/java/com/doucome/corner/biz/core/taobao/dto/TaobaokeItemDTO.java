@@ -16,6 +16,8 @@ public class TaobaokeItemDTO extends AbstractModel {
 	
 	public TaobaokeItemDTO(TaobaokeItem item){
 		ReflectUtils.reflectTo(item, this) ;
+		//淘宝的佣金比率500 代表 5%
+		//this.commissionRate = DecimalUtils.divide(this.commissionRate , DecimalConstant.HUNDRED) ;
 	}
 	
 	public TaobaokeItemDTO(){
@@ -23,7 +25,7 @@ public class TaobaokeItemDTO extends AbstractModel {
 	}
 
 	/**
-	 * 淘宝客佣金比率，比如：1234.00代表12.34% ,比如：500.00
+	 * 淘宝客佣金比率，比如：12.34代表12.34% ,比如：12.34
 	 */
 	private BigDecimal commissionRate;
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.model.page.QueryResult;
+import com.doucome.corner.biz.core.utils.DateUtils;
 import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportService;
@@ -32,6 +33,10 @@ public class TaokeReportSettleAction extends BopsBasicAction implements ModelDri
 	@Override
 	public String execute() throws Exception {
 		
+		condition.setGmtSettledStart(DateUtils.setTime(condition.getGmtSettledStart(), 0 , 0 , 0)) ;
+		condition.setGmtSettledEnd(DateUtils.setTime(condition.getGmtSettledEnd(), 23 , 59 , 59)) ;
+		condition.setGmtCreateStart(DateUtils.setTime(condition.getGmtCreateStart(), 0, 0, 0)) ;
+		condition.setGmtCreateEnd(DateUtils.setTime(condition.getGmtCreateEnd(), 23 , 59 , 59)) ;
 		Pagination pagination = new Pagination(page , size);
 		
 		settleResult = ddzTaokeReportService.getSettlesWithPagination(condition, pagination) ;

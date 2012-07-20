@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!--
+  - 短消息业务配置文件_
+  -
+  - @author Leon Liu
+  - @version $Id
+ -->
+<businesses>
+    <!--
+      - 点点折返现短信
+    -->
+    <business id="ddz_settle_sms">
+        <chl-code>10</chl-code>
+        <name>点点折结算</name>
+        <fee-type>F</fee-type>
+        <property>authentication</property>
+        <money>0</money>
+        <message key="normal">[点点折返现]返现金额{0}元已成功汇入您的支付宝:{1}，请注意查收，查询或建议可直接回复本短信。</message>
+    </business>
+   
+	
+    <transport>
+        <host>127.0.0.1</host>
+        <port>80</port>
+        <uri>/sms2/send</uri>
+		<parameter>pcode={0}&amp;acode={1}&amp;uid=${mobiletrade_timor_uid}&amp;scode={2}&amp;batid={3}&amp;msg={4}&amp;rec={5}&amp;token={6}</parameter>    
+    </transport>
+</businesses>

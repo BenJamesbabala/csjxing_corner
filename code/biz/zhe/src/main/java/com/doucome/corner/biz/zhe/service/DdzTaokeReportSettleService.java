@@ -61,4 +61,10 @@ public interface DdzTaokeReportSettleService {
      * @return
      */
     BigDecimal getTotalSettleFee(String settleAlipay , String[] settleStatus) ;
+    
+    /**
+     * 统计一个支付宝结算的次数
+     */
+    int countTotalSettle(String settleAlipay , String[] settleStatus) ;
+    
 }

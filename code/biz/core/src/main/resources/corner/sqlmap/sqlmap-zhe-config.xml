@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="ZHE-CONFIG">
+	<typeAlias alias="TA-ZHE-CONFIG"
+		type="com.doucome.corner.biz.dal.dataobject.DdzConfigDO" />
+
+	<resultMap id="RM-ZHE-CONFIG" class="TA-ZHE-CONFIG">
+		<result property="id" column="ID" />
+		<result property="module" column="MODULE" jdbcType="VARCHAR" />
+		<result property="keyName" column="KEY_NAME" jdbcType="VARCHAR" />
+		<result property="value" column="VALUE" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<select id="queryForModule" resultMap="RM-ZHE-CONFIG">
+		SELECT
+			ID,MODULE,KEY_NAME,VALUE,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DDZ_CONFIG
+		WHERE 
+			MODULE = #module#
+	</select>
+	
+</sqlMap>

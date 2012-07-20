@@ -10,13 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.doucome.corner.biz.core.constant.EnvConstant;
 import com.doucome.corner.biz.core.constant.LogConstant;
 import com.doucome.corner.biz.core.constant.URIConstant;
-import com.doucome.corner.biz.core.exception.EncryptException;
 import com.doucome.corner.biz.core.service.taobao.TaobaoServiceDecorator;
 import com.doucome.corner.biz.core.taobao.constant.TopParameterConst;
 import com.doucome.corner.biz.core.taobao.dto.TaobaoUserDTO;
 import com.doucome.corner.biz.core.taobao.fields.TaobaoFields;
 import com.doucome.corner.biz.core.utils.EnvPropertiesUtil;
-import com.doucome.corner.biz.core.utils.TaobaoSignUtils;
+import com.doucome.corner.biz.core.utils.TaobaoSignV2Utils;
 import com.doucome.corner.biz.dal.dataobject.DdzUserDO;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
 import com.doucome.corner.biz.zhe.service.DdzTaobaoRegisterService;
@@ -64,15 +63,15 @@ public class TBLoginPassAction extends DdzBasicAction implements ModelDriven<Top
             String top_parameters = topCallbackParameter.getTop_parameters();
             String top_sign = topCallbackParameter.getTop_sign();
             String top_session = topCallbackParameter.getTop_session();
-            String parameter = top_appkey + top_parameters + top_session;
-            boolean isValidate = TaobaoSignUtils.validateSign(top_sign, parameter, appSecret);
+            //String parameter = top_appkey + top_parameters + top_session;
+            boolean isValidate = TaobaoSignV2Utils.verifyTopResponse(top_parameters, top_sign ,appSecret);
             if (!isValidate) {
                 taobao_log.error("taobao callback parameter error : " + topCallbackParameter);
             }
 
-            Map<String, String> parameterMap = TaobaoSignUtils.convertBase64StringtoMap(top_parameters);
+            Map<String, String> parameterMap = TaobaoSignV2Utils.convertBase64StringtoMap(top_parameters);
             // »ñÈ¡ÌÔ±¦µÇÂ½ÕËºÅ
-            String nickname = parameterMap.get(TopParameterConst.visitor_nick);
+            String nickname = parameterMap.get(TopParameterConst.nick);
             if (StringUtils.isNotBlank(nickname)) {
                 // ²éÑ¯Êý¾Ý¿â
                 DdzUserDO user = ddzUserService.getByLoginId(nickname);
@@ -95,8 +94,8 @@ public class TBLoginPassAction extends DdzBasicAction implements ModelDriven<Top
             // µÇÂ¼Ê§°Ü£¬Ìø×ªÖÁDDZÊ×Ò³
             redirectToUrlName(URIConstant.DDZ_SERVER);
 
-        } catch (EncryptException e) {
-            log.error(e.getMessage(), e);
+        } finally{
+        	
         }
         return SUCCESS;
     }

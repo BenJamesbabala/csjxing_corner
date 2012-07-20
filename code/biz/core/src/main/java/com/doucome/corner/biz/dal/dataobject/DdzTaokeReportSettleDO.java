@@ -21,6 +21,7 @@ public class DdzTaokeReportSettleDO extends AbstractModel {
     private String     alipayBatchno;
     private String     alipayStatus;
     private String     emailStatus;
+    private String 	   mobileStatus ;
     private Date       gmtCreate;
     private Date       gmtModified;
     private Date       gmtSettled;
@@ -33,7 +34,15 @@ public class DdzTaokeReportSettleDO extends AbstractModel {
         this.id = id;
     }
 
-    public String getSettleId() {
+    public String getMobileStatus() {
+		return mobileStatus;
+	}
+
+	public void setMobileStatus(String mobileStatus) {
+		this.mobileStatus = mobileStatus;
+	}
+
+	public String getSettleId() {
         return settleId;
     }
 

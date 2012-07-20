@@ -46,11 +46,11 @@ public class TaokeReportSettleAjaxAction extends BopsBasicAction{
 		
 		SettleStatusEnums status = SettleStatusEnums.fromValue(settleTo) ;
 		
-		if(status != SettleStatusEnums.SETTLE_FAIL && status != SettleStatusEnums.SETTLE_SUCCESS){
-			json.setCode(JsonModel.CODE_ILL_ARGS) ;
-			json.setDetail("input settleTo is not right .") ;
-			return SUCCESS ;
-		}
+//		if(status != SettleStatusEnums.SETTLE_FAIL && status != SettleStatusEnums.SETTLE_SUCCESS){
+//			json.setCode(JsonModel.CODE_ILL_ARGS) ;
+//			json.setDetail("input settleTo is not right .") ;
+//			return SUCCESS ;
+//		}
 		List<Integer> idList = new ArrayList<Integer>() ;
 		for(String id : idArray){
 			if(StringUtils.isNumeric(id)){

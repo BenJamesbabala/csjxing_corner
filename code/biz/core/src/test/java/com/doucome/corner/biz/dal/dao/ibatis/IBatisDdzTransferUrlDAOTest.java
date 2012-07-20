@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.doucome.corner.biz.dal.DdzTransferUrlDAO;
 import com.doucome.corner.biz.dal.dataobject.DdzTransferUrlDO;
-import com.doucome.corner.test.AbstractBaseJUnit4Test;
+import com.doucome.corner.unittest.AbstractBaseJUnit4Test;
 
 @ContextConfiguration(locations={
 		"classpath:corner/bean/biz-common.xml" ,

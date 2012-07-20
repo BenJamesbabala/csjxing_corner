@@ -85,6 +85,20 @@ public class TaobaoClientWrapper implements InitializingBean{
 		return topSessionList.get(0) ;
 	}
 	
+	public String defaultAppKey() {
+		if(CollectionUtils.isEmpty(appKeyList)){
+			return null ;
+		}
+		return appKeyList.get(0) ;
+	}
+	
+	public String defaultAppSecrets(){
+		if(CollectionUtils.isEmpty(appSecretList)){
+			return null ;
+		}
+		return appSecretList.get(0) ;
+	}
+	
 	/**
 	 * ----------------------------------------------------
 	 */

@@ -42,20 +42,8 @@ public class IBatisDdzTaokeReportDAO extends SqlMapClientDaoSupport implements D
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<DdzTaokeReportDO> selectReportsWithPagination(TaokeReportSearchCondition searchCondition, int start, int size) {
-		Map<String,Object> condition = new HashMap<String,Object>() ;
+		Map<String,Object> condition = searchCondition.toMap();
 		
-		condition.put("gmtPaidStart", searchCondition.getGmtPaidStart()) ;
-		condition.put("gmtPaidEnd", searchCondition.getGmtPaidEnd()) ;
-		condition.put("gmtSettledStart", searchCondition.getGmtSettledStart()) ;
-		condition.put("gmtSettledEnd", searchCondition.getGmtSettledEnd()) ;
-		condition.put("settleStatus", searchCondition.getSettleStatus()) ;
-		condition.put("settleAlipay", searchCondition.getSettleAlipay()) ;
-		condition.put("settleTaobaoNick", searchCondition.getSettleTaobaoNick()) ;
-		condition.put("settleUid", searchCondition.getSettleUid()) ;
-		condition.put("settleId", searchCondition.getSettleId());
-		condition.put("settleStatusList", searchCondition.getSettleStatusList()) ;
-		
-		//condition.put("payBatchno", searchCondition.getPayBatchno()) ;
 		condition.put("start", start-1) ;
 		condition.put("size", size) ;
 		return getSqlMapClientTemplate().queryForList("ddzReport.selectReportsWithPagination" , condition) ;
@@ -63,18 +51,8 @@ public class IBatisDdzTaokeReportDAO extends SqlMapClientDaoSupport implements D
 
 	@Override
 	public int countReportsWithPagination(TaokeReportSearchCondition searchCondition) {
-		Map<String,Object> condition = new HashMap<String,Object>() ;	
+		Map<String,Object> condition = searchCondition.toMap();	
 		
-		condition.put("gmtPaidStart", searchCondition.getGmtPaidStart()) ;
-		condition.put("gmtPaidEnd", searchCondition.getGmtPaidEnd()) ;
-		condition.put("gmtSettledStart", searchCondition.getGmtSettledStart()) ;
-		condition.put("gmtSettledEnd", searchCondition.getGmtSettledEnd()) ;
-		condition.put("settleStatus", searchCondition.getSettleStatus()) ;
-		condition.put("settleAlipay", searchCondition.getSettleAlipay()) ;
-		condition.put("settleTaobaoNick", searchCondition.getSettleTaobaoNick()) ;
-		condition.put("settleUid", searchCondition.getSettleUid()) ;
-		condition.put("settleId", searchCondition.getSettleId());
-		condition.put("settleStatusList", searchCondition.getSettleStatusList()) ;
 		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("ddzReport.countReportsWithPagination" , condition)) ;
 	}
 	
