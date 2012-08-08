@@ -40,9 +40,16 @@
 		<scope>application</scope>
 		<class>com.doucome.corner.web.common.toolbox.CollectionUtilsToolbox</class>
 	</tool>
+	
 	<tool>
 		<key>systemUtils</key>
 		<scope>application</scope>
 		<class>com.doucome.corner.biz.core.utils.SystemUtil</class>
+	</tool>
+	
+	<tool>
+		<key>avatarUtils</key>
+		<scope>application</scope>
+		<class>com.doucome.corner.web.common.toolbox.AvatarUtilsToolbox</class>
 	</tool>
 </toolbox> 

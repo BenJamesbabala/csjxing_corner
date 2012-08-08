@@ -78,7 +78,7 @@
 
 
 ##分页
-#set($searchUrl = ${env.ddzRoot}+"/bops/zhe/taoke_report_settle.htm?")
+#set($searchUrl = ${env.bopsRoot}+"/bops/zhe/taoke_report_settle.htm?")
 #set($searchQuery = ["settleAlipay:$!settleAlipay","settleStatus:$!settleStatus","settleBatchno:$!settleBatchno",
 	"gmtSettledStart:$!gmtSettledStartFormat","gmtSettledEnd:$!gmtSettledEndFormat",
 	"gmtCreateStart:$!gmtCreateStartFormat","gmtCreateEnd:$!gmtCreateEndFormat",
@@ -146,7 +146,7 @@
 	
 	#if($settleResult.totalRecords > 0)
 	
-    	#parse("/common/bops/zhe_reportPagination.vm")
+    	#parse("/common/bops/zhe/reportPagination.vm")
 		
 		#if($order == "settle_fee--desc")
 			#set($sortStyle = "dbsort_desc")
@@ -270,7 +270,7 @@
            
         </table>
         
-        #parse("/common/bops/zhe_reportPagination.vm")
+        #parse("/common/bops/zhe/reportPagination.vm")
 	#else
 		没有查询到记录
 	#end

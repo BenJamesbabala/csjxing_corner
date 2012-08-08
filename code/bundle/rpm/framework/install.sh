@@ -56,6 +56,7 @@ function deploy () {
   for x in $SRC/*; do
     ##rsync -avzq --delete $x $DEST &>/dev/null
 	cp -r $x $DEST &>/dev/null
+	## end rsync 
     if [ $? != 0 ]; then
       fail "Error: rsync $x $DEST failed, abort installation."
       exit 60

@@ -1,0 +1,77 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "<a href='${env.bopsRoot}/bops/dcome/qq/scene_list.htm'>场景列表</a> - " + $!sceneDTO.name)
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcSceneDetail"/>
+
+#set($pagination = $itemQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/qq/scene_detail.htm?")
+#set($searchQuery = ["sceneId:$!sceneDTO.id"])
+
+<div class="bops">
+    <div style="MT20">&nbsp;</div>
+	#if($sceneDTO)
+	<div>
+		<span class="dc-scene-title">$!sceneDTO.name</span> 
+		<span class="">已经添加$!itemQuery.totalRecords款商品  
+			<a href="${env.bopsRoot}/bops/dcome/qq/add_scene_item.htm?sceneId=$!sceneDTO.id">管理商品</a>
+            <a href="${env.root}/frame/q/preview.htm?sceneId=$!sceneDTO.id" target="_blank">预览线上效果</a>
+        </span>
+	</div>
+    <div class="F14 MT10">#if($sceneDTO.active != "T") 该场景未激活，<a href="javascript:;" data-sceneId="$!sceneDTO.id" data-sceneActive="T">现在激活</a> #end</div>
+    <div class="dc-scene-desc MT10 MB20">$!sceneDTO.sceneDesc</div>
+	
+	<!---->
+    <div class="MT20 MB20"> ---- <b>场景下的商品信息</b> ----------------------------------- </div>
+	
+    <div>
+		
+		#parse("/common/bops/dcome.qq/sceneDetailPagination.vm")
+		
+		<table width="960" style="font-size:14px;" id="sceneTable">
+		<tr>
+    		<th width="20">序号</th>
+			<th width="30">商品ID</th>
+			<th width="300">名称</th>
+			<th width="30">类目ID</th>
+			<th width="30">评论</th>
+			<th width="30">喜欢</th>
+			<th width="100">创建时间</th>
+			<th width="120">操作</th>
+    	</tr>
+		#if($itemQuery.totalRecords > 0)
+    		#foreach($item in $itemQuery.items)
+				#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
+            	<tr>
+            		<td>$idx</td>
+                    <td>$item.id</td>
+                    <td>
+						<img src="${env.itemUploadedRoot}$!item.getPicUrl(0,'60x60')" width="20" height="20"> 
+						<a href="${env.root}/frame/q/detail.htm?id=$!item.id&sceneId=$!sceneDTO.id&tracelog=bops" target="_blank" class="dc-blue">$item.itemTitle</a>
+					</td>
+                    <td>$!item.categoryId</td>
+					<td>$!item.comments</td>
+					<td>$!item.loves</td>
+					<td>$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+                    <td>
+						<a href="${env.root}/frame/q/detail.htm?id=$!item.id&sceneId=$!sceneDTO.id&tracelog=bops" target="_blank" class="dc-blue">查看</a>
+					</td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="8" align="center">该场景下没有商品，现在就添加商品到场景下? <a href="${env.bopsRoot}/bops/dcome/qq/add_scene_item.htm?sceneId=$!sceneDTO.id">点击添加</a></td></tr>
+		#end
+     </table>
+		#parse("/common/bops/dcome.qq/sceneDetailPagination.vm")
+	</div>
+	#else
+		查询的场景不存在
+	#end
+</div>
+	
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

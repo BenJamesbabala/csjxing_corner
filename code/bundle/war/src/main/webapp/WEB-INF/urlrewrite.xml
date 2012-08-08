@@ -30,7 +30,10 @@
 		<from>/zhe/(index|item|search|keyword).(vm|jsp|action)(.*)</from>
 		<to type="permanent-redirect">$1.htm$3</to>
 	</rule>
-	
+	<rule>
+		<from>/frame/q/qqLogin.(vm|do|action)\\?(.*)</from>
+		<to type="forward">/frame/q/qqLogin.htm?$2</to>
+	</rule>
 	
 </urlrewrite>
 

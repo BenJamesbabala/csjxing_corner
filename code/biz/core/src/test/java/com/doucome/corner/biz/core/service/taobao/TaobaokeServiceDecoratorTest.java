@@ -63,7 +63,7 @@ public class TaobaokeServiceDecoratorTest extends AbstractBaseJUnit4Test {
 		 * http://www.dujiaok.com/home/index.htm?top_appkey=12512482&top_parameters=ZXhwaXJlc19pbj0zMTUzNjAwMSZpZnJhbWU9MSZyZV9leHBpcmVzX2luPTAmcmVmcmVzaF90b2tlbj02MTAxNjI1YWE4Y2QxMzI1YWM1YmFiMGE4MTZmNWEyZTQxMzI1NzRjZmJhNTIxMjY2NDQyOTg5JnRzPTEzMzA2ODQwOTYzNTYmdmlzaXRvcl9pZD02NjQ0Mjk4OSZ2aXNpdG9yX25pY2s9Ymx1ZWNvbA%253D%253D&top_session=6100325c033f0978829e8328831d34a011c96d656a530a466442989&top_sign=toCJIM8uRvGVYo%252BXpl7V%252Bg%253D%253D
 		 */
 		
-		Date d = DateUtils.parseDate("2012-05-28", new String[]{"yyyy-MM-dd"}) ;
+		Date d = DateUtils.parseDate("2012-08-02", new String[]{"yyyy-MM-dd"}) ;
 		
 		QueryResult<TaobaokeReportMemberDTO> result = taobaokeServiceDecorator.getReport(new TaobaokeDate(d), new String[]{
 			TaokeReportMembConst.item_num , 
@@ -76,7 +76,8 @@ public class TaobaokeServiceDecoratorTest extends AbstractBaseJUnit4Test {
 			TaokeReportMembConst.real_pay_fee , 
 			TaokeReportMembConst.seller_nick , 
 			TaokeReportMembConst.trade_id
-		}, new Pagination(1)) ;
+		}, new Pagination(1,40)) ;
+		
 		
 		
 		System.out.println(result);

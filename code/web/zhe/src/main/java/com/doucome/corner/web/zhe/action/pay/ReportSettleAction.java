@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportSettleService;
 import com.doucome.corner.biz.zhe.utils.EncryptUtils;
+import com.doucome.corner.web.common.model.JsonModel;
 import com.doucome.corner.web.zhe.action.DdzBasicAction;
-import com.doucome.corner.web.zhe.model.JsonModel;
 
 @SuppressWarnings("serial")
 public class ReportSettleAction extends DdzBasicAction {

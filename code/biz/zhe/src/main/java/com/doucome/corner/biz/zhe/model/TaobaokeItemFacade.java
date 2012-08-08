@@ -12,6 +12,7 @@ import com.doucome.corner.biz.core.utils.ReflectUtils;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.InternalCommission;
 import com.doucome.corner.biz.zhe.utils.TaobaoPicUtils;
+import com.taobao.api.domain.ItemImg;
 
 /**
  * 展示给外部的Item对象
@@ -177,6 +178,10 @@ public class TaobaokeItemFacade extends AbstractModel {
      * 显示给用户的佣金
      */
     private BigDecimal userCommission ;
+    
+    private String desc;
+    
+    private String wapDesc;
     
     /**
      * 显示给用户的佣金比例
@@ -398,7 +403,21 @@ public class TaobaokeItemFacade extends AbstractModel {
 	public void setDetailUrl(String detailUrl) {
 		this.detailUrl = detailUrl;
 	}
-	
-	
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public String getWapDesc() {
+		return wapDesc;
+	}
+
+	public void setWapDesc(String wapDesc) {
+		this.wapDesc = wapDesc;
+	}
 
 }

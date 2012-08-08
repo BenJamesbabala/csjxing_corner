@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.doucome.corner.biz.zhe.model.TaobaokeReportFacade;
 import com.doucome.corner.biz.zhe.model.TaobaokeShopFacade;
 import com.doucome.corner.biz.zhe.service.DdzRecommendService;
-import com.doucome.corner.biz.zhe.vo.BuyingRecommendVO;
 import com.doucome.corner.web.zhe.model.GuideVar;
 
 /**

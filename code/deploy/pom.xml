@@ -30,6 +30,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.web.dcome</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
 			<artifactId>corner.web.bops</artifactId>
 			<version>${pom.version}</version>
 		</dependency>

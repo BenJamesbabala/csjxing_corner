@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcItem">
+	<typeAlias alias="TA-DcItem"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcItemDO" />
+
+	<typeAlias alias="TA-DcCatCount" type="com.doucome.corner.biz.dal.dataobject.dcome.DcCatCountDO"/>
+	
+	<resultMap id="RM-DcItem" class="TA-DcItem">
+		<result property="id" column="ID" />
+		<result property="nativeId" column="NATIVE_ID" jdbcType="VARCHAR" />
+		<result property="nativeCategoryId" column="NATIVE_CATEGORY_ID"/>
+		<result property="itemTitle" column="ITEM_TITLE" jdbcType="VARCHAR" />
+		<result property="itemDesc" column="ITEM_DESC" jdbcType="VARCHAR" />
+		<result property="itemPrice" column="ITEM_PRICE" jdbcType="DECIMAL" />
+		<result property="source" column="SOURCE" jdbcType="VARCHAR" />
+		<result property="srcUrl" column="SRC_URL" jdbcType="VARCHAR" />
+		<result property="picUrls" column="PIC_URLS" jdbcType="VARCHAR" />
+		<result property="clickUrl" column="CLICK_URL" jdbcType="VARCHAR" />
+		<result property="loves" column="LOVES"  />
+		<result property="sells" column="SELLS"  />
+		<result property="comments" column="COMMENTS" />
+		<result property="categoryId" column="CATEGORY_ID"   />
+		<result property="status" column="STATUS"  />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtItemUpdate" column="GMT_ITEM_UPDATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<resultMap id="RM-DcCatCount" class="TA-DcCatCount" >
+		<result property="categoryId" column="CATEGORY_ID"/>
+		<result property="itemCount" column="ITEM_COUNT"/>
+	</resultMap>
+	
+	<insert id="insertItem">
+		INSERT INTO DC_ITEM
+			(ID, NATIVE_ID, NATIVE_CATEGORY_ID, ITEM_TITLE, ITEM_DESC, ITEM_PRICE, SOURCE, SRC_URL, PIC_URLS, CLICK_URL,
+				LOVES, SELLS, COMMENTS, CATEGORY_ID, STATUS, GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE)
+		VALUES
+			(#id#, #nativeId#, #nativeCategoryId#, #itemTitle#, #itemDesc#, #itemPrice#, #source#, #srcUrl#, #picUrls#, #clickUrl#,
+				#loves#, #sells#, #comments#, #categoryId#, #status#, now(), now(), now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<update id="updateItem">
+	    UPDATE DC_ITEM
+	      SET ITEM_TITLE = #itemTitle#,
+	        CATEGORY_ID = #categoryId#,
+	        ITEM_PRICE = #itemPrice#,
+	        CLICK_URL = #clickUrl#,
+	        PIC_URLS = #picUrls#,
+	        ITEM_DESC = #itemDesc#,
+	        GMT_MODIFIED = now()
+	      WHERE ID=#id#
+	</update>
+	
+	<select id="queryItemById" resultMap="RM-DcItem">
+		SELECT 
+			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
+			LOVES,SELLS,COMMENTS,CATEGORY_ID,STATUS,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
+		FROM 
+			DC_ITEM
+		WHERE 
+			ID = #id#
+	</select>
+	
+	<select id="queryItemsByIds" resultMap="RM-DcItem">
+		SELECT 
+			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
+			LOVES,SELLS,COMMENTS,CATEGORY_ID,STATUS,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
+		FROM 
+			DC_ITEM
+		WHERE
+		ID IN 
+		<iterate prepend="" property="ids" open="("  close=")"  conjunction=",">
+		      #ids[]#
+		</iterate>
+				
+	</select>
+	
+	<select id="queryItemsWithPagination" resultMap="RM-DcItem">
+		SELECT 
+			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
+			LOVES,SELLS,COMMENTS,CATEGORY_ID,STATUS,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
+		FROM 
+			DC_ITEM
+		<dynamic>
+            <isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="itemId" prepend="AND">
+				    ID = #itemId#
+				</isNotEmpty>
+				<isNotEmpty property="categoryId" prepend="AND">
+				    CATEGORY_ID = #categoryId#
+				</isNotEmpty>
+				<isNotEmpty property="categoryIds" prepend="AND">
+				   	CATEGORY_ID IN
+				    <iterate prepend="" property="categoryIds" open="("  close=")"  conjunction=",">
+					      #categoryIds[]#
+					</iterate>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateStart" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE >= #gmtCreateStart#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateEnd" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE <= #gmtCreateEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="keywords" prepend="AND">
+				    ITEM_TITLE like CONCAT('%', #keywords#, '%')
+				</isNotEmpty>
+				<isNotEmpty property="itemStatus" prepend="AND">
+				    STATUS = #itemStatus#
+				</isNotEmpty>
+				<isNotEmpty property="exclusionIds" prepend="AND">
+				    ID NOT IN
+				    <iterate prepend="" property="exclusionIds" open="("  close=")"  conjunction=",">
+					      #exclusionIds[]#
+					</iterate>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+		ORDER BY GMT_CREATE DESC, GMT_MODIFIED DESC
+		LIMIT 
+			#start# , #size#
+	</select>
+	
+	<select id="countItemsWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(ID)
+		FROM 
+			DC_ITEM
+		
+		<dynamic>
+            <isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="itemId" prepend="AND">
+				    ID = #itemId#
+				</isNotEmpty>
+				<isNotEmpty property="categoryId" prepend="AND">
+				    CATEGORY_ID = #categoryId#
+				</isNotEmpty>
+				<isNotEmpty property="categoryIds" prepend="AND">
+				   	CATEGORY_ID IN
+				    <iterate prepend="" property="categoryIds" open="("  close=")"  conjunction=",">
+					      #categoryIds[]#
+					</iterate>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateStart" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE >= #gmtCreateStart#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateEnd" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE <= #gmtCreateEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="keywords" prepend="AND">
+				    ITEM_TITLE like CONCAT('%', #keywords#, '%')
+				</isNotEmpty>
+				<isNotEmpty property="itemStatus" prepend="AND">
+				    STATUS = #itemStatus#
+				</isNotEmpty>
+				<isNotEmpty property="exclusionIds" prepend="AND">
+				    ID NOT IN
+				    <iterate prepend="" property="exclusionIds" open="("  close=")"  conjunction=",">
+					      #exclusionIds[]#
+					</iterate>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+	</select>
+	
+	<update id="incrLoveCount">
+		UPDATE 
+			DC_ITEM
+		SET 
+			LOVES = LOVES + 1 , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #itemId#
+	</update>
+	
+	<update id="incrCommentCount" parameterClass="map">
+		UPDATE 
+			DC_ITEM
+		SET 
+			COMMENTS = COMMENTS + #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #itemId#
+	</update>
+	
+	<update id="updateItemStatus" parameterClass="map">
+		UPDATE 
+			DC_ITEM
+		SET 
+			STATUS = #status# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #itemId#
+	</update>
+	
+	<update id="descCommentCount">
+		UPDATE 
+			DC_ITEM
+		SET 
+			COMMENTS = COMMENTS - 1 , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #itemId#
+	</update>
+	
+	<select id="groupCategoryCountByIds" resultMap="RM-DcCatCount">
+		SELECT 
+			COUNT(ID) AS ITEM_COUNT , CATEGORY_ID
+		FROM 
+			DC_ITEM
+		WHERE
+			ID IN 
+		<iterate prepend="" property="ids" open="("  close=")"  conjunction=",">
+		      #ids[]#
+		</iterate>
+		GROUP BY 
+			CATEGORY_ID
+	</select>
+</sqlMap>

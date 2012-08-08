@@ -21,6 +21,5 @@
 	<import resource="classpath:corner/bean/biz-uri.xml" />
 	<import resource="classpath:corner/bean/biz-util.xml" />
 	<import resource="classpath:corner/bean/biz-sms.xml" />
-	
 	<import resource="classpath:corner/service/email.xml" />
 </beans>

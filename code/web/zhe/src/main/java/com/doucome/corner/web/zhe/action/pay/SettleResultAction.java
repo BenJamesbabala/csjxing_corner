@@ -14,8 +14,8 @@ import com.doucome.corner.biz.zhe.model.SettleResult;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportSettleService;
 import com.doucome.corner.biz.zhe.utils.EncryptUtils;
 import com.doucome.corner.biz.zhe.utils.SettleUtils;
+import com.doucome.corner.web.common.model.JsonModel;
 import com.doucome.corner.web.zhe.action.DdzBasicAction;
-import com.doucome.corner.web.zhe.model.JsonModel;
 
 @SuppressWarnings("serial")
 public class SettleResultAction extends DdzBasicAction {

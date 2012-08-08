@@ -26,6 +26,11 @@
 			<artifactId>corner.biz.zhe</artifactId>
 			<version>${pom.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.biz.dcome</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
 	</dependencies>
 
 

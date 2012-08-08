@@ -1,12 +1,23 @@
 
 <ul class="left_menu">
-    <p><a href="">点点折BOPS后台管理</a></p>
-	<li><a href="javascript:">点点折后台管理</a>
+    <p><a href="">BOPS后台管理</a></p>
+	<li><a href="javascript:">点点折</a>
 		<ul>
             <li id="taokeReport"><a href="${env.bopsRoot}/bops/zhe/taoke_report_settle.htm" >淘客报表结算</a></li>
 			<li id="taokeReportTask"><a href="${env.bopsRoot}/bops/zhe/taoke_report_task.htm" >淘宝客报表任务日历</a></li>
 			<li id="accountList"><a href="${env.bopsRoot}/bops/zhe/account_list.htm" >支付宝账号查询</a></li>
-			<li id="accountList"><a href="${env.bopsRoot}/bops/zhe/buying_recommend.htm" >别人正在买</a></li>
+		</ul>
+		<ul>
+			<li id="taokeReport"></li>
+		</ul>
+	</li>
+	
+	<li><a href="javascript:">豆蔻</a>
+		<ul>
+			<li id="itemList"><a href="${env.bopsRoot}/bops/dcome/qq/item_list.htm" >商品维护</a></li>
+            <li id="sceneList"><a href="${env.bopsRoot}/bops/dcome/qq/scene_list.htm" >场景维护</a></li>
+			<li id="categoryList"><a href="${env.bopsRoot}/bops/dcome/qq/category_list.htm" >类目维护</a></li>
+			<li id="commentList"><a href="${env.bopsRoot}/bops/dcome/qq/comment_list.htm" >评论维护</a></li>
 		</ul>
 		<ul>
 			<li id="taokeReport"></li>

@@ -1,0 +1,146 @@
+#set($layout="bops/default_bops.vm")
+#set($title = $item.title)
+#DDZ_CSS(["../bops/itemOperate.css"])
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="dcItemPicRoot" value="$env.itemUploadedRoot"/>
+<div class="dc-item-main clr-both">
+	<div class="item-src box100 clr-both">
+		<div>
+			<form id="search-form" method="get" action="${env.bopsRoot}/bops/dcome/qq/item_operate.htm">
+				<input type="text" id="wd" name="wd" value="$!item.srcUrl" placeHolder="请录入淘宝商品链接" />
+				<input type="hidden" id="alipayId" name="alipayId" value="vip@diandianzhe.com" />
+				<button id="submit" type="submit">下一步</button>
+			</form>
+		</div>
+		<span class="clr-both"></span>
+	</div>
+	<div class="item-meta box100 clr-both #if(!$item)fd-hide #end">
+		<form id="item-form" method="post" action="${env.bopsRoot}/bops/dcome/qq/item_save.htm">
+		<div class="item-summary clr-both">
+			<div class="item-pic clr-both">
+				<div class="item-pic-s460">
+					<a id="" href="#" target="_blank">
+						#if($$!item.picUrlList[0].indexOf('http://') == -1)
+							<img id="cur-pic" src="$env.itemUploadedRoot$!item.picUrlList[0]"/>
+						#else
+						    <img id="cur-pic" src="$!item.picUrlList[0]"/>
+						#end
+					</a>
+				</div>
+				<ul id="pic-list" class="item-pic-s60-list clr-both">
+					#set($index = 0)
+					#foreach($picUrl in $!item.picUrlList)
+					<li class="pic-s60 #if($index == 0)active#end" cur-pic="#if($index == 0)true#else false#end">				
+						<a href="#" title="修改"></a>
+						<input type="hidden" name="picUrlList" value="$!item.picUrlList[$index]" />
+					</li>
+					#set($index = $index + 1)
+					#end
+					<li id="pic-add">
+						<div>
+							<a href="#" title="新增">新增</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="item-property">
+				<div class="item-property-wrap clr-both">
+					<div class="item-title">
+					    <input type="text" id="itemTitle" name="itemTitle" value="$!item.itemTitle" text="$!item.itemTitle"/>
+					</div>
+					<ul class="item-meta-info">
+						<li class="item-detail">
+							<span class="item-price-label label">价格：￥</span>
+							<input type="input" id="itemPrice" name="itemPrice" value="$!item.itemPrice"/>
+							<span class="item-code-label label">商品编号：</span>
+							<span class="item-code label label">$!item.nativeId</span>
+							<input type="hidden" name="nativeId" value="$!item.nativeId"/>
+						</li>
+						<li class="item-category item-detail">
+							<span>商品类目：</span>
+							<select name="categoryId" data-selCatId="$item.categoryId"  data-init-dcCategorySelect="select"></select>
+							<span>淘宝类目ID：$!item.nativeCategoryId</span>
+							<input type="hidden" name="nativeCategoryId" value="$!item.nativeCategoryId"/>
+							<span>商品来源：</span>
+							<select name="source">
+							    <option value="TB" #if($!item.source=='TB')selected="true"#end>淘宝集市</option>
+							    <option value="TM" #if($!item.source=='TM')selected="true"#end>淘宝商城</option>
+							</select>
+					    </li>
+						<li class="item-src-url item-detail clr-both">
+							<span class="label">商品url：</span>
+							<a target="_blank" href="$!item.srcUrl">$!item.srcUrl</a>
+							<input type="hidden" name="srcUrl" value="$!item.srcUrl" />
+						</li>
+						<li class="item-taoke-url item-detail clr-both">
+							<div><span class="lable">淘客url：</span></div>
+							<div><a href="javascript:;" title="重新生成淘客链接">重新生成</a></div>
+							<span class="click-info"></span>
+							<span>
+								<a class="url" target="_blank" href="$!item.clickUrl">$!item.clickUrl</a>
+								<input type="hidden" name="clickUrl" value="$!item.clickUrl" />
+							</span>
+						</li>
+						<li class="item-sell-info item-detail clr-both">
+							<span class="label">月销量：</span><em>$!item.sells</em>
+							<input type="hidden" name="sells" value="$!item.sells" />
+							<span class="label">喜欢：</span><em>$!item.loves</em>
+							<input type="hidden" name="loves" value="$!item.loves" />
+							<span class="label">评论：</span><em>$!item.comments</em>
+							<input type="hidden" name="comments" value="$!item.comments" />
+						</li>
+						<li class="item-desc-info item-detail">
+							<textarea id="itemDesc" name="itemDesc" class="item-desc">$!item.itemDesc</textarea>
+						</li>
+					</ul>
+					<div class="item-operate">
+					    <div id="item-save">
+					    	<button id="item-save-btn" type="submit" title="生成导购商品">保存</button>
+					    </div>
+					</div>
+					<div class="clr-both"></div>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" name="id" value="$!item.id" />
+		</form>
+	</div>
+</div>
+
+<div class="pic-operate-div  #if(!$item)fd-hide #end">
+	<ul class="operate-list">
+		<li id="pic-delete">
+			<span style="color: red;">删除</span>
+		</li>
+	</ul>
+</div>
+
+<div class="background" style="opacity: 0.3;"></div>
+<div id="upload-pic-div" class="fd-hide">
+	<h4>上传图片</h4>
+    <div class="header">
+		<p>(请上传不超过500k大小的图片文件)</p>
+	</div>
+	
+	<div class="obj-param fd-clr">
+		<form id="picUploadForm" method="post" action="${env.bopsRoot}/bops/dcome/qq/remote/pic_upload_ajax.htm" enctype="multipart/form-data">
+			<div  class="cell-upfile">							
+				<label>
+					<span id="is-ie-broser">选择文件</span>
+				</label>
+				<input type="file" id="picFile" name="picFile" class="upfile-text file-input" value="" />
+	        </div>
+	        <div class="error-info fd-hide">
+	        	<span id="upload-info" style="color: red;"></span>
+	        </div>
+		    <input type="submit" id="pic-save" value="保存" />
+		    <input type="button" id="pic-cancel"value="取&nbsp;&nbsp;消"/>
+	    </form>
+    </div>
+ </div>
+ <div id="backgroundPopup"></div>
+
+#DDZ_JS(["../bops/itemOperate.js", "../js/lib/jquery.form.js"])
+
+

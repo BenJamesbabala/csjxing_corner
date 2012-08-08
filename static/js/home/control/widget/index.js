@@ -27,6 +27,14 @@
 		_initRecommend:function(){
 			
 			var ddzRoot	= $("#ddzRoot").val() ;
+			if($("#ddRecomends").is(":visible")) {
+				$("[data-imgsrc]").each(function(){
+					var imgSrc = $(this).data("imgsrc") ;
+					if(imgSrc != ''){
+						$(this).attr("src",imgSrc) ;
+					}
+				});
+			}
 			
 			//¸ü¸ÄÖ§¸¶±¦
 			$("#changeBrandsAlipay").click(function(){

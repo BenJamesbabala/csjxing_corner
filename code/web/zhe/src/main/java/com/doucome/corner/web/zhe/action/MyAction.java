@@ -1,12 +1,15 @@
 package com.doucome.corner.web.zhe.action;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.doucome.corner.biz.core.constant.LogConstant;
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.model.page.QueryResult;
-import com.doucome.corner.biz.core.taobao.model.TaokeReportSearchCondition;
 import com.doucome.corner.biz.core.utils.ArrayStringUtils;
+import com.doucome.corner.biz.dal.condition.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.DdzAccountDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzUserDO;
@@ -20,6 +23,8 @@ import com.doucome.corner.biz.zhe.service.DdzTaokeReportService;
 @SuppressWarnings("serial")
 public class MyAction extends DdzBasicAction {
 
+    private static final Log              log  = LogFactory.getLog(MyAction.class);
+
     @Autowired
     private DdzTaokeReportService         ddzTaokeReportService;
 
@@ -30,8 +35,8 @@ public class MyAction extends DdzBasicAction {
     private DdzUserDO                     user;
 
     private String                        alipayId;
-    
-    private String						  statuses ;
+
+    private String                        statuses;
 
     @Override
     public String execute() throws Exception {
@@ -42,14 +47,15 @@ public class MyAction extends DdzBasicAction {
             alipayId = accountDO.getAlipayId();
         }
 
-        if (user == null) {
+        // 如果是内部用户，可以直接访问，无需登陆
+        if (user == null && !ddzAuthz.isPrivateUser()) {
             return DDZ_INDEX;
         }
 
         if (StringUtils.isBlank(alipayId)) {
             return SUCCESS;
         }
-        
+
         Pagination pagination = new Pagination(page, 10);
         TaokeReportSearchCondition searchCondition = new TaokeReportSearchCondition();
         searchCondition.setSettleAlipay(alipayId);
@@ -78,18 +84,22 @@ public class MyAction extends DdzBasicAction {
         return itemList;
     }
 
-	public String getStatuses() {
-		return statuses;
-	}
+    public String getStatuses() {
+        return statuses;
+    }
 
-	public void setStatuses(String statuses) {
-		this.statuses = statuses;
-	}
+    public void setStatuses(String statuses) {
+        this.statuses = statuses;
+    }
 
-	
+    public void setAlipayId(String alipayId) {
+        if (ddzAuthz == null) {
+            log.error("ddzAuthz is null!");
+            return;
+        }
+        if (ddzAuthz.isPrivateUser()) {
+            this.alipayId = alipayId;
+        }
+    }
 
-    
-
-
-    
 }

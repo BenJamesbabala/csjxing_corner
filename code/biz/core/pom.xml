@@ -18,7 +18,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.doucome.corner</groupId>
-			<artifactId>corner.biz.sms</artifactId>
+			<artifactId>corner.biz.external</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.biz.common</artifactId>
 			<version>${pom.version}</version>
 		</dependency>
 		<dependency>
@@ -38,33 +43,18 @@
 			<artifactId>taobao.sdk.taobaoke</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>com.qq.platform</groupId>
+			<artifactId>qq.openapi.sdk</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>c3p0</groupId>
-			<artifactId>c3p0</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>c3p0</groupId>
-			<artifactId>c3p0</artifactId>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.ibatis</groupId>
-			<artifactId>ibatis-sqlmap</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-		</dependency>
+
 
 		<dependency>
 			<groupId>commons-collections</groupId>
@@ -74,10 +64,7 @@
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -102,23 +89,17 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>net.sf.ezmorph</groupId>
 			<artifactId>ezmorph</artifactId>
@@ -145,52 +126,13 @@
 			<version>2.3</version>
 			<classifier>jdk15</classifier>
 		</dependency>
+		<dependency>
+			<groupId>com.googlecode.sli4j</groupId>
+			<artifactId>sli4j-slf4j-log4j</artifactId>
+		</dependency>
 	</dependencies>
 
 
-	<profiles>
 
-		<profile>
-			<id>dev</id>
-			<activation>
-				<property>
-					<name>env</name>
-					<value>!release</value>
-				</property>
-			</activation>
-			<properties>
-				<release_directory>${project.build.directory}</release_directory>
-			</properties>
-
-			<build>
-				<plugins>
-
-					<plugin>
-						<groupId>com.doucome.maven.plugins</groupId>
-						<artifactId>maven-autoconf-plugin</artifactId>
-						<version>0.4</version>
-						<executions>
-							<execution>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>config</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<destFiles>
-								<destFile>${release_directory}/${pom.artifactId}-${pom.version}.jar</destFile>
-							</destFiles>
-							<includeDescriptorPatterns>
-								<includeDescriptorPattern>META-INF/autoconf/auto-config.xml</includeDescriptorPattern>
-								<includeDescriptorPattern>WEB-INF/autoconf/auto-config.xml</includeDescriptorPattern>
-							</includeDescriptorPatterns>
-						</configuration>
-					</plugin>
-				</plugins>
-
-			</build>
-		</profile>
-	</profiles>
 
 </project>

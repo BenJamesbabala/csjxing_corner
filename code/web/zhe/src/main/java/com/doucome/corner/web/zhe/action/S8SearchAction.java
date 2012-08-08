@@ -6,17 +6,17 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.core.constant.Constant;
+import com.doucome.corner.biz.core.enums.OutCodeEnums;
 import com.doucome.corner.biz.core.service.taobao.TaobaokeServiceDecorator;
 import com.doucome.corner.biz.core.taobao.model.TaokeItemSearchCondition;
 import com.doucome.corner.biz.core.utils.MD5Util;
+import com.doucome.corner.biz.core.utils.OutCodeUtils;
 import com.doucome.corner.biz.core.utils.ValidateUtil;
 import com.doucome.corner.biz.dal.dataobject.DdzSearchLogDO;
-import com.doucome.corner.biz.zhe.enums.OutCodeEnums;
 import com.doucome.corner.biz.zhe.enums.SearchWayEnums;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
 import com.doucome.corner.biz.zhe.service.DdzSearchLogService;
 import com.doucome.corner.biz.zhe.service.KeywordsFilterService;
-import com.doucome.corner.biz.zhe.utils.OutCodeUtils;
 import com.doucome.corner.web.zhe.authz.DdzSessionOperator;
 import com.opensymphony.xwork2.ModelDriven;
 

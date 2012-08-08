@@ -3,18 +3,18 @@ package com.doucome.corner.web.zhe.action.ajax;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.doucome.corner.biz.core.enums.OutCodeEnums;
 import com.doucome.corner.biz.core.model.URLModel;
 import com.doucome.corner.biz.core.service.taobao.TaobaokeServiceDecorator;
 import com.doucome.corner.biz.core.utils.HttpUrlHelper;
+import com.doucome.corner.biz.core.utils.OutCodeUtils;
 import com.doucome.corner.biz.core.utils.ValidateUtil;
-import com.doucome.corner.biz.zhe.enums.OutCodeEnums;
 import com.doucome.corner.biz.zhe.model.TaobaokeItemFacade;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
 import com.doucome.corner.biz.zhe.service.DdzTaobaokeService;
-import com.doucome.corner.biz.zhe.utils.OutCodeUtils;
 import com.doucome.corner.web.common.action.BasicAction;
-import com.doucome.corner.web.zhe.model.JsonModel;
-import com.doucome.corner.web.zhe.utils.TaobaoUrlUtils;
+import com.doucome.corner.web.common.model.JsonModel;
+import com.doucome.corner.web.common.utils.TaobaoUrlUtils;
 
 /**
  * 转换商品接口

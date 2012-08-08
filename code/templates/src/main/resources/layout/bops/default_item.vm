@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	#parse("/common/dcome.qq/head.vm")
+</head>
+<body>
+	
+	<div class="header">
+		<ul class="other">
+			<!--
+			<li><a href="#" title="会看前几天" class="lookback">会看前几天</a></li>
+			<li><a href="#" title="我来爆料" class="ido">我来爆料</a></li>
+			-->
+		</ul>
+		<a href="${env.root}/frame/q/index.htm" class="logo" title="豆蔻 - 美丽帮你挑">豆蔻</a>
+	</div>
+	<div class="content">
+		$screen_content
+	</div>
+	<div class="footer">
+		<span>您的ID是$!dcAuthz.getExternalId()，如有问题请联系客服：vip@doucome.com&nbsp;&nbsp;版权所有&nbsp;&copy;&nbsp;豆蔻</span>
+	</div>
+	
+	
+	#parse("/common/dcome.qq/bottom.vm")
+	#DC_QRES(["jquery-1.7.2-min.js","jquery.roundabout-2.4.2.js", "../../bops/bopsDetail.js"])
+</body>
+</html>
+	

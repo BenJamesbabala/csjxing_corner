@@ -1,0 +1,68 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	
+	<package name="frame-q" namespace="/frame/q" extends="default">
+		<interceptors>
+			<!-- authz stack -->
+            <interceptor-stack name="dcomeDefaultStack">
+				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="setDcContextInterceptor" />
+				 <!-- <interceptor-ref name="dcomeAuthzContextInterceptor" /> -->
+			 </interceptor-stack>
+			<!-- no authz stack -->
+            <interceptor-stack name="dcomeBasicStack">
+				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="setDcContextInterceptor" />
+			 </interceptor-stack>
+		</interceptors>
+		
+		<action name="qqLogin" class="com.doucome.corner.web.dcome.action.frame.q.QqLoginAction">
+			<interceptor-ref name="dcomeBasicStack" />
+			<result name="success" type="redirect">/frame/q/index.htm</result>
+		</action>
+		
+		<action name="index" class="com.doucome.corner.web.dcome.action.frame.q.IndexAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="velocity">/dcome/frame.q/index.vm</result>
+		</action>
+		
+		<action name="preview" class="com.doucome.corner.web.dcome.action.frame.q.IndexAction" method="preview">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="velocity">/dcome/frame.q/index.vm</result>
+		</action>
+		
+		<action name="detail" class="com.doucome.corner.web.dcome.action.frame.q.ItemDetailAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="velocity">/dcome/frame.q/detail.vm</result>
+		</action>
+		
+	</package>
+	
+	<package name="frame-q-remote-rest" namespace="/frame/q/remote/rest" extends="struts-json">
+		<interceptors>
+			 <!-- Basic stack -->
+            <interceptor-stack name="dcomeDefaultStack">
+				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="setDcContextInterceptor" />
+			 </interceptor-stack>
+		</interceptors>
+		
+		<action name="add_comment_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.CommentOperateAjaxAction" method="add">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="add_love_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.ItemOperateAjaxAction" method="addLove">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="query_comments_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.QueryCommentsAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+	</package>
+</struts>

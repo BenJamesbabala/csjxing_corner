@@ -1,9 +1,6 @@
 package com.doucome.corner.biz.core.service.upyun;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -17,7 +14,9 @@ import java.util.TimeZone;
 import com.doucome.corner.biz.core.enums.HttpMethodEnums;
 
 public class UpYunUtils {
-
+	
+	private static final char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	
 	/**
 	 * MD5 加密方法
 	 * 
@@ -25,7 +24,7 @@ public class UpYunUtils {
 	 *            待加密字符串 return 加密后字符串;
 	 */
 	public static String md5(String str) {
-		char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+		
 		MessageDigest md5 = null;
 		try {
 			md5 = MessageDigest.getInstance("MD5");
@@ -46,28 +45,20 @@ public class UpYunUtils {
 		return new String(finalValue);
 	}
 
-	public static String md5(InputStream in) throws Exception {
+	public static String md5(byte[] buf) throws Exception{
 		
-		char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-				'a', 'b', 'c', 'd', 'e', 'f' };
 		MessageDigest md5 = null;
 		try {
 			md5 = MessageDigest.getInstance("MD5");
-			int n = 0;
-			byte[] buffer = new byte[1024];
-			do {
-				n = in.read(buffer);
-				if (n > 0) {
-					md5.update(buffer, 0, n);
-				}
-			} while (n != -1);
-			in.skip(0);
-		}  finally {
-			in.close();
-		}
+				
+			md5.update(buf, 0, buf.length);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
+		} 
 
 		byte[] encodedValue = md5.digest();
-
+		
 		int j = encodedValue.length;
 		char finalValue[] = new char[j * 2];
 		int k = 0;
@@ -76,8 +67,8 @@ public class UpYunUtils {
 			finalValue[k++] = hexDigits[encoded >> 4 & 0xf];
 			finalValue[k++] = hexDigits[encoded & 0xf];
 		}
-
-		return String.valueOf(finalValue);
+		
+		return new String(finalValue);
 	}
 
 		
@@ -99,10 +90,30 @@ public class UpYunUtils {
 	* @param length 请求所发Body数据长度
 	* return 签名字符串
 	*/
-	public static String sign(HttpMethodEnums method,String date ,  String uri, long length , String username , String md5Password){
+	public static String sign(HttpMethodEnums method, String date ,  String uri, long length , String username , String md5Password){
 		String sign = method.getValue() + "&" + uri + "&" + date + "&" + length + "&" + md5Password;
 		//System.out.println(sign);
 		//System.out.println("UpYun " + username + ":" + md5(sign));
 		return "UpYun " + username + ":" + md5(sign);
 	}
+	
+	public static byte[] inputStream2Buf(InputStream ins , int length) throws Exception {
+		
+		byte[] content = new byte[length];
+		int offset = 0 ;
+		int bufsize = 4096 ;
+		while(true){
+			int readsize = ins.read(content,offset , bufsize) ;
+			offset += readsize ;
+			if(offset >= length){
+				break ;
+			}
+			if(readsize == -1){
+				break ;
+			}
+		}
+		return content ;
+	}
+	
+	
 }

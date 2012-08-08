@@ -1,16 +1,21 @@
 package com.doucome.corner.biz.core.service.upyun;
 
-import java.io.File;
+import com.doucome.corner.biz.core.exception.UpyunException;
+import com.doucome.corner.biz.core.service.upyun.model.UpyunDataEntity;
 
+/**
+ * 又拍接口封装
+ * @author shenjia.caosj 2012-7-22
+ *
+ */
 public interface UpYunService {
 
 	/**
-	 * 上传文件
-	 * @param path 文件路径（包含文件名）
-	 * @param file
-	 * @return
+	 * 从URL拷贝图片到指定又拍路径
+	 * @param imgUrl
+	 * @param picPath
 	 */
-	boolean uploadFile(String path ,  File in , boolean auto) ;
+	void upload(UpyunDataEntity upyunEntity) throws UpyunException ;
 	
 	/**
 	* 删除文件

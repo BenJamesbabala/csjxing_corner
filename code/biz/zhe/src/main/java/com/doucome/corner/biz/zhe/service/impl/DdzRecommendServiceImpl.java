@@ -1,5 +1,6 @@
 package com.doucome.corner.biz.zhe.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -13,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.model.page.QueryResult;
-import com.doucome.corner.biz.core.taobao.model.TaokeReportSearchCondition;
+import com.doucome.corner.biz.core.utils.DecimalUtils;
+import com.doucome.corner.biz.dal.condition.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.zhe.cache.BrandsCache;
 import com.doucome.corner.biz.zhe.cache.BuyingRecommendItemCache;
@@ -91,10 +93,14 @@ public class DdzRecommendServiceImpl implements DdzRecommendService {
 		searchCondition.setGmtCreateStart(c.getTime()) ;
 		//之前5天的成交
 		QueryResult<DdzTaokeReportDO> result = ddzTaokeReportService.getReportsWithPagination(searchCondition, new Pagination(1,500)) ;
+		BigDecimal jiao = new BigDecimal("0.1") ;//1角
 		for(DdzTaokeReportDO r : result.getItems()){
 			if(r != null && StringUtils.isNotBlank(r.getPicUrl()) && StringUtils.isNotBlank(r.getSettleAlipay())){
 				TaobaokeReportFacade facade = new TaobaokeReportFacade(r) ;
-				items.add(facade) ;
+				BigDecimal uc = facade.getUserCommission() ;
+				if(DecimalUtils.greatThan(uc, jiao)){
+					items.add(facade) ;
+				}
 			}
 		}
 		

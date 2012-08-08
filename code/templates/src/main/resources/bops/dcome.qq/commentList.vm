@@ -1,0 +1,98 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "评论列表")
+
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcCommentList"/>
+
+
+#set($pagination = $commentQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/qq/comment_list.htm?")
+#set($searchQuery = ["keywords:$!keywords","userId:$!userId","status:$!status",
+	"gmtCreateStart:$!gmtCreateStartFormat","gmtCreateEnd:$!gmtCreateEndFormat","itemId:$!itemId"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+	
+	<form action="${env.bopsRoot}/bops/dcome/qq/comment_list.htm" method="GET">
+    	<div class="settleIpt">
+			<div>
+    			商品ID:<input name="itemId" type="text" value="$!itemId" data-validator-number />
+				&nbsp;&nbsp;
+				USER_ID:<input name="userId" type="text" value="$!userId" data-validator-number />
+				&nbsp;&nbsp;
+				状态：
+				<select name="status">
+                    <option value="">全部</option>
+					<option value="D" #if($status == "D") selected #end>禁止</option>
+					<option value="N" #if($status == "N") selected #end>正常</option>
+                </select>
+        		<input type="submit" value="查询" /> [<a href="javascript:;" class="F12" data-toggle-id="queryIptMore">更多查询条件</a>]
+                <div class="MT10 F14">
+					评论关键词：<input name="keywords" type="text" value="$!keywords" size="50"/> &nbsp;&nbsp;
+					<span class="#if(!$gmtCreateStart && !$gmtCreateEnd) dd-hide #end" id="queryIptMore">
+					记录创建时间：
+					<input type="text" id="gmtCreateStart" name="gmtCreateStart" class="dateIpt" value="$!gmtCreateStartFormat" data-init-datepicker="yy-mm-dd" /> - 
+					<input type="text" id="gmtCreateEnd" name="gmtCreateEnd"class="dateIpt" value="$!gmtCreateEndFormat" data-init-datepicker="yy-mm-dd" />
+                    </span>
+				</div>
+			</div>
+            
+			<div class="F14 MT10 MB10 #if(!$gmtCreateStart && !$gmtCreateEnd) dd-hide #end" >
+				
+				 
+					
+                </span>
+			</div>
+    	</div>
+    </form>
+	
+	#parse("/common/bops/dcome.qq/commentPagination.vm")
+	
+	 <table width="960" style="font-size:14px;" id="itemTable">
+		<tr>
+    		<th width="30">序号</th>
+			<th width="50">商品ID</th>
+			<th width="50">USER_ID</th>
+			<th width="80">昵称</th>
+			<th width="220">内容</th>
+			<th width="40">状态</th>
+			<th width="80">创建时间</th>
+			<th width="120">操作</th>
+    	</tr>
+		#if($commentQuery.totalRecords > 0)
+    		#foreach($item in $commentQuery.items)
+				#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
+            	<tr>
+            		<td align="center">$idx</td>
+					<td>$!item.itemId</td>
+                    <td>$!item.userId</td>
+                    <td>$!item.userNick</td>
+                    <td class="item-desc"><span class='#if($item.status != "N") dc-red #end'>$!item.content</span></td>
+					<td>#if($!item.status == "N") 正常 #else 禁止($!item.status) #end </td>
+                    <td>$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+                    <td>
+						#if($item.status == "N")
+                        <a href="javascript:;" data-comment-id="$!item.id" data-comment-status="D" class="dc-blue">禁止</a>
+						#else
+                        <a href="javascript:;" data-comment-id="$!item.id" data-comment-status="N"><span class="dc-blue">恢复评论</span></a>
+						#end
+					</td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="6">没有查询到记录</td></tr>
+		#end
+     </table>
+	 
+	 #parse("/common/bops/dcome.qq/commentPagination.vm")
+	
+</div>
+	
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

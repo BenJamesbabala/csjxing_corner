@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcSceneDetail">
+	<typeAlias alias="TA-DcSceneDetail" type="com.doucome.corner.biz.dal.dataobject.dcome.DcSceneDetailDO" />
+
+	<resultMap id="RM-DcSceneDetail" class="TA-DcSceneDetail">
+		<result property="id" column="ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="sceneId" column="SCENE_ID"  />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertSceneDetail">
+		INSERT INTO 
+			DC_SCENE_DETAIL(ID,ITEM_ID,SCENE_ID,GMT_CREATE)
+		VALUES
+			(#id#,#itemId#,#sceneId#,now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="queryItemsBySceneWithPagination" resultClass="java.lang.Long">
+		SELECT 
+			ITEM_ID
+		FROM 
+			DC_SCENE_DETAIL
+		WHERE
+			SCENE_ID = #sceneId#
+		LIMIT 
+			#start# , #size# 
+	</select>
+	
+	<select id="countItemsBySceneWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(ID) 
+		FROM 
+			DC_SCENE_DETAIL
+		WHERE
+			SCENE_ID = #sceneId#
+	</select>
+		
+	<delete id="deleteSceneDetail">
+		DELETE FROM
+			DC_SCENE_DETAIL
+		WHERE
+			ITEM_ID = #itemId#
+		AND
+			SCENE_ID = #sceneId#
+	</delete>
+	
+</sqlMap>

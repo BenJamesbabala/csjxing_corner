@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcScene">
+	<typeAlias alias="TA-DcScene"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcSceneDO" />
+
+	<resultMap id="RM-DcScene" class="TA-DcScene">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" jdbcType="VARCHAR"/>
+		<result property="sceneDesc" column="SCENE_DESC" jdbcType="VARCHAR" />
+		<result property="active" column="ACTIVE" jdbcType="VARCHAR" />
+		<result property="systemId" column="SYSTEM_ID" />
+		<result property="categoryIds" column="CATEGORY_IDS" jdbcType="VARCHAR" />
+		<result property="bannerPicUrl" column="BANNER_PIC_URL" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertScene">
+		INSERT INTO 
+			DC_SCENE(ID,NAME,SCENE_DESC,ACTIVE,SYSTEM_ID,CATEGORY_IDS,BANNER_PIC_URL,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#name#,#sceneDesc#,
+			<isEmpty property="active">'F'</isEmpty>
+			<isNotEmpty property="active">#active#</isNotEmpty>
+			,#systemId#,#categoryIds#,#bannerPicUrl#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="querySceneById" resultMap="RM-DcScene">
+		SELECT 
+			ID,NAME,SCENE_DESC,ACTIVE,SYSTEM_ID,CATEGORY_IDS,BANNER_PIC_URL,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_SCENE
+		WHERE
+			ID = #id#
+	</select>
+	
+	<update id="updateSceneActiveById">
+		UPDATE 
+			DC_SCENE
+		SET 
+			ACTIVE = #active# , 
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
+	</update>
+	
+	<update id="updateSceneById">
+		UPDATE 
+			DC_SCENE
+		SET 
+			NAME = #name# , 
+			SCENE_DESC = #sceneDesc#,
+			BANNER_PIC_URL = #bannerPicUrl#,
+			CATEGORY_IDS = #categoryIds#,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
+	</update>
+	
+	<select id="queryScenesWithPagination" resultMap="RM-DcScene">
+		SELECT 
+			ID,NAME,SCENE_DESC,ACTIVE,SYSTEM_ID,CATEGORY_IDS,BANNER_PIC_URL,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_SCENE
+		ORDER BY 
+			GMT_CREATE DESC 
+		LIMIT 
+			#start# , #size#
+	</select>
+	
+	<select id="countScenesWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(ID)
+		FROM 
+			DC_SCENE
+	</select>
+</sqlMap>

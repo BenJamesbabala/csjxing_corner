@@ -4,7 +4,6 @@ ServerRoot "${corner_output}"
 DocumentRoot "${corner_htdocs_home}"
 ServerName ${corner_domainName}
 ServerName ${corner_ddz_domainName}
-ServerName diandainzhe.com
 
 DefaultLanguage cn
 AddDefaultCharset GBK
@@ -60,18 +59,21 @@ DirectoryIndex index.html
 NameVirtualHost *
 
 <VirtualHost *>
-	RewriteEngine on
-    RewriteCond %{HTTP_HOST} ^diandainzhe.com [NC,OR]
-RewriteRule ^(.*)$ http://${corner_ddz_domainName}$1 [L,R=301]
-</VirtualHost>
-
-<VirtualHost *>
     ServerAdmin ${corner_unix_user}
     ServerName ${corner_ddz_domainName}
 	DocumentRoot "${corner_htdocs_home}"
     RewriteEngine on
     RewriteCond %{HTTP_HOST} ${corner_ddz_domainName} [NC] 
     RewriteRule ^\/$ /zhe/index.htm [L,P]
+</VirtualHost>
+
+<VirtualHost *>
+    ServerAdmin ${corner_unix_user}
+    ServerName ${corner_domainName}
+	DocumentRoot "${corner_htdocs_home}"
+    RewriteEngine on
+    RewriteCond %{HTTP_HOST} ${corner_domainName} [NC] 
+    RewriteRule ^\/$ /frame/q/index.htm [L,P]
 </VirtualHost>
 
 

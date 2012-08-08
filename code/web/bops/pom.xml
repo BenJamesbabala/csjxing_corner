@@ -27,8 +27,21 @@
 			<version>${pom.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.biz.dcome</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+	    </dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
 		</dependency>
 	</dependencies>
 </project>

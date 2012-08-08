@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.doucome.corner.biz.core.enums.SettleStatusEnums;
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.model.page.QueryResult;
-import com.doucome.corner.biz.core.taobao.model.TaokeReportSearchCondition;
+import com.doucome.corner.biz.dal.condition.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportService;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportSettleService;
+import com.doucome.corner.web.common.model.JsonModel;
 import com.doucome.corner.web.zhe.action.DdzBasicAction;
-import com.doucome.corner.web.zhe.model.JsonModel;
 
 @SuppressWarnings("serial")
 public class UserinfoAction extends DdzBasicAction {

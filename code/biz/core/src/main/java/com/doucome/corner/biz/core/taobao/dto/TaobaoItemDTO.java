@@ -2,10 +2,12 @@ package com.doucome.corner.biz.core.taobao.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.doucome.corner.biz.core.model.AbstractModel;
 import com.doucome.corner.biz.core.utils.ReflectUtils;
 import com.taobao.api.domain.Item;
+import com.taobao.api.domain.ItemImg;
 import com.taobao.api.domain.Location;
 
 /**
@@ -303,6 +305,19 @@ public class TaobaoItemDTO extends AbstractModel {
 	 * 是否承诺退换货服务!
 	 */
 	private Boolean sellPromise ;
+	
+	/**
+	 * 商品图片列表(包括主图)。fields中只设置item_img可以返回ItemImg结构体中所有字段，如果设置为item_img.id、item_img.url、item_img.position等形式就只会返回相应的字段
+	 */
+	private List<ItemImg> itemImgs ; 
+
+	public List<ItemImg> getItemImgs() {
+		return itemImgs;
+	}
+
+	public void setItemImgs(List<ItemImg> itemImgs) {
+		this.itemImgs = itemImgs;
+	}
 
 	public String getDetailUrl() {
 		return detailUrl;

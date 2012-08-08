@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcLoveDetail">
+	<typeAlias alias="TA-DcLoveDetail"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcLoveDetailDO" />
+
+	<resultMap id="RM-DcLoveDetail" class="TA-DcLoveDetail">
+		<result property="id" column="ID" />
+		<result property="itemId" column="ITEM_ID"/>
+		<result property="userId" column="USER_ID"  />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertDetail">
+		INSERT INTO DC_LOVE_DETAIL
+			(ID,ITEM_ID,USER_ID,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#itemId#,#userId#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryDetailByUserAndItem" resultMap="RM-DcLoveDetail">
+		SELECT 
+			ID,ITEM_ID,USER_ID,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_LOVE_DETAIL
+		WHERE 
+			USER_ID = #userId#
+		AND
+			ITEM_ID = #itemId# 
+	</select>
+	
+	
+</sqlMap>

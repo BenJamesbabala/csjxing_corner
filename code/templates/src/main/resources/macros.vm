@@ -39,3 +39,7 @@
 	#end
 	$_outputUrl
 #end
+
+#macro(FIELD_ERROR $fieldName)
+	$!fieldErrorHelper.getErrorText($fieldName)
+#end

@@ -1,0 +1,41 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "QQ空间首页配置")
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcQIndexConfig"/>
+
+<style>
+
+</style>
+
+<div class="bops">
+	<div style="MT20 MB20">&nbsp;</div>
+	<div>
+		<span class="dc-scene-title">$!sceneDTO.name</span> 
+	</div>
+	<div class="MT20 MB20" style="height:350px;">
+	#if($sceneDTO.itemList.size() > 0)
+		<div style="width:800px;">
+		#foreach($item in $sceneDTO.itemList)
+			#set($idx = $velocityCount )
+            <div style="margin:10px;border:1px solid #dddddd;" class="L">
+                <div style="margin:5px;"><img src="$!item.getPicUrl(0,'120x120')" width="120" height="120"></img></div>
+                <div class="F12 MT10 " style="margin:5px;">$!item.itemTitle</div>
+			</div> 
+		#end
+        </div>
+		
+		<div class="MT20 MB20">
+    	<form action="${env.bopsRoot}/bops/dcome/qq/pre_release_index.htm" method="post">
+    		<input type="hidden" name="systemId" value="$!sceneDTO.systemId" />
+    		<input type="hidden" name="sceneId" value="$!sceneDTO.id" />
+            >> <input type="submit" value="预发布"/>
+        </form>
+        </div>
+		
+	#else
+        <div>该场景下没有商品 ，现在就去添加商品吧 <a href="${env.bopsRoot}/bops/dcome/qq/scene_detail.htm?sceneId=$!sceneDTO.id">维护场景</a></div>
+	#end
+	</div>
+	
+</div>

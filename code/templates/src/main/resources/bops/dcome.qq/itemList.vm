@@ -1,0 +1,115 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "商品列表")
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcItemList"/>
+
+
+#set($pagination = $itemQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/qq/item_list.htm?")
+#set($searchQuery = ["categoryId:$!categoryId","keywords:$!keywords","itemStatus:$!itemStatus",
+	"gmtCreateStart:$!gmtCreateStartFormat","gmtCreateEnd:$!gmtCreateEndFormat","itemId:$!itemId"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/dcome/qq/item_list.htm" method="GET">
+		<div class="MB10 MT10">
+			商品ID： <input  type="text" name="itemId" value="$!condition.itemId" />
+			关键字：<input  type="text" name="keywords" value="$!condition.keywords" />
+			&nbsp;&nbsp;
+			商品类目：<select name="categoryId" data-selCatId="$!condition.categoryId"  data-init-dcCategorySelect="select" include-all="true"></select>
+			&nbsp;&nbsp;
+			商品状态：
+			<select name="itemStatus">
+	            <option value="">全部</option>
+				<option value="N" #if($!condition.itemStatus == "N") selected #end>销售中</option>
+				<option value="D" #if($!condition.itemStatus == "D") selected #end>已下架</option>
+	        </select>
+			&nbsp;&nbsp;
+			
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	<div class="MB20 MT20"><a href="${env.bopsRoot}/bops/dcome/qq/item_operate.htm" target="_blank">新增商品</a></div>
+		
+	#parse("/common/bops/dcome.qq/itemPagination.vm")
+	
+	 <table width="960" style="font-size:14px;" id="itemTable">
+		<tr>
+    		<th width="30">序号</th>
+			<th width="40">商品ID</th>
+			<th width="180">名称</th>
+			<th width="30">类目ID</th>
+			<th width="30">喜欢</th>
+			<th width="40">评论</th>
+			<th width="100">描述</th>
+			<th width="40">状态</th>
+			<th width="80">创建时间</th>
+			<th width="30">操作</th>
+    	</tr>
+		#if($itemQuery.totalRecords > 0)
+    		#foreach($item in $itemQuery.items)
+				#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
+            	<tr data-index="$!item.id">
+            		<td>$idx</td>
+                    <td>$!item.id</td>
+                    <td>$!item.itemTitle</td>
+					<td align="center">$!item.categoryId</td>
+					<td align="center">$!item.loves</td>
+                    <td align="center">$!item.comments 
+						#if($item.comments > 0)[<a href="${env.bopsRoot}/bops/dcome/qq/comment_list.htm?itemId=$!item.id" class="dc-blue" target="_blank">查看</a>] #end
+					</td>
+					<td title="$!item.itemDesc">
+						<div class="dc-item-desc">$!item.itemDesc</div></td>
+					<td class="dc-item-status">#if($item.status=='D')已下架 #else 销售中 #end</td>
+                    <td>$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+                    <td>
+                    	<div class="current-item" data-trIndex="$velocityCount">
+                    		<a href="javascript:;">操作</a>
+                    		<span class="icon-pull-down">&nbsp;</span>
+							<div class="ui-customize-select-list dd-hide" style="margin:-18px 0 0 -4px;">
+                            	<ul class="normal-list">
+                            		<li class="first" dead="true" >
+                            			<span>操作</span>
+                            		</li>
+                            		<li class="split" tips="所有操作都记录在案，请谨慎操作">
+										<span><a href="${env.root}/frame/q/detail.htm?id=$!item.id" title="预览" target="_blank">预览</a></span>
+									</li>
+									<li class="split" tips="所有操作都记录在案，请谨慎操作">
+										<span><a href="${env.bopsRoot}/bops/dcome/qq/item_operate.htm?wd=$!item.id" title="修改" target="_blank">修改</a></span>
+									</li>
+									<li class="split" tips="所有操作都记录在案，请谨慎操作">
+										<span><a href="${env.bopsRoot}/bops/dcome/qq/bops_detail.htm?id=$!item.id" title="灌水" target="_blank">灌水</a></span>
+									</li>
+									#if($$!item.status!="D")
+									<li id="diableItem" class="split" tips="所有操作都记录在案，请谨慎操作" data-itemId="$!item.id" data-status='D'>
+                            			<span><a href="javascript:;" title="下架">下架</a></span>
+                            		</li>
+                            		#end
+									<li class="last" dead="true">
+										<span></span>
+									</li>
+                            	</ul>
+                            </div>
+						</div>
+                    </td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="6">没有查询到记录</td></tr>
+		#end
+     </table>
+	 
+	 #parse("/common/bops/dcome.qq/itemPagination.vm")
+	
+</div>
+#DDZ_JS(["../bops/itemList.js"])
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

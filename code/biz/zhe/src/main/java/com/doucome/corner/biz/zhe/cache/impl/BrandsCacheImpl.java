@@ -28,9 +28,7 @@ public class BrandsCacheImpl extends AbstractCacheSupport implements BrandsCache
 	public void setCache(List<TaobaokeShopFacade> items) {
 		CacheClient cc = getCacheClient() ;
 		String key = buildCachekeyWithArgs("") ;
-		InternalStoreItem<List<TaobaokeShopFacade>> store = new InternalStoreItem<List<TaobaokeShopFacade>>() ;
-		store.setGmtCreate(new Date()) ;
-		store.setItem(items) ;
+		InternalStoreItem<List<TaobaokeShopFacade>> store = new InternalStoreItem<List<TaobaokeShopFacade>>(items) ;
 		cc.put(key, store) ;
 	}
 

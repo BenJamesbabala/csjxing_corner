@@ -29,6 +29,7 @@
 	<script>
 		<generate template="bin/env.sh.vm" destfile="bin/env.sh" charset="GBK" />
 		<generate template="bin/startSendReportMails.sh" destfile="bin/startSendReportMails.sh" charset="GBK" />
+		<generate template="bin/taokeReportSyncStarter.sh" destfile="bin/taokeReportSyncStarter.sh" charset="GBK" />
 	</script>
 </config>
 

@@ -15,9 +15,9 @@ import org.apache.http.util.EntityUtils;
 
 import com.doucome.corner.biz.core.utils.JacksonHelper;
 import com.doucome.corner.biz.core.utils.ValidateUtil;
+import com.doucome.corner.web.common.model.JsonModel;
 import com.doucome.corner.web.zhe.action.DdzBasicAction;
 import com.doucome.corner.web.zhe.model.AlipayAcctStatusCheck;
-import com.doucome.corner.web.zhe.model.JsonModel;
 
 /**
  * 

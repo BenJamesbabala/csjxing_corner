@@ -1,0 +1,91 @@
+#set($layout="bops/default_item.vm")
+
+#if($!item.itemTitle)
+	#set($title = $!item.itemTitle)
+#end
+
+<input type="hidden" id="envRoot" value="${env.bopsRoot}" />
+<input type="hidden" id="picUploadedRoot" value="${env.picUploadedRoot}" />
+
+#set($clickUrl = $!item.clickUrl)
+#if(!$clickUrl)
+	#set($clickUrl = $!item.srcUrl)
+#end
+	
+<div class="detail-main">
+	<div class="title">
+		<ul>
+			<li>$!category.name</li>
+			<li class="gt-icon">&gt;</li>
+			<li>$!item.itemTitle</li>
+		</ul>
+	</div>
+	<div class="detail-content">
+		<div class="image-field">
+			<div class="image-big">
+				<a href="$!clickUrl" title="$!item.itemTitle" target="_blank" gtrack="virtual/frame/q/detail/buy?itemId=$!item.id&from=pic&userId=$!userId">
+					<img id="show-big-image" alt="" src="${env.itemUploadedRoot}$item.getPicUrl(0,'278x278')" width="278" height="278" />
+				</a>
+			</div>
+			<div class="image-other">
+				<ul>
+					#foreach($picUrl in $item.picUrlList)
+						#set($index = $velocityCount - 1)
+						#if($index < 4)
+						<li data-src="${env.itemUploadedRoot}$item.getPicUrl($index,'278x278')" #if($index > 0) class="ml13" #end><a href="javascript:;" title=""><img alt="$item.itemTitle" src="${env.itemUploadedRoot}$item.getPicUrl($index,'60x60')" width="60" height="60"/></a></li>
+						#end
+					#end
+				</ul>
+			</div>
+		</div>
+		<div class="detail-info">
+            <div class="detail-title"><span class="src-logo-$!item.source"></span><a href="$!clickUrl" target="_blank" gtrack="virtual/frame/q/detail/buy?itemId=$!item.id&from=title&userId=$!userId">$!item.itemTitle</a></div>
+			<div class="detail-description">$!item.itemDesc</div>
+            <div class="detail-buy">
+				<a href="$!clickUrl" target="_blank" gtrack="virtual/frame/q/detail/buy?itemId=$!item.id&userId=$!userId&from=btn"><div class="go-target">&yen;&nbsp;$decimalUtils.format($item.itemPrice , "0.00")</div></a>
+			</div>
+			<div class="detail-other dd-clr">
+				<!--detail-like-->
+				<span class="like dc-op-ilike" id="detailLike" data-item-id="$!item.id" data-loved="false"><a href="javascript:;" title="我喜欢" gtrack="virtual/frame/q/detail/love?itemId=$!item.id" class="loveCount">$!item.loves</a></span>
+				<span class="comment">$!item.comments</span>
+			</div>
+			<div class="comment-info" id="commentInfo">
+				<div class="comment-title dd-clr" id="commentPage" data-item-id="$!item.id" data-comment-count="$!item.comments" data-cur-page="1" data-page-size="5">
+					<span class="title-text">评论</span>
+					<span class="dc-comment-add"><a href="javascript:;" style="width: auto;height:21px; text-decoration: none;background: none;">灌水</a></span>
+                    <span class="comment-op-page" data-type="pre"><a href="javascript:;" class="pre" title="上一页"  ></a></span>
+                    <span class="comment-op-page" data-type="back"><a href="javascript:;" class="back" title="下一页"></a></span>
+				</div>
+				<ul class="comment-detail-list">
+					#foreach($comment in $commentList)
+					<li class="dd-clr">
+                        <img alt="$!comment.userNick" data-src="$avatarUtils.getAvatarUrl($!comment.userId,'30x30')" class="avatar init-avatar" data-init-avatar="30x30"></img>
+                        <span class="list-content" style="width: 240px;">$!comment.userNick:$!comment.contentEsc</span>
+                        <a id="disableComment" href="javascript:;" title="禁止" data-comment-id="$comment.id">禁止</a>
+					</li>
+					#end
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="like-dialog dd-hide" id="ilikeDialog">
+	<div class="dialog-content">
+		<span class="content">已添加喜欢</span>
+	</div>
+</div>
+
+<div class="like-dialog dd-hide" style="width:400px;height:240px;" id="commentDialog">
+	<div class="dialog-comment">
+		<div class="title">豆蔻评论<span style="font-size: 10px;">（批量添加评论，请在评论间用英文';'分隔）</span><a href="javascript:;" class="close"></a></div>
+		<div class="dialog-comment-content">
+			<textarea class="comment" placeholder="请输入您对该商品的感觉" data-maxlen="140"></textarea>
+			<div>
+                <span class="error"></span><span class="info"></span>
+				<a href="javascript:;" class="submit" title="确定">确&nbsp;定</a>
+			</div>
+		</div>
+	</div>	
+</div>
+#DDZ_JS([])

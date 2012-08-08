@@ -23,5 +23,20 @@ public class TaobaoFields {
 		TaobaoItemConst.detail_url
 	} ;
 	
-	
+	public static final String[] taobao_item_fields_full = new String[]{
+		TaobaoItemConst.cid , 
+		TaobaoItemConst.num_iid , 
+		TaobaoItemConst.pic_url ,
+		TaobaoItemConst.title , 
+		TaobaoItemConst.price , 
+		TaobaoItemConst.detail_url,
+		TaobaoItemConst.nick,
+		TaobaoItemConst.wap_desc,
+		TaobaoItemConst.created ,
+		TaobaoItemConst.cid,
+		TaobaoItemConst.post_fee,
+		TaobaoItemConst.express_fee ,
+		TaobaoItemConst.ems_fee ,
+		TaobaoItemConst.item_img
+	} ;
 }

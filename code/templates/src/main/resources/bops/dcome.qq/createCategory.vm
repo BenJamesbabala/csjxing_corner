@@ -1,0 +1,46 @@
+#set($layout="bops/default_bops.vm")
+
+#set($catId = $categoryDTO.id)
+
+#set($navigation = "<a href='${env.bopsRoot}/bops/dcome/qq/category_list.htm'>类目列表</a> - #if(!$catId) 新建 #else $!categoryDTO.name - 修改 #end")
+
+
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcCreateScene"/>
+
+<div class="bops">
+    <div class="MT20 MB20">&nbsp;</div>
+	
+	<form action="${env.bopsRoot}/bops/dcome/qq/do_create_category.htm" method="post">
+		<input name="id" type="hidden" value="$!categoryDTO.id"/>
+		<input name="categoryLevel" type="hidden" value="C"/>
+        <table>
+            <tr>
+				<th>ID</th><td>#if($catId) $!categoryDTO.id #else 系统自动生成  #end</td>
+			</tr>
+			<tr>
+				<th>名称</th>
+				<td>
+					<input name="name" type="text" value="$!categoryDTO.name" size="30"/>
+					<div class="dc-red">#FIELD_ERROR("name")</div>
+				</td>
+			</tr>
+			
+			
+		</table>
+        <div class="MT20">
+			#if($catId) 修改  #else 新建 #end >> <input type="submit" value="提交"/>
+		</div>
+		
+    </form>
+	
+	
+</div>
+
+	
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

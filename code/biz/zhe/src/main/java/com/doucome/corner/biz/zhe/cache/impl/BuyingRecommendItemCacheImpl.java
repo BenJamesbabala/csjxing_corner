@@ -18,10 +18,7 @@ public class BuyingRecommendItemCacheImpl extends AbstractCacheSupport implement
 	public void setCache(List<TaobaokeReportFacade> items) {
 		CacheClient cc = getCacheClient() ;
 		String key = buildCachekeyWithArgs("") ;
-		InternalStoreItem<List<TaobaokeReportFacade>> store = new InternalStoreItem<List<TaobaokeReportFacade>>() ; 
-		store.setGmtCreate(new Date()) ;
-		store.setItem(items) ;
-		
+		InternalStoreItem<List<TaobaokeReportFacade>> store = new InternalStoreItem<List<TaobaokeReportFacade>>(items) ; 
 		cc.put(key, store) ;
 	}
 

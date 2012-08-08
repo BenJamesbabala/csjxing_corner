@@ -1,0 +1,3 @@
+#set($layout="bops/default_bops.vm")
+
+³ö´íÀ²£¡£¡  <a href="${env.bopsRoot}/bops/index.htm">·µ»ØÊ×Ò³</a>

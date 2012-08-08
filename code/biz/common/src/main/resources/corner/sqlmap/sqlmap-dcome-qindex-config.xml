@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcQIndexConfig">
+	<typeAlias alias="TA-DcQIndexConfig"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcQIndexConfigDO" />
+
+	<resultMap id="RM-DcQIndexConfig" class="TA-DcQIndexConfig">
+		<result property="id" column="ID" />
+		<result property="systemId" column="SYSTEM_ID" />
+		<result property="sceneId" column="SCENE_ID"  />
+		<result property="pubStatus" column="PUB_STATUS" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertConfig">
+		INSERT INTO 
+			DC_QINDEX_CONFIG(ID,SYSTEM_ID,SCENE_ID,PUB_STATUS,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#systemId#,#sceneId#,#pubStatus#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<update id="updateSceneIdBySysAndStatus">
+		UPDATE 
+			DC_QINDEX_CONFIG
+		SET
+			SCENE_ID = #sceneId# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			SYSTEM_ID = #systemId#
+		AND
+			PUB_STATUS = #pubStatus#
+	</update>
+	
+	<select id="queryConfigBySysAndStatus" resultMap="RM-DcQIndexConfig">
+		SELECT 
+			ID,SYSTEM_ID,SCENE_ID,PUB_STATUS,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_QINDEX_CONFIG
+		WHERE
+			PUB_STATUS = #pubStatus# 
+		AND
+			SYSTEM_ID = #systemId#
+	</select>
+	
+	<select id="queryConfigByStatus" resultMap="RM-DcQIndexConfig">
+		SELECT 
+			ID,SYSTEM_ID,SCENE_ID,PUB_STATUS,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_QINDEX_CONFIG
+		WHERE
+			PUB_STATUS = #pubStatus# 
+	</select>
+</sqlMap>

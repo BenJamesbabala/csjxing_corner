@@ -7,7 +7,7 @@
 		<div class="nav">
 			<ol>
 				<li #if(!$statuses) class="current" #end>
-					<a href="${env.ddzRoot}/zhe/my.htm" title="全部"> 
+					<a href="${env.ddzRoot}/zhe/my.htm?alipayId=$!alipayId" title="全部"> 
 						<s class="left"></s>
     					<p>
     						全部
@@ -15,7 +15,7 @@
 					</a>
 				</li>
 				<li #if($statuses == "P,F,U") class="current" #end>
-					<a href="${env.ddzRoot}/zhe/my.htm?statuses=P,F,U" title="待返利"> 
+					<a href="${env.ddzRoot}/zhe/my.htm?statuses=P,F,U&alipayId=$!alipayId" title="待返利"> 
     					<s class="left"></s>
     					<p>
 							待返利
@@ -24,7 +24,7 @@
                     </a>
 				</li>
 				<li #if($statuses == "S") class="current" #end>
-					<a href="${env.ddzRoot}/zhe/my.htm?statuses=S" title="已返利"> 
+					<a href="${env.ddzRoot}/zhe/my.htm?statuses=S&alipayId=$!alipayId" title="已返利"> 
     					<s class="left"></s>
     					<p>
 							已返利
@@ -82,7 +82,7 @@
             	#set($totalRecords=($itemList.pagination.totalPages * $size))
             #end
     		
-    		#set($pageURL=${env.ddzRoot} + "/zhe/my.htm")
+    		#set($pageURL=${env.ddzRoot} + "/zhe/my.htm?alipayId=$!alipayId&statuses=$!statuses")
     		#parse("/common/zhe/page.vm")
 		#end
 	</div>

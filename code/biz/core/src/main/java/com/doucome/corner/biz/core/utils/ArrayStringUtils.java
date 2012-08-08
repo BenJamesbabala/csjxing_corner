@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 /**
  * Array =&gt; String Лђеп String =&gt; Array
@@ -56,5 +57,37 @@ public class ArrayStringUtils {
 			}
 		}
 		return list ;
+	}
+	
+	public static List<Long> toLongList(String str){
+		String[] arr = toArray(str) ;
+		if(ArrayUtils.isEmpty(arr)){
+			return null ;
+		}
+		List<Long> list = new ArrayList<Long>() ;
+		for(String s : arr){
+			if(StringUtils.isNotBlank(s) && StringUtils.isNumeric(s)){
+				list.add(Long.valueOf(s)) ;
+			}
+		}
+		return list ;
+	}
+	
+	
+	public static String toString(@SuppressWarnings("rawtypes") List list){
+		
+		if(CollectionUtils.isEmpty(list)){
+			return "" ;
+		}
+		
+		StringBuilder strConcat = new StringBuilder() ; 
+		for(int i=0 ;i<list.size();i++){
+			Object obj = list.get(i) ;
+			strConcat.append(obj) ;
+			if(i != list.size()-1){
+				strConcat.append(",") ;
+			}
+		}
+		return strConcat.toString() ;
 	}
 }

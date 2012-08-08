@@ -3,11 +3,11 @@ package com.doucome.corner.web.zhe.action;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.doucome.corner.biz.zhe.enums.OutCodeEnums;
+import com.doucome.corner.biz.core.enums.OutCodeEnums;
+import com.doucome.corner.biz.core.utils.OutCodeUtils;
 import com.doucome.corner.biz.zhe.model.TaobaokeShopFacade;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
 import com.doucome.corner.biz.zhe.service.DdzTaobaokeService;
-import com.doucome.corner.biz.zhe.utils.OutCodeUtils;
 
 @SuppressWarnings("serial")
 public class ShopSearchAction extends DdzBasicAction {

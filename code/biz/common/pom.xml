@@ -16,7 +16,102 @@
 	<name>biz.common</name>
 
 	<dependencies>
-		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ibatis</groupId>
+			<artifactId>ibatis-sqlmap</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
 	</dependencies>
 
+	<profiles>
+
+		<profile>
+			<id>dev</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>!release</value>
+				</property>
+			</activation>
+			<properties>
+				<release_directory>${project.build.directory}</release_directory>
+			</properties>
+
+			<build>
+				<plugins>
+
+					<plugin>
+						<groupId>com.doucome.maven.plugins</groupId>
+						<artifactId>maven-autoconf-plugin</artifactId>
+						<version>0.4</version>
+						<executions>
+							<execution>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>config</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<destFiles>
+								<destFile>${release_directory}/${pom.artifactId}-${pom.version}.jar</destFile>
+							</destFiles>
+							<includeDescriptorPatterns>
+								<includeDescriptorPattern>META-INF/autoconf/auto-config.xml</includeDescriptorPattern>
+								<includeDescriptorPattern>WEB-INF/autoconf/auto-config.xml</includeDescriptorPattern>
+							</includeDescriptorPatterns>
+						</configuration>
+					</plugin>
+				</plugins>
+
+			</build>
+		</profile>
+	</profiles>
 </project>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcCategory">
+	<typeAlias alias="TA-DcCategory"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcCategoryDO" />
+
+	<resultMap id="RM-DcCategory" class="TA-DcCategory">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="categoryLevel" column="CATEGORY_LEVEL" jdbcType="VARCHAR" />
+		<result property="parentCategoryId" column="PARENT_CATEGORY_ID" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertCategory">
+		INSERT INTO 
+			DC_CATEGORY(ID,NAME,CATEGORY_LEVEL,PARENT_CATEGORY_ID,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#name#,#categoryLevel#,#parentCategoryId#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<update id="updateCategoryById">
+		UPDATE 
+			DC_CATEGORY
+		SET
+			NAME = #name# ,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
+	</update>
+	
+	<select id="queryCategoryById" resultMap="RM-DcCategory">
+		SELECT 
+			ID,NAME,CATEGORY_LEVEL,PARENT_CATEGORY_ID,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_CATEGORY
+		WHERE
+			ID = #id#
+	</select>
+	
+	<select id="queryCategoriesByLevel" resultMap="RM-DcCategory">
+		SELECT 
+			ID,NAME,CATEGORY_LEVEL,PARENT_CATEGORY_ID,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_CATEGORY
+		WHERE
+			CATEGORY_LEVEL = #categoryLevel#
+	</select>
+		
+	<select id="queryChildCategories" resultMap="RM-DcCategory">
+		SELECT 
+			ID,NAME,CATEGORY_LEVEL,PARENT_CATEGORY_ID,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_CATEGORY
+		WHERE
+			PARENT_CATEGORY_ID = #parentCategoryId#
+	</select>
+	
+	<select id="queryCategoriesByIds" resultMap="RM-DcCategory">
+		SELECT 
+			ID,NAME,CATEGORY_LEVEL,PARENT_CATEGORY_ID,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_CATEGORY
+		WHERE
+			ID IN
+		<iterate prepend="" property="ids" open="("  close=")"  conjunction=",">
+		      #ids[]#
+		</iterate>
+			
+	</select>
+	
+	<select id="queryCategoriesWithPagination" resultMap="RM-DcCategory">
+		SELECT 
+			ID,NAME,CATEGORY_LEVEL,PARENT_CATEGORY_ID,GMT_CREATE,GMT_MODIFIED
+		FROM
+			DC_CATEGORY
+		<dynamic>
+            <isParameterPresent open="WHERE" removeFirstPrepend="true">
+            	<isNotEmpty property="categoryLevel" prepend="AND">
+            		CATEGORY_LEVEL = #categoryLevel#
+            	</isNotEmpty>
+				<isNotNull property="id" prepend="AND">
+				    ID = #id#
+				</isNotNull>
+				<isNotNull property="parentCategoryId" prepend="AND">
+				    PARENT_CATEGORY_ID = #parentCategoryId#
+				</isNotNull>
+				<isNotEmpty property="name" prepend="AND">
+				    NAME = #name#
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+		LIMIT 
+			#start# , #size#
+	</select>
+	
+	<select id="countCategoriesWithPagination" resultClass="java.lang.Integer">
+		SELECT	
+			COUNT(ID)
+		FROM
+			DC_CATEGORY
+		<dynamic>
+            <isParameterPresent open="WHERE" removeFirstPrepend="true">
+            	<isNotNull property="categoryLevel" prepend="AND">
+            		CATEGORY_LEVEL = #categoryLevel#
+            	</isNotNull>
+				<isNotNull property="id" prepend="AND">
+				    ID = #id#
+				</isNotNull>
+				<isNotNull property="parentCategoryId" prepend="AND">
+				    PARENT_CATEGORY_ID = #parentCategoryId#
+				</isNotNull>
+			</isParameterPresent>
+		</dynamic>
+	</select>
+	
+	<delete id="deleteCategoryById">
+		DELETE FROM 
+			DC_CATEGORY
+		WHERE 
+			ID = #categoryId#
+	</delete>
+</sqlMap>

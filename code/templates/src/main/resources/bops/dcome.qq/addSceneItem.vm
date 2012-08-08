@@ -1,0 +1,100 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "<a href='${env.bopsRoot}/bops/dcome/qq/scene_list.htm'>场景列表</a> - <a href='${env.bopsRoot}/bops/dcome/qq/scene_detail.htm?sceneId=$sceneId'>" + $!sceneDTO.name + "</a> - 维护商品")
+
+<style>
+	.cat-nav {
+		margin-left:20px;
+	}
+	
+	.dc-scene-item-title {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		height:38px;
+		line-height:19px;
+		width:85px;
+	}
+</style>
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcAddSceneItem"/>
+
+<input type="hidden" id="sceneId" value="$!sceneId"/>
+#set($pagination = $itemQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/qq/add_scene_item.htm?")
+#set($searchQuery = ["catId:$!catId","sceneId:$!sceneId"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+	
+	<input type="hidden" id="dcSceneDetails" value="$!sceneDetailString"/>
+	
+	<div>
+        <span class="dc-scene-title">$!sceneDTO.name</span> <span class="">已经添加$!sceneDetailList.size()款商品</span>
+	</div>
+    <div class="dc-scene-desc">$!sceneDTO.sceneDesc</div>
+	
+	<div class="MT20" style="height:40px;">
+        <span class="F14">类目导航：</span>
+		
+        <ul>
+            <li class="L cat-nav">
+				#if(!$catId) 
+					[<a href="${env.bopsRoot}/bops/dcome/qq/add_scene_item.htm?sceneId=$!sceneDTO.id" class="dc-blue">全部</a>]
+				#else 
+					<a href="${env.bopsRoot}/bops/dcome/qq/add_scene_item.htm?sceneId=$!sceneDTO.id" class="dc-gray">全部</a>
+				#end
+    			
+    		</li>
+    		#foreach($cat in $categoryList)
+            <li class="L cat-nav">
+    			<a href="${env.bopsRoot}/bops/dcome/qq/add_scene_item.htm?sceneId=$!sceneDTO.id&catId=$cat.id" class="">
+					#if($cat.id == $catId)
+                    [<span class="dc-blue">$cat.name<span data-init-cat-item-count="" data-cat-id="$cat.id" class="F14"></span></span>]
+					#else
+					<span class="dc-gray">$cat.name<span data-init-cat-item-count="" data-cat-id="$cat.id"  class="F14"></span></span>
+					#end
+				</a>
+    		</li>
+    		#end
+    	</ul>
+    </div>
+    <div>&nbsp;</div>
+	<div>
+		<div>
+    	#parse("/common/bops/dcome.qq/addSceneItemPagination.vm")
+        </div>
+    	<div style="width:1000px;height:460px;clear:both;" class="MT20">
+    	
+    	#if($itemQuery.totalRecords > 0)
+    		#foreach($item in $itemQuery.items)
+    			#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
+                <div class="L MB10" style="width:100px;height:140px;">
+                    <div class="R F12">
+    					<img src='${env.itemUploadedRoot}$!item.getPicUrl(0,"80x80")' width="80" height="80" style="border:1px solid #dddddd;"></img>
+                        <div class="dc-scene-item-title">$!item.itemTitle</div>
+						<div>
+    					<span data-init-add-scene-item="" data-item-id="$!item.id" data-scene-id="$!sceneDTO.id"><a href="javascript:;" class="dc-blue">添加</a></span>
+    					<span data-init-remove-scene-item="" data-item-id="$!item.id" data-scene-id="$!sceneDTO.id" class="dd-hide"><a href="javascript:;" class="dc-red">移除</a></span>
+                        </div>
+                    </div>
+    			</div>
+    		#end
+    	#else
+    		没有查询到商品记录
+    	#end
+    	
+        </div>
+    	
+    	<div>
+    	#parse("/common/bops/dcome.qq/addSceneItemPagination.vm")
+        </div>
+    </div>
+</div>
+	
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

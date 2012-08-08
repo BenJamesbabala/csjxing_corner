@@ -2,7 +2,6 @@ package com.doucome.corner.biz.zhe.service.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.doucome.corner.biz.core.enums.SettleStatusEnums;
-import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.dal.DdzTaokeReportDAO;
 import com.doucome.corner.biz.dal.DdzTaokeReportSettleDAO;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
@@ -63,8 +61,7 @@ public class DdzTaokeReportSettleServiceImpl implements DdzTaokeReportSettleServ
 	public List<AlipayItemDO> getAlipayItems(int pageSize) {
 		List<AlipayItemDO> settleItems = null;
 		try {
-			Pagination pagination = new Pagination(1, pageSize);
-			settleItems = ddzTaokeReportSettleDAO.getAliSettleItems(pagination);
+			settleItems = ddzTaokeReportSettleDAO.getAliSettleItems(1,pageSize);
 		} catch (Exception e) {
 			log.error(e);
 			return null;

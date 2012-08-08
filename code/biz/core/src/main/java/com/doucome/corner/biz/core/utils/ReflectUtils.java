@@ -6,13 +6,17 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.util.ReflectionUtils;
 
 public class ReflectUtils {
 
 	public static <T> void reflectTo(T src , T target){
+		if(target == null || src == null){
+			return ;
+		}
 		
-		Class clazz = target.getClass() ;
+		Class<?> clazz = target.getClass() ;
 		Field[] fields = src.getClass().getDeclaredFields() ;
 		for(Field field : fields){
 			String fieldName = field.getName() ;
@@ -31,8 +35,8 @@ public class ReflectUtils {
 			if(sourceValue == null){
 				continue ;
 			}
-			Class targetType = targetField.getType() ;
-			Class sourceType = field.getType() ;
+			Class<?> targetType = targetField.getType() ;
+			Class<?> sourceType = field.getType() ;
 			PropertyDescriptor targetDescriptor = null ;
 			try {
 				targetDescriptor = new PropertyDescriptor(fieldName, target.getClass()) ;
@@ -55,7 +59,6 @@ public class ReflectUtils {
 	}
 	
 	public static <T> boolean setField(T clazz, String fieldName, Object value) {
-		Field field = null; 
 		PropertyDescriptor descriptor = null;
 		try {
 			descriptor = new PropertyDescriptor(fieldName, clazz.getClass());
@@ -69,5 +72,48 @@ public class ReflectUtils {
 			return false;
 		}
 		return true;
+	}
+	
+	public static <T> Object getFiled(T clazz, String fieldName) {
+		PropertyDescriptor descriptor = null;
+		try {
+			descriptor = new PropertyDescriptor(fieldName, clazz.getClass());
+		} catch (IntrospectionException e) {
+			return null;
+		}
+		Method method = descriptor.getReadMethod();
+		try {
+			return ReflectionUtils.invokeMethod(method, clazz);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public static <T> void mergeObject(T mergeFrom, T mergeTo) {
+		if (mergeFrom == null) {
+			return ;
+		}
+		if (mergeTo == null) {
+			mergeTo = mergeFrom;
+			return;
+		}
+		Class<?> toClazz = mergeTo.getClass() ;
+		Field[] fields = toClazz.getDeclaredFields();
+		Object tempValue = null;
+		for (Field field: fields) {
+			try {
+				tempValue = getFiled(mergeFrom, field.getName());
+				if (tempValue != null) {
+					if (field.getType().equals(String.class)) {
+						if (StringUtils.isEmpty((String)tempValue)) {
+							continue;
+						}
+					}
+					setField(mergeTo, field.getName(), tempValue);
+				}
+			} catch (Exception e) {
+				
+			}
+		}
 	}
 }

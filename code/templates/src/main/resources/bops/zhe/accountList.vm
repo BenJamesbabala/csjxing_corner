@@ -8,7 +8,7 @@
 #set($size = $accountResult.pagination.size)
 
 
-#set($searchUrl = ${env.ddzRoot}+"/bops/zhe/account_list.htm?") 
+#set($searchUrl = ${env.bopsRoot}+"/bops/zhe/account_list.htm?") 
 #set($searchQuery = ["gmtCreateStart:$!dateUtils.format($!gmtCreateStart,'yyyy-MM-dd')","gmtCreateEnd:$!dateUtils.format($!gmtCreateEnd,'yyyy-MM-dd')","alipayId:$!alipayId","page:$!page"])
 
 <input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
@@ -41,7 +41,7 @@
 	
 	#if($accountResult.totalRecords > 0)
 	
-    	#parse("/common/bops/zhe_accountListPagination.vm")
+    	#parse("/common/bops/zhe/accountListPagination.vm")
         
         <table width="1080" style="font-size:14px;" id="settleTable">
         	<tr>
@@ -59,7 +59,11 @@
 						<div class="darkGray">$!item.accountId</div>
 					</td>
 					<td>
-                        <div class="darkGray">$!item.alipayId <a href="javascript:;" data-alipay="$!item.alipayId"><img src="${env.ddzStaticroot}/img/info.png" title="点击查看支付宝详情"></img></a></div>
+                        <div class="darkGray">
+							$!item.alipayId
+							<a href="javascript:;" data-alipay="$!item.alipayId"><img src="${env.ddzStaticroot}/img/info.png" title="点击查看支付宝详情"></img></a>
+							<a href="${env.ddzRoot}/zhe/my.htm?alipayId=$!item.alipayId" target="_blank">绿</a>
+						</div>
 					</td>
 					<td>$dateUtils.format($item.gmtCreate,'yyyy-MM-dd HH:mm:ss')</td>
             	</tr>
@@ -67,7 +71,7 @@
            
         </table>
         
-        #parse("/common/bops/zhe_accountListPagination.vm")
+        #parse("/common/bops/zhe/accountListPagination.vm")
 	#else
 		没有查询到记录
 	#end

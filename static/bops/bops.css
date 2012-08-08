@@ -38,6 +38,13 @@
 	background-color: transparent;
 }
 
+.L {
+	float:left;
+}
+.R {
+	float:right;
+}
+
 body {
 	font: 12px normal;
 	witdh: 100%;
@@ -54,6 +61,83 @@ ol,ul {
 
 .darkGray {
 	color: #555555;
+}
+
+
+.dc-red{
+	color:#F44 ;
+}
+
+.dc-green{
+	color:#53A000;
+}
+
+.dc-blue{
+	color:#08C;
+}
+
+.dc-gray{
+	color:#666;
+}
+
+.F12{
+	font-size:12px;
+}
+
+.F14{
+	font-size:14px;	
+}
+
+.F16 {
+	font-size: 16px;	
+}
+
+.MT20{
+	margin-top:20px;
+}
+
+.MT10{
+	margin-top:10px;
+}
+
+.MB20{
+	margin-bottom:20px;
+}
+
+.MB10{
+	margin-bottom:10px;
+}
+
+.ML10{
+	margin-left:10px;
+}
+
+.ML20{
+	margin-left:20px;
+}
+
+.MR20{
+	margin-right:20px;
+}
+
+.MR10{
+	margin-right:10px;
+}
+
+.MR5{
+	margin-right:5px;
+}
+
+.ML5{
+	margin-left:5px;
+}
+
+.MT5{
+	margin-top:5px;
+}
+
+.MB5{
+	margin-bottom:5px;
 }
 
 .dd-hide {
@@ -516,4 +600,17 @@ ol,ul {
 	width: 7px;
 	z-index: 1;
 	right:-7px;
+}
+
+.dc-scene-title {
+	font-size:32px;
+	color:#0066ff;
+}
+.dc-scene-desc {
+	color:#666666;
+}
+.dc-item-desc {
+	width:120px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

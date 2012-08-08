@@ -1,0 +1,56 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "类目列表")
+
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcCategoryList"/>
+
+
+#set($pagination = $categoryQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/qq/category_list.htm?")
+#set($searchQuery = ["categoryId:$!categoryId","categoryLevel:$!categoryLevel","parentCategoryId:$!parentCategoryId"])
+
+<div class="bops">
+    <div class="MT20 MB20">&nbsp;</div>
+	
+    <div class="F14">共有类目$categoryQuery.totalRecords个，<a href="${evn.bopsRoot}/bops/dcome/qq/create_category.htm">增加类目</a></div>
+		 
+	 #parse("/common/bops/dcome.qq/categoryPagination.vm")
+	 
+	 <table width="960" style="font-size:14px;" id="itemTable">
+		<tr>
+    		<th width="30">序号</th>
+			<th width="50">类目ID</th>
+			<th width="50">类目名称</th>
+			<th width="80">创建时间</th>
+			<th width="50">操作</th>
+    	</tr>
+		#if($categoryQuery.totalRecords > 0)
+    		#foreach($item in $categoryQuery.items)
+				#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
+            	<tr>
+            		<td>$idx</td>
+					<td>$!item.id</td>
+                    <td>$!item.name</td>
+                    <td>$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+                    <td> 
+						<a href="${env.bopsRoot}/bops/dcome/qq/create_category.htm?catId=$!item.id">修改类目名称</a>
+					</td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="7">没有查询到记录</td></tr>
+		#end
+     </table>
+	 
+	 #parse("/common/bops/dcome.qq/categoryPagination.vm")
+	
+</div>
+	
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

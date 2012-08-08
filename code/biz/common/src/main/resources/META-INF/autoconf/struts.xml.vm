@@ -1,0 +1,83 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<!-- Constant -->
+	<constant name="struts.action.extension" value="htm" />
+	#if($corner_production == "true")
+		<constant name="struts.devMode" value="false" />
+	#else
+		<constant name="struts.devMode" value="true" />
+	#end
+	<constant name="struts.i18n.encoding" value="GBK" />
+	<constant name="struts.velocity.toolboxlocation" value="WEB-INF/velocity-toolbox.xml" />  
+	<constant name="struts.velocity.configfile" value="WEB-INF/velocity.properties" />
+	 
+	<constant name="struts.objectFactory" value="spring"></constant>
+
+	<include file="struts-default.xml" />
+
+	<package name="default" extends="struts-default">
+		
+		<result-types>
+			<result-type name="velocity" class="com.doucome.corner.web.common.velocity.VelocityLayoutResult" />
+		</result-types>
+		 
+		<interceptors>
+			 <interceptor name="setDdzContextInterceptor" class="com.doucome.corner.web.zhe.interceptor.SetContextInterceptor">
+			 	<param name="domain">${corner_ddz_domainName}</param>
+			 </interceptor>
+			 
+			 <interceptor name="setDcContextInterceptor" class="com.doucome.corner.web.dcome.interceptor.SetContextInterceptor">
+			 	<param name="domain">${corner_domainName}</param>
+			 </interceptor>
+			 
+			 <interceptor name="setBopsContextInterceptor" class="com.doucome.corner.web.bops.interceptor.SetContextInterceptor">
+			 	<param name="domain">${corner_bops_domainName}</param>
+			 </interceptor>
+			 <interceptor name="bopsAuthzContextInterceptor" class="com.doucome.corner.web.bops.interceptor.AuthzInterceptor">
+			 </interceptor>
+			 <interceptor name="dcomeAuthzContextInterceptor" class="com.doucome.corner.web.dcome.interceptor.AuthzInterceptor">
+			 	<param name="errorResult">dcomeQQError</param>
+			 </interceptor>
+		</interceptors>
+		 
+		<global-results>
+			<result name="exception" type="velocity">/zhe/error/404.vm</result>
+			<result name="memberLogin" type="redirect">/member/login.htm?Done=${Done}</result>
+			<result name="adminLogin" type="redirect">/bops/login.htm?Done=${Done}</result>
+			<result name="ddzIndex" type="redirect">/zhe/index.htm</result>
+			<result name="bopsError" type="velocity">/bops/error.vm</result>
+			<result name="dcomeQQError" type="velocity">/dcome/frame.q/error.vm</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping result="exception" exception="java.lang.Exception" />
+		</global-exception-mappings>
+
+
+	</package>
+	
+	<package name="struts-json" extends="default">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult">
+            	<param name="excludeNullProperties">true</param>
+            </result-type>
+        </result-types>
+        <interceptors>
+            <interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"/>
+        </interceptors>
+    </package>
+    
+    
+	<include file="struts-zhe.xml" />
+	<include file="struts-bops.xml" />
+	<include file="struts-bops-dcome.xml" />
+	<include file="struts-home.xml"/>
+	<include file="struts-dcome.xml"/>
+	<include file="struts-task.xml" />
+	<include file="struts-shortUrl.xml" />
+
+</struts>

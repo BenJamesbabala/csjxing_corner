@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcComment">
+	<typeAlias alias="TA-DcComment"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcCommentDO" />
+
+	<resultMap id="RM-DcComment" class="TA-DcComment">
+		<result property="id" column="ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="source" column="SOURCE" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT" jdbcType="VARCHAR" />
+		<result property="userId" column="USER_ID" />
+		<result property="userNick" column="USER_NICK" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertComment">
+		INSERT INTO 
+			DC_COMMENT(ID,ITEM_ID,SOURCE,CONTENT,USER_ID,USER_NICK,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#itemId#,#source#,#content#,#userId#,#userNick#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="queryCommentById" resultMap="RM-DcComment">
+		SELECT 
+			ID,ITEM_ID,SOURCE,CONTENT,USER_ID,USER_NICK,STATUS,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_COMMENT
+		WHERE 
+			ID = #id#
+	</select>
+	
+	<update id="updateStatus">
+		UPDATE 
+			DC_COMMENT
+		SET
+			STATUS = #status# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #id#
+	</update>
+	
+	<select id="queryCommentsWithPagination" resultMap="RM-DcComment">
+		SELECT 
+			ID,ITEM_ID,SOURCE,CONTENT,USER_ID,USER_NICK,STATUS,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_COMMENT
+		<dynamic>
+            <isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="itemId" prepend="AND">
+				    ITEM_ID = #itemId#
+				</isNotEmpty>
+				<isNotEmpty property="userId" prepend="AND">
+				    USER_ID = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateStart" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE >= #gmtCreateStart#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateEnd" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE <= #gmtCreateEnd#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="keywords" prepend="AND">
+				    CONTENT like CONCAT('%', #keywords#, '%')
+				</isNotEmpty>
+				<isNotEmpty property="status" prepend="AND">
+				    STATUS = #status#
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+		ORDER BY GMT_CREATE DESC 
+		LIMIT #start# , #size#
+	</select>
+		
+	<select id="countCommentsWithPagination" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(ID)
+		FROM 
+			DC_COMMENT
+		<dynamic>
+            <isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="itemId" prepend="AND">
+				    ITEM_ID = #itemId#
+				</isNotEmpty>
+				<isNotEmpty property="userId" prepend="AND">
+				    USER_ID = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateStart" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE >= #gmtCreateStart#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateEnd" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE <= #gmtCreateEnd#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="keywords" prepend="AND">
+				    CONTENT like CONCAT('%', #keywords#, '%')
+				</isNotEmpty>
+				<isNotEmpty property="status" prepend="AND">
+				    STATUS = #status#
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+	</select>
+	
+	
+</sqlMap>

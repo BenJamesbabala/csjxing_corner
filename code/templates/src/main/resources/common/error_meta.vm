@@ -1,0 +1,4 @@
+<meta charset="GBK">
+<title>#if($title && $title != "") $title - #end 出错啦</title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>

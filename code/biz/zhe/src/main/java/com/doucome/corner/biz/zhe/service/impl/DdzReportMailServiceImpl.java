@@ -14,11 +14,11 @@ import com.doucome.corner.biz.core.enums.EmailStatusEnums;
 import com.doucome.corner.biz.core.enums.SettleStatusEnums;
 import com.doucome.corner.biz.core.mail.SendMailService;
 import com.doucome.corner.biz.core.mail.ToolsMapFactory;
-import com.doucome.corner.biz.core.taobao.model.TaokeReportSearchCondition;
 import com.doucome.corner.biz.core.utils.EmailUtil;
 import com.doucome.corner.biz.core.utils.MobileUtil;
 import com.doucome.corner.biz.core.utils.ValidateUtil;
 import com.doucome.corner.biz.dal.DdzTaokeReportSettleDAO;
+import com.doucome.corner.biz.dal.condition.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.DdzAccountDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
@@ -152,9 +152,8 @@ public class DdzReportMailServiceImpl implements DdzReportMailService {
             context.put("settleDO", settleDO);
             context.put("emailAddress", emailAddress);
             if (sendMailService.send("email-rebate-notice", emailAddress, context)) {
-                Thread.sleep(100);
-                sendMailService.send("email-rebate-notice", "diandianzhetest@163.com", context);
-                Thread.sleep(100);
+                Thread.sleep(2000);
+                // sendMailService.send("email-rebate-notice", "diandianzhetest@163.com", context);
                 reportMailLog.info("[success] send mail to " + emailAddress + " ,alipayId: "
                                    + settleDO.getSettleAlipay() + ", settleId: " + settleId + " ,username:" + userName);
                 return true;

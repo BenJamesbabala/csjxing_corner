@@ -1,0 +1,107 @@
+#set($layout="bops/default_bops.vm")
+
+#set($sceneId = $sceneDTO.id)
+
+#if($sceneId)
+	#set($navigation = "<a href='${env.bopsRoot}/bops/dcome/qq/scene_list.htm'>场景列表</a> - <a href='${env.bopsRoot}/bops/dcome/qq/scene_detail.htm?sceneId=$sceneId'>" + $!sceneDTO.name + "</a> - 修改")
+#else
+	#set($navigation = "<a href='${env.bopsRoot}/bops/dcome/qq/scene_list.htm'>场景列表</a> - 新建场景")
+#end
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcCreateScene"/>
+
+<div class="bops">
+    <div style="height:20px;">&nbsp;</div>
+	#if($sceneId)
+	<div>
+		<span class="dc-scene-title">ID:$!sceneDTO.id - $!sceneDTO.name</span> 
+	</div>
+    <div class="MB20">
+		#if($sceneDTO.active != "T") 
+			<span class="dc-red MT20">场景未激活 </span>
+            <div class="F12 MT10"><span class="dc-gray">未激活的场景不会展示给用户 </span><a href="javascript:;" data-sceneId="$!sceneDTO.id" data-sceneActive="T">现在激活</a></div>
+		#end
+	</div>
+    
+    #end
+	<form action="${env.bopsRoot}/bops/dcome/qq/do_create_scene.htm" method="post">
+		<input name="id" type="hidden" value="$!sceneDTO.id"/>
+        <table>
+            <tr><th>ID</th><td>#if($sceneId) $!sceneDTO.id #else 系统自动生成  #end</td></tr>
+			<tr>
+				<th>名称</th>
+				<td>
+					<input name="name" type="text" value="$!sceneDTO.name" size="50"/>
+                    <div class="dc-red">#FIELD_ERROR("name")</div>
+				</td>
+			</tr>
+			<tr>
+				<th>系统APP [不可修改]</th>
+                <td>
+					#if($sceneId)
+                        ID:$!sceneDTO.systemId - <span data-init-dcSystemSelect="name" date-systemId="$!sceneDTO.systemId"></span>
+						<input name="systemId" type="hidden" value="$!sceneDTO.systemId"/>
+					#else
+						<select name="systemId" data-init-dcSystemSelect="select" ></select>
+					#end
+				</td>
+			</tr>
+			<tr>
+				<th>Banner图片URL</th>
+                <td>
+					<input name="bannerPicUrl" type="name" value="$!sceneDTO.bannerPicUrl" size="50"/>
+					<div class="dc-gray F12">请确保图片已经上传到图片空间！</div>
+				</td>
+			</tr>
+			<tr>
+				<th>包含类目(请选择四个类目)</th>
+                <td>
+					<input type="hidden" id="categoryIds" value="$!sceneDTO.categoryIds"/>
+					#foreach($cat in $!categoryList)
+                        <span class="MR10">
+							<input name="categoryIdList" type="checkbox" value="$!cat.id" data-init-categoryIds=""/>$cat.name
+						</span> 
+						#if($velocityCount == 5)
+                            <div></div>
+						#end
+					#end
+                    <div class="dc-red">#FIELD_ERROR("categoryIds")</div>
+				</td>
+            </tr>
+            <tr>
+				<th>场景描述</th>
+				<td>
+					<textarea name="sceneDesc" cols="40" rows="4">$!sceneDTO.sceneDesc</textarea>
+                    <div class="dc-red">#FIELD_ERROR("sceneDesc")</div><div class="dc-scene-desc">场景描述请在160字内</div>
+					
+				</td>
+			</tr>
+			#if($sceneId)
+			<tr>
+				<th>激活</th>
+                <td>
+					#if($sceneDTO.active != "T")
+                        <span class="dc-red">未激活</span> 点击<a href="javascript:;" data-sceneId="$!sceneDTO.id" data-sceneActive="T">激活</a>
+					#else
+						<span class="dc-green">激活</span> 点击<a href="javascript:;" data-sceneId="$!sceneDTO.id" data-sceneActive="F">取消激活</a>
+					#end
+				</td>
+			</tr>
+			#end
+		</table>
+        <div class="MT20">
+			#if($sceneId) 修改  #else 新建 #end >> <input type="submit" value="提交"/>
+		</div>
+		
+    </form>
+	
+	
+</div>
+
+	
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

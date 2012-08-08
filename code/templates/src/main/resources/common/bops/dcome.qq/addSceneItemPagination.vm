@@ -1,0 +1,12 @@
+<div class="pagination" id="pagination">
+	#parse("/common/bops/dcome.qq/_pagination.vm")
+		
+	<form method="get" action="$searchUrl" id="form_page">
+		<input type="hidden" name="sceneId" value="$!sceneId"/>
+		<input type="hidden" name="catId" value="$!catId"/>
+		<div class="page-op">
+    		<span class="total-page">共 $totalPages 页</span>到<input type="text" name="page" value="$!curPage">页
+    		<input type="submit" value="确定">
+    	</div>
+    </form>
+</div>	

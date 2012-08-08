@@ -11,7 +11,7 @@ import com.doucome.corner.biz.core.utils.HttpUrlHelper;
 import com.doucome.corner.biz.core.utils.MD5Util;
 import com.doucome.corner.biz.zhe.enums.SearchWayEnums;
 import com.doucome.corner.web.common.action.BasicAction;
-import com.doucome.corner.web.zhe.utils.TaobaoUrlUtils;
+import com.doucome.corner.web.common.utils.TaobaoUrlUtils;
 
 /**
  * ²éÑ¯Èë¿Ú

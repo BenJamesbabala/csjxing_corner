@@ -7,10 +7,14 @@ public class LogConstant {
 	 */
     public static final String taobao_log          = "taobao-log";
     /**
-     * 用户登录log
+     * ddz用户登录log
      */
     public static final String signin_log          = "signin-log";
     
+    /**
+     * 豆蔻用户登录log
+     */
+    public static final String dcome_signin_log          = "dcome-signin-log";
     
     public static final String task_syncReport_log = "task-syncReport-log";
 

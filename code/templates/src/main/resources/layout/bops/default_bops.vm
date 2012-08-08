@@ -34,7 +34,7 @@
 	#parse("/common/bops/bottom.vm")
 	
 	
-	#DDZ_JS(["../bops/bops.js"])
+	#DDZ_JS(["../bops/bops.js","../bops/dcome.js"])
 </body>
 </html>
 

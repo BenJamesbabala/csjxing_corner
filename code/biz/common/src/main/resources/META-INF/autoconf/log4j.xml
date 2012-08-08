@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!--
+  - Log4j配置文件。
+  -
+  - 请使用专用的XML编辑器编辑此文件，以确保其符合log4j.dtd。
+  -
+ -->
+#set($loggingRoot = $!{corner_loggingRoot})
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <!-- ===================================================================== -->
+    <!--  以下是appender的定义                                                 -->
+    <!-- ===================================================================== -->
+    #if($corner_production != "true")
+        <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		      <param name="Target" value="System.out" />
+		      <param name="Threshold" value="WARN" />
+		      <layout class="org.apache.log4j.PatternLayout">
+		         <param name="ConversionPattern" value="%d [%-5p](%C{2},%L) - %m%n" />
+		      </layout>
+	    </appender>
+    #end
+    <appender name="PROJECT" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="${loggingRoot}/sys/sys.log"/> 
+        #if($corner_production != "true") 
+        <param name="append" value="false"/>
+        #else 
+        <param name="append" value="true"/> 
+        #end 
+        <param name="encoding" value="GBK"/>
+        <param name="threshold" value="info"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="taobao-log-appender" class="org.apache.log4j.RollingFileAppender">
+    	<param name="file" value="${loggingRoot}/sys/taobao.log"/>
+    	<param name="maxFileSize" value="10MB"/>
+    	<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="signin-log-appender" class="org.apache.log4j.RollingFileAppender">
+    	<param name="file" value="${loggingRoot}/sys/signin/signin.log"/>
+    	<param name="maxFileSize" value="10MB"/>
+    	<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="dcome-signin-log-appender" class="org.apache.log4j.RollingFileAppender">
+    	<param name="file" value="${loggingRoot}/sys/dcome/signin/signin.log"/>
+    	<param name="maxFileSize" value="10MB"/>
+    	<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="reportMail-log-appender" class="org.apache.log4j.RollingFileAppender">
+    	<param name="file" value="${loggingRoot}/sys/mail/reportMail.log"/>
+    	<param name="maxFileSize" value="10MB"/>
+    	<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="click-log-appender" class="org.apache.log4j.DailyRollingFileAppender">
+    	<param name="file" value="${loggingRoot}/sys/click/click.log"/>
+    	#if($corner_production != "true") 
+        <param name="append" value="false"/>
+        #else 
+        <param name="append" value="true"/> 
+        #end 
+        <param name="encoding" value="GBK"/>
+        <param name="threshold" value="info"/>
+    	<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="task-syncReport-log-appender" class="org.apache.log4j.RollingFileAppender">
+    	<param name="file" value="${loggingRoot}/sys/task-syncReport.log"/>
+    	<param name="maxFileSize" value="10MB"/>
+    	<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="report-settle-log-appender" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="${loggingRoot}/sys/report-settle.log"/>
+        <param name="maxFileSize" value="10MB"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="task-syncRecommend-log-appender" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="${loggingRoot}/sys/task-syncRecommend.log"/>
+        <param name="maxFileSize" value="10MB"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <logger name="dcome-signin-log" additivity="true">
+    	<appender-ref ref="dcome-signin-log-appender"/>
+    	<level value="info"></level>
+    </logger>
+    
+    <logger name="signin-log" additivity="true">
+    	<appender-ref ref="signin-log-appender"/>
+    	<level value="info"></level>
+    </logger>
+    <logger name="taobao-log" additivity="true">
+    	<appender-ref ref="taobao-log-appender"/>
+    	<level value="info"></level>
+    </logger>
+    
+    <logger name="reportMail-log" additivity="true">
+    	<appender-ref ref="reportMail-log-appender"/>
+    	<level value="info"></level>
+    </logger>
+    
+    <logger name="click-log" additivity="true">
+    	<appender-ref ref="click-log-appender"/>
+    	<level value="info"></level>
+    </logger>
+    
+    <logger name="task-syncReport-log" additivity="true">
+    	<appender-ref ref="task-syncReport-log-appender"/>
+    	<level value="info"></level>
+    </logger>
+    
+    <logger name="task-syncRecommend-log" additivity="true">
+    	<appender-ref ref="task-syncRecommend-log-appender"/>
+    	<level value="info"></level>
+    </logger>
+    
+    
+    <logger name="report-settle-log" additivity="true">
+        <appender-ref ref="report-settle-log-appender"/>
+        <level value="info"></level>
+    </logger>
+  
+    <!-- ===================================================================== -->
+    <!--  Root logger的定义                                                    -->
+    <!-- ===================================================================== -->
+    <root>
+        <level value="$corner_loggingLevel"/>
+        <appender-ref ref="PROJECT"/>
+        <appender-ref ref="ExceptionAppender" />
+        #if($corner_production != "true")
+           <appender-ref ref="CONSOLE" />
+        #end
+        <!-- <appender-ref ref="ASYNC" /> -->
+    </root>
+    
+</log4j:configuration>

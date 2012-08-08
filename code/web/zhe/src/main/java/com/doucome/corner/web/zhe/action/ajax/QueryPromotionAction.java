@@ -13,7 +13,7 @@ import com.doucome.corner.biz.core.taobao.dto.TaobaoPromotionDisplayDTO;
 import com.doucome.corner.biz.core.taobao.dto.TaobaoPromotionInItemDTO;
 import com.doucome.corner.biz.core.utils.DecimalUtils;
 import com.doucome.corner.web.common.action.BasicAction;
-import com.doucome.corner.web.zhe.model.JsonModel;
+import com.doucome.corner.web.common.model.JsonModel;
 import com.doucome.corner.web.zhe.model.PromotionPriceModel;
 
 @SuppressWarnings("serial")
@@ -71,7 +71,7 @@ public class QueryPromotionAction extends BasicAction {
 			json.setCode(JsonModel.CODE_FAIL) ;
 			json.setDetail("exception occored .") ;
 			
-			log.error(e.getMessage() , e) ;
+			log.error("查询促销价格出错：" + e.getMessage()) ;
 			return SUCCESS ;
 		}
 		

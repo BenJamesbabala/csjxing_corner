@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:roma="http://roma.alibaba.com/schema"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://roma.alibaba.com/schema http://roma.alibaba.com/schema/roma-component.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+			default-autowire="byName">
+
+	<bean id="uriService" class="com.doucome.corner.biz.core.service.impl.DefaultUriService" lazy-init="false">
+		<property name="uriMappings">
+			<map>
+				<entry key="dcomeServer" value="http://${corner.domainName}:${corner.port}"/>
+				<entry key="ddzServer" value="http://${corner.ddz.domainName}:${corner.port}"/>
+				<entry key="staticServer" value="${corner.static.url}"/>
+				<entry key="dcomePicUploadedServer" value="${corner.picture.uploaded.img.url}"/>
+				<entry key="dcomeItemUploadedServer" value="${corner.picture.uploaded.item.url}"/>
+				<entry key="ddzStaticServer" value="${corner.static.url}"/>
+				<entry key="ddzHelpServer" value="${corner.ddz.helpUrl}"/>
+				<entry key="taobaoLoginLink" value="${corner.api.taobao.login.url}?response_type=user&amp;client_id=${corner.api.taobao.appkey}&amp;redirect_uri=http://${corner.domainName}:${corner.port}/zhe/tblogin_pass.htm"/>
+				<entry key="surlServer" value="${corner.surl.url}"/>
+				<entry key="bopsServer" value="http://${corner.bops.domainName}:${corner.port}"/>
+				<entry key="bopsLoginLink"  value="http://${corner.bops.domainName}:${corner.port}/bops/login.htm" />
+			</map>
+		</property>
+	</bean>
+</beans>

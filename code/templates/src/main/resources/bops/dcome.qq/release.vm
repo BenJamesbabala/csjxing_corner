@@ -1,0 +1,35 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "QQ空间首页 - #if($pubStatus == 'R') 发布成功 #else 预发布成功 #end")
+
+<div class="bops">
+	<div class="MB20 MT20">
+    #if($pubStatus == "P")
+    	<form action="${env.bopsRoot}/bops/dcome/qq/release_index.htm" method="post" id="releaseForm">
+    		<input type="hidden" name="systemId" value="$!systemId" />
+    		<input type="hidden" name="sceneId" value="$!sceneId" />
+            <div>
+				<span class="dc-blue">预发布成功！</span>
+				<span class="F12 ML20">>>>>>> 点击 <a href="javascript:;" class="F12" id="releaseBtn">正式发布</a></span></div>
+        </form>
+    
+    #elseif($pubStatus == "R")
+		发布成功，需要大约5分钟以内更新缓存
+	#end
+    <a href="${env.root}/frame/q/index.htm?sysId=$!systemId&pubStatus=$!pubStatus" target="_blank" >查看前台</a>
+    </div>
+</div>
+
+<div style="border:1px solid #dddddd;width:760px;height:960px;">
+<iframe  src="${env.root}/frame/q/index.htm?sysId=$!systemId&pubStatus=$!pubStatus" width="760" height="900" frameborder="0" scrolling="yes"></iframe>
+</div>
+	
+<script>
+!(function($){
+	$("#releaseBtn").click(function(){
+		if(confirm('确定发布场景到首页吗？')){
+			$("#releaseForm").submit() ;
+		}
+	}) ;
+})(jQuery);
+</script>

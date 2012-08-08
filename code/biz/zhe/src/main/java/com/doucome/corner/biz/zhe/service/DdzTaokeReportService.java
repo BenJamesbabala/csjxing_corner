@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.model.page.QueryResult;
-import com.doucome.corner.biz.core.taobao.model.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleSearchCondition;
+import com.doucome.corner.biz.dal.condition.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;

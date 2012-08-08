@@ -287,4 +287,21 @@ public class TaobaoItemConst {
 	 * 是否承诺退换货服务!
 	 */
 	public static final String sell_promise = "sell_promise" ;
+	
+	/**
+	 * 商品图片列表(包括主图)。fields中只设置item_img可以返回ItemImg结构体中所有字段，如果设置为item_img.id、item_img.url、item_img.position等形式就只会返回相应的字段
+	 */
+	public static final String item_img = "item_img" ;
+	/**
+	 * 商品图片列表图片id
+	 */
+	public static final String item_img_id = "item_img.id";
+	/**
+	 * 商品图片列表图片url
+	 */
+	public static final String item_img_url = "item_img.url";
+	/**
+	 * 商品图片列表图片position
+	 */
+	public static final String item_img_position = "item_img.position";
 }

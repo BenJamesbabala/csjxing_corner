@@ -1,5 +1,6 @@
 package com.doucome.corner.web.common.action;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.doucome.corner.biz.core.service.impl.DefaultUriService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.util.ValueStack;
@@ -39,6 +41,17 @@ public class BasicAction extends ActionSupport {
 
     protected HttpSession getHttpSession() {
         return getRequest().getSession();
+    }
+    
+    protected void redirect(String url) throws IOException {
+        HttpServletResponse response = getResponse();
+        response.sendRedirect(url);
+    }
+
+    protected void redirectToUrlName(String urlName) throws IOException {
+        String url = DefaultUriService.getFactoryURI(urlName);
+        redirect(url);
+
     }
 
     /**

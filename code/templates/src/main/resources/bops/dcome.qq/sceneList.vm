@@ -1,0 +1,64 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "场景列表")
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcSceneList"/>
+
+#set($pagination = $sceneQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/qq/scene_list.htm?")
+#set($searchQuery = [])
+
+<div class="bops">
+    <div style="height:30px;">&nbsp;</div>
+	
+    <div class="MT20 MB20 F14">共有场景 $sceneQuery.totalRecords 个 ，现在就去    <a href="${env.bopsRoot}/bops/dcome/qq/create_scene.htm">新建场景</a></div>
+	
+	#parse("/common/bops/dcome.qq/scenePagination.vm")
+	
+	 <table width="960" style="font-size:14px;" id="sceneTable">
+		<tr>
+    		<th width="20">序号</th>
+			<th width="20">APP</th>
+			<th width="40">场景ID</th>
+			<th width="80">名称</th>
+			<th width="100">描述</th>
+			<th width="80">创建时间</th>
+			<th width="80">激活</th>
+			<th width="50">操作</th>
+    	</tr>
+		#if($sceneQuery.totalRecords > 0)
+    		#foreach($item in $sceneQuery.items)
+				#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
+            	<tr>
+            		<td>$idx</td>
+					<td align="center">$item.systemId</td>
+                    <td align="center">$item.id</td>
+                    <td><a href="${env.bopsRoot}/bops/dcome/qq/scene_detail.htm?sceneId=$!item.id">$item.name</a></td>
+					<td class="dc-item-desc">$item.sceneDesc</td>
+                    <td>$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+					<td>
+						#if($item.active != "T")
+                        <span class="dc-red">未激活</span>
+						<a href="javascript:;" data-sceneId="$!item.id" data-sceneActive="T">现在激活</a>
+						#else
+						<span>已激活</span>
+						#end
+					</td>
+                    <td>
+                        <a href="${env.bopsRoot}/bops/dcome/qq/create_scene.htm?sceneId=$!item.id">修改</a>
+						<a href="${env.root}/frame/q/preview.htm?sceneId=$!item.id" target="_blank">预览</a>
+						#if($item.active == "T")
+						<a href="${env.bopsRoot}/bops/dcome/qq/index_config.htm?sceneId=$!item.id">发布到首页</a>
+						#end
+                        
+					</td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="6">没有查询到记录</td></tr>
+		#end
+     </table>
+	 
+	 #parse("/common/bops/dcome.qq/scenePagination.vm")
+</div>

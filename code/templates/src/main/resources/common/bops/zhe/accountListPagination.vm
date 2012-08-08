@@ -1,0 +1,14 @@
+<div class="pagination" id="pagination">
+	#parse("/common/bops/_pagination.vm")
+		
+	<form method="get" action="$searchUrl" id="form_page">
+		<input type="hidden" name="gmtCreateStart" value="$!dateUtils.format($!gmtCreateStart,'yyyy-MM-dd')"/>
+		<input type="hidden" name="gmtCreateEnd" value="$!dateUtils.format($!gmtCreateEnd,'yyyy-MM-dd')"/>
+		<input type="hidden" name="alipayId" value="$!alipayId"/>
+		
+		<div class="page-op">
+    		<span class="total-page">共 $totalPages 页</span>到<input type="text" name="page" value="$!curPage">页
+    		<input type="submit" value="确定">
+    	</div>
+    </form>
+</div>	

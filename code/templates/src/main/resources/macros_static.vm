@@ -13,3 +13,15 @@
 	<link  rel="stylesheet" type="text/css" href="${env.ddzStaticroot}/css/$!key?v=$!version" />
 	#end
 #end
+
+##¶¹Þ¢QQ¿Õ¼äresource
+#macro(DC_QRES $libs)
+	#foreach ($key in $libs)
+    	#set($version = $staticVerUtils.ver($!key))
+    	#if($stringUtils.endsWithIgnoreCase($key,"js"))
+    	<script type="text/javascript" src="${env.staticroot}/dcome/q/$!key?v=$!version"></script>
+    	#elseif($stringUtils.endsWithIgnoreCase($key,"css"))
+    	<link  rel="stylesheet" type="text/css" href="${env.staticroot}/dcome/q/$!key?v=$!version" />
+    	#end
+	#end
+#end

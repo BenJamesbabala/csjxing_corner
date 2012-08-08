@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.model.page.QueryResult;
-import com.doucome.corner.biz.core.taobao.model.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.DdzTaokeReportDAO;
 import com.doucome.corner.biz.dal.DdzTaokeReportSettleDAO;
 import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleSearchCondition;
+import com.doucome.corner.biz.dal.condition.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
@@ -80,7 +80,7 @@ public class DdzTaokeReportServiceImpl implements DdzTaokeReportService {
 	@Override
 	public List<AlipayItemDO> getUnMergedReportSettleInfo(Pagination pagination) {
 		try {
-			return ddzTaokeReportDAO.getUnMergedReportSettleInfo(pagination);
+			return ddzTaokeReportDAO.getUnMergedReportSettleInfo(pagination.getStart() , pagination.getSize());
 		} catch (Exception e) {
 			log.error(e);
 			return null;

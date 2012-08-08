@@ -24,6 +24,10 @@ public class AbstractCacheSupport implements InitializingBean {
 	protected static final long ONE_HOUR_MILLISECONDS = 3600L * 1000; // 1小时
 
 	protected static final long ONE_DAY_MILLISECONDS = 3600L * 1000 * 24; // 1天
+	
+	protected static final long ONE_MINUTES_MILLISECONDS = 60L * 1000  ; //10分钟
+	
+	protected static final long ONE_SECOND_MILLISECONDS = 1000 ;
 
 	/**
 	 * Cache RegionName
@@ -61,15 +65,37 @@ public class AbstractCacheSupport implements InitializingBean {
 		}
 	}
 	
-	protected String buildCachekeyWithArgs(String... args){
+	protected String buildCachekeyWithArgs(Object... args){
 		String regionName = getRegionName() ;
-		String key = regionName ;
+		StringBuilder key = new StringBuilder(regionName) ;
 		if(!ArrayUtils.isEmpty(args)) {
-			for(String a : args){
-				key += "_" + a ;
+			for(Object a : args){
+				key.append("_").append(a) ;
 			}
 		}
-		return key ;
+		return key.toString() ;
+	}
+	
+	protected String buildCachekeyWithArgs(String... args){
+		String regionName = getRegionName() ;
+		StringBuilder key = new StringBuilder(regionName) ;
+		if(!ArrayUtils.isEmpty(args)) {
+			for(String a : args){
+				key.append("_").append(a) ;
+			}
+		}
+		return key.toString() ;
+	}
+	
+	protected String buildCachekeyWithArgs(Long... args){
+		String regionName = getRegionName() ;
+		StringBuilder key = new StringBuilder(regionName) ;
+		if(!ArrayUtils.isEmpty(args)) {
+			for(Long a : args){
+				key.append("_").append(a) ;
+			}
+		}
+		return key.toString() ;
 	}
 
 	/**
@@ -80,9 +106,16 @@ public class AbstractCacheSupport implements InitializingBean {
 	 * @param <T>
 	 */
 	public static class InternalStoreItem<T> implements Serializable {
+		
+		public InternalStoreItem (T item){
+			this.item = item ;
+			this.gmtCreate = new Date() ;
+		}
+		
 		private static final long serialVersionUID = 1L;
 		private Date gmtCreate; // 缓存修改时间
 		private T item; // 缓存数据item
+		private int version = 0 ;
 
 		public Date getGmtCreate() {
 			return gmtCreate;
@@ -99,5 +132,14 @@ public class AbstractCacheSupport implements InitializingBean {
 		public void setItem(T item) {
 			this.item = item;
 		}
+
+		public int getVersion() {
+			return version;
+		}
+
+		public void setVersion(int version) {
+			this.version = version;
+		}
+		
 	}
 }

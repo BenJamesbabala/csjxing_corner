@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.doucome.corner.biz.zhe.model.TaobaokeItemFacade;
 import com.doucome.corner.biz.zhe.service.DdzTaobaokeService;
 import com.doucome.corner.web.common.action.BasicAction;
-import com.doucome.corner.web.zhe.model.JsonModel;
+import com.doucome.corner.web.common.model.JsonModel;
 
 /**
  * 类SearchRecommandAction.java的实现描述：查询推荐

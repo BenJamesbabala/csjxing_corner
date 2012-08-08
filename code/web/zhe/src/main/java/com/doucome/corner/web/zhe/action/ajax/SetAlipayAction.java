@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.doucome.corner.biz.core.utils.ValidateUtil;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
 import com.doucome.corner.web.common.action.BasicAction;
+import com.doucome.corner.web.common.model.JsonModel;
 import com.doucome.corner.web.zhe.authz.DdzSessionOperator;
-import com.doucome.corner.web.zhe.model.JsonModel;
 
 /**
  * …Ë÷√÷ß∏∂±¶

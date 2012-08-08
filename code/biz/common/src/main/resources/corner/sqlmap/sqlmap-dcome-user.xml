@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcUser">
+	<typeAlias alias="TA-DcUser"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcUserDO" />
+
+	<resultMap id="RM-DcUser" class="TA-DcUser">
+		<result property="userId" column="USER_ID" />
+		<result property="nick" column="NICK" jdbcType="VARCHAR" />
+		<result property="externalId" column="EXTERNAL_ID" jdbcType="VARCHAR" />
+		<result property="externalPf" column="EXTERNAL_PF" jdbcType="VARCHAR" />
+		<result property="gender" column="GENDER" jdbcType="VARCHAR" />
+		<result property="mobile" column="MOBILE" jdbcType="VARCHAR" />
+		<result property="email" column="EMAIL" jdbcType="VARCHAR" />
+		<result property="md5Password" column="MD5_PASSWORD" jdbcType="VARCHAR" />
+		<result property="source" column="SOURCE" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtLastLogin" column="GMT_LAST_LOGIN" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertUser" parameterClass="TA-DcUser">
+		INSERT INTO DC_USER
+			(USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN)
+		VALUES
+			(#userId#,#externalId#,#externalPf#,#nick#,#gender#,#mobile#,#email#,#md5Password#,#source#,now(),now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="userId">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS USER_ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryUser" resultMap="RM-DcUser">
+		SELECT 
+			USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
+		FROM 
+			DC_USER
+		WHERE 
+			USER_ID = #userId#
+	</select>
+	
+	<select id="queryUsers" parameterClass="java.util.ArrayList" resultMap="RM-DcUser">
+		SELECT 
+			USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
+		FROM 
+			DC_USER
+		WHERE 
+			USER_ID IN 
+			<iterate prepend="" open="(" close=")" conjunction=",">
+			    #userIds[]#
+			</iterate>
+	</select>
+	
+	<select id="queryUserByExternalId" resultMap="RM-DcUser">
+		SELECT 
+			USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
+		FROM 
+			DC_USER
+		WHERE 
+			EXTERNAL_ID = #externalId# AND EXTERNAL_PF = #externalPf#
+	</select>
+	
+	<update id="updateUser" parameterClass="TA-DcUser">
+		update DC_USER
+		set GMT_MODIFIED = now()
+		<isNotEmpty property="nick" prepend=",">
+			NICK = #nick#
+		</isNotEmpty>
+		<isNotEmpty property="gender" prepend=",">
+			GENDER = #gender#
+		</isNotEmpty>
+		<isNotEmpty property="mobile" prepend=",">
+			MOBILE = #mobile#
+		</isNotEmpty>
+		<isNotEmpty property="email" prepend=",">
+			EMAIL = #email#
+		</isNotEmpty>
+		<isNotEmpty property="md5Password" prepend=",">
+			MD5_PASSWORD = #md5Password#
+		</isNotEmpty>
+		where USER_ID = #userId#
+	</update>
+	
+	<update id="updateLastLoginTime" parameterClass="long">
+		update DC_USER
+		set GMT_MODIFIED = now(),GMT_LAST_LOGIN = now()
+		where USER_ID = #userId#
+	</update>
+</sqlMap>

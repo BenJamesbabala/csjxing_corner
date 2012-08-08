@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		#parse("/common/zhe/meta.vm")
+		#parse("/common/error_meta.vm")
 		#DDZ_CSS(["/home/screens/error/error.css"])
 	</head>
 	<body>

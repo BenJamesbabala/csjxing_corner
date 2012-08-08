@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:roma="http://roma.alibaba.com/schema"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://roma.alibaba.com/schema http://roma.alibaba.com/schema/roma-component.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="velocityProperties">
+			<props>
+				<prop key="resource.loader">class</prop>
+				<prop key="class.resource.loader.class">org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+				</prop>
+				<prop key="velocimacro.library" />
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="taokeApiLimitRetryInterceptor" class="com.doucome.corner.biz.core.interceptor.TaokeApiLimitRetryInterceptor"></bean>
+	
+	<bean id="taobaokeProxyFactoryBean" class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
+        <property name="interceptorNames">
+           <value>taokeApiLimitRetryInterceptor</value>
+        </property>
+    </bean>
+
+	<bean id="taobaokeServiceDecorator" class="com.doucome.corner.biz.core.service.taobao.TaobaokeServiceDecoratorImpl">
+		<property name="nickname" value="${corner.api.taobao.nickname}" />
+		<property name="taobaoClientWrapper" ref="taobaokeClientWrapper" />
+	</bean>
+	
+	<bean id="dcomeTaobaokeServiceDecorator" class="com.doucome.corner.biz.core.service.taobao.TaobaokeServiceDecoratorImpl">
+		<property name="nickname" value="doucomeapp" />
+		<property name="taobaoClientWrapper" ref="taobaokeClientWrapper" />
+	</bean>
+	
+	<bean id="taobaoServiceDecorator" class="com.doucome.corner.biz.core.service.taobao.TaobaoServiceDecoratorImpl">
+		<property name="nickname" value="${corner.api.taobao.nickname}" />
+		<property name="taobaoClientWrapper" ref="taobaokeClientWrapper" />
+	</bean>
+
+	<bean id="taobaoRecommandDecorator"
+		class="com.doucome.corner.biz.core.service.taobao.TaobaoRecommandDecoratorImpl">
+		<property name="nickname" value="${corner.api.taobao.nickname}" />
+		<property name="taobaoClientWrapper" ref="taobaokeClientWrapper" />
+	</bean>
+ 
+	<bean id="upYunService" class="com.doucome.corner.biz.core.service.upyun.UpYunServiceImpl">
+		<property name="uploadUrl" value="http://${corner.upyun.api.domainName}"/>
+		<property name="username" value="${corner.upyun.api.username}"/>
+		<property name="password" value="${corner.upyun.api.password}"/>
+	</bean>
+ 
+	<bean id="shortUrlService"
+		class="com.doucome.corner.biz.core.service.impl.ShortUrlServiceImpl"></bean>
+
+	<bean id="velocityMergeService"
+		class="com.doucome.corner.biz.core.service.impl.VelocityMergeServiceImpl">
+		<property name="defaultEncoding" value="GBK" />
+	</bean>
+	
+	<bean id="sendMailService"
+		class="com.doucome.corner.biz.core.mail.impl.SendMailServiceImpl" />
+		
+	<bean id="smsBusinessConfig" class="com.doucome.corner.biz.core.sms.config.SmsBusinessConfig" init-method="init">
+		<property name="config"><value>classpath:/corner/bean/SmsBusiness.xml</value></property>
+	</bean>
+	
+	<bean id="sendSmsService" class="com.doucome.corner.biz.core.sms.SendSmsServiceImpl"></bean>
+	
+	<bean id="openApiV3" class="com.qq.open.OpenApiV3">
+		<property name="appid" value="${corner.qq.appid}"/>
+		<property name="appkey" value="${corner.qq.appkey}"/>
+		<property name="serverName" value="${corner.qq.servername}"/>
+	</bean>
+	
+	<bean id="qqQueryService" class="com.doucome.corner.biz.core.qq.impl.V3QqQueryServiceImpl"></bean>
+</beans>
