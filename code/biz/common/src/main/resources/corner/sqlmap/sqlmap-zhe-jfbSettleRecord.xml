@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="ddzJfbSettleRecord">
+	<typeAlias alias="TA-ddzJfbSettleRecord"
+		type="com.doucome.corner.biz.dal.dataobject.DdzJfbSettleRecordDO" />
+
+	<resultMap id="RM-ddzJfbSettleRecord" class="TA-ddzJfbSettleRecord">
+		<result property="id" column="ID" />
+		<result property="planAlipayCount" column="PLAN_ALIPAY_COUNT" />
+		<result property="successAlipayCount" column="SUCCESS_ALIPAY_COUNT" />
+		<result property="planJfbCount" column="PLAN_JFB_COUNT" />
+		<result property="successJfbCount" column="SUCCESS_JFB_COUNT" />
+		<result property="tradeNo" column="TRADE_NO" />
+		<result property="settleBatchno" column="SETTLE_BATCHNO" />
+		<result property="isSettled" column="IS_SETTLED" />
+		<result property="gmtSettled" column="GMT_SETTLED" jdbcType="TIMESTAMP" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertRecord">
+		INSERT INTO 
+			DDZ_JFB_SETTLE_RECORD 
+			(ID,PLAN_ALIPAY_COUNT,SUCCESS_ALIPAY_COUNT,PLAN_JFB_COUNT,SUCCESS_JFB_COUNT,TRADE_NO,SETTLE_BATCHNO,GMT_CREATE,GMT_MODIFIED)
+		VALUES 
+			(#id#,#planAlipayCount#,#successAlipayCount#,#planJfbCount#,#successJfbCount#,#tradeNo#,#settleBatchno#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="queryRecordById" resultMap="RM-ddzJfbSettleRecord">
+		SELECT 
+			ID,PLAN_ALIPAY_COUNT,SUCCESS_ALIPAY_COUNT,PLAN_JFB_COUNT,SUCCESS_JFB_COUNT,TRADE_NO,SETTLE_BATCHNO,IS_SETTLED,GMT_SETTLED,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DDZ_JFB_SETTLE_RECORD
+		WHERE
+			ID = #id#
+	</select>
+	
+	<select id="queryRecordsWithPagination" resultMap="RM-ddzJfbSettleRecord">
+		SELECT 
+			ID,PLAN_ALIPAY_COUNT,SUCCESS_ALIPAY_COUNT,PLAN_JFB_COUNT,SUCCESS_JFB_COUNT,TRADE_NO,SETTLE_BATCHNO,IS_SETTLED,GMT_SETTLED,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DDZ_JFB_SETTLE_RECORD
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="tradeNo" prepend="AND">
+					<![CDATA[
+					TRADE_NO = #tradeNo#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="settleBatchno" prepend="AND">
+					<![CDATA[
+					SETTLE_BATCHNO = #settleBatchno#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="isSettled" prepend="AND">
+					<![CDATA[
+					IS_SETTLED = #isSettled#
+					]]>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+		ORDER BY 
+			GMT_CREATE DESC
+		LIMIT 
+			#start# , #size#
+	</select>
+	
+	<select id="countRecordsWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(ID)
+		FROM 
+			DDZ_JFB_SETTLE_RECORD
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="tradeNo" prepend="AND">
+					<![CDATA[
+					TRADE_NO = #tradeNo#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="settleBatchno" prepend="AND">
+					<![CDATA[
+					SETTLE_BATCHNO = #settleBatchno#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="isSettled" prepend="AND">
+					<![CDATA[
+					IS_SETTLED = #isSettled#
+					]]>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+	</select>
+	
+	<update id="updateSuccessInfoById">
+		UPDATE
+			DDZ_JFB_SETTLE_RECORD
+		SET
+			SUCCESS_ALIPAY_COUNT = #successAlipayCount# , 
+			SUCCESS_JFB_COUNT = #successJfbCount# , 
+			TRADE_NO = #tradeNo# ,
+			IS_SETTLED = #isSettled# ,
+			GMT_SETTLED = #gmtSettled# ,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
+	</update>
+	
+</sqlMap>

@@ -13,7 +13,7 @@ import com.doucome.corner.web.zhe.authz.DdzSessionOperator;
 
 /**
  * …Ë÷√÷ß∏∂±¶
- * @author shenjia.caosj 2012-6-1
+ * @author langben 2012-6-1
  *
  */
 @SuppressWarnings("serial")

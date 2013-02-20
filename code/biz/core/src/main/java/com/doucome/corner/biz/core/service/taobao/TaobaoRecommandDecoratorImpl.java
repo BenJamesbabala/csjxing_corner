@@ -126,7 +126,6 @@ public class TaobaoRecommandDecoratorImpl extends AbstractTaobaoService implemen
 		}catch(ApiException e){
 			throw new TaobaoRemoteException(e.getErrMsg() , e , e.getErrCode()) ;
 		}
-		
 	}
 
 	

@@ -6,7 +6,7 @@ import com.doucome.corner.biz.zhe.model.TaobaokeShopFacade;
 
 /**
  * Ê×Ò³Æ·ÅÆ»º´æ
- * @author shenjia.caosj 2012-6-28
+ * @author langben 2012-6-28
  *
  */
 public interface BrandsCache {

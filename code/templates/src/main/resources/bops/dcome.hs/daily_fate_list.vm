@@ -1,0 +1,126 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "星座日运势列表")
+
+<input type="hidden"  id="hsBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="hsBopsPage" value="daily_fate_list"/>
+
+<style>
+</style>
+
+#set($pagination = $hsFateQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/hs/daily_fate_list.htm?")
+#set($searchQuery = ["hsId:$!sId","gmtDay:$!gmtDay"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/dcome/hs/daily_fate_list.htm" method="GET">
+		<div class="settleipt MB10 MT10">
+			<span>星座：</span>
+			<select name="hsId">
+	            <option value="">全部</option>
+				<option value="1" #if($!hsId == 1) selected #end>白羊座</option>
+				<option value="2" #if($!hsId == 2) selected #end>金牛座</option>
+				<option value="3" #if($!hsId == 3) selected #end>双子座</option>
+				<option value="4" #if($!hsId == 4) selected #end>巨蟹座</option>
+				<option value="5" #if($!hsId == 5) selected #end>狮子座</option>
+				<option value="6" #if($!hsId == 6) selected #end>处女座</option>
+				<option value="7" #if($!hsId == 7) selected #end>天秤座</option>
+				<option value="8" #if($!hsId == 8) selected #end>天蝎座</option>
+				<option value="9" #if($!hsId == 9) selected #end>射手座</option>
+				<option value="10" #if($!hsId == 10) selected #end>摩羯座</option>
+				<option value="11" #if($!hsId == 11) selected #end>水瓶座</option>
+				<option value="12" #if($!hsId == 12) selected #end>双鱼座</option>
+    	    </select>
+			有效时间：<input name="gmtDay" value="$!dateUtils.format($!gmtDay, 'yyyy-MM-dd')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate"/>
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	<div class="MB20 MT20"><a href="${env.bopsRoot}/bops/dcome/hs/daily_fate.htm" target="_blank">新增星座运势</a></div>
+	
+		
+	#parse("/common/bops/dcome.hs/hsFatePagination.vm")
+	
+	 <table width="1000" style="font-size:14px;" id="hsFateTable" class="hs-table">
+		<tr>
+			<th width="25">ID</th>
+			<th width="25">星座</th>
+    		<th width="250">概述</th>
+			<th width="70">综合指数</th>
+			<th width="70">爱情指数</th>
+			<th width="70">工作指数</th>
+			<th width="70">财运指数</th>
+			<th width="70">健康指数</th>
+			<th width="70">幸运色</th>
+			<th width="70">幸运数字</th>
+			<th width="70">转运方式</th>
+			<th width="70">有效日期</th>
+			<th width="70">创建日期</th>
+			<th>操作</th>
+    	</tr>
+		#if($hsFateQuery.totalRecords > 0)
+    		#foreach($hsFate in $hsFateQuery.items)
+            	<tr data-index="$!item.id">
+					<td>$!hsFate.id</td>
+					<td>
+						#if($!hsFate.hsId == 1)
+						    白羊座
+    					#elseif ($!hsFate.hsId == 2)
+    					    金牛座
+    					#elseif ($!hsFate.hsId == 3)
+    					    双子座
+    					#elseif ($!hsFate.hsId == 4)
+    					    巨蟹座
+    					#elseif ($!hsFate.hsId == 5)
+    					    狮子座
+    					#elseif ($!hsFate.hsId == 6)
+    					    处女座
+    					#elseif ($!hsFate.hsId == 7)
+    					    天秤座
+    					#elseif ($!hsFate.hsId == 8)
+    					    天蝎座
+    					#elseif ($!hsFate.hsId == 9)
+    					    射手座
+    					#elseif ($!hsFate.hsId == 10)
+    					    摩羯座
+    					#elseif ($!hsFate.hsId == 11)
+    					    水瓶座
+    					#elseif ($!hsFate.hsId == 12)
+    					    双鱼座
+    					#else
+    					    未知星座
+    					#end
+    				</td>
+            		<td style="position: relative;">
+            			<div class="desc">$!hsFate.summary</div>
+            			<div class="detail dd-hide">$!hsFate.summary</div>
+            		</td>
+                    <td align="center">$!hsFate.compositeIndex</td>
+                    <td align="center">$!hsFate.loveIndex</td>
+					<td align="center">$!hsFate.workIndex</td>
+					<td align="center">$!hsFate.wealthIndex</td>
+					<td align="center">$!hsFate.healthIndex</td>
+					<td align="center">$!hsFate.luckyColor</td>
+					<td align="center">$!hsFate.luckyNumber</td>
+					<td align="center"><div class="desc desc-s">$!hsFate.turnToLucky</div></td>
+                    <td align="center">$!dateUtils.format($!hsFate.gmtDay , 'yyyy-MM-dd')</td>
+					<td align="center">$!dateUtils.format($!hsFate.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+					<td><a href="${env.bopsRoot}/bops/dcome/hs/daily_fate.htm?id=$!hsFate.id" target="_blank">修改</a></td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="6">没有查询到记录</td></tr>
+		#end
+     </table>
+	 #parse("/common/bops/dcome.hs/hsFatePagination.vm")
+	
+</div>
+#DDZ_JS(["../bops/hs/bops.js"])
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

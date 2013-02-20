@@ -4,7 +4,7 @@ import com.doucome.corner.biz.dal.dataobject.dcome.DcLoveDetailDO;
 
 /**
  * Ï²»¶+1 ÏêÏ¸
- * @author shenjia.caosj 2012-7-22
+ * @author langben 2012-7-22
  *
  */
 public interface DcLoveDetailDAO {

@@ -2,18 +2,16 @@
 	$.namespace("Dcome.Bops");
 	
 	var self = Dcome.Bops;
+	var bopsRoot = $('#ddzBopsRoot').val();
 	
 	$.extend(Dcome.Bops,{
 		
 		init:function(){
 			self._initItemOperate();
 		},
-		/**
-		 * 淘客报表结算
-		 */
+		
 		_initItemOperate:function(){
 			var ddzBopsRoot = $("#ddzBopsRoot").val();
-			
 			
 			$(".ui-customize-select-list li").mouseenter(function(){
 				$(this).parent().find("li").removeClass("active");
@@ -47,39 +45,79 @@
 					}
 				});
 			});
-			
-			$(".normal-list #diableItem").click(function(e){
-				e.stopPropagation(); 
-				if(!confirm("确认下架商品？")) {
+			var selectedIndex;
+			$("#itemTable").find(".category").click(function() {
+			    selectedIndex = $(this).get(0).selectedIndex;
+			});
+			$("#itemTable").find(".category").change(function() {
+			    var _this = $(this);
+				if(!confirm("确认更新？")) {
+				    _this.get(0).selectedIndex = selectedIndex;
 				    return;
 				}
-				var url = $('#ddzBopsRoot').val() + '/bops/dcome/qq/remote/reset_item_status_ajax.htm';
-				var itemId = $(this).attr("data-itemId");
-				var status = $(this).attr("data-status");
+				var categoryId = _this.children("option:selected").val();
+				if (categoryId == undefined || categoryId == '' || isNaN(categoryId)) {
+				    alert("类目id有误，请刷新页面");
+					return ;
+				}
+				var _tr = _this.closest("tr");
+				var itemId = _tr.attr("data-index");
 				$.ajax({
-					url : url ,
-					type : "POST" ,
-					data : {"itemId":itemId, "itemStatus": status},
-					success : function(data) {
-					    var json = data.json;
-						if (json.code = "success") {
-						    var exp = 'table tr[data-index="' + itemId + '"]';
-							$(exp).find(".dc-item-status").html("已下架");
+				    url: bopsRoot + '/bops/dcome/qq/remote/update_item_category_ajax.htm',
+					type: "post",
+					data: {itemId: itemId, categoryId: categoryId},
+					success: function(result) {
+					    var json = result.json;
+						if (json.success) {
+						    window.location.href = window.location.href;
 						} else {
-						    alert("更新失败，请联系管理员。");
+						    if (json.detail == 'no.item') {
+						        alert("更新商品类目ID失败，无法找到对应的商品");
+							} else {
+							    alert("更新商品类目ID失败，未知错误");
+							}
 						}
 					},
-					error: function(data) {
-					    alert("internal error");
+					error: function() {
+					
 					}
 				});
 			});
-			$(document).click(function(e){
-				var e = $(this) ;
-				$(".ui-customize-select-list").addClass("dd-hide") ;
-				$(".settleTableTr").removeClass("highlightBk") ;
-				$("#alipay_detail_tips").addClass("dd-hide");
-			}); 
+			$("#itemTable").find("td .userid").click(function() {
+			    var _this = $(this);
+				var _td = _this.closest("td");
+				var userId = _this.html();
+				if (_this.attr("data-init") != 'y') {
+				    $.ajax({
+					    url: bopsRoot + '/bops/dcome/qq/remote/query_user_info_ajax.htm',
+						type: "post",
+						data: {userIds: userId, includeComm: true},
+						async: false,
+						success: function(result) {
+						    var json = result.json;
+							if (json.success) {
+							    var data = json.data;
+								var userInfo = data[0]
+								var info = '<div style="position: relative"><ul class="user-info dd-hide"><li><a class="w_close_color" href="javascript:;"></a></li>' +
+								      '<li><span>用户名：</span><span>' + userInfo.userNick +'</span></li><li><span>积分：</span><span>' + userInfo.integralCount +'</span></li>' +
+									  '<li><span>返利：</span><span>' + userInfo.commission +'</span></li><li><span>注册：</span><span>' + userInfo.gmtCreateFmt +'</span></li></ul></div>';
+							     _td.append(info);
+								 var _userInfo = _td.find(".user-info");
+								 _userInfo.find(".w_close_color").click(function() {
+								     _userInfo.addClass("dd-hide");
+								 });
+								 _this.attr("data-init", 'y');
+							}
+							
+						},
+						error: function() {
+						
+						}
+					});
+				}
+				$(".user-info").addClass("dd-hide");
+				_td.find(".user-info").removeClass("dd-hide");
+			});
 		} , 
 		
 		end:0

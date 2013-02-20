@@ -1,0 +1,56 @@
+<div class="" id="tiles">
+	<div id="waterfall" class="feedwall-container">
+		<ul class="feedwall">
+			
+        </ul>
+    </div>
+    <div class="dd-hide" id="pgcItemTemplate">			
+		<li class="box">
+			<div class="feed_container">
+				<div class="mbs pic_item">
+					<a class="link" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item_id@" @gtrack@='/virtual/qq/item?tracelog=pgc-offer-img&id=@item_id@' data-item-id="@item_id@" height="@item_pic_height@" title="@item_title@">
+						<img alt="@item_title@" @src@="@item_pic_url@" width="220" height="@item_pic_height@" class="item-pic">
+					</a>
+					<div class="mbs status clearfix">
+						#if(!$myPromotionItem && $promotion)
+    					<a href="javascript:;" class="btn btn-danger pub-wish-click @pub-wish-display@" title="免费领取" data-item-id="@item_id@" @gtrack@='/virtual/qq/item?tracelog=pgc-offer-mianfei&id=@item_id@'>免费领取</a>
+    					#end
+					</div>
+					
+					<span class="price lbl bob">&yen;@item_price@</span>
+					<div class="sell-info">
+					    @postal_enable@
+					    @sells@
+					</div>
+					<a href="javascript:;" class="go_taobao pngfix" target="_blank" style="display: none;">去购买</a>
+				</div>
+				
+				<p class="c_grey2 hots">
+					<span class="@integral-display@ buy_integral">购买获赠<span class="integral">@integralCount@</span>积分</span>
+					<a class="c_grey1 mrs" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item_id@" data-item-id="@item_id@" @gtrack@='/virtual/qq/item?tracelog=pgc-offer-buy&id=@item_id@'>看详情</a>
+				</p>
+				<div class="recommand">
+					@recom_reason@
+				</div>
+				<div class="@ugc-content-display@">
+    				<div class="split clearfix">
+    				</div>
+    				<div class="summary">
+    					<div class="mbs clearfix">
+    						<a href="javascript:;" class="ui_ib avater">
+    							<img data-avatar-size="30x30" data-avatar-src="@avatar_url@">
+    							<div class="usercard mask pngfix" data-id="38387"></div>
+    						</a>
+    						<a href="javascript:;" class="usercard c_pink bold">@creator_nick@</a><br>
+    					</div>
+    				</div>
+				</div>
+			</div>
+			<div class="box_bottom"></div>
+		</li>
+	</div>
+    <div class="more-btn" id="waterfallMore"><a href="javascript:;" class="waterfallMore"></a></div>
+    #if($ugcShow && $ugcShow==true)
+    #parse("/common/dcome.qq/ugc_recommend.vm")
+    #end
+</div>

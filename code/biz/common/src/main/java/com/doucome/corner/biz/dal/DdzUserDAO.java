@@ -5,7 +5,7 @@ import com.doucome.corner.biz.dal.dataobject.DdzUserDO;
 /**
  * 点点折用户
  * 
- * @author shenjia.caosj 2012-3-30
+ * @author langben 2012-3-30
  */
 public interface DdzUserDAO {
 
@@ -52,4 +52,14 @@ public interface DdzUserDAO {
      * @return
      */
     DdzUserDO queryByLoginIdAndPassword(String loginId, String md5Password);
+    
+    /**
+     * 更新支付宝
+     * @param loginId
+     * @param alipayId
+     * @return
+     */
+    int updateAlipayIdByLoginId(String loginId , String alipayId) ;
+
+	int incrModificationCount(String loginId);
 }

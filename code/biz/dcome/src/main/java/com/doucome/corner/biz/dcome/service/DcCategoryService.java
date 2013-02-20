@@ -10,7 +10,7 @@ import com.doucome.corner.biz.dcome.enums.DcCategoryLevelEnums;
 import com.doucome.corner.biz.dcome.model.DcCategoryDTO;
 /**
  * ¶¹Þ¢ÀàÄ¿
- * @author shenjia.caosj 2012-7-23
+ * @author langben 2012-7-23
  *
  */
 public interface DcCategoryService {

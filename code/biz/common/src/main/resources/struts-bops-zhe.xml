@@ -1,0 +1,140 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+		
+	<package name="bops-zhe" namespace="/bops/zhe" extends="bops">
+		<action name="taoke_report_settle" class="com.doucome.corner.web.bops.action.zhe.TaokeReportSettleAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/zhe/taokeReportSettle.vm</result>
+		</action>
+		
+		<action name="taoke_report_list" class="com.doucome.corner.web.bops.action.zhe.TaokeReportListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/zhe/taokeReportList.vm</result>
+		</action>
+		
+		<action name="taoke_report_task" class="com.doucome.corner.web.bops.action.zhe.TaokeReportTaskAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/zhe/taokeReportTask.vm</result>
+		</action>
+		
+		<action name="account_list" class="com.doucome.corner.web.bops.action.zhe.AccountListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/zhe/accountList.vm</result>
+		</action>
+		
+		<action name="jfb_settle_record_list" class="com.doucome.corner.web.bops.action.zhe.JfbSettleRecordListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/zhe/jfbSettleRecordList.vm</result>
+		</action>
+		
+		<action name="jfb_upload_success_list" class="com.doucome.corner.web.bops.action.zhe.JFBSettleCsvAction" method="uploadSuccessList">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/zhe/jfbUploadSuccessList.vm</result>
+			<result name="error" type="velocity">/bops/zhe/jfbUploadSuccessList_error.vm</result>
+		</action>
+		
+		<action name="settle_sms_export" class="com.doucome.corner.web.bops.action.zhe.SettleSMSExportAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="excel" type="stream">
+				<param name="contentType">application/msexcel</param>
+				<param name="contentDisposition">attachment;filename=${fileName}</param>
+				<param name="bufferSize">4096</param>
+				<param name="inputStream">inputStream</param>
+			</result>
+			<result name="text" type="stream">
+				<param name="contentType">application/plain</param>
+				<param name="contentDisposition">attachment;filename=${fileName}</param>
+				<param name="bufferSize">4096</param>
+				<param name="inputStream">inputStream</param>
+			</result>
+			<result name="none" type="velocity">/bops/zhe/none.vm</result>
+		</action>
+		
+		<action name="export_jfb_settle_csv" class="com.doucome.corner.web.bops.action.zhe.JFBSettleCsvAction" method="exportCsv">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="stream">
+				<param name="contentType">application/msexcel</param>
+				<param name="contentDisposition">attachment;filename=${fileName}</param>
+				<param name="bufferSize">4096</param>
+				<param name="inputStream">inputStream</param>
+			</result>			
+			<result name="none" type="velocity">/bops/zhe/none.vm</result>
+		</action>
+		
+		<action name="re_export_jfb_settle_csv" class="com.doucome.corner.web.bops.action.zhe.JFBSettleCsvAction" method="reExportCsv">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="stream">
+				<param name="contentType">application/msexcel</param>
+				<param name="contentDisposition">attachment;filename=${fileName}</param>
+				<param name="bufferSize">4096</param>
+				<param name="inputStream">inputStream</param>
+			</result>			
+			<result name="none" type="velocity">/bops/zhe/none.vm</result>
+		</action>
+		
+		<action name="taoke_convert" class="com.doucome.corner.web.bops.action.zhe.TaokeConvertAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/zhe/taokeConvert.vm</result>
+		</action>
+	</package>
+	
+	<package name="bops-zhe-remote" namespace="/bops/zhe/remote" extends="struts-json">
+		<interceptors>
+			 <!-- Basic stack -->
+            <interceptor-stack name="bopsDefaultStack">
+				 <interceptor-ref name="cornerDefaultStack" />
+				 <interceptor-ref name="setBopsContextInterceptor" />
+				 <interceptor-ref name="bopsAuthzContextInterceptor" />
+			 </interceptor-stack>
+		</interceptors>
+		
+		<action name="statistic_jfb_settle_ajax" class="com.doucome.corner.web.bops.action.zhe.ajax.StatisticJFBSettleAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="settle_report_ajax" class="com.doucome.corner.web.bops.action.zhe.TaokeReportSettleAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="taoke_report_ajax" class="com.doucome.corner.web.bops.action.zhe.TaokeReportAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="buying_recomm_display_ajax" class="com.doucome.corner.web.bops.action.zhe.BuyingRecommDisplayAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="buying_recommend_refreshCache_ajax" class="com.doucome.corner.web.bops.action.zhe.BuyingRecommDisplayAjaxAction" method="refreshCache">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="alipay_detail_ajax" class="com.doucome.corner.web.bops.action.zhe.AlipayDetailAjaxAction">
+			<interceptor-ref name="bopsDefaultStack"></interceptor-ref>
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="add_settle_memo_ajax" class="com.doucome.corner.web.bops.action.zhe.TaokeReportSettleOperateAjaxAction" method="addMemo">
+			<interceptor-ref name="bopsDefaultStack"></interceptor-ref>
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="account_refund_ajax" class="com.doucome.corner.web.bops.action.zhe.AccountRefundAjaxAction">
+			<interceptor-ref name="bopsDefaultStack"></interceptor-ref>
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="calc_report_settle_amount_ajax" class="com.doucome.corner.web.bops.action.zhe.CalcReportSettleAmountAjaxAction">
+			<interceptor-ref name="bopsDefaultStack"></interceptor-ref>
+			<result name="success" type="json2"></result>
+		</action>
+	</package>
+	
+</struts>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcWinnerGameConfig">
+
+	<typeAlias alias="TA-DcWinnerGameConfigDO" type="com.doucome.corner.biz.dal.dataobject.dcome.DcWinnerGameConfigDO"/>
+	
+	<resultMap id="RM-DcWinnerGameConfigDO" class="TA-DcWinnerGameConfigDO">
+		<result property="id" column="ID" />
+		<result property="cardName" column="CARD_NAME" />
+		<result property="probability" column="PROBABILITY"/>
+		<result property="score" column="SCORE"/>
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<select id="queryConfigs" resultMap="RM-DcWinnerGameConfigDO">
+		SELECT 
+			ID,CARD_NAME,PROBABILITY,SCORE,GMT_MODIFIED,GMT_CREATE
+		FROM 
+			DC_WINNER_GAME_CONFIG
+	</select>
+	
+	<select id="queryConfigByCardName" resultMap="RM-DcWinnerGameConfigDO">
+		SELECT 
+			ID,CARD_NAME,PROBABILITY,SCORE,GMT_MODIFIED,GMT_CREATE
+		FROM 
+			DC_WINNER_GAME_CONFIG
+		WHERE
+			CARD_NAME = #cardName#
+	</select>
+	
+</sqlMap>

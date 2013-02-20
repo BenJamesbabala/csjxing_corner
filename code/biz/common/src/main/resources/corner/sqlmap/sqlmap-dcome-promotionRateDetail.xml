@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcPromotionRateDetail">
+	<typeAlias alias="TA-DcPromotionRateDetail"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcPromotionRateDetailDO" />
+		
+	<typeAlias alias="TA-RobActivity" type="com.doucome.corner.biz.dal.dataobject.dcome.DcRobOtherActivityDO"/>
+	
+	<resultMap id="RM-DcPromotionRateDetail" class="TA-DcPromotionRateDetail">
+		<result property="id" column="ID" />
+		<result property="promotionId" column="PROMOTION_ID" />
+		<result property="promotionItemId" column="PROMOTION_ITEM_ID" />
+		<result property="stealPromotionItemId" column="STEAL_PROMOTION_ITEM_ID" />
+		<result property="amount" column="AMOUNT" />
+		<result property="rateUserId" column="RATE_USER_ID" />
+		<result property="rateUserNick" column="RATE_USER_NICK" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS" jdbcType="VARCHAR" />
+		<result property="rateType" column="RATE_TYPE" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<resultMap id="RM-RobActivity" class="TA-RobActivity">
+		<result property="promotionId" column="PROMOTION_ID" />
+		<result property="toPromItemId" column="PROMOTION_ITEM_ID" />
+		<result property="fromPromItemId" column="STEAL_PROMOTION_ITEM_ID"/>
+		<result property="toUserId" column="RATE_USER_ID"/>
+		<result property="fromUserId" column="USER_ID"/>
+		<result property="toUserNick" column="RATE_USER_NICK" />
+		<result property="fromUserNick" column="USER_NICK"/>
+		<result property="amount" column="AMOUNT" />
+		<result property="rateType" column="RATE_TYPE" />
+		<result property="status" column="STATUS"/>
+		<result property="rateCount" column="RATE_COUNT"/>
+		<result property="robResult" column="ROB_RESULT"/>
+		<result property="itemId" column="ITEM_ID" />
+		<result property="rateCount" column="RATE_COUNT" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertRateDetail">
+		INSERT INTO 
+			DC_PROMOTION_RATE_DETAIL(ID,PROMOTION_ID,PROMOTION_ITEM_ID,STEAL_PROMOTION_ITEM_ID,AMOUNT,RATE_USER_ID,RATE_USER_NICK,STATUS,RATE_TYPE,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#promotionId#,#promotionItemId#,#stealPromotionItemId#,#amount#,#rateUserId#,#rateUserNick#,#status#,#rateType#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="queryRateDetailByPromItemAndRateUser" resultMap="RM-DcPromotionRateDetail">
+		SELECT 
+			ID,PROMOTION_ID,PROMOTION_ITEM_ID,STEAL_PROMOTION_ITEM_ID,AMOUNT,RATE_USER_ID,RATE_USER_NICK,STATUS,RATE_TYPE,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_PROMOTION_RATE_DETAIL
+		WHERE 
+			RATE_USER_ID = #rateUserId#
+		AND
+			PROMOTION_ITEM_ID = #promotionItemId# 
+		LIMIT 1
+	</select>
+	
+	<select id="queryRateDetailsByPromotion" resultMap="RM-DcPromotionRateDetail">
+		SELECT 
+			ID,PROMOTION_ID,PROMOTION_ITEM_ID,STEAL_PROMOTION_ITEM_ID,AMOUNT,RATE_USER_ID,RATE_USER_NICK,STATUS,RATE_TYPE,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_PROMOTION_RATE_DETAIL
+		WHERE
+			PROMOTION_ID = #promotionId#
+	</select>
+	
+	<select id="queryRateDetailsWithPagination" resultMap="RM-DcPromotionRateDetail">
+		SELECT 
+			ID,PROMOTION_ID,PROMOTION_ITEM_ID,STEAL_PROMOTION_ITEM_ID,AMOUNT,RATE_USER_ID,RATE_USER_NICK,STATUS,RATE_TYPE,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_PROMOTION_RATE_DETAIL
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="promotionId" prepend="AND">
+					<![CDATA[
+					PROMOTION_ID = #promotionId#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="rateUserId" prepend="AND">
+					<![CDATA[
+					RATE_USER_ID = #rateUserId#
+					]]>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+		LIMIT #start# , #size#
+	</select>
+	
+	<select id="countRateDetailsWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			SUM(RATE_COUNT)
+		FROM 
+			DC_PROMOTION_RATE_DETAIL
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="promotionId" prepend="AND">
+					<![CDATA[
+					PROMOTION_ID = #promotionId#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="rateUserId" prepend="AND">
+					<![CDATA[
+					RATE_USER_ID = #rateUserId#
+					]]>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+	</select>
+	
+	<select id="getUserRobActivities" parameterClass="java.util.Map" resultMap="RM-RobActivity">
+	    SELECT * FROM 
+			(SELECT A.PROMOTION_ID,A.PROMOTION_ITEM_ID,A.STEAL_PROMOTION_ITEM_ID,A.AMOUNT,
+			     A.RATE_USER_ID,A.RATE_USER_NICK,A.STATUS,A.RATE_TYPE,A.GMT_CREATE,B.ITEM_ID,
+			      B.USER_ID,B.USER_NICK,B.RATE_COUNT,1 AS ROB_RESULT
+			   FROM DC_PROMOTION_RATE_DETAIL A, DC_PROMOTION_ITEM B
+			   WHERE PROMOTION_ITEM_ID=#promotionItemId# AND B.ID=A.STEAL_PROMOTION_ITEM_ID
+			UNION ALL
+			SELECT A.PROMOTION_ID,A.PROMOTION_ITEM_ID,A.STEAL_PROMOTION_ITEM_ID,A.AMOUNT,
+			     A.RATE_USER_ID,A.RATE_USER_NICK,A.STATUS,A.RATE_TYPE,A.GMT_CREATE,B.ITEM_ID,
+			     B.USER_ID,B.USER_NICK,B.RATE_COUNT,0 AS ROB_RESULT
+			  FROM DC_PROMOTION_RATE_DETAIL A, DC_PROMOTION_ITEM B
+			  WHERE STEAL_PROMOTION_ITEM_ID=#promotionItemId# AND A.PROMOTION_ITEM_ID=B.ID) A
+			ORDER BY GMT_CREATE DESC
+			LIMIT 20
+	</select>
+	
+	<select id="getPromRobActivities" parameterClass="java.util.Map" resultMap="RM-RobActivity">
+	    SELECT A.PROMOTION_ID,A.PROMOTION_ITEM_ID,A.STEAL_PROMOTION_ITEM_ID,A.AMOUNT,
+		     A.RATE_USER_ID,A.RATE_USER_NICK,A.STATUS,A.RATE_TYPE,A.GMT_CREATE,B.ITEM_ID,
+		     B.USER_ID,B.USER_NICK,B.RATE_COUNT,1 AS ROB_RESULT
+		   FROM DC_PROMOTION_RATE_DETAIL A, DC_PROMOTION_ITEM B
+  		   WHERE A.PROMOTION_ID=8 AND B.PROMOTION_ID=8 AND A.STEAL_PROMOTION_ITEM_ID=B.ID
+  		   ORDER BY A.GMT_CREATE DESC
+  		   LIMIT 20
+	</select>
+</sqlMap>

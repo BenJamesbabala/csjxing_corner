@@ -1,0 +1,20 @@
+#if(!$user.isGuideDone('ex_s'))
+<div class="ex-search-guide" id="exSearchGuide" style="display: none;">
+    <div class="head">
+		<a class="close-btn" href="javascript:;"></a>
+		<div class="title dd-l">您好像还不会使用哦，让我教教你</div>
+		<a class="read dd-l" href="javascript:;">我知道了</a>
+	</div>
+	<div class="container">
+	    <div class="slide">
+			<a class="prev-btn" data-index="1" title="上一步"></a>
+			<a class="next-btn next-btn-enable" data-index="1" title="下一步"></a>
+		</div>
+		<div class="steps">
+			<img src="http://img.doucome.com/dcome/ex-guide/ex-search1.png" width="500" height="230"/>
+			<img src="http://img.doucome.com/dcome/ex-guide/ex-search2.png" width="500" height="230"/>
+			<img src="http://img.doucome.com/dcome/ex-guide/ex-search3.png" width="500" height="230"/>
+		</div>
+	</div>
+</div>
+#end

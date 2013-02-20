@@ -16,7 +16,7 @@ import com.ibatis.sqlmap.client.SqlMapExecutor;
 
 /**
  * ¶¹Þ¢ÆÀÂÛ
- * @author shenjia.caosj 2012-7-21
+ * @author langben 2012-7-21
  *
  */
 public class IBatisDcCommentDAO extends SqlMapClientDaoSupport implements DcCommentDAO {
@@ -41,7 +41,7 @@ public class IBatisDcCommentDAO extends SqlMapClientDaoSupport implements DcComm
 	@Override
 	public int countCommentsWithPagination(DcCommentSearchCondition searchCondition) {
 		Map<String,Object> condition = searchCondition.toMap() ;
-		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("DcComment.countCommentsWithPagination" , condition)) ;
+		return NumberUtils.parseInt((Integer)getSqlMapClientTemplate().queryForObject("DcComment.countCommentsWithPagination" , condition)) ;
 	}
 
 	@Override

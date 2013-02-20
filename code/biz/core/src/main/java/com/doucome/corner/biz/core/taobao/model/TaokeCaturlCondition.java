@@ -1,10 +1,10 @@
 package com.doucome.corner.biz.core.taobao.model;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 类目推广查询条件
- * @author shenjia.caosj 2012-3-21
+ * @author langben 2012-3-21
  *
  */
 public class TaokeCaturlCondition extends AbstractModel{

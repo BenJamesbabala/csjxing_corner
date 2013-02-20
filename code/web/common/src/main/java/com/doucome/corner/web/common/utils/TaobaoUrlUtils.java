@@ -33,14 +33,30 @@ public class TaobaoUrlUtils {
 			itemId = params.get("itemid") ;
 		}
 		if(StringUtils.isBlank(itemId)){
+			itemId = params.get("itemId") ;
+		}
+		if(StringUtils.isBlank(itemId)){
 			itemId = params.get("default_item_id") ;
 		}
 		if(StringUtils.isBlank(itemId)){
 			itemId = params.get("mallstitemid") ;
 		}
 		if(StringUtils.isBlank(itemId)){
+			itemId = params.get("mallstItemId") ;
+		}
+		if(StringUtils.isBlank(itemId)){
 			return null ;
 		}
 		return itemId ;
 	}
+	
+//	public static boolean isValidItemUrl(String tbItemUrl) {
+//		if (StringUtils.isBlank(tbItemUrl)) {
+//			return false;
+//		}
+//		if (StringUtils.isEmpty(parseItemId(tbItemUrl))) {
+//			return false;
+//		}		
+//		return true;
+//	}
 }

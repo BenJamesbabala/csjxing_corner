@@ -6,7 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * ≤È—Øaccount
- * @author shenjia.caosj 2012-5-20
+ * @author langben 2012-5-20
  *
  */
 public class DdzAccountSearchCondition {

@@ -20,7 +20,7 @@ import com.doucome.corner.web.bops.action.BopsBasicAction;
 
 /**
  * 淘宝客报表任务
- * @author shenjia.caosj 2012-4-23
+ * @author langben 2012-4-23
  *
  */
 @SuppressWarnings("serial")
@@ -45,7 +45,7 @@ public class TaokeReportTaskAction extends BopsBasicAction {
 	
 	private Date current ;
 	
-	private SyncReportTaskFacade[][]  taskCalendar  = new SyncReportTaskFacade[5][7] ;
+	private SyncReportTaskFacade[][]  taskCalendar  = new SyncReportTaskFacade[6][7] ;
 	
 	@Autowired
 	private DdzSyncReportTaskDAO ddzSyncReportTaskDAO ;
@@ -102,6 +102,7 @@ public class TaokeReportTaskAction extends BopsBasicAction {
 			if(calCurrent.get(Calendar.MONTH) != currentMonth){
 				break ;
 			}
+			
 		}
 		
 		

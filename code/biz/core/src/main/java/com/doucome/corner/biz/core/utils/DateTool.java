@@ -29,6 +29,15 @@ public class DateTool {
     }
 
     /**
+     * yyyy-MM-dd格式.
+     * @param date
+     * @return
+     */
+    public static String formatToDay(Date date) {
+    	return format(date, DATE_FORMAT_DAY);
+    }
+    
+    /**
      * yyyy-MM-dd HH:mm格式
      * 
      * @param date
@@ -36,5 +45,12 @@ public class DateTool {
      */
     public static String format_2mm(Date date) {
         return format(date, DATE_FORMAT_2MM);
+    }
+    
+    public static long getMilliseconds(Date date){
+    	if(date == null){
+    		return 0 ;
+    	}
+    	return date.getTime() ;
     }
 }

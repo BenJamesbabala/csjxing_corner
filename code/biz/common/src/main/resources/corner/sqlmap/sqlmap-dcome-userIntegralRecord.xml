@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcUserIntegralRecord">
+	<typeAlias alias="TA-DcUserIntegralRecord"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcUserIntegralRecordDO" />
+
+	<resultMap id="RM-DcUserIntegralRecord" class="TA-DcUserIntegralRecord">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="integralCount" column="INTEGRAL_COUNT"  />
+		<result property="inOutType" column="IN_OUT_TYPE" />
+		<result property="source" column="SOURCE" />
+		<result property="integralDesc" column="INTEGRAL_DESC" />
+		<result property="integralBalance" column="INTEGRAL_BALANCE" />
+		<result property="taokeReportId" column="TAOKE_REPORT_ID" />
+		<result property="exchangeApproveId" column="EXCHANGE_APPROVE_ID" />
+		<result property="status" column="STATUS" />
+		<result property="settleId" column="SETTLE_ID" />
+		<result property="gmtCreate" column="GMT_CREATE" />
+		<result property="gmtModified" column="GMT_MODIFIED" />
+	</resultMap>
+	
+	<insert id="insertRecord">
+		INSERT INTO
+			DC_USER_INTEGRAL_RECORD(ID,USER_ID,INTEGRAL_COUNT,IN_OUT_TYPE,SOURCE,INTEGRAL_DESC,INTEGRAL_BALANCE,TAOKE_REPORT_ID,EXCHANGE_APPROVE_ID,SETTLE_ID,STATUS,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#userId#,#integralCount#,#inOutType#,#source#,#integralDesc#,#integralBalance#,#taokeReportId#,#exchangeApproveId#,#settleId#,#status#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryRecordsWithPagination" resultMap="RM-DcUserIntegralRecord">
+	    SELECT 
+	    	ID,USER_ID,INTEGRAL_COUNT,IN_OUT_TYPE,SOURCE,INTEGRAL_DESC,INTEGRAL_BALANCE,TAOKE_REPORT_ID,EXCHANGE_APPROVE_ID,SETTLE_ID,STATUS,GMT_CREATE,GMT_MODIFIED
+	    FROM 
+	    	DC_USER_INTEGRAL_RECORD
+	    <dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+		    	<isNotEmpty property="userId" prepend="AND">
+					    USER_ID = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="inOutType" prepend="AND">
+					    IN_OUT_TYPE = #inOutType#
+				</isNotEmpty>
+				<isNotEmpty property="status" prepend="AND">
+					    STATUS = #status#
+				</isNotEmpty>
+	    	</isParameterPresent>
+	    </dynamic>
+	    ORDER BY 
+	    	GMT_CREATE DESC
+	    LIMIT 
+	    	#start#, #size#
+	</select>
+	
+	<select id="countRecordsWithPagination" resultClass="java.lang.Integer">
+	    SELECT 
+	    	COUNT(ID)
+	    FROM 
+	    	DC_USER_INTEGRAL_RECORD
+	    <dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+		    	<isNotEmpty property="userId" prepend="AND">
+					    USER_ID = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="inOutType" prepend="AND">
+					    IN_OUT_TYPE = #inOutType#
+				</isNotEmpty>
+				<isNotEmpty property="status" prepend="AND">
+					    STATUS = #status#
+				</isNotEmpty>
+	    	</isParameterPresent>
+	    </dynamic>
+	</select>
+	
+	<select id="queryRecordByReportId" resultMap="RM-DcUserIntegralRecord">
+		SELECT 
+			ID,USER_ID,INTEGRAL_COUNT,IN_OUT_TYPE,SOURCE,INTEGRAL_DESC,INTEGRAL_BALANCE,TAOKE_REPORT_ID,EXCHANGE_APPROVE_ID,SETTLE_ID,STATUS,GMT_CREATE,GMT_MODIFIED
+		FROM
+			DC_USER_INTEGRAL_RECORD
+		WHERE
+			TAOKE_REPORT_ID = #reportId#
+		LIMIT 1
+	</select>
+	
+	<update id="updateStatusBySettleIdList">
+		UPDATE
+			DC_USER_INTEGRAL_RECORD
+		SET
+			STATUS = #status# ,
+			GMT_MODIFIED = now() 
+		WHERE
+			SETTLE_ID IN
+		    <iterate prepend="" property="settleIdList" open="("  close=")"  conjunction=",">
+			      #settleIdList[]#
+			</iterate>
+	</update>
+	
+	<update id="updateStatusAndUserMemoByExApproveId">
+		UPDATE
+			DC_USER_INTEGRAL_RECORD
+		SET
+			STATUS = #status# ,
+			<isNotNull property="userMemo">
+				    USER_MEMO = #userMemo# ,
+			</isNotNull>
+			GMT_MODIFIED = now() 
+		WHERE
+			EXCHANGE_APPROVE_ID = #exchangeApproveId#
+	</update>
+</sqlMap>

@@ -2,7 +2,7 @@ package com.doucome.corner.biz.zhe.condition;
 
 /**
  * ’€ø€πÊ‘Ú
- * @author shenjia.caosj 2012-3-29
+ * @author langben 2012-3-29
  *
  */
 public class EatDiscountCondition {

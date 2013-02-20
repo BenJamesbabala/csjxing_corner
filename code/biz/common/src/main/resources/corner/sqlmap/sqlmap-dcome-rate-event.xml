@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcRateEvent">
+	<typeAlias alias="TA-DcRateEvent"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcRateEventDO" />
+
+	<resultMap id="RM-DcRateEvent" class="TA-DcRateEvent">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="nick" column="NICK" jdbcType="VARCHAR" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="clientAgent" column="CLIENT_AGENT" jdbcType="VARCHAR" />
+		<result property="queryString" column="QUERY_STRING" jdbcType="VARCHAR" />
+		<result property="ipAddress" column="IP_ADDRESS" jdbcType="VARCHAR" />
+		<result property="httpMethod" column="HTTP_METHOD" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS" jdbcType="VARCHAR" />
+		<result property="gmtLogin" column="GMT_LOGIN" jdbcType="TIMESTAMP" />
+		<result property="loginSource" column="LOGIN_SOURCE" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insert" parameterClass="TA-DcRateEvent">
+		INSERT INTO DC_RATE_EVENT
+			(ID,USER_ID,NICK,ITEM_ID,CLIENT_AGENT,QUERY_STRING,IP_ADDRESS,HTTP_METHOD,STATUS,GMT_LOGIN,LOGIN_SOURCE,GMT_CREATE)
+		VALUES
+			(#id#,#userId#,#nick#,#itemId#,#clientAgent#,#queryString#,#ipAddress#,#httpMethod#,#status#,#gmtLogin#,#loginSource#,now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryRateEvent" resultMap="RM-DcRateEvent">
+		SELECT 
+			ID,USER_ID,NICK,ITEM_ID,CLIENT_AGENT,QUERY_STRING,IP_ADDRESS,HTTP_METHOD,STATUS,GMT_LOGIN,LOGIN_SOURCE,GMT_CREATE
+		FROM 
+			DC_RATE_EVENT
+			<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="itemId" prepend="AND">
+					<![CDATA[
+					ITEM_ID = #itemId#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="inMinutes" prepend="AND">
+					<![CDATA[
+					UNIX_TIMESTAMP(NOW()) -  UNIX_TIMESTAMP(GMT_CREATE) < #inMinutes#
+					]]>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+		
+	</select>
+	
+</sqlMap>

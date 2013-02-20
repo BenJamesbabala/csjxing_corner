@@ -16,7 +16,7 @@
 			<result name="success" type="velocity">/bops/dcome.qq/sceneDetail.vm</result>
 		</action>
 		
-		<action name="item_list" class="com.doucome.corner.web.bops.action.dcome.qq.ItemListAction">
+		<action name="item_list" class="com.doucome.corner.web.bops.action.dcome.qq.DcItemListAction">
 			<interceptor-ref name="bopsDefaultStack" />
 			<result name="success" type="velocity">/bops/dcome.qq/itemList.vm</result>
 		</action>
@@ -58,18 +58,19 @@
 			<result name="success" type="velocity">/bops/dcome.qq/commentList.vm</result>
 		</action>
 		
-		<action name="item_operate" class="com.doucome.corner.web.bops.action.dcome.qq.ItemSearchAction">
+		<action name="item_operate" class="com.doucome.corner.web.bops.action.dcome.qq.DcItemSearchAction">
 			<interceptor-ref name="bopsDefaultStack" />
 			<result name="success" type="velocity">/bops/dcome.qq/itemOperate.vm</result>
 			<result name="item_not_found" type="velocity">/bops/noItem.vm</result>
 		</action>
-		<action name="item_save" class="com.doucome.corner.web.bops.action.dcome.qq.ItemAction">
+		<action name="item_save" class="com.doucome.corner.web.bops.action.dcome.qq.DcPgcItemAction">
 			<interceptor-ref name="bopsDefaultStack" />
-			<result name="success" type="redirect">/bops/dcome/qq/bops_detail.htm?id=${itemId}</result>
+			<result name="success" type="redirect">/bops/dcome/qq/item_operate.htm</result>
 		</action>
-		<action name="bops_detail" class="com.doucome.corner.web.dcome.action.frame.q.ItemDetailAction">
+		<action name="bops_detail" class="com.doucome.corner.web.bops.action.dcome.qq.BopsItemDetailAction">
 			<interceptor-ref name="bopsDefaultStack" />
 			<result name="success" type="velocity">/bops/dcome.qq/bopsDetail.vm</result>
+			<result name="item_not_found" type="velocity">/bops/noItem.vm</result>
 		</action>
 		
 		<action name="index_config" class="com.doucome.corner.web.bops.action.dcome.qq.IndexConfigAction">
@@ -86,13 +87,89 @@
 			<interceptor-ref name="bopsDefaultStack" />
 			<result name="success" type="velocity">/bops/dcome.qq/release.vm</result>
 		</action>
+		
+		<action name="batch_add_item" class="com.doucome.corner.web.bops.action.dcome.qq.BatchAddItemAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.qq/batchAddItem.vm</result>
+		</action>
+		
+		<action name="do_batch_add_item" class="com.doucome.corner.web.bops.action.dcome.qq.BatchAddItemAction" method="doAdd">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="redirect">/bops/dcome/qq/item_list.htm?order=display-order--desc</result>
+		</action>
+		
+		<action name="promotion_vote_track" class="com.doucome.corner.web.bops.action.dcome.qq.PromotionVoteTrackAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.qq/promotionVoteTrack.vm</result>
+		</action>
+		
+		<action name="exchange_approve_list" class="com.doucome.corner.web.bops.action.dcome.qq.ExchangeApproveListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.qq/exchangeApproveList.vm</result>
+		</action>
+		
+		<action name="user_integral_record_list" class="com.doucome.corner.web.bops.action.dcome.qq.UserIntegralRecordListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.qq/userIntegralRecordList.vm</result>
+		</action>
+	</package>
+	
+	<package name="bops-dcome-hs" namespace="/bops/dcome/hs" extends="bops">
+		<action name="topic_list" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsTopicListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.hs/topic_list.vm</result>
+		</action>
+		<action name="daily_fate_list" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsDailyFateListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.hs/daily_fate_list.vm</result>
+		</action>
+		<action name="week_fate_list" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsWeekFateListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.hs/week_fate_list.vm</result>
+		</action>
+		<action name="month_fate_list" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsMonthFateListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.hs/month_fate_list.vm</result>
+		</action>
+		<action name="topic" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsTopicAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.hs/topic.vm</result>
+		</action>
+		<action name="daily_fate" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsDailyFateAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.hs/daily_fate.vm</result>
+		</action>
+		<action name="week_fate" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsWeekFateAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.hs/week_fate.vm</result>
+		</action>
+		<action name="month_fate" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsMonthFateAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.hs/month_fate.vm</result>
+		</action>
+		<action name="new_topic" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsNewTopicAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="redirect">/bops/dcome/hs/topic.htm</result>
+		</action>
+		<action name="new_daily_fate" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsNewDailyFateAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="redirect">/bops/dcome/hs/daily_fate.htm?hsId=${nextHsId}</result>
+		</action>
+		<action name="new_week_fate" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsNewWeekFateAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="redirect">/bops/dcome/hs/week_fate.htm?hsId=${nextHsId}</result>
+		</action>
+		<action name="new_month_fate" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsNewMonthFateAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="redirect">/bops/dcome/hs/month_fate.htm?hsId=${nextHsId}</result>
+		</action>
 	</package>
 	
 	<package name="bops-dcome-qq-remote" namespace="/bops/dcome/qq/remote" extends="struts-json">
 		<interceptors>
 			 <!-- Basic stack -->
             <interceptor-stack name="bopsDefaultStack">
-				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="cornerDefaultStack" />
 				 <interceptor-ref name="setBopsContextInterceptor" />
 				 <interceptor-ref name="bopsAuthzContextInterceptor" />
 			 </interceptor-stack>
@@ -123,7 +200,7 @@
 			<result name="success" type="json" ></result>
 		</action>
 		
-		<action name="set_comment_status_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.CommentOperateAjaxAction" method="status">
+		<action name="set_comment_status_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsCommentAjaxAction" method="status">
 			<interceptor-ref name="bopsDefaultStack" />
 			<result name="success" type="json" ></result>
 		</action>
@@ -138,18 +215,218 @@
 			<result name="success" type="json" ></result>
 		</action>
 		
-		<action name="add_bops_comment_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsItemAjaxAction" method="addBopsComment">
+		<action name="add_bops_comment_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsCommentAjaxAction" method="addBopsComment">
 			<interceptor-ref name="bopsDefaultStack" />
 			<result name="success" type="json" ></result>
 		</action>
-		<action name="reset_item_status_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsItemAjaxAction" method="resetItemStatus">
+		
+		<action name="update_item_status_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsItemAjaxAction" method="updateItemStatus">
 			<interceptor-ref name="bopsDefaultStack" />
 			<result name="success" type="json" ></result>
 		</action>
+		
+		<action name="add_exchange_item_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsExchangeAjaxAction" method="addToExchange">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="update_exchange_item_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsExchangeAjaxAction" method="updateExchangeInfo">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="del_exchange_item_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsExchangeAjaxAction" method="delExchangeItem">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
 		<action name="reset_taoke_url_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsItemAjaxAction" method="resetTaokeUrl">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="feed_item_comments_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.TaobaoCommentAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="update_prom_award_status_ajax" class="com.doucome.corner.web.bops.action.dcome.prom.PromotionAwardOperateAjaxAction" method="updateReviewStatus">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="update_prom_award_send_status_ajax" class="com.doucome.corner.web.bops.action.dcome.prom.PromotionAwardOperateAjaxAction" method="updateSendStatus">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="update_item_recomm_type_ajax" class="com.doucome.corner.web.bops.action.dcome.prom.ItemOperateAjaxAction" method="updateRecommType">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="update_item_postal_ajax" class="com.doucome.corner.web.bops.action.dcome.prom.ItemOperateAjaxAction" method="updatePostalEnable">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="update_item_category_ajax" class="com.doucome.corner.web.bops.action.dcome.prom.ItemOperateAjaxAction" method="updateCategoryId">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="update_item_display_order_ajax" class="com.doucome.corner.web.bops.action.dcome.ajax.UpdateItemDisplayOrderAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="check_item_exists_by_native_id_ajax" class="com.doucome.corner.web.bops.action.dcome.ajax.CheckDcItemExistsByNativeIdAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="update_nick_ajax" class="com.doucome.corner.web.bops.action.dcome.ajax.UpdateNickAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="update_promotion_rate_ajax" class="com.doucome.corner.web.bops.action.dcome.ajax.UpdatePromotionRateAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="query_most_wish_ajax" class="com.doucome.corner.web.bops.action.dcome.ajax.QueryMostWishAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="takein_promotion_ajax" class="com.doucome.corner.web.bops.action.dcome.ajax.TakeinPromotionAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="calculate_promotion_rate_ajax" class="com.doucome.corner.web.bops.action.dcome.ajax.CalculatePromotionRateAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="exchange_detail_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsExchangeAjaxAction" method="queryExchangeDetail">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="accept_ugc_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsUgcAjaxAction" method="acceptUgcToPgc">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		<action name="query_user_info_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.BopsUserAjaxAction" method="queryUserInfo">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="update_user_exchange_approve_status_ajax" class="com.doucome.corner.web.bops.action.dcome.ajax.UserExchangeApproveOperateAjaxAction">
 			<interceptor-ref name="bopsDefaultStack" />
 			<result name="success" type="json" ></result>
 		</action>
 	</package>
 	
+	<package name="bops-dcome-prom" namespace="/bops/dcome/prom" extends="bops">
+		<action name="rate_detail_list" class="com.doucome.corner.web.bops.action.dcome.prom.PromotionRateListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.prom/rateDetailList.vm</result>
+		</action>
+		
+		<action name="new_promotion" class="com.doucome.corner.web.bops.action.dcome.prom.PromotionNewAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.prom/promotion_list.vm</result>
+		</action>
+		
+		<action name="prom_list" class="com.doucome.corner.web.bops.action.dcome.prom.PromotionListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.prom/promList.vm</result>
+		</action>
+		
+		<action name="spider_item_list" class="com.doucome.corner.web.bops.action.dcome.prom.SpiderItemListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.prom/spiderItemList.vm</result>
+		</action>
+		
+		<action name="login_trace" class="com.doucome.corner.web.bops.action.dcome.prom.UserLoginTraceAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.prom/loginTrace.vm</result>
+		</action>
+		
+		<action name="redirect_item" class="com.doucome.corner.web.bops.action.dcome.prom.RedirectItemAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="none" type="velocity">/bops/noItem.vm</result>
+		</action>
+		
+		<action name="exchange_item_list" class="com.doucome.corner.web.bops.action.dcome.prom.ExchangeItemListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.prom/exchangeItemList.vm</result>
+		</action>
+		
+		<action name="prom_award_list" class="com.doucome.corner.web.bops.action.dcome.prom.PromotionAwardListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.prom/promAwardList.vm</result>
+		</action>
+		<action name="search_log_list" class="com.doucome.corner.web.bops.action.dcome.prom.SearchLogListAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="velocity">/bops/dcome.prom/searchLogList.vm</result>
+		</action>
+	</package>
+	
+	<package name="bops-dcome-qq-remote-prom" namespace="/bops/dcome/qq/remote/prom" extends="struts-json">
+		<interceptors>
+			 <!-- Basic stack -->
+            <interceptor-stack name="bopsDefaultStack">
+				 <interceptor-ref name="cornerDefaultStack" />
+				 <interceptor-ref name="setBopsContextInterceptor" />
+				 <interceptor-ref name="bopsAuthzContextInterceptor" />
+			 </interceptor-stack>
+		</interceptors>	
+		
+	    <action name="get_prom_awards" class="com.doucome.corner.web.bops.action.dcome.prom.PromotionAwardAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="query_prom_outcode" class="com.doucome.corner.web.bops.action.dcome.prom.QueryPromOutcodeAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="scan_award_user_cheat_ajax" class="com.doucome.corner.web.bops.action.dcome.prom.ScanAwardUserCheatAjaxAction">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="send_message_ajax" class="com.doucome.corner.web.bops.action.dcome.prom.BopsMessageAjaxAction" method="sendMessageToUser">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		
+		<action name="query_item_from_tb_ajax" class="com.doucome.corner.web.bops.action.dcome.prom.SearchLogAjaxAction" method="queryItemFromTb">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+		<action name="add_ugc_to_exchange_ajax" class="com.doucome.corner.web.bops.action.dcome.prom.SearchLogAjaxAction" method="addUgcToExchange">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>
+	</package>
+	
+	<package name="bops-dcome-hs-remote" namespace="/bops/dcome/hs/remote" extends="struts-json">
+	    <interceptors>
+            <interceptor-stack name="bopsDefaultStack">
+				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="setBopsContextInterceptor" />
+				 <interceptor-ref name="bopsAuthzContextInterceptor" />
+			 </interceptor-stack>
+		</interceptors>
+		<action name="delete_hs_topic_ajax" class="com.doucome.corner.web.bops.action.dcome.qq.hs.HsTopicAjaxAction" method="deleteHsTopic">
+			<interceptor-ref name="bopsDefaultStack" />
+			<result name="success" type="json" ></result>
+		</action>	
+	</package>
 </struts>

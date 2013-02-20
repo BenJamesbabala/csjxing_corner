@@ -2,7 +2,7 @@ package com.doucome.corner.biz.core.taobao.constant;
 
 /**
  * 
- * @author shenjia.caosj 2012-2-26
+ * @author langben 2012-2-26
  *
  */
 public class TaokeErrCodeConstant {

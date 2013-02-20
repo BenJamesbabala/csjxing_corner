@@ -78,14 +78,25 @@
 
 <div class="like-dialog dd-hide" style="width:400px;height:240px;" id="commentDialog">
 	<div class="dialog-comment">
-		<div class="title">豆蔻评论<span style="font-size: 10px;">（批量添加评论，请在评论间用英文';'分隔）</span><a href="javascript:;" class="close"></a></div>
-		<div class="dialog-comment-content">
+		<div class="title">评论<a href="javascript:;" class="close"></a></div>	
+		<span class="comment-category-title"">豆蔻评论</span><span style="font-size: 10px;">（批量添加评论，请在评论间用英文';'分隔）</span>
+		<div class="dcome-comment dialog-comment-content">
 			<textarea class="comment" placeholder="请输入您对该商品的感觉" data-maxlen="140"></textarea>
 			<div>
-                <span class="error"></span><span class="info"></span>
-				<a href="javascript:;" class="submit" title="确定">确&nbsp;定</a>
+				<span class="info"></span>
+            	<span class="error"></span>
 			</div>
 		</div>
-	</div>	
+		<span class="comment-category-title">淘宝评论</span>
+		<div class="taobao-comment dialog-comment-content" data-native-id="$!item.nativeId" data-item-source="$!item.source" data-seller-id="$!sellerUserId">
+			<table style="width: 100%;">
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="dialog-comment-content">
+			<a href="javascript:;" class="submit" title="确定">确&nbsp;定</a>
+		</div>
+	</div>
 </div>
-#DDZ_JS([])
+#DDZ_CSS(["../bops/item/bopsDetail.css"])

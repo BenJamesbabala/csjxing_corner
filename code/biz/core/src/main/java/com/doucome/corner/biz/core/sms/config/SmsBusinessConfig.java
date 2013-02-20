@@ -17,7 +17,7 @@ import com.doucome.corner.biz.core.sms.model.SmsBusinessEnums;
  * 	<li>短信网关信息从配置读取</li>
  * 	<li>短信文案等配置从DB读取</li>
  * </ul>
- * @author shenjia.caosj 2011-3-22
+ * @author langben 2011-3-22
  *
  */
 public class SmsBusinessConfig {
@@ -86,7 +86,7 @@ public class SmsBusinessConfig {
 	 * 	<li>短信网关服务器配置信息</li>
 	 * 	<li>短信内容等配置信息</li>
 	 * </ul>
-	 * @author shenjia.caosj 2011-3-22
+	 * @author langben 2011-3-22
 	 *
 	 */
 	public static class SmsBusinessPack {

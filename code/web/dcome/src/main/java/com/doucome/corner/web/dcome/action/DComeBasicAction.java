@@ -1,6 +1,7 @@
 package com.doucome.corner.web.dcome.action;
 
 import com.doucome.corner.biz.dcome.enums.DcLoginSourceEnums;
+import com.doucome.corner.biz.dcome.model.DcUserDTO;
 import com.doucome.corner.web.common.action.BasicAction;
 import com.doucome.corner.web.dcome.authz.DcAuthz;
 
@@ -34,4 +35,9 @@ public abstract class DComeBasicAction extends BasicAction {
     	}
     	return source.getValue() ;
     }
+    
+    public DcUserDTO getUser() {
+    	return dcAuthz.getUser() ;
+    }
+   
 }

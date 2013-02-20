@@ -21,6 +21,8 @@ public class JsonModel<T> {
 
 	private T data;
 	
+	private String extraData ;
+	
 	public boolean isSuccess(){
 		return StringUtils.equals(code,CODE_SUCCESS) ; 
 	}
@@ -49,5 +51,21 @@ public class JsonModel<T> {
 		this.detail = detail;
 	}
 	
+	public void setSuccess(String code, T data) {
+		setCode(code);
+		setData(data);
+	}
+	
+	public void setFail(String code, String detail) {
+		setCode(code);
+		setDetail(detail);
+	}
 
+	public String getExtraData() {
+		return extraData;
+	}
+
+	public void setExtraData(String extraData) {
+		this.extraData = extraData;
+	}
 }

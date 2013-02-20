@@ -1,6 +1,7 @@
 package com.doucome.corner.biz.dal.dao.ibatis;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -47,21 +48,21 @@ public class DdzTaokeReportSettleDAOTest extends AbstractBaseJUnit4Test {
 		System.out.println(count);
 	}
 	
-//	@Test
-//	public void testUpdateSettleStatus() {
-//		List<DdzTaokeReportSettleDO> settleDOs = new ArrayList<DdzTaokeReportSettleDO>();
-//		DdzTaokeReportSettleDO settleDO = new DdzTaokeReportSettleDO();
-//		settleDO.setId(517L);
-//		settleDO.setSettleStatus(SettleStatusEnums.SETTLE_FAIL.getValue());
-//		settleDOs.add(settleDO);
-//		settleDO = new DdzTaokeReportSettleDO();
-//		settleDO.setId(2L);
-//		settleDO.setSettleStatus(SettleStatusEnums.SETTLE_PENDING.getValue());
-//		settleDO.setSettleBatchno("asdf");
-//		settleDOs.add(settleDO);
-//		int count = ddzTaokeReportSettleDAO.updateSettleStatus(settleDOs);
-//		Assert.assertEquals(1, count);
-//	}
+	@Test
+	public void testUpdateSettleStatus() {
+		List<DdzTaokeReportSettleDO> settleDOs = new ArrayList<DdzTaokeReportSettleDO>();
+		DdzTaokeReportSettleDO settleDO = new DdzTaokeReportSettleDO();
+		settleDO.setId(9856L);
+		settleDO.setSettleStatus("F");
+		settleDOs.add(settleDO);
+		settleDO = new DdzTaokeReportSettleDO();
+		settleDO.setId(9857L);
+		settleDO.setSettleStatus("P");
+		settleDO.setSettleBatchno("asdf");
+		settleDOs.add(settleDO);
+		int count = ddzTaokeReportSettleDAO.updateSettleStatus(settleDOs);
+		Assert.assertEquals(1, count);
+	}
 	
 //	@Test
 //	public void testUpdateAlipayResult() {

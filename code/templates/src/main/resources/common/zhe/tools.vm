@@ -3,10 +3,12 @@
 	<div class="w1024">
 		<ul>
 			<li class="tool-left">
+				<!--
 				<a href="#" id="diandianFavorite">
     				<p class="tool-title f22">收藏点点折</p>
     				<p class="tool-content f14">将点点折加为收藏</p>
 				</a>
+				-->
 			</li>
 			<li class="tool-center tool-item-rborder">
 				<a target="_blank" href="${env.ddzHelproot}/help/help.html" gtrack="virtual/zhe/help">

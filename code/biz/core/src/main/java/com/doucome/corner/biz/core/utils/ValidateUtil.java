@@ -52,7 +52,7 @@ public class ValidateUtil {
 
         if (mobileNo.length() == 11
             && StringUtils.isNumeric(mobileNo)
-            && (mobileNo.startsWith("13") || mobileNo.startsWith("14") || mobileNo.startsWith("15") || mobileNo.startsWith("18"))) {
+            && (mobileNo.startsWith("1"))) {
             return true;
         } else {
             return false;
@@ -99,4 +99,14 @@ public class ValidateUtil {
     	
     	return true ;
     }
+    
+    public static boolean checkIsQQ(String qq){
+    	if(StringUtils.isBlank(qq)) {
+    		return false ;
+    	}
+    	
+    	return StringUtils.isNumeric(qq) ;
+    }
+    
+
 }

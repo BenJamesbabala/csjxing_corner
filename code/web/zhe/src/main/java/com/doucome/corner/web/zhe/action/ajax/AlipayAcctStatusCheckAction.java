@@ -21,7 +21,7 @@ import com.doucome.corner.web.zhe.model.AlipayAcctStatusCheck;
 
 /**
  * 
- * @author shenjia.caosj 2012-4-27
+ * @author langben 2012-4-27
  *
  */
 @SuppressWarnings("serial")

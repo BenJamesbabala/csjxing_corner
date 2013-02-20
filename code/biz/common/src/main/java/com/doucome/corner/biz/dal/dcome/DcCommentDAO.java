@@ -7,7 +7,7 @@ import com.doucome.corner.biz.dal.dataobject.dcome.DcCommentDO;
 
 /**
  * ¶¹Þ¢ÆÀÂÛ
- * @author shenjia.caosj 2012-7-21
+ * @author langben 2012-7-21
  *
  */
 public interface DcCommentDAO {

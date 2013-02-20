@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.doucome.corner.biz.dcome.business.DcCommentBO;
+import com.doucome.corner.biz.dcome.business.DcItemBO;
 import com.doucome.corner.biz.dcome.model.DcCommentDTO;
 import com.doucome.corner.web.common.model.JsonModel;
 import com.doucome.corner.web.dcome.action.DComeBasicAction;
@@ -24,7 +24,7 @@ public class QueryCommentsAjaxAction extends DComeBasicAction{
 	private Long itemId ;
 	
 	@Autowired
-	private DcCommentBO dcCommentBO ; 
+	private DcItemBO dcItemBO ; 
 	
 	@Override
 	public String execute() throws Exception {
@@ -42,7 +42,7 @@ public class QueryCommentsAjaxAction extends DComeBasicAction{
 			return SUCCESS;
 		}
 		
-		List<DcCommentDTO> commentList = dcCommentBO.getCommentsNoPagination(itemId,page,size);;
+		List<DcCommentDTO> commentList = dcItemBO.getCommentsNoPagination(itemId,page,size);;
 		
 		json.setCode(JsonModel.CODE_SUCCESS) ;
 		json.setData(commentList) ;

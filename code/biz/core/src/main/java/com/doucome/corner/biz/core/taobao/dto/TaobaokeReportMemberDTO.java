@@ -3,13 +3,13 @@ package com.doucome.corner.biz.core.taobao.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
-import com.doucome.corner.biz.core.utils.ReflectUtils;
+import com.doucome.corner.biz.common.utils.ReflectUtils;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 import com.taobao.api.domain.TaobaokeReportMember;
 
 /**
  * 
- * @author shenjia.caosj 2012-2-26
+ * @author langben 2012-2-26
  * 
  */
 public class TaobaokeReportMemberDTO extends AbstractModel {
@@ -98,19 +98,6 @@ public class TaobaokeReportMemberDTO extends AbstractModel {
 	 * ¬Ùº“Í«≥∆,jayzhou
 	 */
 	private String sellerNick;
-	
-	/**
-	 * ±¶±¥Õº∆¨
-	 */
-	private String picUrl ;
-
-	public String getPicUrl() {
-		return picUrl;
-	}
-
-	public void setPicUrl(String picUrl) {
-		this.picUrl = picUrl;
-	}
 
 	public BigDecimal getRealPayFee() {
 		return realPayFee;

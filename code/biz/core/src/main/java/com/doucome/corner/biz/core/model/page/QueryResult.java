@@ -2,12 +2,12 @@ package com.doucome.corner.biz.core.model.page;
 
 import java.util.List;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * ²éÑ¯½á¹û
  * 
- * @author shenjia.caosj 2012-1-12
+ * @author langben 2012-1-12
  * 
  */
 public class QueryResult<T> extends AbstractModel {

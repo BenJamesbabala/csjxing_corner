@@ -1,0 +1,585 @@
+<html>
+<head>
+	<meta charset="GBK">
+	<link rel="stylesheet" type="text/css" href="common.css" />
+	<link rel="stylesheet" type="text/css" href="index.css" />
+</head>
+
+<body>
+    <div id="shadowBg" style="display: none;"></div>
+    <div class="wish-rule-detail" style="display: none;">
+	    <div class="wish-detail" style="">
+			<a class="hide-btn"></a>
+		</div>
+		<div class="star-guide-detail" style="">
+			<a class="hide-btn"></a>
+		</div>
+	</div>
+	
+	<div class="message-layer" id="messageLayer" style="display: none;">
+	    <div class="head">
+			<h2>我的积分详情</h2>
+			<a class="hide-btn" href="javascript:;"></a>
+		</div>
+		<div class="message-area">
+			<ul class="message-list">
+			    <li class="loadding32x32"></li>
+			    <li class="load-fail">数据加载失败，请稍后再试...</li>
+				<li>
+					<div class="content dd-l"><div class="nick50">ttesttetj</div>刚登陆系统，+10积分</div>
+					<div class="time dd-r">刚刚</div>
+				</li>
+				<li>
+					<div class="content dd-l">
+						<div class="nick25">xxx</div>
+						<span>购买了</span>
+						<div class="obj-name">dfjkdjflsjafp;idjfdejhfi</div>
+						<span>，+10积分为什么</span>
+					    
+					</div>
+					<div class="time dd-r">1分钟前</div>
+				</li>
+				<li>
+					<div class="content dd-l">
+					  <div class="nick25">XXX</div>
+					  <span>邀请了</span>
+					  <div class="nick25">XXX</div>
+					  <span>,+10积分</span>
+					</div>
+					<div class="time dd-r">09:47</div>
+				</li>
+				<li>
+					<div class="content dd-l">
+						<div class="nick50">xxx</div>
+						<span>偷了</span>
+						<div class="nick50">xxx</div>
+						<span>的一颗愿望星，-10积分</span>
+					</div>
+					<div class="time dd-r">12-26</div>
+				</li>
+			</ul>
+			<a class="more" href="javascript:;" data-page="1">更多...</a>
+		</div>
+	</div>
+	
+	<div class="dc-body" id="dc-body">
+		<div class="header" id="header">
+			<div class="bg"></div>
+			<a href="javascript:;" class="rule-detail-btn"></a>
+			<div class="user">
+				<img src="user30.jpg" class="user-avatar dd-l">
+				<span class="user-nick">月溪谷</span>
+				<a class="checkin dd-l"></a>
+			</div>
+			<div class="logo">
+			    <img src="index-logo.png"/>
+			</div>
+			<div class="menu-nav">
+			    <div class="wrap dd-l">
+					<div class="dd-l nav">
+						<ul class="menu-list">
+							<li class="cur">
+								<a href="javascript:;" class="hot-menu" style="">限时特价</a>
+							</li>
+							<li class="on">
+								<a class="pgc-menu" href="${env.root}/frame/q/rank.htm" style="line-space: 1px;">小编精选</a>
+							</li>
+							<li class="" class="text-align: center;">
+								<a class="pk-menu split" href="javascript:;" class="my-award">免费领</a>
+								<div class="mark"></div>
+							</li>
+							<li>
+								<a class="auction-menu" href="javascript:;" class="my-award">积分兑换</a>
+							</li>
+							<li>
+								<a class="ugc-btn" href="javascript:;" class="my-award"></a>
+							</li>
+						</ul>
+					</div>
+					<div class="dd-r info">
+					    <div class="message-area dd-l">
+							<div class="total-num">3</div>
+							<div class="messages" style="display: none;">
+								<div class="head">
+									<h3>
+										<span class="head-lbl">消息通知&nbsp;&nbsp;|</span>
+										<span class="normal title">
+											<a class="cur" href="javascript:;">我的消息</a>
+											<span class="normal-num num">2</span>
+										</span>
+										<span class="award title">
+											<a class="on" href="javascript:;">中奖消息</a>
+											<span class="award-num num">1</span>
+										</span>
+									</h3>
+								</div>
+								<ul class="content-list">
+									<li class="content">暂时还么有消息</li>
+									<li class="content">你还有<a class="my-award" href="javascript:;">1个奖品</a>领取领取</li>
+									<li class="content">你还有<a class="earn-integral-btn" href="javascript:;">45积分</a>没有领取</li>
+								</ul>
+								<div class="foot-shadow"></div>
+							</div>
+						</div>
+						<div class="user-area dd-l">
+							<div class="icon dd-l"></div>
+							<div class="dd-l integral-area">
+								<div class="active ">积分:<span class="integral-count">5530</span></div>
+								<div class="frozen ">已冻结:<span class="frozen-integral-count">8020</span></div>
+							</div>
+						</div>
+						<a class="earn-integral earn-integral-btn dd-l" href="javascript:;"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="idx-cnt pk-cnt">
+			<div class="cnt-top">
+				<!--div class="award-title"></div-->
+				<div class="dynamic-message dd-l" id="dynamicMessage">
+					<span class="title dd-l">美丽动态</span>
+					<div class="nav dd-l">
+						<a class="mine-message active" href="javascript:;">和我相关</a>
+						<a class="prom-message" href="javascript:;">TA们在做</a>
+						<a class="other-message" href="javascript:;">小道消息</a>
+					</div>
+					<div class="message-area dd-l">
+					    <div class="loadding32x32" style="display: none;"></div>
+						<div class="message-list-wrap">
+							<ul class="message-list">
+								<li>你没有系统消息</li>
+								<li>
+									<div class="content dd-l"><div class="nick50">ttesttetj</div>刚登陆系统，+10积分</div>
+									<div class="time dd-r">刚刚</div>
+								</li>
+								<li>
+									<div class="content dd-l">
+										<div class="nick25">xxx</div>
+										<span>购买了</span>
+										<div class="obj-name">dfjkdjflsjafp;idjfdejhfi</div>
+										<span>，+10积分</span>
+									</div>
+									<div class="time dd-r">1分钟前</div>
+								</li>
+								<li>
+									<div class="content dd-l">
+									  <div class="nick25">XXX</div>
+									  <span>邀请了</span>
+									  <div class="nick25">XXX</div>
+									  <span>,+10积分</span>
+									</div>
+									<div class="time dd-r">09:47</div>
+								</li>
+								<li>
+									<div class="content dd-l">
+										<div class="nick50">xxx</div>
+										<span>偷了</span>
+										<div class="nick50">xxx</div>
+										<span>的一颗愿望星，-10积分</span>
+									</div>
+									<div class="time dd-r">12-26</div>
+								</li>
+							</ul>
+						</div>
+						<a href="javascript:;" class="message-more">更多...</a>
+					</div>
+				</div>
+				<div class="iwish">
+					<div class="wrap dd-l">
+						<div class="main">
+							<div class="wish-content">
+								<div class="top-cover">
+									<div class="info-wrap">
+										<div class="info">
+											<span class="rate-count color-orange">102</span>颗愿望星
+											/第<span class="rank color-orange">34</span>名
+										</div>
+									</div>
+									<div class="browse-wrap dd-hide">
+										<span class="price">&yen;12.33</span>
+										<span class="go">
+											<a class="browse" href="javascript:;" style="">去看看</a>
+										</span>
+									</div>
+								</div>
+								<img class="picture" alt="" src="item160.jpg" style=""/>
+								<a class="star" style="opacity: 100;"></a>
+							</div>
+							<div class="bottom-cover">
+								<span style="line-height: 20px; font-weight: bold;">我的愿望卡</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="iwish-start" style="display: none;">
+					<div class="wrap dd-l">
+						<div class="prom-desc"></div>
+						<a href="javascript:;" class="unwish-btn"></a>
+					</div>
+				</div>
+				<div class="pk-rank">
+				    <div class="wrap">
+						<a class="history-rank" href="javascript:;" title="昨日榜单">昨日榜单</a>
+						<a class="fresh-rank" href="javascript:;" title="当前排行榜">刷新</a>
+						<ul class="rank-list" style="position: relative;">
+							<li>
+								<div class="user-name text-ellipsis">扯蛋</div>
+								<div class="item-title text-ellipsis">
+								    <a href="">【包邮秋装新品】2012韩版女装圆领格子街头宽松长袖T恤大码打底衫</a>
+								</div>	
+								<div class="dd-r"><span class="count dd-l">134</span><div class="star dd-l"></div></div>
+							</li>
+							<li>
+								<div class="user-name text-ellipsis">Forsaken</div>
+								<div class="item-title text-ellipsis"><a href="">萝莉塔~ 精致破洞 超显瘦 破洞牛仔铅笔小脚裤 573</a></div>
+								<div class="dd-r"><span class="count dd-l">134</span><div class="star dd-l"></div></div>
+							</li>
+							<li>
+								<div class="user-name text-ellipsis">Forsaken</div>
+								<div class="item-title text-ellipsis"><a href="">萝莉塔~ 精致破洞 超显瘦 破洞牛仔铅笔小脚裤 573</a></div>
+								<div class="dd-r"><span class="count dd-l">120</span><div class="star dd-l"></div></div>
+							</li>
+							<li>
+								<div class="user-name text-ellipsis">放逐自我</div>
+								<div class="item-title text-ellipsis"><a href="">萝莉塔~ 精致破洞 超显瘦 破洞牛仔铅笔小脚裤 573</a></div>
+								<div class="dd-r"><span class="count dd-l">120</span><div class="star dd-l"></div></div>
+							</li>
+							<li style="position: absolute; top: 112px;">
+								<div class="user-name text-ellipsis">博弈咖</div>
+								<div class="item-title text-ellipsis"><a href="">萝莉塔~ 精致破洞 超显瘦 破洞牛仔铅笔小脚裤 573</a></div>
+								<div class="dd-r"><span class="count dd-l">120</span><div class="star dd-l"></div></div>
+							</li>
+							<li style="position: absolute; top: 112px;">
+								<div class="user-name text-ellipsis">博弈咖</div>
+								<div class="item-title text-ellipsis"><a href="">萝莉塔~ 精致破洞 超显瘦 破洞牛仔铅笔小脚裤 573</a></div>
+								<div class="dd-r"><span class="count dd-l">120</span><div class="star dd-l"></div></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="fav-wish">
+				<div class="wrap">
+					<div class="head dd-l">
+						<div class="lbl dd-l"></div>
+						<div class="btn dd-r">
+							<a class="prev-btn btn" title="更多"></a>
+							<a class="next-btn btn" title="更多"></a>
+						</div>
+					</div>
+					<ul class="wish-list dd-l">
+						<li>
+							<div class="pic-wrap">
+								<img class="wish-pic" title="" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" />
+								<div class="foot-cover">
+									<div class="foot-wrap">
+										<div class="icon"></div>
+										<span class="wish-count">12人选了它</span>
+									</div>
+								</div>
+								<span class="price">￥23.00</span>
+							</div>
+							<div class="ws-ft"></div>
+						</li>
+						<li>
+							<div class="pic-wrap">
+								<img class="wish-pic" title="" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" />
+								<div class="foot-cover">
+									<div class="foot-wrap">
+										<div class="icon"></div>
+										<span class="wish-count">12人选了它</span>
+									</div>
+								</div>
+							</div>
+							<div class="ws-ft"></div>
+						</li>
+						<li>
+							<div class="pic-wrap">
+								<img class="wish-pic" title="" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" />
+								<div class="foot-cover">
+									<div class="foot-wrap">
+										<div class="icon"></div>
+										<span class="wish-count">12人选了它</span>
+									</div>
+								</div>
+							</div>
+							<div class="ws-ft"></div>
+						</li>
+						<li class="empty">
+						</li>
+						<li>
+							<div class="pic-wrap">
+								<img class="wish-pic" title="" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" />
+								<div class="foot-cover">
+									<div class="foot-wrap">
+										<div class="icon"></div>
+										<span class="wish-count">12人选了它</span>
+									</div>
+								</div>
+							</div>
+							<div class="ws-ft"></div>
+						</li>
+						<li>
+							<div class="pic-wrap">
+								<img class="wish-pic" title="" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" />
+								<div class="foot-cover">
+									<div class="foot-wrap">
+										<div class="icon"></div>
+										<span class="wish-count">12人选了它</span>
+									</div>
+								</div>
+							</div>
+							<div class="ws-ft"></div>
+						</li>
+						<li>
+							<div class="pic-wrap">
+								<img class="wish-pic" title="" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" />
+								<div class="foot-cover">
+									<div class="foot-wrap">
+										<div class="icon"></div>
+										<span class="wish-count">12人选了它</span>
+									</div>
+								</div>
+							</div>
+							<div class="ws-ft"></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="wishs-lbl">
+			    <div class="lbl"></div>
+			</div>
+			<div class="prom-item-main dd-clear">
+				<div class="prom-item-wrap">
+					<div class="promotion-waterfall wish-offer">
+						<ul style="margin-left: 12px;">
+							<li style="">
+								<div class="head"></div>
+								<div class="main">
+									<div class="dd-clear item-pic">
+										<div class="top-cover dd-hide">
+											<span class="item-price">￥39.00</span>
+											<span class="go"><a gtrack="/virtual/qq/item?tracelog=wish-offer&amp;id=100376&amp;src=promotion" title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" taoke-href="http://dev.doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100376" gtrack-init="y">去看看</a></span>
+										</div>
+										<img title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" alt="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒">
+									</div>
+									<div class="user-cover">
+										<span class="user-pic">
+											<img data-avatar-size="30x30" data-avatar-src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" avatar-init="y">
+										</span>
+										<span class="user-name">豆花1的愿望</span>
+										<span title="TA收集的愿望星" class="wish-icon-small"></span>
+										<span class="rate-count">10</span>
+									</div>
+								</div>
+								<div class="foot">
+									<span class="qiang"></span>
+									<div gtrack="/virtual/qq/qiang?tracelog=wish-offer&amp;id=100376&amp;src=promotion" data-promotion-item-id="620" data-promotion-id="19" class="steal-draw-icon stealRate-btn-click" gtrack-init="y">
+										<span class="undraw-rate-count">5</span>
+									</div>
+								</div>
+								<div class="ws_ft"></div>
+							</li>
+                            <li style="">
+								<div class="head"></div>
+								<div class="main">
+									<div class="dd-clear item-pic">
+										<div class="top-cover dd-hide">
+											<span class="item-price">￥39.00</span>
+											<span class="go"><a gtrack="/virtual/qq/item?tracelog=wish-offer&amp;id=100376&amp;src=promotion" title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" taoke-href="http://dev.doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100376" gtrack-init="y">去看看</a></span>
+										</div>
+										<img title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" alt="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒">
+									</div>
+									<div class="user-cover">
+										<span class="user-pic">
+											<img data-avatar-size="30x30" data-avatar-src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" avatar-init="y">
+										</span>
+										<span class="user-name">豆花1的愿望</span>
+										<span title="TA收集的愿望星" class="wish-icon-small"></span>
+										<span class="rate-count">10</span>
+									</div>
+								</div>
+								<div class="foot">
+									<span class="qiang"></span>
+									<div gtrack="/virtual/qq/qiang?tracelog=wish-offer&amp;id=100376&amp;src=promotion" data-promotion-item-id="620" data-promotion-id="19" class="steal-draw-icon stealRate-btn-click" gtrack-init="y">
+										<span class="undraw-rate-count">5</span>
+									</div>
+								</div>
+								<div class="ws_ft"></div>
+							</li>
+                            <li style="">
+								<div class="head"></div>
+								<div class="main">
+									<div class="dd-clear item-pic">
+										<div class="top-cover dd-hide">
+											<span class="item-price">￥39.00</span>
+											<span class="go"><a gtrack="/virtual/qq/item?tracelog=wish-offer&amp;id=100376&amp;src=promotion" title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" taoke-href="http://dev.doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100376" gtrack-init="y">去看看</a></span>
+										</div>
+										<img title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" alt="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒">
+									</div>
+									<div class="user-cover">
+										<span class="user-pic">
+											<img data-avatar-size="30x30" data-avatar-src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" avatar-init="y">
+										</span>
+										<span class="user-name">豆花1的愿望</span>
+										<span title="TA收集的愿望星" class="wish-icon-small"></span>
+										<span class="rate-count">10</span>
+									</div>
+								</div>
+								<div class="foot">
+									<span class="qiang"></span>
+									<div gtrack="/virtual/qq/qiang?tracelog=wish-offer&amp;id=100376&amp;src=promotion" data-promotion-item-id="620" data-promotion-id="19" class="steal-draw-icon stealRate-btn-click" gtrack-init="y">
+										<span class="undraw-rate-count">5</span>
+									</div>
+								</div>
+								<div class="ws_ft"></div>
+							</li>
+                            <li style="">
+								<div class="head"></div>
+								<div class="main">
+									<div class="dd-clear item-pic">
+										<div class="top-cover dd-hide">
+											<span class="item-price">￥39.00</span>
+											<span class="go"><a gtrack="/virtual/qq/item?tracelog=wish-offer&amp;id=100376&amp;src=promotion" title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" taoke-href="http://dev.doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100376" gtrack-init="y">去看看</a></span>
+										</div>
+										<img title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" alt="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒">
+									</div>
+									<div class="user-cover">
+										<span class="user-pic">
+											<img data-avatar-size="30x30" data-avatar-src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" avatar-init="y">
+										</span>
+										<span class="user-name">豆花1的愿望</span>
+										<span title="TA收集的愿望星" class="wish-icon-small"></span>
+										<span class="rate-count">10</span>
+									</div>
+								</div>
+								<div class="foot">
+									<span class="qiang"></span>
+									<div gtrack="/virtual/qq/qiang?tracelog=wish-offer&amp;id=100376&amp;src=promotion" data-promotion-item-id="620" data-promotion-id="19" class="steal-draw-icon stealRate-btn-click" gtrack-init="y">
+										<span class="undraw-rate-count">5</span>
+									</div>
+								</div>
+								<div class="ws_ft"></div>
+							</li>
+                            <li style="">
+								<div class="head"></div>
+								<div class="main">
+									<div class="dd-clear item-pic">
+										<div class="top-cover dd-hide">
+											<span class="item-price">￥39.00</span>
+											<span class="go"><a gtrack="/virtual/qq/item?tracelog=wish-offer&amp;id=100376&amp;src=promotion" title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" taoke-href="http://dev.doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100376" gtrack-init="y">去看看</a></span>
+										</div>
+										<img title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" alt="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒">
+									</div>
+									<div class="user-cover">
+										<span class="user-pic">
+											<img data-avatar-size="30x30" data-avatar-src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" avatar-init="y">
+										</span>
+										<span class="user-name">豆花1的愿望</span>
+										<span title="TA收集的愿望星" class="wish-icon-small"></span>
+										<span class="rate-count">10</span>
+									</div>
+								</div>
+								<div class="foot">
+									<span class="qiang"></span>
+									<div gtrack="/virtual/qq/qiang?tracelog=wish-offer&amp;id=100376&amp;src=promotion" data-promotion-item-id="620" data-promotion-id="19" class="steal-draw-icon stealRate-btn-click" gtrack-init="y">
+										<span class="undraw-rate-count">5</span>
+									</div>
+								</div>
+								<div class="ws_ft"></div>
+							</li>
+                          	<li style="">
+								<div class="head"></div>
+								<div class="main">
+									<div class="dd-clear item-pic">
+										<div class="top-cover dd-hide">
+											<span class="item-price">￥39.00</span>
+											<span class="go"><a gtrack="/virtual/qq/item?tracelog=wish-offer&amp;id=100376&amp;src=promotion" title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" taoke-href="http://dev.doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100376" gtrack-init="y">去看看</a></span>
+										</div>
+										<img title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" alt="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒">
+									</div>
+									<div class="user-cover">
+										<span class="user-pic">
+											<img data-avatar-size="30x30" data-avatar-src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" avatar-init="y">
+										</span>
+										<span class="user-name">豆花1的愿望</span>
+										<span title="TA收集的愿望星" class="wish-icon-small"></span>
+										<span class="rate-count">10</span>
+									</div>
+								</div>
+								<div class="foot">
+									<span class="qiang"></span>
+									<div gtrack="/virtual/qq/qiang?tracelog=wish-offer&amp;id=100376&amp;src=promotion" data-promotion-item-id="620" data-promotion-id="19" class="steal-draw-icon stealRate-btn-click" gtrack-init="y">
+										<span class="undraw-rate-count">5</span>
+									</div>
+								</div>
+								<div class="ws_ft"></div>
+							</li>
+							<li style="">
+								<div class="head"></div>
+								<div class="main">
+									<div class="dd-clear item-pic">
+										<div class="top-cover dd-hide">
+											<span class="item-price">￥39.00</span>
+											<span class="go"><a gtrack="/virtual/qq/item?tracelog=wish-offer&amp;id=100376&amp;src=promotion" title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" taoke-href="http://dev.doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100376" gtrack-init="y">去看看</a></span>
+										</div>
+										<img title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" alt="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒">
+									</div>
+									<div class="user-cover">
+										<span class="user-pic">
+											<img data-avatar-size="30x30" data-avatar-src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" avatar-init="y">
+										</span>
+										<span class="user-name">豆花1的愿望</span>
+										<span title="TA收集的愿望星" class="wish-icon-small"></span>
+										<span class="rate-count">10</span>
+									</div>
+								</div>
+								<div class="foot">
+									<span class="qiang"></span>
+									<div gtrack="/virtual/qq/qiang?tracelog=wish-offer&amp;id=100376&amp;src=promotion" data-promotion-item-id="620" data-promotion-id="19" class="steal-draw-icon stealRate-btn-click" gtrack-init="y">
+										<span class="undraw-rate-count">5</span>
+									</div>
+								</div>
+								<div class="ws_ft"></div>
+							</li>
+							<li style="">
+								<div class="head"></div>
+								<div class="main">
+									<div class="dd-clear item-pic">
+										<div class="top-cover dd-hide">
+											<span class="item-price">￥39.00</span>
+											<span class="go"><a gtrack="/virtual/qq/item?tracelog=wish-offer&amp;id=100376&amp;src=promotion" title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" taoke-href="http://dev.doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100376" gtrack-init="y">去看看</a></span>
+										</div>
+										<img title="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒" src="http://doucome-item.b0.upaiyun.com/upload/product/201208/12/233659523628873.jpg_160x160.jpg" alt="大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒">
+									</div>
+									<div class="user-cover">
+										<span class="user-pic">
+											<img data-avatar-size="30x30" data-avatar-src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" src="http://doucome-img.b0.upaiyun.com/avatar/0/0/0/0/0.jpg_30x30.jpg" avatar-init="y">
+										</span>
+										<span class="user-name">豆花1的愿望</span>
+										<span title="TA收集的愿望星" class="wish-icon-small"></span>
+										<span class="rate-count">10</span>
+									</div>
+								</div>
+								<div class="foot">
+									<span class="qiang"></span>
+									<div gtrack="/virtual/qq/qiang?tracelog=wish-offer&amp;id=100376&amp;src=promotion" data-promotion-item-id="620" data-promotion-id="19" class="steal-draw-icon stealRate-btn-click" gtrack-init="y">
+										<span class="undraw-rate-count">5</span>
+									</div>
+								</div>
+								<div class="ws_ft"></div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<span>您的ID是，如有问题请联系客服：vip@doucome.com&nbsp;&nbsp;版权所有&nbsp;&copy;&nbsp;豆蔻</span>
+		</div>
+	</div>
+	<script type="text/javascript" src="jquery-1.7.2-min.js"></script>
+	<script type="text/javascript" src="index.js"></script>
+</body>
+</html>

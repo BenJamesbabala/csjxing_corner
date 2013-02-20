@@ -1,10 +1,10 @@
 package com.doucome.corner.web.zhe.model;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 新手指引
- * @author shenjia.caosj 2012-5-10
+ * @author langben 2012-5-10
  *
  */
 public class GuideVar extends AbstractModel {

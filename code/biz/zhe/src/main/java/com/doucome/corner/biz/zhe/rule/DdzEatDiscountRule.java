@@ -4,26 +4,28 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.digester.Digester;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.core.io.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.core.constant.DecimalConstant;
-import com.doucome.corner.biz.core.model.AbstractModel;
+import com.doucome.corner.biz.core.taobao.config.SettleConfig;
+import com.doucome.corner.biz.core.taobao.config.SettleConfigMgr;
 import com.doucome.corner.biz.core.utils.DecimalUtils;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 折扣规则，所有的rate都是，比如：1234.00代表12.34% 
- * @author shenjia.caosj 2012-4-8
+ * @author langben 2012-4-8
  *
  */
 public class DdzEatDiscountRule extends AbstractModel implements InitializingBean {
 	
-	private Resource configLocation ;
-	
 	private List<Rule> ruleList = new ArrayList<Rule>() ;
 	
 	private static Rule defaultRule = new Rule(new BigDecimal("0") , new BigDecimal("0") , new BigDecimal("0")) ;
+	
+	@Autowired
+	SettleConfig ddzSettleConfig ;
 	
 	/**
 	 * 淘宝默认的折扣
@@ -31,35 +33,16 @@ public class DdzEatDiscountRule extends AbstractModel implements InitializingBea
 	 */
 	public static final BigDecimal TAOBAO_DEFAULT_RATE = new BigDecimal("10") ;
 	
-	public void setConfigLocation(Resource configLocation) {
-		this.configLocation = configLocation;
-	}	
-
+	/**
+	 * 天猫税率
+	 */
+	public static final BigDecimal TMALL_TAX_RATE = new BigDecimal("1") ;
+	
 	@Override
-	public void afterPropertiesSet() throws Exception {
-		if(this.configLocation == null){
-			throw new IllegalArgumentException("configLocation is null .") ;
-		}		
-		
-		Digester digester = new Digester();
-
-        digester.setValidating(false);
-        digester.addObjectCreate("businesses", DdzEatDiscountRule.class);
-        digester.addObjectCreate("rules/rule", Rule.class);
-        digester.addSetProperties("rules/rule", "startCommission", "startCommission");
-        digester.addSetProperties("rules/rule", "endCommission", "endCommission");
-        digester.addSetProperties("rules/rule", "eatRate", "eatRate");
-        digester.addSetNext("rules/rule", "addRule");
-		
-        //rule  =  (DdzEatDiscountRule)digester.parse(configLocation.getInputStream());
-        //System.out.println(rule);
+	public void afterPropertiesSet() throws Exception {	
         
-        
-//        ruleList.add(new Rule(new BigDecimal("5.00"), new BigDecimal("20.00"), new BigDecimal("6"))) ;
-//        ruleList.add(new Rule(new BigDecimal("20.00"), new BigDecimal("40.00"), new BigDecimal("8"))) ;
-//        ruleList.add(new Rule(new BigDecimal("40.00"), new BigDecimal("10000000.00"), new BigDecimal("10"))) ;
-        
-          ruleList.add(new Rule(new BigDecimal("1.00"), new BigDecimal("10000000.00"), new BigDecimal("5"))) ;
+        ruleList.add(new Rule(new BigDecimal("1.00"), new BigDecimal("10000000.00"), 
+        		ddzSettleConfig.getEatCommissionRate())) ;
         
 	}
 	
@@ -71,8 +54,10 @@ public class DdzEatDiscountRule extends AbstractModel implements InitializingBea
 	 * @return UserCommission
 	 */
 	public static InternalCommission calcUserCommission(DdzEatDiscountRule rule , BigDecimal commissionRate){
+		
 		InternalCommission uc = new InternalCommission() ;
-		BigDecimal eatRate = new BigDecimal("5") ;
+		BigDecimal eatRate = SettleConfigMgr.get(SettleConfigMgr.DDZ).getEatCommissionRate() ;
+		
     	//淘宝默认的10%折扣
     	BigDecimal taobaoDefaultRate = DdzEatDiscountRule.TAOBAO_DEFAULT_RATE ;
     	
@@ -98,6 +83,18 @@ public class DdzEatDiscountRule extends AbstractModel implements InitializingBea
 	 * @return UserCommission
 	 */
 	public static InternalCommission calcUserCommissions(DdzEatDiscountRule rule , BigDecimal commission , BigDecimal commissionRate , BigDecimal price){
+		return calcUserCommissions(rule, commission, commissionRate, price, false) ;
+	}
+	
+	/**
+	 * 
+	 * @param commssion 原始佣金  如 12.50（单位 元，精确到小数点后2位）
+	 * @param commissionRate 原始佣金比例  如  （10.20，表示10.20%，精确到小数点后2位）
+	 * @param price 价格
+	 * @param isMall 是否商城
+	 * @return UserCommission
+	 */
+	public static InternalCommission calcUserCommissions(DdzEatDiscountRule rule , BigDecimal commission , BigDecimal commissionRate , BigDecimal price , boolean isMall){
 		InternalCommission uc = new InternalCommission() ;
 		Rule r = rule.getRule(commission) ;
     	//
@@ -108,8 +105,11 @@ public class DdzEatDiscountRule extends AbstractModel implements InitializingBea
     	//总的佣金比例
     	BigDecimal totalRate = DecimalConstant.HUNDRED ;
     	
-    	//用户的佣金比例 = 总比例 - 淘宝的默认比例 - 点点折吃掉的比例
+    	//用户的佣金比例 = 总比例 - 淘宝的默认比例 - 点点折吃掉的比例 - （商城税率）
     	BigDecimal userRate = DecimalUtils.substract(totalRate, taobaoDefaultRate) ;
+    	if(isMall){
+    		userRate = DecimalUtils.substract(userRate, DdzEatDiscountRule.TMALL_TAX_RATE) ;
+    	}
     	userRate = DecimalUtils.substract(userRate , eatRate) ;
     	BigDecimal userRatePercent = DecimalUtils.divide(userRate, DecimalConstant.HUNDRED) ;
     	BigDecimal eatRatePercent = DecimalUtils.divide(eatRate, DecimalConstant.HUNDRED) ;

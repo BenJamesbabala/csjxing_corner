@@ -2,7 +2,7 @@ package com.doucome.corner.biz.dcome.enums;
 
 /**
  * ÆÀÂÛÀ´Ô´
- * @author shenjia.caosj 2012-7-25
+ * @author langben 2012-7-25
  *
  */
 public enum DcCommentSourceEnums {

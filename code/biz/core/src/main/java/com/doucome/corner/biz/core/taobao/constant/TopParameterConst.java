@@ -2,7 +2,7 @@ package com.doucome.corner.biz.core.taobao.constant;
 
 /**
  * top ²ÎÊý 
- * @author shenjia.caosj 2012-3-21
+ * @author langben 2012-3-21
  *
  */
 public class TopParameterConst {

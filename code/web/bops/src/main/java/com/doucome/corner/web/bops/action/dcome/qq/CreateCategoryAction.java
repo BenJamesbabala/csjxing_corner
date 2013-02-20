@@ -16,7 +16,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * 创建子类目
- * @author shenjia.caosj 2012-7-25
+ * @author langben 2012-7-25
  *
  */
 @SuppressWarnings("serial")

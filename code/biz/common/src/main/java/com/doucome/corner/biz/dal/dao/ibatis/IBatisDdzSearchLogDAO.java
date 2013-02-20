@@ -41,7 +41,7 @@ public class IBatisDdzSearchLogDAO extends SqlMapClientDaoSupport implements Ddz
 		condition.put("gmtCreateStart", searchCondition.getGmtCreateStart()) ;
 		condition.put("gmtCreateEnd", searchCondition.getGmtCreateEnd()) ;
 		
-		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("ddzSearchLog.countSearchLog", condition)) ;
+		return NumberUtils.parseInt((Integer)getSqlMapClientTemplate().queryForObject("ddzSearchLog.countSearchLog", condition)) ;
 	}
 
 }

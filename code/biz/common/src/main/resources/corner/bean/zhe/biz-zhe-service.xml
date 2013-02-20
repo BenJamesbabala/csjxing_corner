@@ -23,31 +23,8 @@
 	
 	<bean id="ddzSyncReportTaskService" class="com.doucome.corner.biz.zhe.service.impl.DdzSyncReportTaskServiceImpl"></bean>
 		
-	<bean id="ddzTaobaoRegisterService" class="com.doucome.corner.biz.zhe.service.impl.DdzTaobaoRegisterServiceImpl"/>
-	
-	<bean id="ddzRecommendService" class="com.doucome.corner.biz.zhe.service.impl.DdzRecommendServiceImpl">
-		<property name="brandIdList">
-			<list>
-				<value>58501945</value><!-- 韩都衣舍 -->
-				<value>61849926</value><!-- 伊丝艾拉-->
-				<value>62486958</value><!-- 粉红大布娃娃 -->
-				<value>57301326</value><!-- 歌莉娅官方旗舰店 -->
-				<value>33771053</value><!-- 小维 -->
-				<value>60014227</value><!-- TATA -->
-				<value>57299948</value><!-- 御泥坊旗舰店 -->
-				<value>60253750</value><!-- 衣品天成 --> 
-				<value>57300730</value><!-- 韩国SZ -->
-				<value>57299311</value><!-- 相宜本草 -->
-				<value>57301876</value><!-- 百丽官方旗舰店 -->
-				<value>65884720</value><!-- 美肤宝 -->
-				<value>60974421</value><!-- 曼妮芬 -->
-				<value>60628842</value><!-- 骆驼 -->
-				<value>62907168</value><!-- 秋水伊人 -->
-				<value>57299937</value><!-- OSA -->
-			</list>
-		</property>
-	</bean>
-		
+	<bean id="ddzUserRegisterService" class="com.doucome.corner.biz.zhe.service.impl.DdzUserRegisterServiceImpl"/>
+			
 	<bean id="keywordsFilterService" class="com.doucome.corner.biz.zhe.service.impl.KeywordsFilterServiceImpl"/>
 	
 	<bean id="ddzConfigService" class="com.doucome.corner.biz.zhe.service.impl.DdzConfigServiceImpl"/>
@@ -56,13 +33,20 @@
 	    <property name="productionMode" value="${corner.production}" />
 	</bean>
 	
-	<bean id="ddzEatDiscountRule" class="com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule" lazy-init="false">
-		<property name="configLocation">
-			<value>classpath:/corner/bean/zhe/discountRule.xml</value>
-		</property>
-	</bean>
+	<bean id="ddzEatDiscountRule" class="com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule" lazy-init="false"></bean>
 	
 	<bean id="ddzTaobaokeService" class="com.doucome.corner.biz.zhe.service.impl.DdzTaobaokeServiceImpl"></bean>
 	
-	<bean id="ddzReportMailService" class="com.doucome.corner.biz.zhe.service.impl.DdzReportMailServiceImpl" />
+	<bean id="ddzSendSuccessSettleReportService" class="com.doucome.corner.biz.zhe.service.impl.DdzSendSuccessSettleReportService" />
+	
+	<bean id="ddzSendDelaySettleReportService" class="com.doucome.corner.biz.zhe.service.impl.DdzSendDelaySettleReportService" />
+	
+	<bean id="ddzBrandPartnerService" class="com.doucome.corner.biz.zhe.service.impl.DdzBrandPartnerServiceImpl"></bean>
+	
+	<bean id="ddzDrawApproveService" class="com.doucome.corner.biz.zhe.service.impl.DdzDrawApproveServiceImpl"></bean>
+	
+	<bean id="ddzJfbSettleRecordService" class="com.doucome.corner.biz.zhe.service.impl.DdzJfbSettleRecordServiceImpl"></bean>
+	
+	<bean id="ddzTaokeReportSettleBO" class="com.doucome.corner.biz.zhe.bo.DdzTaokeReportSettleBO"></bean>
+	
 </beans>

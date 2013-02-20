@@ -23,6 +23,13 @@ public interface DcSceneService {
 	DcSceneDTO getSceneById(long sceneId) ;
 	
 	/**
+	 * 根据ID查询场景(同时查询sceneDetailIds)
+	 * @return
+	 */
+	DcSceneDTO getSceneWithDetailsById(long sceneId) ;
+	
+	
+	/**
 	 * 更新场景
 	 * @param id
 	 * @param name

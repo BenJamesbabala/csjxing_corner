@@ -1,16 +1,10 @@
-.content-main .go-target,
-.content-list .nav dd a,
-.content-list .nav dd span,
-.content-list .list .ilike,.like-dialog .dialog-content .add-comment,.like-dialog .dialog-comment-content .submit,.detail-main .detail-like
-{
+.content-main .go-target,.content-list .nav dd a,.content-list .nav dd span,.content-list .list .ilike,.like-dialog .dialog-content .add-comment,.like-dialog .dialog-comment-content .submit,.detail-main .detail-like
+	{
 	background: url(btn.png) no-repeat;
 	display: inline-block;
 }
-.content-main .banner-scroll .like,
-.content-main .banner-scroll .comment,
-.content-list .list .other .like , 
-.content-list .list .other .comment ,
-.header .other li a,.like-dialog .dialog-content span,.like-dialog .dialog-comment .close,.detail-main .go-target,.detail-main .detail-other .comment,.detail-main .comment-title a,.detail-main .like
+
+.content-main .banner-scroll .like,.content-main .banner-scroll .comment,.content-list .list .other .like,.content-list .list .other .comment,.header .other li a,.like-dialog .dialog-content span,.like-dialog .dialog-comment .close,.detail-main .go-target,.detail-main .detail-other .comment,.detail-main .comment-title a,.detail-main .like
 	{
 	background: url(icon.png) no-repeat;
 	display: inline-block;
@@ -29,9 +23,7 @@
 	display: inline-block;
 }
 
-.src-logo-TM,
-.src-logo-TB
- {
+.src-logo-TM,.src-logo-TB {
 	background: url(src-logo.png) no-repeat;
 	display: inline-block;
 }
@@ -122,25 +114,24 @@ body {
 .content-main .banner-scroll .title {
 	margin-top: 48px;
 	font-size: 14px;
-	width:200px;
+	width: 200px;
 }
 
 .content-main .banner-scroll .title a {
-	color:#666;
+	color: #666;
 	text-decoration: none;
 }
 
-.content-main .banner-scroll .title a:hover{
-	text-decoration: underline ;
+.content-main .banner-scroll .title a:hover {
+	text-decoration: underline;
 }
 
 .content-main .banner-scroll .price {
 	margin-top: 28px;
 	font-size: 16px;
-	color:#333333;
+	color: #333333;
 	font-weight: 700;
 }
-
 
 .content-main .go-target {
 	background-position: 0 -50px;
@@ -160,7 +151,7 @@ body {
 	color: #E63B3B;
 	line-height: 13px;
 	padding-left: 15px;
-	width:20px;
+	width: 20px;
 	color: #666666;
 	cursor: pointer;
 }
@@ -169,12 +160,11 @@ body {
 	background-position: 0 -339px;
 	color: #E63B3B;
 	line-height: 13px;
-	width:20px;
+	width: 20px;
 	padding-left: 15px;
 	color: #666666;
-	margin-left:10px;
+	margin-left: 10px;
 }
-
 
 .content-main {
 	height: 500px;
@@ -278,7 +268,7 @@ body {
 	margin-top: 5px;
 }
 
-.content-list .list .other .like ,.content-list .list .other .comment {
+.content-list .list .other .like,.content-list .list .other .comment {
 	padding-left: 14px;
 	height: 12px;
 	line-height: 12px;
@@ -340,7 +330,7 @@ body {
 	border: 7px solid #ccc;
 	position: absolute;
 	background-color: #ffffff;
-	z-index:999;
+	z-index: 999;
 }
 
 .like-dialog .dialog-content {
@@ -446,7 +436,7 @@ body {
 }
 
 .detail-main .title a {
-	color:#666;
+	color: #666;
 	text-decoration: none;
 }
 
@@ -528,7 +518,7 @@ body {
 
 .detail-main .extra-info {
 	position: absolute;
-	top:260px;
+	top: 260px;
 }
 
 .detail-main .go-target {
@@ -627,15 +617,15 @@ body {
 }
 
 .src-logo-TM {
-	background-position: 0 -20px ;
-	width:16px;
-	height:16px;
+	background-position: 0 -20px;
+	width: 16px;
+	height: 16px;
 	margin-right: 5px;
 }
 
 .src-logo-TB {
-	background-position: 0 0 ;
-	width:16px;
-	height:16px;
+	background-position: 0 0;
+	width: 16px;
+	height: 16px;
 	margin-right: 5px;
 }

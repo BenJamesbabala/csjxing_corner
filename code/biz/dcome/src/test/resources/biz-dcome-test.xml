@@ -11,7 +11,6 @@
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
 			default-autowire="byName">
 
-	
 	<import resource="classpath:corner/bean/biz-common.xml" />
 	<import resource="classpath:corner/bean/biz-dao.xml" />
 	<import resource="classpath:corner/bean/biz-service.xml" />
@@ -23,9 +22,20 @@
 	<import resource="classpath:corner/bean/biz-sms.xml" />
 	<import resource="classpath:corner/service/email.xml"/>
 	
+	<import resource="classpath:corner/bean/zhe/biz-zhe-service.xml" />
+	<import resource="classpath:corner/bean/zhe/biz-zhe-cache.xml" />
+	<import resource="classpath:corner/bean/zhe/biz-zhe-dao.xml" />
+	
 	<import resource="classpath:corner/bean/dcome/biz-dcome-service.xml" />
 	<import resource="classpath:corner/bean/dcome/biz-dcome-dao.xml" />
 	<import resource="classpath:corner/bean/dcome/biz-dcome-cache.xml" />
 	<import resource="classpath:corner/bean/dcome/biz-dcome-bo.xml" />
-	<import resource="classpath:corner/bean/dcome/biz-dcome-bo.xml" />				
+	
+	<import resource="classpath:corner/bean/horoscope/biz-hs-bo.xml" />
+	<import resource="classpath:corner/bean/horoscope/biz-hs-service.xml" />
+	<import resource="classpath:corner/bean/horoscope/biz-hs-dao.xml" />
+	
+	<import resource="classpath:corner/bean/wryneck/biz-wryneck-service.xml" />
+	<import resource="classpath:corner/bean/wryneck/biz-wryneck-cache.xml" />
+	<import resource="classpath:corner/bean/wryneck/biz-wryneck-dao.xml" />
 </beans>

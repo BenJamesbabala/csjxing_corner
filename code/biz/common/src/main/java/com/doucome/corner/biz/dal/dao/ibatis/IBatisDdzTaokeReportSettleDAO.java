@@ -12,8 +12,10 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import com.doucome.corner.biz.common.utils.NumberUtils;
 import com.doucome.corner.biz.dal.DdzTaokeReportSettleDAO;
 import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleSearchCondition;
+import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleUpdateCondition;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
+import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleStatisticsDO;
 import com.ibatis.sqlmap.client.SqlMapExecutor;
 
 public class IBatisDdzTaokeReportSettleDAO extends SqlMapClientDaoSupport implements DdzTaokeReportSettleDAO {
@@ -85,7 +87,7 @@ public class IBatisDdzTaokeReportSettleDAO extends SqlMapClientDaoSupport implem
 		
 		Map<String,Object> condition = searchCondition.toMap() ;
 		
-		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("ddzReportSettle.countSettlesWithPagination" , condition)) ;
+		return NumberUtils.parseInt((Integer)getSqlMapClientTemplate().queryForObject("ddzReportSettle.countSettlesWithPagination" , condition)) ;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -96,13 +98,28 @@ public class IBatisDdzTaokeReportSettleDAO extends SqlMapClientDaoSupport implem
 		condition.put("size", size) ;
 		return getSqlMapClientTemplate().queryForList("ddzReportSettle.selectSettlesWithPagination" , condition) ;
 	}
+	
+	@Override
+	public DdzTaokeReportSettleStatisticsDO statisticsWithPagination(DdzTaokeReportSettleSearchCondition searchCondition) {
+		Map<String,Object> condition = searchCondition.toMap() ;
+		return (DdzTaokeReportSettleStatisticsDO)getSqlMapClientTemplate().queryForObject("ddzReportSettle.statisticsWithPagination" , condition) ;
+	}
+
 
 	@Override
-	public int updateSettleStatus(List<Integer> settleIds , String settleStatus) {
+	public int updateSettleStatus(List<Long> settleIds , String settleStatus) {
 		Map<String,Object> condition = new HashMap<String,Object>() ;
 		condition.put("settleIds", settleIds) ;
 		condition.put("settleStatus", settleStatus) ;
 		return getSqlMapClientTemplate().update("ddzReportSettle.updateSettleStatus_by_ids" , condition) ;
+	}
+	
+	@Override
+	public int updateSettleStatus(DdzTaokeReportSettleUpdateCondition condition, String toSettleStatus , String settleBatchno) {
+		Map<String,Object> map = condition.toMap() ;
+		map.put("settleStatus", toSettleStatus) ;
+		map.put("settleBatchno", settleBatchno) ;
+		return getSqlMapClientTemplate().update("ddzReportSettle.updateSettleStatus_by_ids" , map) ;
 	}
 
     @Override
@@ -141,9 +158,15 @@ public class IBatisDdzTaokeReportSettleDAO extends SqlMapClientDaoSupport implem
 		Map<String,Object> condition = new HashMap<String,Object>() ;
         condition.put("settleAlipay", settleAlipay) ;
         condition.put("settleStatus", settleStatus) ;
-		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("ddzReportSettle.countTotalSettle" , condition)) ;
+		return NumberUtils.parseInt((Integer)getSqlMapClientTemplate().queryForObject("ddzReportSettle.countTotalSettle" , condition)) ;
 	}
 
-	
-	
+	@Override
+	public int updateMemoById(Integer settleId, String memo) {
+		Map<String,Object> condition = new HashMap<String,Object>() ;
+        condition.put("id", settleId) ;
+        condition.put("memo", memo) ;
+		return getSqlMapClientTemplate().update("ddzReportSettle.updateMemoById" , condition) ;
+	}
+
 }

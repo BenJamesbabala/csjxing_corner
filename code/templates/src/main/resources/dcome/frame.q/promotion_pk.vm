@@ -1,0 +1,224 @@
+#set($page_nav = "promotion_pk")
+#set($layout="dcome/frame.q/default.vm")
+<input type="hidden" id="dcPage" value="promotion" />
+<div class="rank-layer" id="rankLayer" style="display: none;">
+    <div class="head">
+	    <h2 class="title"><span class="time">昨日</span>榜单</h2>
+		<div class="hide-btn"></div>
+		<!--div class="more dd-r">
+		   &lt;
+		   <a class="prev" data-num="-1" href="javascript:;">前一天</a>
+		   &nbsp;|&nbsp;
+		   <a class="next" data-num="1" href="javascript:;">后一天</a>
+		   &gt;
+		</div-->
+	</div>
+	<div class="rank-wrap">
+		<div class="template" style="display:none">
+		    <li class="dd-l">
+			    <div class="rank-num dd-l">@rank@</div>
+				<div class="wish-info dd-l">
+				    <img class="item-pic dd-l" alt="" src="@item-pic@" />
+					<div class="info dd-l">
+						<div class="item-info">
+							<div class="title" style="">@item-title@</div>
+							<div class="price">&yen;@item-price@</div>
+						</div>
+						<div class="user-info">
+							<span class="name" style="">@user-name@</span>的愿望
+						</div>
+					</div>
+				</div>
+				<div class="rate dd-l">
+					<div><span class="rate-count" style="">@rate-count@</span>颗愿望星</div>
+					<div class="status">@status@</div>
+				</div>
+			</li>
+		</div>
+		<div class="loadding32x32"></div>
+	    <ul class="rank-list"></ul>
+	</div>
+</div>
+
+<div class="idx-cnt pk-cnt">
+	<div class="cnt-top">
+		<div class="dynamic-message dd-l" id="dynamicMessage">
+			<span class="title dd-l">美丽动态</span>
+			<div class="nav dd-l">
+				<a class="prom-message" href="javascript:;">TA们在做</a>
+				<a class="mine-message" href="javascript:;">和我相关</a>
+				<a class="notify-message" href="javascript:;">小道消息</a>
+			</div>
+			<div class="message-area dd-l">
+			    <div class="loadding32x32" style="display: none;"></div>
+			    <div class="message-list-wrap dd-l">
+				    <ul class="message-list">
+				    	<li>加载中...</li>
+				    </ul>
+				</div>
+			    <a href="javascript:;" class="message-more">更多...</a>
+			</div>
+		</div>
+		#if($myPromotionItem)
+			<div class="iwish" id="iwish">
+				<div class="wrap dd-l">
+					<div class="main">
+						<div class="wish-content">
+							<div class="top-cover">
+								<div class="info-wrap">
+								    <div class="info">
+										<span class="my-rate-count color-orange">$!myPromotionItem.rateCount</span>颗愿望星
+									</div>
+								</div>
+							    <div class="browse-wrap dd-hide">
+									<span class="price">&yen;$!myPromotionItem.itemPriceFmt</span>
+									<span class="go">
+										<a class="browse" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!myPromotionItem.itemId" title="$!myPromotionItem.itemTitle" gtrack='/virtual/qq/item?tracelog=wish-offer&id=$!myPromotionItem.itemId&src=promotion'>去看看</a>
+									</span>
+								</div>
+							</div>
+                            <a class="browse" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!myPromotionItem.itemId" title="$!myPromotionItem.itemTitle" gtrack='/virtual/qq/item?tracelog=wish-offer-img&id=$!myPromotionItem.itemId&src=promotion'>
+                            	<img class="picture" alt="我的愿望" src="$!myPromotionItem.itemPicUrl160x160"/>
+                            </a>
+                            #foreach($i in [1,2])
+                            	#if ($i > $myPromotionItem.canDrawCount)
+                            	    #break;
+                            	#end
+                            	<a class="star" href="javascript:;" title="收集足够的星星，可以实现愿望哦~~"></a>
+                            #end
+						</div>
+						<div class="bottom-cover">
+							<a href="javascript:;" class="dd-l draw-btn show-lingqu-dlg-click #if($myPromotionItem.canDrawCount <= 0) disabled #end" ></a>
+							<a href="javascript:;" class="dd-r egg-btn show-caidan-dlg-click" ></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pk-rank">
+			    <div class="wrap">
+					<a class="history-rank" href="javascript:;" title="昨日榜单">昨日榜单</a>
+					<a class="fresh-rank" href="javascript:;" title="当前排行榜">刷新</a>
+					<ul class="rank-list">
+						#foreach($promItem in $topRankPromItems)
+						<li>
+							<div class="user-name text-ellipsis">$!promItem.userNick</div>
+							<div class="item-title text-ellipsis">
+							    <a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!promItem.itemId" title="$!promItem.itemTitle" gtrack='/virtual/qq/item?tracelog=wish-offer&id=$!promItem.itemId&src=promotion'>$!promItem.itemTitle</a>
+							</div>
+							<div class="dd-r"><span class="count dd-l">$!promItem.rateCount</span><div class="star dd-l"></div></div>
+						</li>
+						#end
+					</ul>
+					<div class="rankTemplate" style="display: none;">
+						<li style="opacity: 0; position: absolute; top: 112px;">
+							<div class="user-name text-ellipsis">@user_name@</div>
+							<div class="item-title text-ellipsis">
+							    <a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item_id@" title="@item_title@" gtrack='/virtual/qq/item?tracelog=wish-offer&id=@item_id@&src=promotion'>@item_title@</a>
+							</div>	
+							<div class="dd-r"><span class="count dd-l">@rate_count@</span><div class="star dd-l"></div></div>
+						</li>
+					</div>	
+				</div>
+			</div>
+		#else
+		    <div class="iwish-start">
+				<div class="wrap dd-l">
+					<div class="prom-desc"></div>
+					<a href="javascript:;" class="unwish-btn"></a>
+				</div>
+			</div>
+		#end
+	</div>
+	
+	<div class="banner-config-init" data-banner-id="dc_promotion_top"></div>
+	
+	#if (!$collectionUtils.isEmpty($mostWishItems))
+		<div class="fav-wish">
+		    <div class="wrap">
+			    <div class="head dd-l">
+				    <div class="lbl dd-l"></div>
+				    #if ($mostWishItems.size() > 5)
+					<div class="btn dd-r">
+					    <a class="prev-btn btn" title="更多"></a>
+						<a class="next-btn btn" title="更多"></a>
+					</div>
+					#end
+				</div>
+				<ul class="wish-list dd-l">
+					#foreach($wishItem in $mostWishItems)
+						<li>
+							<div class="pic-wrap">
+								<a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!wishItem.itemId" title="$!wishItem.itemTitle" gtrack='/virtual/qq/item?tracelog=wish-offer&id=$!wishItem.itemId&src=most-wish'>
+							        <img class="wish-pic" title="$!wishItem.itemTitle" src="$!wishItem.itemPicUrl160x160" />
+							    </a>
+								<div class="foot-cover">
+									<div class="foot-wrap">
+										<div class="icon"></div>
+										<span class="wish-count">$!wishItem.wishCount人选了它</span>
+									</div>
+								</div>
+								<span class="price">&yen;$!wishItem.itemPrice</span>
+							</div>
+							<div class="ws-ft"></div>
+						</li>
+					#end
+					#set($temp = $mostWishItems.size() % 5)
+					#if($temp != 0)
+					#foreach($i in [1,2,3,4,5])
+					    #if ($temp == 5)
+					        #break
+					    #end
+					    <li class="empty"></li>
+					    #set($temp = $temp + 1)
+					#end
+					#end
+				</ul>
+			</div>
+		</div>
+	#end
+	<div class="wishs-lbl">
+	    <div class="lbl"></div>
+	</div>
+    <div class="prom-item-main">
+    	<div class="prom-item-wrap">
+    		<div id="promotionWaterfall" class="promotion-waterfall wish-offer" data-promotion-id="$!promotion.id" data-order="$!order" >
+        		<ul id="tiles">
+        			
+        		</ul>
+    		</div>
+            <div class="dd-hide" id="appendTemplate">		
+				<li>
+					<div class="head"></div>
+					<div class="main">
+						<div class="dd-clear item-pic">
+							<div class="top-cover dd-hide">
+								<span class="item-price">&yen;@item_price@</span>
+								<span class="go"><a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item_id@" title="@item_title@" @gtrack@='/virtual/qq/item?tracelog=wish-offer&id=@item_id@&src=promotion'>去看看</a></span>
+							</div>
+							<a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item_id@" title="@item_title@" @gtrack@='/virtual/qq/item?tracelog=wish-offer&id=@item_id@&src=promotion'>
+							    <img alt="@item_title@" @src@="@item_url@" title="@item_title@">
+							</a>
+						</div>
+						<div class="user-cover">
+							<span class="user-pic">
+								<img data-avatar-src="@avatar_url@" data-avatar-size="30x30">
+							</span>
+							<span class="user-name">@user_nick@的愿望</span>
+							<span class="wish-icon-small" title="TA收集的愿望星"></span>
+							<span class="rate-count">@rate_count@</span>
+						</div>
+					</div>
+					<div class="foot">
+						<span class="qiang"></span>
+						<div class="steal-draw-icon stealRate-btn-click" data-promotion-id="$!promotion.id" data-promotion-item-id="@promotion_item_id@" @gtrack@='/virtual/qq/qiang?tracelog=wish-offer&id=@item_id@&src=promotion'>
+							<span class="undraw-rate-count">@can_draw_count@</span>
+						</div>
+					</div>
+					<div class="ws_ft"></div>
+				</li>
+    		</div>
+			
+			<div class="more-btn" id="promotionWaterfallMore"><a href="javascript:;" class="waterfallMore"></a></div>
+    	</div>
+    </div>
+</div>

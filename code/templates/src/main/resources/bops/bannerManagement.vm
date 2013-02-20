@@ -1,0 +1,119 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "Banner管理")
+
+<input type="hidden"  id="bopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="bopsPage" value="bannerManagement"/>
+
+
+#set($pagination = $queryResult.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/banner_management.htm?")
+#set($searchQuery = ["bannerId:$!bannerId"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/banner_management.htm" method="GET">
+		<div class="MB10 MT10">
+			bannerId： <input  type="text" name="bannerId" value="$!bannerId" />
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	#parse("/common/bops/bannerManagementPagination.vm")
+	
+	 <table width="1000" style="font-size:14px;" id="itemTable">
+		<tr>
+    		<th width="30">序号</th>
+			<th width="50">bannerId</th>
+    		<th width="120">banner图片</th>
+			<th width="80">URL</th>
+			<th width="60">新窗打开</th>
+			<th width="70">状态</th>
+			<th width="40">事件</th>
+			<th width="50">操作</th>
+    	</tr>
+		#if($queryResult.totalRecords > 0)
+    		#foreach($item in $queryResult.items)
+				#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
+            	<tr data-index="$!item.id">
+            		<td>$idx</td>
+					<td>$!item.bannerId</td>
+            		<td>
+						#if($item.bannerPicUrl)
+                        <img src="$!item.bannerPicUrl" width="300"> <a href="$!item.bannerPicUrl" target="_blank" >查看原图</a>
+						#else
+							无图片
+						#end
+					</td>
+                    <td>$!item.targetUrl</td>
+					<td align="center">
+						#if($item.targetBlank == 'T') 是 #else 否 #end
+					</td>
+                    <td align="center">
+                        #if($item.status == "N") <span class="dc-green">已启用</span> <a href="javascript:;" data-status="D" data-banner-id="$!item.bannerId" class="edit-banner-status-click">点击禁用</a>#else <span class="dc-red">已禁用</span>   <a href="javascript:;" data-status="N" data-banner-id="$!item.bannerId" class="edit-banner-status-click">点击启用</a>   #end </a>
+					</td>
+					<td align="center">
+						#if($stringUtils.isNotBlank($item.bindEvent) && $stringUtils.isNotBlank($item.bindEventFunction))
+                        <a href="javascript:;" class="dc-blue edit-banner-event-click" data-banner-id="$!item.bannerId"><span class="clock-icon clock-icon-active"></span></a>
+						#else 
+						<a href="javascript:;" class="dc-blue edit-banner-event-click" data-banner-id="$!item.bannerId"><span class="clock-icon"></span></a>
+						#end
+					</td>
+                    <td>
+						<a href="javascript:;" class="dc-blue edit-banner-click" data-banner-id="$!item.bannerId">编辑</a>
+					</td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="6">没有查询到记录</td></tr>
+		#end
+     </table>
+	 
+	 #parse("/common/bops/bannerManagementPagination.vm")
+
+	 
+	 
+	 <div id="updateBannerDialog" class="update-banner-dialog dd-hide" >
+        <div class="dialog-head">
+    		<a class="W_close_color layer_tips_close" href="javascript:;"></a>
+    		<span>Banner配置管理</span>
+    	</div>
+		<div class="line">bannerId： <span class="bannerId"></span> &nbsp; 
+			新开窗口：<select class="targetBlank">
+				<option value="T">是</option>
+				<option value="F">否</option>
+			</select>
+		</div>
+        <div class="line">banner图片： <input type="text" name="" class="bannerPicUrl" /></div>
+		<div class="line">URL： <input type="text" name="" class="targetUrl" /></div>
+    	<div class="">
+            <span class="msg dd-hide">请输入内容</span>
+    		<a href="javascript:;" class="submit">提交</a>
+    	</div>
+    	<div class="angle-top"></div>
+    </div>
+	
+	<div id="updateBannerBindEventDialog" class="update-banner-dialog dd-hide" >
+		<div class="dialog-head">
+    		<a class="W_close_color layer_tips_close" href="javascript:;"></a>
+    		<span>配置绑定事件</span>
+    	</div>
+		<div class="line">bannerId： <span class="bannerId"></span> </div>
+		<div class="line">
+			event：  <input type="text" name="" class="bindEvent" style="width:180px;float:none;"/>
+		</div>
+		<div>
+            <div>JS function :</div> 
+			<textarea class="bindEventFunction" style="width:600px;height:300px;"></textarea>
+		</div>
+		<div><a href="javascript:;" class="submit">提交</a></div>
+	</div>
+</div>
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

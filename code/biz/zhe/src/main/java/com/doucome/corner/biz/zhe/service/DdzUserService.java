@@ -48,5 +48,9 @@ public interface DdzUserService {
      * @return
      */
     DdzUserDO getByLoginIdAndPassword(String loginId, String md5Password);
+    
+    int updateAlipayIdByLoginId(String loginId, String alipayId) ;
+    
+    int incrModificationCount(String loginId) ;
 
 }

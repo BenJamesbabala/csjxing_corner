@@ -6,7 +6,7 @@ import java.util.Date;
 
 /**
  * 
- * @author shenjia.caosj 2012-5-22
+ * @author langben 2012-5-22
  *
  */
 public class RecommendBatchDate {

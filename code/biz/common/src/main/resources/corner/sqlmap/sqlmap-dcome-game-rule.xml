@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcGameRule">
+
+	<typeAlias alias="TA-DcGameRule" type="com.doucome.corner.biz.dal.dataobject.dcome.DcGameRuleDO"/>
+	
+	<resultMap id="RM-DcGameRule" class="TA-DcGameRule">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="type" column="TYPE"/>
+		<result property="timeId" column="TIME_ID"/>
+		<result property="status" column="STATUS"/>
+		<result property="playLimit" column="PLAY_LIMIT"/>
+		<result property="exchangeAmount" column="EXCHANGE_AMOUNT"/>
+		<result property="todayPlayCount" column="TODAY_PLAY_COUNT"/>
+		<result property="todayClickCount" column="TODAY_CLICK_COUNT"/>
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertGameRule">
+		INSERT INTO DC_GAME_RULE
+			(ID, USER_ID, TYPE, TIME_ID, STATUS, PLAY_LIMIT, EXCHANGE_AMOUNT, TODAY_PLAY_COUNT, TODAY_CLICK_COUNT, GMT_MODIFIED, GMT_CREATE)
+		VALUES
+			(#id#, #userId#, #type#, #timeId#, #status#, #playLimit#, #exchangeAmount#, #todayPlayCount#, #todayClickCount#, now(), now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="getGameRule" resultMap="RM-DcGameRule">
+		SELECT ID, USER_ID, TYPE, TIME_ID, STATUS, PLAY_LIMIT, EXCHANGE_AMOUNT, TODAY_PLAY_COUNT, TODAY_CLICK_COUNT,
+		    GMT_MODIFIED, GMT_CREATE
+		  FROM DC_GAME_RULE
+		  WHERE ID = #id#
+		  LIMIT 1
+	</select>
+	
+	<select id="getUserGameRule" resultMap="RM-DcGameRule">
+		SELECT ID, USER_ID, TYPE, TIME_ID, STATUS, PLAY_LIMIT, EXCHANGE_AMOUNT, TODAY_PLAY_COUNT, TODAY_CLICK_COUNT,
+		    GMT_MODIFIED, GMT_CREATE
+		  FROM DC_GAME_RULE
+		  WHERE USER_ID = #userId# AND TYPE = #type# AND TIME_ID = #timeId#
+		  LIMIT 1
+	</select>
+	
+	<update id="incClickCount">
+		UPDATE DC_GAME_RULE
+		SET TODAY_CLICK_COUNT = IFNULL(TODAY_CLICK_COUNT,0) + #count#,
+			GMT_MODIFIED = now() 
+		WHERE ID = #id#
+	</update>
+	
+	<update id="incUserClickCount">
+		UPDATE DC_GAME_RULE
+			SET TODAY_CLICK_COUNT = IFNULL(TODAY_CLICK_COUNT,0) + #count#,
+				GMT_MODIFIED = now()
+			WHERE USER_ID = #userId# AND TYPE = #gameType# AND TIME_ID = #timeId#
+	</update>
+	
+	<!-- 不添加 play_count < play_limit，牺牲并发，优化sql -->
+	<update id="incPlayCount">
+		UPDATE DC_GAME_RULE
+		SET TODAY_PLAY_COUNT = IFNULL(TODAY_PLAY_COUNT,0) + #count#,
+			GMT_MODIFIED = now() 
+		WHERE ID = #id#
+	</update>
+</sqlMap>

@@ -2,20 +2,37 @@
 <!--
   - 短消息业务配置文件_
   -
-  - @author Leon Liu
+  - @author 
   - @version $Id
  -->
 <businesses>
-    <!--
-      - 点点折返现短信
-    -->
+    <!-- - 点点折返现短信 -->
     <business id="ddz_settle_sms">
         <chl-code>10</chl-code>
         <name>点点折结算</name>
         <fee-type>F</fee-type>
         <property>authentication</property>
         <money>0</money>
-        <message key="normal">[点点折返现]返现金额{0}元已成功汇入您的支付宝:{1}，请注意查收，查询或建议可直接回复本短信。</message>
+        <message key="normal">返现金额{0}元已成功汇入您的支付宝:{1}，请注意查收。【点点折】</message>
+    </business>
+    
+    <business id="ddz_jfb_settle_sms">
+        <chl-code>10</chl-code>
+        <name>点点折集分宝结算</name>
+        <fee-type>F</fee-type>
+        <property>authentication</property>
+        <money>0</money>
+        <message key="normal">有一笔集分宝返利已成功汇入您的支付宝:{1}，请注意查收。【点点折】</message>
+    </business>
+    
+    <!-- - 点点折大额延迟短信 -->
+    <business id="ddz_delay_sms">
+        <chl-code>10</chl-code>
+        <name>点点折大额延迟短信</name>
+        <fee-type>F</fee-type>
+        <property>authentication</property>
+        <money>0</money>
+        <message key="normal">您有一笔返利正在确认中，返利金额大于5000集分宝到账时间为十五天。此期间若发生退款该返利将自动取消。【点点折】</message>
     </business>
    
 	

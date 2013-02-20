@@ -3,5 +3,5 @@
 	ProxyRequests Off
 	ProxyPreserveHost On	
 	
-	ProxyPassMatch ^(/(s|zhe|surl|task|bops|frame)/(.*))$ http://localhost:${app_port} min=5 smax=16 max=64 ttl=600 timeout=30
+	ProxyPassMatch ^(/(s|zhe|surl|task|bops|frame|home)/(.*))$ http://localhost:${app_port} min=5 smax=16 max=64 ttl=600 timeout=30
 </IfModule>

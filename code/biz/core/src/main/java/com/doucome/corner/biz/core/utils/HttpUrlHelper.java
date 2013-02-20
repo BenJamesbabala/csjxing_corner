@@ -16,7 +16,7 @@ import com.doucome.corner.biz.core.model.URLModel;
 /**
  * URL ½âÎö¹¤¾ß
  * 
- * @author shenjia.caosj 2012-2-25
+ * @author langben 2012-2-25
  * 
  */
 public class HttpUrlHelper {
@@ -48,9 +48,10 @@ public class HttpUrlHelper {
 			model.setHost(aURL.getHost());
 			model.setProtocol(aURL.getProtocol());
 			model.setPort(aURL.getPort());
+			model.setPath(aURL.getPath()) ;
 			//String encode = aURL.get
 			if (StringUtils.isNotBlank(aURL.getQuery())) {
-				String queryString = StringUtils.lowerCase(aURL.getQuery());
+				String queryString = StringUtils.trim(aURL.getQuery());
 				Map<String, String> params = getParamsMap(queryString,Constant.ENCODING);
 				model.setParams(params);
 			}

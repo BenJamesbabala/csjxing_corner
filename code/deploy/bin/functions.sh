@@ -5,7 +5,7 @@
 
 # description:  pass/fail color setup, this bit is ripped wholesale from redhat's init scripts :-)
 # usage:  [success|failed|warn] $what_you_want_to_say
-# author:  caosir
+# author:  langben
 # date:  2003-04-22
 
 if [ -f /etc/sysconfig/init ]; then

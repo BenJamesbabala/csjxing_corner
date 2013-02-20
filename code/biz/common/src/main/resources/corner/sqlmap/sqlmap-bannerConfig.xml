@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="bannerConfig">
+	<typeAlias alias="TA-bannerConfig"
+		type="com.doucome.corner.biz.dal.dataobject.BannerConfigDO" />
+
+	<resultMap id="RM-bannerConfig" class="TA-bannerConfig">
+		<result property="id" column="ID" />
+		<result property="bannerId" column="BANNER_ID" />
+		<result property="bannerPicUrl" column="BANNER_PIC_URL" jdbcType="VARCHAR" />
+		<result property="width" column="WIDTH"/>
+		<result property="height" column="HEIGHT"/>
+		<result property="targetUrl" column="TARGET_URL" jdbcType="VARCHAR" />
+		<result property="targetBlank" column="TARGET_BLANK" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS" jdbcType="VARCHAR" />
+		<result property="memo" column="MEMO" jdbcType="VARCHAR"/>
+		<result property="bindEvent" column="BIND_EVENT" jdbcType="VARCHAR"/>
+		<result property="bindEventFunction" column="BIND_EVENT_FUNCTION" jdbcType="VARCHAR"/>
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<select id="queryConfigsByBannerId" resultMap="RM-bannerConfig">
+		SELECT 
+			ID,BANNER_ID,BANNER_PIC_URL,WIDTH,HEIGHT,TARGET_URL,TARGET_BLANK,STATUS,MEMO,BIND_EVENT,BIND_EVENT_FUNCTION,GMT_CREATE,GMT_MODIFIED
+		FROM
+			BANNER_CONFIG
+		WHERE
+			BANNER_ID = #bannerId#
+	</select>
+	
+	<update id="updateBindEventById">
+		UPDATE
+			BANNER_CONFIG
+		SET
+			BIND_EVENT = #bindEvent# , 
+			BIND_EVENT_FUNCTION = #bindEventFunction# ,
+			GMT_MODIFIED = now()
+		WHERE
+			BANNER_ID = #bannerId#
+	</update>
+	
+	<update id="updateConfigByBannerId">
+		UPDATE
+			BANNER_CONFIG
+		SET
+			BANNER_PIC_URL = #bannerPicUrl# , 
+			TARGET_URL = #targetUrl# ,
+			TARGET_BLANK = #targetBlank# ,
+			GMT_MODIFIED = now()
+		WHERE
+			BANNER_ID = #bannerId#
+	</update>
+	
+	<update id="updateConfigStatusByBannerId">
+		UPDATE
+			BANNER_CONFIG
+		SET
+			STATUS = #status# , 
+			GMT_MODIFIED = now()
+		WHERE
+			BANNER_ID = #bannerId#
+	</update>
+	
+	<select id="countConfigsWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(ID)
+		FROM
+			BANNER_CONFIG
+		<dynamic>
+            <isParameterPresent open="WHERE" removeFirstPrepend="true">
+           	 	<isNotEmpty property="bannerId" prepend="AND">
+				    BANNER_ID = #bannerId#
+				</isNotEmpty>
+           	</isParameterPresent>
+        </dynamic>
+	</select>
+	
+	<select id="queryConfigsWithPagination" resultMap="RM-bannerConfig">
+		SELECT 
+			ID,BANNER_ID,BANNER_PIC_URL,WIDTH,HEIGHT,TARGET_URL,TARGET_BLANK,STATUS,MEMO,BIND_EVENT,BIND_EVENT_FUNCTION,GMT_CREATE,GMT_MODIFIED
+		FROM
+			BANNER_CONFIG
+		<dynamic>
+            <isParameterPresent open="WHERE" removeFirstPrepend="true">
+           	 	<isNotEmpty property="bannerId" prepend="AND">
+				    BANNER_ID = #bannerId#
+				</isNotEmpty>
+           	</isParameterPresent>
+        </dynamic>
+        LIMIT 
+			#start# , #size#
+	</select>
+</sqlMap>

@@ -3,12 +3,12 @@ package com.doucome.corner.biz.core.taobao.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 单品级优惠信息
  * 
- * @author shenjia.caosj 2012-3-28
+ * @author langben 2012-3-28
  * 
  */
 public class TaobaoPromotionInItemDTO extends AbstractModel {

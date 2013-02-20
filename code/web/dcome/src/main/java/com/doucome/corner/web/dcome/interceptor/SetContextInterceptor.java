@@ -1,5 +1,8 @@
 package com.doucome.corner.web.dcome.interceptor;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +17,7 @@ import com.doucome.corner.biz.dcome.enums.DcLoginSourceEnums;
 import com.doucome.corner.web.common.constant.CookieConstants;
 import com.doucome.corner.web.common.cookie.CookieHelper;
 import com.doucome.corner.web.common.cookie.DcCookieNameConstant;
+import com.doucome.corner.web.common.utils.UbidUtil;
 import com.doucome.corner.web.dcome.authz.DcAuthz;
 import com.doucome.corner.web.dcome.authz.model.DcAuthzTemp;
 import com.doucome.corner.web.dcome.context.AuthzContext;
@@ -72,9 +76,32 @@ public class SetContextInterceptor extends AbstractInterceptor {
             authzContext.setPrivateUser(true);
         }
 
+        // 处理DC_UBID
+        String ubid = CookieHelper.readCookie(cookies, DcCookieNameConstant.DC_UBID);
+        if (StringUtils.isNotBlank(ubid) && UbidUtil.checkUbid(ubid)) {
+            authzContext.setUbid(ubid);
+        } else {
+            ubid = UbidUtil.createUbid();
+            writeYearCookie(DcCookieNameConstant.DC_UBID, ubid);
+            authzContext.setUbid(ubid);
+        }
+
         // 处理DC_LOGIN_SOURCE
         String loginSource = CookieHelper.readCookie(cookies, DcCookieNameConstant.DC_LOGIN_SOURCE);
         authzContext.setLoginSource(DcLoginSourceEnums.get(loginSource));
+
+        // 处理DC_PROMOTYPE
+        String promotypeStr = CookieHelper.readCookie(cookies, DcCookieNameConstant.DC_PROMOTYPE);
+        try {
+            if (StringUtils.isNotBlank(promotypeStr)) {
+                Map<String, String> promotype = JacksonHelper.fromJSON(promotypeStr, HashMap.class);
+                if (promotype != null) {
+                    authzContext.setPromotype(promotype);
+                }
+            }
+        } catch (Exception e) {
+            log.error("Analytic promotype error ! promotype: " + promotypeStr, e);
+        }
 
         // 处理DC_PF_NICK
         String pfNickEntrypt = CookieHelper.readCookie(cookies, DcCookieNameConstant.DC_PF_NICK);
@@ -141,15 +168,45 @@ public class SetContextInterceptor extends AbstractInterceptor {
                     writeSessionCookie(DcCookieNameConstant.DC_LOGIN_SOURCE, null);
                     writeSessionCookie(DcCookieNameConstant.DC_USER_ID, null);
                 }
+
+                Map<String, String> promotype = authzContext.getPromotype();
+                if (promotype == null || promotype.isEmpty()) {
+                    writeSessionCookie(DcCookieNameConstant.DC_PROMOTYPE, null);
+                } else {
+                    try {
+                        String promotypeJson = JacksonHelper.toJSON(promotype);
+                        writeSessionCookie(DcCookieNameConstant.DC_PROMOTYPE, promotypeJson);
+                    } catch (Exception e) {
+                        log.error("change promotype error ! ", e);
+                    }
+                }
             } catch (Exception e) {
                 log.error("change cookie error ! " + e.getMessage(), e);
             }
         }
+        
+        //每次都植入 淘宝开放平台的相关参数
+//        String timestamp = TaobaoWidgetUtils.timestamp() ;
+//        String appKey = EnvPropertiesUtil.getProperty(EnvConstant.CORNER_API_TAOBAO_APPKEY) ;
+//        String secret = EnvPropertiesUtil.getProperty(EnvConstant.CORNER_API_TAOBAO_SECRET) ;
+//        String sign;
+//		try {
+//			sign = TaobaoWidgetUtils.sign(secret, appKey, timestamp);
+//		} catch (EncryptException e) {
+//			sign = null ;
+//		}
+//        CookieHelper.writeCookie(ServletActionContext.getResponse(), domain, TaobaoCoolieNameConstant.SIGN, sign, CookieConstants.EXPIRY_TIME_SESSION) ;
+//        CookieHelper.writeCookie(ServletActionContext.getResponse(), domain, TaobaoCoolieNameConstant.TIMESTAMP, timestamp, CookieConstants.EXPIRY_TIME_SESSION) ;
     }
 
     private void writeSessionCookie(String name, String value) {
         CookieHelper.writeCookie(ServletActionContext.getResponse(), domain, name, value,
                                  CookieConstants.EXPIRY_TIME_SESSION);
+    }
+    
+    private void writeYearCookie(String name, String value) {
+        CookieHelper.writeCookie(ServletActionContext.getResponse(), domain, name, value,
+                                 CookieConstants.EXPIRY_TIME_YEAR);
     }
 
     /**

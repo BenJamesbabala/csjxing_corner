@@ -12,7 +12,7 @@ import com.doucome.corner.biz.core.utils.EnvPropertiesUtil;
 
 /**
  * EnvPropertiesToolbox velocity toolbox
- * @author shenjia.caosj 2011-12-23
+ * @author langben 2011-12-23
  *
  */
 public class EnvPropertiesToolbox {
@@ -89,5 +89,20 @@ public class EnvPropertiesToolbox {
 	public String getBopsRoot(){
 		return DefaultUriService.getFactoryURI(URIConstant.BOPS_SERVER) ;
 	}
-		
+	
+	public String getHsRoot() {
+		return DefaultUriService.getFactoryURI(URIConstant.HS_SERVER);
+	}
+	
+	public String getHsStaticRoot() {
+		return DefaultUriService.getFactoryURI(URIConstant.HS_STATIC_SERVER);
+	}
+	
+	public String getWryneckRoot(){
+		return DefaultUriService.getFactoryURI(URIConstant.WRYNECK_SERVER);
+	}
+	
+	public String getNamefateRoot(){
+		return DefaultUriService.getFactoryURI(URIConstant.NAMEFATE_SERVER);
+	}
 }

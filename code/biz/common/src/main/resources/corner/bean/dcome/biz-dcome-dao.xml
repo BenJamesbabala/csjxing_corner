@@ -10,22 +10,177 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
 		default-autowire="byName">
-		
-	<bean id="dcCommentDAO" class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcCommentDAO" />
 	
-	<bean id="dcItemDAO" class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcItemDAO"/>
+	<bean id="dcCommentDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcCommentDAO" />
+		</property>
+	</bean>
 	
-	<bean id="dcLoveDetailDAO" class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcLoveDetailDAO"/>
+	<bean id="dcItemDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcItemDAO" />
+		</property>
+	</bean>
 	
-	<bean id="dcSceneDAO" class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcSceneDAO"/>
+	<bean id="dcLoveDetailDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcLoveDetailDAO" />
+		</property>
+	</bean>
 	
-	<bean id="dcSceneDetailDAO" class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcSceneDetailDAO"/>
+	<bean id="dcSceneDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcSceneDAO" />
+		</property>
+	</bean>
 	
-	<bean id="dcCategoryDAO" class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcCategoryDAO"/>
+	<bean id="dcSceneDetailDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcSceneDetailDAO" />
+		</property>
+	</bean>
 	
-	<bean id="dcUserDAO" class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcUserDAO"/>
+	<bean id="dcCategoryDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcCategoryDAO" />
+		</property>
+	</bean>
 	
-	<bean id="dcQIndexConfigDAO" class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcQIndexConfigDAO"/>
+	<bean id="dcUserDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcUserDAO" />
+		</property>
+	</bean>
 	
-	<bean id="dcSystemDAO" class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcSystemDAO"/>
+	<bean id="dcQIndexConfigDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcQIndexConfigDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcSystemDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcSystemDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcPromotionAwardDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcPromotionAwardDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcRateDetailDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcRateDetailDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcPromotionDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcPromotionDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcPromotionItemDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcPromotionItemDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcRateEventDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcRateEventDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcPromotionRateDetailDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcPromotionRateDetailDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcUserIntegralDetailDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcUserIntegralDetailDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcUserLoginTraceDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcUserLoginTraceDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcUserClickStatisticsDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcUserClickStatisticsDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcGameRuleDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IbatisDcGameRuleDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcAuctionItemDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcAuctionItemDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcPromotionSnapInfoDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcPromotionSnapInfoDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcExchangeItemDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcExchangeItemDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcAppVoteDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcAppVoteDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcWinnerGameConfigDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcWinnerGameConfigDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcWinnerGamePlayDetailDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcWinnerGamePlayDetailDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcUserIntegralRecordDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcUserIntegralRecordDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcUserExchangeApproveDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcUserExchangeApproveDAO" />
+		</property>
+	</bean>
+	
+	<bean id="dcSearchLogDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcSearchLogDAO" />
+		</property>
+	</bean>
+	<bean id="dcAutoExchangeDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dcome.ibatis.IBatisDcAutoExchangeDAO" />
+		</property>
+	</bean>
 </beans>

@@ -3,7 +3,35 @@ package com.doucome.corner.biz.core.utils;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
+import com.doucome.corner.biz.core.constant.DecimalConstant;
+
 public class DecimalUtils {
+	
+	/**
+	 * >= 0
+	 * @param bd
+	 * @return
+	 */
+	public static boolean isGreaterEqualThan0(BigDecimal bd){
+		if(bd == null){
+			return false ;
+		}
+		int i = bd.compareTo(DecimalConstant.ZERO) ;
+		return i >= 0 ;
+	}
+	
+	/**
+	 * > 0
+	 * @param bd
+	 * @return
+	 */
+	public static boolean isGreaterThan0(BigDecimal bd){
+		if(bd == null){
+			return false ;
+		}
+		int i = bd.compareTo(DecimalConstant.ZERO) ;
+		return i > 0 ;
+	}
 	
 	public static String format(BigDecimal d , String format){
 		if(d == null){
@@ -53,6 +81,9 @@ public class DecimalUtils {
 	 * @return
 	 */
 	public static boolean lessEqualThan(BigDecimal d1 , BigDecimal d2){
+		if(d1 == null || d2 == null){
+			return false ;
+		}
 		int i = d1.compareTo(d2) ;
 		return i == 1 ? false : true ;
 	}

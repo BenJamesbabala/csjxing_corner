@@ -11,17 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.doucome.corner.biz.core.qq.QqQueryService;
 import com.doucome.corner.biz.core.qq.model.QqCsecWordModel;
 import com.doucome.corner.biz.dal.dataobject.dcome.DcCommentDO;
-import com.doucome.corner.biz.dcome.business.DcCommentBO;
+import com.doucome.corner.biz.dcome.business.DcItemBO;
 import com.doucome.corner.biz.dcome.enums.DcLoginSourceEnums;
 import com.doucome.corner.biz.dcome.model.DcCommentDTO;
+import com.doucome.corner.biz.dcome.model.facade.PfModel;
+import com.doucome.corner.biz.dcome.model.facade.QQPfModel;
 import com.doucome.corner.web.common.model.JsonModel;
 import com.doucome.corner.web.dcome.action.DComeBasicAction;
-import com.doucome.corner.web.dcome.authz.model.PfModel;
-import com.doucome.corner.web.dcome.authz.model.QQPfModel;
 
 /**
  * 添加评论
- * @author shenjia.caosj 2012-7-28
+ * @author langben 2012-7-28
  *
  */
 @SuppressWarnings("serial")
@@ -46,7 +46,7 @@ public class CommentOperateAjaxAction extends DComeBasicAction {
 	private JsonModel<DcCommentDTO> json = new JsonModel<DcCommentDTO>() ;
 
 	@Autowired
-	private DcCommentBO dcCommentBO ;
+	private DcItemBO dcItemBO ;
 	
 	public String add(){
 		
@@ -74,7 +74,7 @@ public class CommentOperateAjaxAction extends DComeBasicAction {
 		try {
 			
 			PfModel pfm = dcAuthz.getPfModel() ;
-			if(pfm.getPf() == DcLoginSourceEnums.Pengyou || pfm.getPf() == DcLoginSourceEnums.Qzone){
+			if(pfm != null && (pfm.getPf() == DcLoginSourceEnums.Pengyou || pfm.getPf() == DcLoginSourceEnums.Qzone)){
 				QQPfModel qpfm = (QQPfModel) pfm ;
 				//过滤敏感词
 				QqCsecWordModel qm = qqQueryService.csecWordFilter(comment.getContent(),qpfm.getPf().getValue() , qpfm.getOpenId(), qpfm.getOpenKey()) ;
@@ -84,7 +84,7 @@ public class CommentOperateAjaxAction extends DComeBasicAction {
 			}
 			
 			
-			Long commentId = dcCommentBO.addComment(comment);
+			Long commentId = dcItemBO.addComment(comment);
 			json.setDetail("id:" + commentId) ;
 			json.setData(new DcCommentDTO(comment)) ;
 		} catch (Exception e){

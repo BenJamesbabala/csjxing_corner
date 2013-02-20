@@ -45,6 +45,7 @@ public class DdzAccountServiceImpl implements DdzAccountService {
             accountDO = new DdzAccountDO();
             accountDO.setAccountId(UidCreateUtil.createUid(alipayId, 11));
             accountDO.setAlipayId(alipayId);
+            accountDO.setRefundCount(0);
             insertAccountDO(accountDO);
         }
 
@@ -104,5 +105,27 @@ public class DdzAccountServiceImpl implements DdzAccountService {
         return new QueryResult<DdzAccountDO>(items, pagination, totalRecords);
 		
 	}
+
+	@Override
+	public int incrRefundCountByAlipayId(String alipayId, int count) {
+		return ddzAccountDAO.incrRefundCountByAlipayId(alipayId, count) ;
+	}
+
+	@Override
+	public int decrNotifyCountByAlipayId(String alipayId, int count) {
+		return ddzAccountDAO.decrNotifyCountByAlipayId(alipayId, count) ;
+	}
+
+	@Override
+	public int updateLastLoginByAlipayId(String alipayId) {
+		return ddzAccountDAO.updateLastLoginByAlipayId(alipayId) ;
+	}
+
+	@Override
+	public int updateLastVisitByAlipayId(String alipayId) {
+		return ddzAccountDAO.updateLastVisitByAlipayId(alipayId) ;
+	}
+
+	
 
 }

@@ -1,0 +1,87 @@
+<div class="winner-layer" style="display: none;">
+	<div class="head">
+		<a class="hide-btn" href="javascript:;"></a>
+		<h2 class="title dd-l">请填写您的收货信息</h2>
+		<span>(如有疑问或建议，请添加微信：doucome)</span>
+	</div>
+	<div class="content dd-l">
+		<div class="tab-wrap">
+			<a class="item-tab" href="javascript:;">普通商品</a>
+			<a class="virtual-tab" href="javascript:;">充值卡(Q币，话费等)</a>
+		</div>
+	    <div class="item-wrap dd-l">
+		    <a class="pic-wrap" taoke-href="" data-item-id="">
+		        <img class="item-pic" src="" alt="商品图片" />
+			</a>
+		    <div class="title-wrap">
+			    <a class="item-title" taoke-href="" data-item-id="" ></a>
+			</div>
+		</div>
+		<ul class="item dd-l">					
+			<li>
+				<div class="price-wrap">
+					<div class="lbl">商品价格</div>
+					<strong class="item-price"></strong>
+					<span>元</span>
+				</div>
+				<div class="code-wrap">
+				    <span class="lbl">领奖码</span>
+					<span class="award-code"></span>
+				</div>
+			</li>
+			<li>
+			    <div class="size-wrap">
+					<span class="lbl">商品尺码</span>
+					<input type="text" class="item-size" name="itemSize" />
+				</div>
+				<div class="color-wrap">
+					<span class="lbl">商品颜色</span>
+					<input type="text" class="item-color" name="itemColor" />
+				</div>
+			</li>
+			<li>
+				<div class="name-wrap">
+					<span class="lbl">收货人姓名</span>
+					<input type="text" class="user-name" name="delName" />
+				</div>
+				<div class="mobile-wrap">
+					<span class="lbl">联系电话</span>
+					<input type="text" class="user-mobile" name="delMobile"/>
+				</div>
+			</li>
+			<li>
+				<span class="lbl">收货人地址</span>
+				<textarea name="delAddr" class="address" wrap="virtual"></textarea>
+			</li>
+			<li>
+				<span class="lbl">其他信息</span>
+				<textarea name="delOther" class="other" wrap="virtual">如有额外信息，请在此处录入</textarea>
+			</li>
+		</ul>
+		<ul class="virtual-item dd-l" style="display: none;">
+			<li>
+				<div class="lbl">商品价格</div>
+				<strong class="item-price"></strong>
+				<span>元</span>
+			</li>
+			<li>
+			    <span class="lbl">领奖码</span>
+				<span class="award-code"></span>
+			</li>
+			<li>
+			    <span class="lbl">领奖人姓名</span>
+				<input type="text" class="user-name" name="delName" />
+			</li>
+			<li>
+			    <span class="lbl">充值号码</span>
+				<input type="text" class="account" name="delMobile" />
+			</li>
+			<li>
+				充值号码说明：如果奖品是q币，充值号码就是QQ号；如果奖品是话费，充值号码就是要充值的手机号；如果奖品是支付宝红包，充值号码就是要充值的支付宝账号...以此类推
+			</li>
+		</ul>
+	</div>
+	<div class="bottom">
+	    <a class="sub-btn btn" href="javascript:;" data-id="" data-item-type="N">提交</a>
+	</div>
+</div>

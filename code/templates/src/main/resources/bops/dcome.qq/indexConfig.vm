@@ -16,7 +16,7 @@
 	<div class="MT20 MB20" style="height:350px;">
 	#if($sceneDTO.itemList.size() > 0)
 		<div style="width:800px;">
-		#foreach($item in $sceneDTO.itemList)
+		#foreach($item in $itemList)
 			#set($idx = $velocityCount )
             <div style="margin:10px;border:1px solid #dddddd;" class="L">
                 <div style="margin:5px;"><img src="$!item.getPicUrl(0,'120x120')" width="120" height="120"></img></div>

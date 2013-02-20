@@ -1,10 +1,10 @@
 package com.doucome.corner.biz.core.taobao.dto;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 店铺级优惠信息 
- * @author shenjia.caosj 2012-3-28
+ * @author langben 2012-3-28
  *
  */
 public class TaobaoPromotionInShopDTO extends AbstractModel {

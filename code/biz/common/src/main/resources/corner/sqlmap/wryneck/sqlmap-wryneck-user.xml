@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="WryneckUser">
+    <typeAlias alias="TA-WryneckUser" type="com.doucome.corner.biz.dal.wryneck.dataobject.WryneckUserDO" />
+
+	<resultMap id="RM-WryneckUser" class="TA-WryneckUser">
+		<result property="userId" column="USER_ID" />
+		<result property="userNick" column="USER_NICK" jdbcType="VARCHAR" />
+		<result property="externalId" column="EXTERNAL_ID" jdbcType="VARCHAR" />
+		<result property="externalPf" column="EXTERNAL_PF" jdbcType="VARCHAR" />
+		<result property="gender" column="GENDER" jdbcType="VARCHAR" />
+		<result property="password" column="MD5_PASSWORD" jdbcType="VARCHAR" />
+		<result property="integralCount" column="INTEGRAL_COUNT" />
+		<result property="newGuide" column="NEW_GUIDE" />
+		<result property="testResult" column="TEST_RESULT" />
+		<result property="gmtLastLogin" column="GMT_LAST_LOGIN" jdbcType="TIMESTAMP" />
+		<result property="gmtFollowQzone" column="GMT_FOLLOW_QZONE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertUser">
+		INSERT INTO WRYNECK_USER
+			(USER_ID,USER_NICK,EXTERNAL_ID,EXTERNAL_PF,GENDER,MD5_PASSWORD,INTEGRAL_COUNT,GMT_LAST_LOGIN,GMT_MODIFIED,GMT_CREATE)
+		VALUES
+			(#userId#,#userNick#,#externalId#,#externalPf#,#gender#,#password#,#integralCount#,now(),now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="userId">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS USER_ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryUser" resultMap="RM-WryneckUser">
+		SELECT 
+			USER_ID,USER_NICK,EXTERNAL_ID,EXTERNAL_PF,GENDER,MD5_PASSWORD,INTEGRAL_COUNT,NEW_GUIDE,TEST_RESULT,
+		     	GMT_FOLLOW_QZONE,GMT_LAST_LOGIN,GMT_MODIFIED,GMT_CREATE
+		FROM 
+			WRYNECK_USER
+		WHERE 
+			USER_ID = #userId#
+		LIMIT 1
+	</select>
+	
+	<select id="queryUserByExternalId" resultMap="RM-WryneckUser">
+		SELECT 
+			USER_ID,USER_NICK,EXTERNAL_ID,EXTERNAL_PF,GENDER,MD5_PASSWORD,INTEGRAL_COUNT,NEW_GUIDE,TEST_RESULT,
+		     	GMT_FOLLOW_QZONE,GMT_LAST_LOGIN,GMT_MODIFIED,GMT_CREATE
+		FROM 
+			WRYNECK_USER
+		WHERE 
+			EXTERNAL_ID = #externalId#
+	</select>
+	
+	<update id="updateLoginInfo">
+	    UPDATE 
+	    	WRYNECK_USER
+	    SET 
+	    	GMT_LAST_LOGIN = now(), 
+	    	GMT_MODIFIED = now()
+	    WHERE 
+	    	USER_ID = #userId#
+	</update>
+	
+	<update id="updateFollowQzone">
+	    UPDATE 
+			WRYNECK_USER
+	    SET 
+	    	GMT_FOLLOW_QZONE = now(), 
+	    	GMT_MODIFIED = now()
+	    WHERE 
+	    	USER_ID = #userId#
+	</update>
+	
+	<update id="updateTestResult">
+		UPDATE
+			WRYNECK_USER
+		SET
+			TEST_RESULT = #testResult# ,
+			GMT_MODIFIED = now()
+		WHERE
+			USER_ID = #userId#
+	</update>
+</sqlMap>

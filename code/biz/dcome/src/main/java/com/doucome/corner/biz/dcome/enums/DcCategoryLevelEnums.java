@@ -2,7 +2,7 @@ package com.doucome.corner.biz.dcome.enums;
 
 /**
  * 豆蔻类目级别
- * @author shenjia.caosj 2012-7-24
+ * @author langben 2012-7-24
  *
  */
 public enum DcCategoryLevelEnums {

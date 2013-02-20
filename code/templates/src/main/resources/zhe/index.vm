@@ -1,7 +1,20 @@
+#set($configMap = $!bannerConfigMap)
 #set($layout="zhe/default_main.vm")
 #DDZ_CSS(["home/control/widget/home/recommend.css"])
 
-	#parse("/common/zhe/recommend.vm")
+
+<div style="height:300px;">
+    <div class="banner-config-init dd-hide" data-banner-id="ddz_index">
+    	####parse("/common/zhe/recommend.vm")
+    </div>
+</div>
+
+
+
+<input type="hidden" id="isNotify" value="$!isNotify" />
+
 ##parse("/common/zhe/brands.vm")
+
+
 
  

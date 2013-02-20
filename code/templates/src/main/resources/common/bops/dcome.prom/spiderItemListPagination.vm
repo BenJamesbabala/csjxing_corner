@@ -1,0 +1,21 @@
+<div class="pagination" id="pagination">
+	#parse("/common/bops/_pagination.vm")
+	<form method="get" action="$searchUrl" id="form_page">
+		<input type="hidden" name="keywords" value="$!keywords" />
+		<input type="hidden" name="category" value="$!category" />
+		<input type="hidden" name="categoryKeywords" value="$!categoryKeywords" />
+		<input type="hidden" name="gmtModifyStart" value="$!startDateFormat"/>-
+		<input type="hidden" name="gmtModifyEnd" value="$!endDateFormat"/>
+		<input type="hidden" name="orderBy" value="$!orderBy" />
+		<input type="hidden" id="priceStart" name="priceStart"  value="$!priceStart"/>
+		<input type="hidden" id="priceEnd" name="priceEnd" value="$!priceEnd"/>
+		<input type="hidden" id="commissionStart" name="commissionStart"  value="$!commissionStart"/>
+		<input type="hidden" id="commissionEnd" name="commissionEnd" value="$!commissionEnd"/>
+		<input type="hidden" id="creditStart" name="creditStart"  value="$!creditStart"/>
+		<input type="hidden" id="creditEnd" name="creditEnd" value="$!creditEnd"/>
+		<input type="hidden" id="volumeStart" name="volumeStart"  value="$!volumeStart"/>
+		<input type="hidden" id="volumeEnd" name="volumeEnd" value="$!volumeEnd"/>
+		<div class="page-op"><span class="total-page">共 $totalPages 页</span>到<input type="text" name="page" value="$!curPage">页<input type="submit" value="确定"></div>
+    </form>
+	
+</div>

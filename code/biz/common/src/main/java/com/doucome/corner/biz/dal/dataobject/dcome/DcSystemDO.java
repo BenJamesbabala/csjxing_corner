@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * ¶¹Þ¢ÏµÍ³APP
- * @author shenjia.caosj 2012-7-26
+ * @author langben 2012-7-26
  *
  */
 public class DcSystemDO {

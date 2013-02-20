@@ -1,10 +1,13 @@
 package com.doucome.corner.biz.dcome.cache;
 
-import com.doucome.corner.biz.dal.dataobject.dcome.DcCategoryDO;
+import java.util.List;
+import java.util.Map;
+
+import com.doucome.corner.biz.dcome.model.DcCategoryDTO;
 
 /**
  * 类目缓存
- * @author shenjia.caosj 2012-7-28
+ * @author langben 2012-7-28
  *
  */
 public interface DcCategoryCache {
@@ -14,13 +17,20 @@ public interface DcCategoryCache {
 	 * @param catId
 	 * @return
 	 */
-	DcCategoryDO get(Long catId) ;
+	DcCategoryDTO get(Long catId) ;
+	
+	/**
+	 * 批量获取Category
+	 * @param idList
+	 * @return
+	 */
+	Map<Long,DcCategoryDTO> getCacheMap(List<Long> idList) ;
 	
 	/**
 	 * 设置
 	 * @param cat
 	 */
-	void set(DcCategoryDO cat) ;
+	void set(DcCategoryDTO cat) ;
 	
 	/**
 	 * 移除

@@ -3,7 +3,7 @@ package com.doucome.corner.biz.core.taobao.enums;
 
 /**
  * 
- * @author shenjia.caosj 2012-3-22
+ * @author langben 2012-3-22
  *
  */
 public enum TaobaoRecommendTypeEnums {

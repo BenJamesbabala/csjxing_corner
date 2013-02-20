@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
 import com.doucome.corner.biz.core.taobao.enums.TaobaoSellerStartCreditEnums;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 淘宝客查询商品条件
- * @author shenjia.caosj 2012-2-27
+ * @author langben 2012-2-27
  *
  */
 public class TaokeItemSearchCondition extends AbstractModel {

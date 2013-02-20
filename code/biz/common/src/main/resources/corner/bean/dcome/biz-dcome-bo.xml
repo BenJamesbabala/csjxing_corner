@@ -27,12 +27,45 @@
 	
 	<bean id="dcQIndexConfigBO" class="com.doucome.corner.biz.dcome.business.DcQIndexConfigBO"></bean>
 	
-	<bean id="dcLoveBO" class="com.doucome.corner.biz.dcome.business.DcLoveBO"></bean>
+	<bean id="dcItemBO" class="com.doucome.corner.biz.dcome.business.DcItemBO"></bean>
 	
-	<bean id="dcCommentBO" class="com.doucome.corner.biz.dcome.business.DcCommentBO"></bean>
+	<bean id="dcRateCtuBO" class="com.doucome.corner.biz.dcome.business.DcRateCtuBO"></bean>
 	
 	<bean id="dcFakeUserBO" class="com.doucome.corner.biz.dcome.business.DcFakeUserBO">
 	    <property name="fakeUserIds" value="10001,10002,10003,10006,10008,10011,10012"/>
 	</bean>
 	
+	<bean id="dcPromotionBO" class="com.doucome.corner.biz.dcome.business.DcPromotionBO"></bean>
+	
+	<bean id="ctuRateSecurityDegreeHandler" class="com.doucome.corner.biz.dcome.handler.CtuRateSecurityDegreeHandler"></bean>
+	
+	<bean id="dcUserIntegralBO" class="com.doucome.corner.biz.dcome.business.DcUserIntegralBO"></bean>
+	
+	<bean id="dcUserBO" class="com.doucome.corner.biz.dcome.business.DcUserBO"></bean>
+	
+	<bean id="dcGameBO" class="com.doucome.corner.biz.dcome.business.DcGameBO"></bean>
+	
+	<bean id="dcPromotionAwardBO" class="com.doucome.corner.biz.dcome.business.DcPromotionAwardBO"></bean>
+	
+	<bean id="dcUserShareBO" class="com.doucome.corner.biz.dcome.business.DcUserShareBO"></bean>
+	
+	<bean id="dcAuctionBO" class="com.doucome.corner.biz.dcome.business.DcAuctionBO"></bean>
+	
+	<bean id="calculateRatethreadPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="6" />
+        <property name="maxPoolSize" value="16" />
+        <property name="keepAliveSeconds" value="60000" />
+        <property name="queueCapacity" value="1000" />
+        <property name="waitForTasksToCompleteOnShutdown" value="true" />
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" /> 
+        </property>
+    </bean>
+    
+    <bean id="dcSyncItemBO" class="com.doucome.corner.biz.dcome.business.DcSyncItemBO"></bean>
+    <bean id="dcExchangeBO" class="com.doucome.corner.biz.dcome.business.DcExchangeBO"></bean>
+    
+    <bean id="dcUserIntegralOperateBO" class="com.doucome.corner.biz.dcome.business.DcUserIntegralOperateBO"></bean>
+    
+    <bean id="dcUserExchangeBO" class="com.doucome.corner.biz.dcome.business.DcUserExchangeBO"></bean>
 </beans>

@@ -17,7 +17,7 @@ import sun.misc.BASE64Encoder;
 /**
  * taobao util
  * 
- * @author shenjia.caosj 2012-3-21
+ * @author langben 2012-3-21
  * 
  */
 public class TaobaoSignV2Utils {

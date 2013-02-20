@@ -1,7 +1,10 @@
 package com.doucome.corner.biz.zhe.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import com.doucome.corner.biz.common.enums.SumTaokeReportTypeEnums;
+import com.doucome.corner.biz.core.enums.SettleStatusEnums;
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.model.page.QueryResult;
 import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleSearchCondition;
@@ -9,6 +12,7 @@ import com.doucome.corner.biz.dal.condition.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
+import com.doucome.corner.biz.zhe.enums.DdzRefundStatusEnums;
 
 
 public interface DdzTaokeReportService {
@@ -18,7 +22,7 @@ public interface DdzTaokeReportService {
 	 * @param report
 	 * @return
 	 */
-	int createReport(DdzTaokeReportDO report) ;
+	Long createReport(DdzTaokeReportDO report) ;
 	
 	/**
 	 * 结算
@@ -74,7 +78,14 @@ public interface DdzTaokeReportService {
 	 * @param ids
 	 * @return
 	 */
-	int updateTaokeReportSettleId(List<Long> reportIds, Long settleId) throws Exception ;
+	int updateTaokeReportSettleId(List<Long> reportIds, Long settleId) ;
+	
+	/**
+	 * 统计结算费用
+	 * @param searchCondition
+	 * @return
+	 */
+	BigDecimal calcTaokeReportTotalSettleFee(TaokeReportSearchCondition searchCondition , SumTaokeReportTypeEnums sumType) ;
 	
 	/**
 	 * 查询结算记录
@@ -90,4 +101,35 @@ public interface DdzTaokeReportService {
      */
     List<DdzTaokeReportSettleDO> getSettleReports(DdzTaokeReportSettleSearchCondition searchCondition);
     
+    /**
+	 * 维权退款
+	 * @param reportId
+	 * @param refundStats
+	 * @return
+	 */
+    int updateRefundById(Long reportId , DdzRefundStatusEnums refundStats) ;
+    
+    /**
+     * 
+     * @param ids
+     * @param refundStats
+     * @return
+     */
+    int updateRefundByIds(List<Long> ids, DdzRefundStatusEnums refundStats) ;
+    
+    /**
+     * 更新结算状态
+     * @param reportId
+     * @param status
+     * @return
+     */
+    int updateSettleStatusByIds(List<Long> ids , SettleStatusEnums status) ;
+    
+    /**
+     * 更新结算费用
+     * @param id
+     * @param settleFee
+     * @return
+     */
+    int updateSettleFeeById(Long id, BigDecimal settleFee) ;
 }

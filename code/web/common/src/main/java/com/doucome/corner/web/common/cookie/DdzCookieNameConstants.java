@@ -29,4 +29,5 @@ public final class DdzCookieNameConstants {
      * 标识是否为内部用户
      */
     public static final String DDZ_IS_PRIVATE = "__ddz_private";
+    
 }

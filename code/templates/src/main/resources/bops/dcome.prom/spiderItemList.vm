@@ -1,0 +1,105 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "外部商品")
+
+<input type="hidden"  id="bopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="bopsPage" value="dcSpiderItemList"/>
+
+#set($startDateFormat=$dateUtils.format($!gmtModifyStart,'yyyy-MM-dd'))
+#set($endDateFormat=$dateUtils.format($!gmtModifyEnd,'yyyy-MM-dd'))
+#set($pagination = $itemQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/prom/spider_item_list.htm?")
+#set($searchQuery = ["priceStart:$!priceStart","categoryKeywords:$!categoryKeywords","priceEnd:$!priceEnd","creditStart:$!creditStart","creditEnd:$!creditEnd","volumeStart:$!volumeStart","volumeEnd:$!volumeEnd","commissionStart:$!commissionStart","commissionEnd:$!commissionEnd","keywords:$!keywords","category:$!category","orderBy:$!orderBy","gmtModifyStart:$!startDateFormat","gmtModifyEnd:$!endDateFormat"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/dcome/prom/spider_item_list.htm" method="GET">
+		<div class="MB10 MT10">
+			商品名称：<input  type="text" name="keywords" value="$!keywords" />
+			更新时间：<input type="text" id="gmtModifyStart" name="gmtModifyStart" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate" value="$!startDateFormat"/>&nbsp;-
+			<input type="text" id="gmtModifyEnd" name="gmtModifyEnd" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate" value="$!endDateFormat"/>
+			<br />
+			类目名称：<input  type="text" name="categoryKeywords" value="$!categoryKeywords" /> &nbsp;or
+			<select name="category">
+				<option value="" #if($!category == "") selected #end>全部</option>
+				#foreach($cgy in $!categorySet)
+					<option value="$!cgy" #if($!category == $cgy) selected #end>$!cgy</option>
+				#end		
+			</select>
+			<br />
+			价格区间：<input type="text" id="priceStart" name="priceStart" style="width:65px;" value="$!priceStart"/>&nbsp;-
+			<input type="text" id="priceEnd" name="priceEnd"  style="width:66px;" value="$!priceEnd"/>
+			返利区间：<input type="text" id="commissionStart" name="commissionStart"  style="width:65px;" value="$!commissionStart"/>&nbsp;-
+			<input type="text" id="commissionEnd" name="commissionEnd"  style="width:66px;" value="$!commissionEnd"/>
+			等级区间：<input type="text" id="creditStart" name="creditStart"  style="width:65px;" value="$!creditStart"/>&nbsp;-
+			<input type="text" id="creditEnd" name="creditEnd"  style="width:66px;" value="$!creditEnd"/>
+			销量区间：<input type="text" id="volumeStart" name="volumeStart"  style="width:65px;" value="$!volumeStart"/>&nbsp;-
+			<input type="text" id="volumeEnd" name="volumeEnd"  style="width:66px;" value="$!volumeEnd"/>
+			<br />
+			排序：
+			<select name="orderBy">
+				<option value="time" #if($!orderBy == "time") selected #end>时间</option>
+				<option value="price" #if($!orderBy == "price") selected #end>价格</option>
+				<option value="rate" #if($!orderBy == "rate") selected #end>返利比例</option>
+			</select>
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	#parse("/common/bops/dcome.prom/spiderItemListPagination.vm")
+	<form action="${env.bopsRoot}/bops/dcome/qq/batch_add_item.htm" method="get" target="_blank">
+	<table width="900" style="font-size:14px;" id="itemTable">
+		#if($itemQuery.totalRecords > 0)
+			<tr><td>
+				#set($rowCount = 0)
+				#foreach($item in $itemQuery.items)
+					#set($rowCount = ($velocityCount - 1) % 5)
+					<div style="float:left;">
+					
+					<table width="170" style="font-size:14px;">
+						#set($taobaoUrl = 'http://item.taobao.com/item.htm?id=' + $!item.itemId)
+						<tr><td >
+							<a href="$taobaoUrl" target="_blank"><img src="$!item.picUrl" width="160px" border="0" /></a>
+                        </td></tr>
+						<tr><td >
+							<a target="_blank" href="${env.bopsRoot}/bops/dcome/qq/item_operate.htm?wd=$!stringUtils.urlEncode($!taobaoUrl)&picUrl=$!stringUtils.urlEncode($!item.picUrl)">添加商品</a>
+							<input type="checkbox" name="numIids" value="$!item.itemId" class="R"/>
+                        </td></tr>
+						<tr><td >
+							价格：$!item.price &nbsp;&nbsp;比例：$!decimalUtils.formatRatio($!item.rate) &nbsp;&nbsp;返现：$!item.commission
+                        </td></tr>
+						<tr><td >
+							等级：$!item.creditScore &nbsp;&nbsp;月销量：$!item.volume
+                        </td></tr>
+						<tr><td >
+							名称：$!item.title
+                        </td></tr>
+						<tr><td >
+							类目：$!item.category
+                        </td></tr>
+                    </table>
+					</div>
+					#if($rowCount == 4 )
+                        <div style="width:900px;height:1px;float:left;"></div>
+					#end
+				#end
+			</td></tr>
+		#else
+			<tr><td>没有查询到任何商品</td></tr>
+		#end
+     </table>
+        <div class="MT10 MB10"><input type="submit" value="批量添加选中商品" /> &nbsp; 全选 <input type="checkbox" class="check-all-click"/></div>
+     </form>
+	 #parse("/common/bops/dcome.prom/spiderItemListPagination.vm")
+		
+	 
+		
+</div>
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

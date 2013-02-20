@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.doucome.corner.biz.core.utils.MD5Util;
 import com.doucome.corner.biz.dal.BopsAdminDAO;
 import com.doucome.corner.biz.dal.dataobject.BopsAdminDO;
-import com.doucome.corner.biz.zhe.service.DdzReportMailService;
 import com.doucome.corner.web.bops.authz.BopsSessionOperator;
 
 /**

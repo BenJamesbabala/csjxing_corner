@@ -1,0 +1,26 @@
+#set($layout="dcome/frame.namefate/default.vm")
+
+#set($pagination = $queryResult.pagination)
+#set($searchUrl = ${env.root}+"/frame/namefate/trick_list.htm?")
+#set($searchQuery = [""])
+
+<div class="trick-result">
+    <table>
+    	<thead>
+    		<tr>
+            	<th></th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    	#if($queryResult.totalRecords > 0)
+    		#foreach($item in $queryResult.items)
+                <tr><td>
+    			$!item.trickInputName #if($!item.trickUserId)£®$!item.trickUserNick£©#end <span>œ≤ª∂µƒ»À «</span> $!item.trickInputTaName 
+    			</td></tr>
+    		#end
+    	#end
+        </tbody>
+	</table>
+</div>
+	
+#parse("/common/dcome.namefate/trickListPagination.vm")

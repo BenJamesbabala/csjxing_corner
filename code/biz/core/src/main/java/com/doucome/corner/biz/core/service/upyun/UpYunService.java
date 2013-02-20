@@ -5,7 +5,7 @@ import com.doucome.corner.biz.core.service.upyun.model.UpyunDataEntity;
 
 /**
  * 又拍接口封装
- * @author shenjia.caosj 2012-7-22
+ * @author langben 2012-7-22
  *
  */
 public interface UpYunService {

@@ -7,8 +7,6 @@ import org.apache.commons.lang.builder.ToStringStyle;
 
 
 public class AbstractModel implements Serializable {
-	
-	private static final long serialVersionUID = 1279724549267632658L;
 
 	@Override
 	public String toString() {

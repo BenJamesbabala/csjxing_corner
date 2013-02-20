@@ -7,7 +7,7 @@ import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * DdzRecommendCategoryDO
- * @author shenjia.caosj 2012-5-23
+ * @author langben 2012-5-23
  *
  */
 public class DdzRecommendTaskDO extends AbstractModel {

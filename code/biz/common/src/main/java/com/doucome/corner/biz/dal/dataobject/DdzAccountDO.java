@@ -27,8 +27,29 @@ public class DdzAccountDO extends AbstractModel {
 	 * usrId
 	 */
 	private String uid;
+	
+	/**
+	 * 退款维权笔数
+	 */
+	private Integer refundCount ;
+	
+	/**
+	 * 提现提醒次数
+	 */
+	private Integer notifyCount ;
+	
 	private Date gmtCreate;
 	private Date gmtModified ;
+	
+	/**
+	 * 最后支付宝登陆时间
+	 */
+	private Date gmtLastLogin ;
+	
+	/**
+	 * 最后访问时间
+	 */
+	private Date gmtLastVisit ;
 	
 	public Date getGmtModified() {
 		return gmtModified;
@@ -76,6 +97,38 @@ public class DdzAccountDO extends AbstractModel {
 
 	public void setGmtCreate(Date gmtCreate) {
 		this.gmtCreate = gmtCreate;
+	}
+
+	public Integer getRefundCount() {
+		return refundCount;
+	}
+
+	public void setRefundCount(Integer refundCount) {
+		this.refundCount = refundCount;
+	}
+
+	public Integer getNotifyCount() {
+		return notifyCount;
+	}
+
+	public void setNotifyCount(Integer notifyCount) {
+		this.notifyCount = notifyCount;
+	}
+
+	public Date getGmtLastLogin() {
+		return gmtLastLogin;
+	}
+
+	public void setGmtLastLogin(Date gmtLastLogin) {
+		this.gmtLastLogin = gmtLastLogin;
+	}
+
+	public Date getGmtLastVisit() {
+		return gmtLastVisit;
+	}
+
+	public void setGmtLastVisit(Date gmtLastVisit) {
+		this.gmtLastVisit = gmtLastVisit;
 	}
 
 }

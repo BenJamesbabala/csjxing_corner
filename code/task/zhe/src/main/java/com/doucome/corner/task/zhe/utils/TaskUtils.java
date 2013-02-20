@@ -7,7 +7,7 @@ import com.doucome.corner.biz.core.utils.DateUtils;
 
 /**
  * Task Utils
- * @author shenjia.caosj 2012-4-11
+ * @author langben 2012-4-11
  *
  */
 public class TaskUtils {

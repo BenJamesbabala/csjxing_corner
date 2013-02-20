@@ -15,7 +15,7 @@ import com.doucome.corner.web.common.utils.TaobaoUrlUtils;
 
 /**
  * ²éÑ¯Èë¿Ú
- * @author shenjia.caosj 2012-4-1
+ * @author langben 2012-4-1
  *
  */
 @SuppressWarnings("serial")
@@ -28,6 +28,8 @@ public class SearchAction extends BasicAction  {
     private String id ;
     
     private boolean userGuide ;
+    
+    private String domain ;
 
     /**
      * @see {@link UriTemplate}
@@ -38,6 +40,7 @@ public class SearchAction extends BasicAction  {
         if (model != null) {
             // taobao url
             id = TaobaoUrlUtils.parseItemId(model);
+            domain = model.getHost() ;
             if (StringUtils.isNotBlank(id)) {
             	if(userGuide){
             		return "itemGuide" ;
@@ -94,4 +97,15 @@ public class SearchAction extends BasicAction  {
 		this.id = id;
 	}
 
+
+	public String getDomain() {
+		return domain;
+	}
+
+
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+
+	
 }

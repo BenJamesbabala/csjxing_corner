@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcRateDetail">
+	<typeAlias alias="TA-DcRateDetail"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcRateDetailDO" />
+
+	<resultMap id="RM-DcRateDetail" class="TA-DcRateDetail">
+		<result property="id" column="ID" />
+		<result property="itemId" column="ITEM_ID"/>
+		<result property="userId" column="USER_ID"  />
+		<result property="rateUserId" column="RATE_USER_ID"  />
+		<result property="rateUserNick" column="RATE_USER_NICK" jdbcType="VARCHAR" />
+		<result property="status" column="STATUS" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertRate">
+		INSERT INTO DC_RATE_DETAIL
+			(ID,ITEM_ID,USER_ID,RATE_USER_ID,RATE_USER_NICK,STATUS,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#itemId#,#userId#,#rateUserId#,#rateUserNick#,#status#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryRateByItemAndRateuser" resultMap="RM-DcRateDetail">
+		SELECT 
+			ID,ITEM_ID,USER_ID,RATE_USER_ID,RATE_USER_NICK,STATUS,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_RATE_DETAIL
+		WHERE 
+			RATE_USER_ID = #rateUserId#
+		AND
+			ITEM_ID = #itemId# 
+	</select>
+	
+	
+</sqlMap>

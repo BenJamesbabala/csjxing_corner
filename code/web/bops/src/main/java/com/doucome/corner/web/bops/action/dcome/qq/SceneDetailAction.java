@@ -12,7 +12,7 @@ import com.doucome.corner.web.bops.action.BopsBasicAction;
 
 /**
  * ≤È—Ø≥°æ∞
- * @author shenjia.caosj 2012-7-24
+ * @author langben 2012-7-24
  *
  */
 @SuppressWarnings("serial")
@@ -28,6 +28,7 @@ public class SceneDetailAction extends BopsBasicAction {
 	
 	@Autowired
 	private DcSceneService dcSceneService ;
+	
 	@Autowired
 	private DcSceneBO dcSceneBO ;
 	

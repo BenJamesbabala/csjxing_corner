@@ -1,0 +1,211 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "积分兑换 - 申请记录")
+
+<input type="hidden"  id="bopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="bopsPage" value="dcExchangeApproveList"/>
+
+<style>
+	
+</style>
+
+#set($pagination = $queryResult.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/qq/exchange_approve_list.htm?")
+#set($searchQuery = ["userId:$!userId","checkCode:$!checkCode","status:$!status"])
+#foreach($exItemType in $exItemTypeList)
+	#set($searchQuery = $collectionUtils.add($searchQuery , "exItemTypeList:$!exItemType")) 
+#end
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/dcome/qq/exchange_approve_list.htm" method="GET">
+		<div class="settleipt MB10 MT10">
+			用户ID: <input type="text" name="userId" value="$!userId"/>
+			&nbsp;
+			兑换码: <input type="text" name="checkCode" value="$!checkCode"/>
+			
+			
+            <div class="fake-select sel-loc" data-name="loc" id="sel-loc">
+                <ul class="selected">
+                     <li>
+                        <s class="sel_dropdown"><s class="i"></s></s>
+                        <a data-nogo="true" data-value="" href="javascript:;">兑换商品类型</a>
+                     </li>
+                </ul>
+                <div class="toselect dd-hide">
+                	<ul class="loc1">
+                		<li class="checked ck-all"><a href="javascript:;" class="">全部</a></li>
+            			<li>
+            				<input type="checkbox" name="exItemTypeList" value="HF" #if($collectionUtils.contains($exItemTypeList , "HF")) checked #end)/>话费
+            			</li>
+            			<li>
+            				<input type="checkbox" name="exItemTypeList" value="QB" #if($collectionUtils.contains($exItemTypeList , "QB")) checked #end/>Q币
+            			</li>
+            			<li>
+            				<input type="checkbox" name="exItemTypeList" value="JFB" #if($collectionUtils.contains($exItemTypeList , "JFB")) checked #end/>集分宝
+            			</li>
+                    </ul>
+                </div>
+            </div>
+			
+			&nbsp;
+			状态: 
+            <select name="status">
+				<option value="">全部</option>
+				<option value="P" #if($!status == "P") selected #end>待发放</option>
+				<option value="S" #if($!status == "S") selected #end>已发放</option>
+				<option value="D" #if($!status == "D") selected #end>审核不过</option>
+				<option value="C" #if($!status == "C") selected #end>取消</option>
+			</select>
+			
+			<input type="submit" value="查询" />
+			
+		</div>
+		
+		<div style="MT20">&nbsp;</div>
+	</form>
+
+	#parse("/common/bops/dcome.qq/exchangeApprovePagination.vm")
+	 
+	 <table width="1100" style="font-size:14px;" id="exchangeTable" class="exchange-approve">
+		<tr>
+    		<th width="25">序号</th>
+			<th width="30">UserId</th>
+    		<th width="30">昵称</th>
+			<th width="100">title</th>
+			<th width="40">份数</th>
+			<th width="40">积分</th>
+			<th width="100">兑奖信息</th>
+			<th width="70">验证码</th>
+			<th width="40">状态</th>
+			<th width="40">创建时间</th>
+			<th width="30">备注</th>
+			<th width="70">操作</th>
+    	</tr>
+		#if($queryResult.totalRecords > 0)
+    		#foreach($item in $queryResult.items)
+				#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
+				#set($exItem = $exItemMap[$item.exItemId])
+            	<tr data-id="$!item.id">
+            		<td align="center">$idx</td>
+					<td>$!item.userId</td>
+					<td>$!item.userNick</td>
+                    <td>[$!exItem.exIntegral积分]$!exItem.itemTitle</td>
+					<td> x $!item.exItemNum</td>
+					<td>$!item.consumeIntegralCount</td>
+                    <td>
+						#if($item.delAlipay)
+                        <div><span class="info-icon"></span><span class="del-label">支:</span><span class="del-info">$!item.delAlipay</span></div>
+						#end
+						#if($item.delQq)
+						<div><span class="info-icon"></span><span class="del-label">QQ:</span><span class="del-info">$!item.delQq</span></div>
+						#end
+						#if($item.delMobile)
+						<div><span class="info-icon"></span><span class="del-label">手机:</span><span class="del-info">$!item.delMobile</span></div>
+						#end
+					</td>
+					<td align="center">$!item.checkCode</td>
+					<td align="center">
+						#if($item.status == "P")
+							#if($item.exItemType == "JFB")
+                            <span class="dc-gray">自动发放</span>
+							#else
+							<span class="dc-blue">待发放</span>
+							#end
+						#elseif($item.status == "D")
+							<span class="dc-red">审核不过</span>
+						#elseif($item.status == "C")
+							<span class="dc-red">取消</span>
+						#elseif($item.status == "S")
+							<span class="dc-green">已发放</span>
+						#end					
+					</td>
+					<td align="center">$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+                    <td>
+						<span class="memo-icon #if($item.memo) memo-icon-active #end add-memo-click" #if(!$item.memo) title="添加后台备注" #end data-memo="$!item.memo" data-id="$item.id" style="margin:2px 0 0 8px;"></span>
+						
+						#if($item.userMemo)
+						<span class="person-icon person-icon-active" data-memo="$!item.userMemo" style="margin:2px 0 0 8px;"></span>
+						#end
+					</td>
+					<td align="center">
+						#if($item.status != "S" && $item.exItemType != "JFB")
+						<div class="ui-customize-select updown-select-btn">
+                            <div class="current-item"><a href="javascript:;">订正</a><span class="icon-pull-down">&nbsp;</span>
+    							<div class="ui-customize-select-list dd-hide" style="margin:-18px 0 0 -4px;">
+                                	<ul class="normal-list">
+                                		<li class="first" dead="true" >
+                                			<span>订正状态</span>
+                                		</li>
+    									#if($!item.status != 'S')
+    									<li class="split" tips="所有操作都记录在案，请谨慎操作" data-to-status="S" data-id="$!item.id">
+                                			<span>已发放</span>
+                                		</li>
+    									#end
+    									#if($!item.status != 'D')
+                                		<li class="split" tips="所有操作都记录在案，请谨慎操作" data-to-status="D" data-id="$!item.id">
+                                			<span>审核不过</span>
+                                		</li>
+    									#end
+    									#if($!item.status != 'C')
+                                        <li class="split" tips="所有操作都记录在案，请谨慎操作" data-to-status="C" data-id="$!item.id">
+    										<span>取消</span>
+    									</li>
+    									#end
+    									<li class="last" dead="true">
+    										<span></span>
+    									</li>
+                                	</ul>
+                                </div>
+    						</div>
+                        </div>
+						#end
+					</td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="10" align="center">没有查询到记录</td></tr>
+		#end
+     </table>
+	 
+	 #parse("/common/bops/dcome.qq/exchangeApprovePagination.vm")
+	 
+</div>
+
+<div id="J-select-tips-container" class="select-tips dd-hide">
+	<div class="content">安全提醒：自行编辑，非系统消息</div>
+	<div class="angle-right" style="top: 7px;"></div>
+</div>
+
+<div id="memo-tips-container" class="select-tips dd-hide">
+	<div class="content">memo</div>
+	<div class="angle-top" style="top: -7px;left:20px;"></div>
+</div>
+
+<div id="" class="exchange-add-memo-dialog dd-hide">
+    <div class="head"><span>修改状态</span><a class="W_close_color layer_tips_close close" href="javascript:;"></a></div>
+	<div class="main">
+        <div class="content">
+    		<div class="text">确定将状态修改为【<span class="status-desc">成功</span>】？</div>	
+    		<div class="memo">
+    			<span class="label">备注*：</span>
+    			<span class="ipt"><input type="text" /></span>
+    		</div>
+    		
+    	</div>
+    	<div class="foot">
+    		<span><a href="javascript:;" class="submit">确定</a></span>
+    		<span><a href="javascript:;" class="close">取消</a></span>
+    	</div>
+	</div>
+</div>
+
+
+
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

@@ -8,12 +8,14 @@
 		<result property="id" column="ID" />
 		<result property="uid" column="UID" jdbcType="VARCHAR" />
 		<result property="loginId" column="LOGIN_ID" jdbcType="VARCHAR" />
-		<result property="taobaoId" column="TAOBAO_ID" jdbcType="VARCHAR" />
+		<result property="nativeAlipayId" column="NATIVE_ALIPAY_ID" jdbcType="VARCHAR" />
+		<result property="alipayId" column="ALIPAY_ID" jdbcType="VARCHAR" />
 		<result property="mobile" column="MOBILE" jdbcType="VARCHAR" />
 		<result property="email" column="EMAIL" jdbcType="VARCHAR" />
 		<result property="gender" column="GENDER" jdbcType="VARCHAR" />
 		<result property="md5Password" column="MD5_PASSWORD" jdbcType="VARCHAR" />
 		<result property="userActive" column="USER_ACTIVE" jdbcType="VARCHAR" />
+		<result property="modificationCount" column="MODIFICATION_COUNT"/>
 		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
 		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
 		<result property="gmtLastLogin" column="GMT_LAST_LOGIN" jdbcType="TIMESTAMP" />
@@ -21,7 +23,7 @@
 	
 	<select id="queryByUid" resultMap="RM-ZHE-USER">
 		SELECT
-			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
+			ID,UID,LOGIN_ID,NATIVE_ALIPAY_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,MODIFICATION_COUNT,ALIPAY_ID,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
 		FROM 
 			DDZ_USER
 		WHERE 
@@ -31,8 +33,8 @@
 	<update id="updateUser" parameterClass="TA-ZHE-USER">
 		update DDZ_USER
 		set GMT_MODIFIED = now()
-		<isNotEmpty property="taobaoId" prepend=",">
-			TAOBAO_ID = #taobaoId#
+		<isNotEmpty property="nativeAlipayId" prepend=",">
+			NATIVE_ALIPAY_ID = #nativeAlipayId#
 		</isNotEmpty>
 		<isNotEmpty property="mobile" prepend=",">
 			MOBILE = #mobile#
@@ -60,7 +62,7 @@
 	
 	<select id="queryByLoginId" resultMap="RM-ZHE-USER">
 		SELECT
-			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
+			ID,UID,LOGIN_ID,NATIVE_ALIPAY_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,MODIFICATION_COUNT,ALIPAY_ID,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
 		FROM 
 			DDZ_USER
 		WHERE 
@@ -69,7 +71,7 @@
 	
 	<select id="queryByLoginIdAndPassword" resultMap="RM-ZHE-USER">
 		SELECT
-			ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
+			ID,UID,LOGIN_ID,NATIVE_ALIPAY_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,MODIFICATION_COUNT,ALIPAY_ID,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
 		FROM 
 			DDZ_USER
 		WHERE 
@@ -77,12 +79,32 @@
 		AND	
 			LOGIN_ID = #loginId#
 	</select>
+	
+	<update id="updateAlipayIdByLoginId">
+		UPDATE 
+			DDZ_USER
+		SET 
+			ALIPAY_ID = #alipayId# ,
+			GMT_MODIFIED = now()
+		WHERE
+			LOGIN_ID = #loginId#
+	</update>
+	
+	<update id="incrModificationCount">
+		UPDATE 
+			DDZ_USER
+		SET
+			MODIFICATION_COUNT = MODIFICATION_COUNT + 1,
+			GMT_MODIFIED = now()
+		WHERE
+			LOGIN_ID = #loginId#
+	</update>
 
 	<insert id="insertUser">
 		INSERT INTO DDZ_USER
-			(ID,UID,LOGIN_ID,TAOBAO_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN)
+			(ID,UID,LOGIN_ID,NATIVE_ALIPAY_ID,MOBILE,EMAIL,GENDER,MD5_PASSWORD,USER_ACTIVE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN)
 		VALUES
-			(#id#,#uid#,#loginId#,#taobaoId#,#mobile#,#email#,#gender#,#md5Password#,#userActive#,now(),now(),now())
+			(#id#,#uid#,#loginId#,#nativeAlipayId#,#mobile#,#email#,#gender#,#md5Password#,#userActive#,now(),now(),now())
 		<selectKey resultClass="java.lang.Integer" keyProperty="id">
     		<![CDATA[
 				SELECT LAST_INSERT_ID() AS ID

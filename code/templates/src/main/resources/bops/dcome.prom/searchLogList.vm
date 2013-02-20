@@ -1,0 +1,106 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "积分兑换商品列表")
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="searchLogList"/>
+
+<style>
+	#searchLogTable .user-id {
+	    width: 100px;
+	}
+	#searchLogTable .user-info {
+	    width: 100px;
+	    overflow: hidden;
+	    text-align: left;
+	}
+</style>
+
+#set($pagination = $searchLogs.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/prom/search_log_list.htm?")
+#set($searchQuery = ["userId:$!userId",
+                    "status:$!status",
+                    "priceStart:$!priceStart",
+                    "priceEnd:$!priceEnd",
+                    "gmtStart:$dateUtils.format($!gmtStart, 'yyyy-MM-dd')",
+                    "gmtEnd:$dateUtils.format($!gmtEnd,'yyyy-MM-dd')"])
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+	<div class="award-oper">
+		
+	</div>
+	<form action="${env.bopsRoot}/bops/dcome/prom/search_log_list.htm" method="GET">
+		<div class="MB10 MT10">
+			价格区间：<input name="priceStart" value="$!priceStart" style="width: 60px;"/>-<input name="priceEnd" value="$!priceEnd" style="width: 60px;"/>
+			UserId：<input  type="text" name="userId" value="$!userId" style="width: 60px;"/>
+			状态:
+			<select name="status">
+			    <option value="">全部</option>
+			    <option value="U" #if($!status=='U')selected#end>未审核</option>
+			    <option value="A" #if($!status=='A')selected#end>已审核</option>
+		    </select>
+			<br/>
+			开始时间：<input name="gmtStart" value="$!dateUtils.format($!gmtStart, 'yyyy-MM-dd')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate"/>
+			&nbsp;&nbsp;
+			结束时间：<input name="gmtEnd" value="$!dateUtils.format($!gmtEnd, 'yyyy-MM-dd')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate"/>
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	#parse("/common/bops/dcome.prom/searchLogListPagination.vm")
+	
+	 <table width="980" style="font-size:14px;" id="searchLogTable">
+		<tr>
+			<th>ID</th>
+			<th wiedth="30">用户ID</th>
+			<th width="30">商品ID</th>
+			<th width="30">搜索次数</th>
+			<th width="60">商品价格</th>
+			<th width="50">邮费</td>
+			<th width="50">商品类型</td>
+			<th width="80">返利</th>
+			<th width="150">商品名称</th>
+			<th width="80">商品图片</th>
+			<th width="80">修改时间</th>
+			<th width="120">操作</th>
+    	</tr>
+		#if($searchLogs.totalRecords > 0)
+    		#foreach($searchLog in $searchLogs.items)
+            	<tr data-native-id="$!searchLog.nativeId">
+            		<td align="center">$!searchLog.id</td>
+                    <td align="center"><div class="user-id" data-userid="$!searchLog.userId">$!searchLog.userId</div></td>
+                    <td align="center">$!searchLog.nativeId</td>
+                    <td>$!searchLog.searchCount</td>
+                    <td align="center"><input type="text" class="price" value="$!searchLog.price" /></td>
+                    <td align="center"><input type="text" class="postal-fee" value="" /></td>
+                    <td>
+						<select name="itemType">
+						    <option value="N">普通商品</option>
+						    <option value="V" #if($!exchange.itemType == 'V')selected#end>充值卡</option>
+						    <option value="O" #if($!exchange.itemType == 'O')selected#end>其他</option>
+    					</select>
+    				</td>
+                    <td align="center"><div class="com-rate">$!searchLog.commissionRate</div></td>
+					<td class="title">
+						<div class="dc-item-title">
+							<a class="item-title" href="http://detail.taobao.com/item.htm?id=$!searchLog.nativeId" target="_blank">$!searchLog.title</a>
+						</div>
+					</td>
+					<td class="picture">#if($!searchLog.picture)<img src="$!searchLog.picture" width="60" height="60"/>#end</td>
+					<td align="center"><div style="width: 80px;">$!dateUtils.format($!searchLog.gmtCreate, 'yyyy-MM-dd HH:mm')</div></td>
+					<td width="120"><a class="add-exchange" href="javascript:;" data-native-id="$!searchLog.nativeId" data-user-id="$!searchLog.userId">添加兑换</a></td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="12"></td></tr>
+		#end
+     </table>
+	 #parse("/common/bops/dcome.prom/searchLogListPagination.vm")
+</div>
+
+#DDZ_JS(["../bops/searchlog.js"])
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

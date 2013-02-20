@@ -32,6 +32,21 @@
 		</dependency>
 		<dependency>
 			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.web.horoscope</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.web.wryneck</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
+			<artifactId>corner.web.namefate</artifactId>
+			<version>${pom.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.doucome.corner</groupId>
 			<artifactId>corner.web.zhe</artifactId>
 			<version>${pom.version}</version>
 		</dependency>

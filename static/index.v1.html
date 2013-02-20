@@ -6,6 +6,46 @@
 <link rel="stylesheet" type="text/css" href="css/home/screens/index.v1.css?v=20120329">
 </head>
 <body>
+	<div id="shadow-overlay" class="xbox-overlay-bg dd-hide"></div>
+	
+	<div class="tixian-notify-dialog dd-hide">
+		<div class="title">重要提醒</div>
+		<div class="content">点点折近期已经升级了账户体系和提现规则，</div>
+		<div class="ikonw"><a href="javascript:;" class="tixian-ikonw-click">我知道了</a></div>
+	</div>
+	
+	<div id="xbox-mock" style="width: 600px; height: auto; top: 187px; left:409px;" class="ui-video-xbox ui-xbox-transparent dd-hide">
+		<div class="ui-xbox-action">
+			<a href="javascript:;" class="close-flash-xbox"></a>
+		</div>
+		<div class="ui-xbox-content">
+			<div class="ui-show-video">
+				<div class="flashXbox">
+					<object id="player" width="550" height="400" type="application/x-shockwave-flash" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+						<param value="flv=null" name="flashvars">
+						<param value="https://hi.alipay.com/cms/huohaier/jfb_flash.swf" name="movie">
+						<param value="https://hi.alipay.com/cms/huohaier/jfb_flash.swf" name="src">
+						<param value="transparent" name="wmode">
+						<param value="-1" name="play">
+						<param value="-1" name="loop">
+						<param value="high" name="quality">
+						<param value="always" name="allowscriptaccess">
+						<param value="scale" name="scale">
+						<param value="0" name="profileport">
+						<param value="all" name="allownetworking">
+						<param value="true" name="allowfullscreen">
+						<param value="true" name="swLiveConnect">
+						<embed allowfullscreen="true" width="550" height="400" wmode="transparent" swliveconnect="true" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" src="https://hi.alipay.com/cms/huohaier/jfb_flash.swf" allowscriptaccess="always" flashvars="flv=null">
+					</object>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="settle-memo-tips-container" class="select-tips">
+		<div class="content">memo</div>
+		<div class="angle-top" style="top: -7px;left:20px;"></div>
+	</div>
 	<div class="ddz">
 		<div id="header" class="header">
 			<div class="w952">
@@ -13,6 +53,7 @@
 				<span class="header-logo-bubble"></span>
 				<span class="header-left">
 					<a href="#">登陆</a> <a href="javascript:;">|</a> <a href="">注册</a></span>
+					<span class="login-tip"></span>
 				<span class="header-right">
 					<iframe width="136" height="24" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0" scrolling="no" border="0" src="http://widget.weibo.com/relationship/followbutton.php?language=zh_cn&width=136&height=24&uid=2698347393&style=2&btn=light&dpc=1"></iframe>
 		        </span>

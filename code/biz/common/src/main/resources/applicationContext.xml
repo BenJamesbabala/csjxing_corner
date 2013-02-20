@@ -12,6 +12,7 @@
 			default-autowire="byName">
 
 	
+	<import resource="classpath:corner/bean/biz-task.xml" />
 	<import resource="classpath:corner/bean/biz-common.xml" />
 	<import resource="classpath:corner/bean/biz-dao.xml" />
 	<import resource="classpath:corner/bean/biz-service.xml" />
@@ -24,13 +25,12 @@
 	
 	<import resource="classpath:corner/bean/zhe/biz-zhe-service.xml" />
 	<import resource="classpath:corner/bean/zhe/biz-zhe-dao.xml" />
-	<import resource="classpath:corner/bean/zhe/biz-zhe-cache.xml" />
-	<import resource="classpath:corner/bean/zhe/biz-zhe-task.xml" />	
+	<import resource="classpath:corner/bean/zhe/biz-zhe-cache.xml" />	
 	
 	<import resource="classpath:corner/bean/dcome/biz-dcome-service.xml" />
 	<import resource="classpath:corner/bean/dcome/biz-dcome-dao.xml" />
 	<import resource="classpath:corner/bean/dcome/biz-dcome-cache.xml" />
-	<import resource="classpath:corner/bean/dcome/biz-dcome-bo.xml" />	
+	<import resource="classpath:corner/bean/dcome/biz-dcome-bo.xml" />
 	
 	<import resource="classpath:corner/bean/web/biz-web-service.xml" />
 	
@@ -38,4 +38,17 @@
 	<import resource="classpath:corner/bean/bops/biz-bops-service.xml" />
 	
 	<import resource="classpath:corner/service/email.xml" />
+	
+	<import resource="classpath:corner/bean/horoscope/biz-hs-bo.xml" />
+	<import resource="classpath:corner/bean/horoscope/biz-hs-service.xml" />
+	<import resource="classpath:corner/bean/horoscope/biz-hs-dao.xml" />
+	
+	
+	<import resource="classpath:corner/bean/wryneck/biz-wryneck-service.xml" />
+	<import resource="classpath:corner/bean/wryneck/biz-wryneck-cache.xml" />
+	<import resource="classpath:corner/bean/wryneck/biz-wryneck-dao.xml" />
+	
+	<import resource="classpath:corner/bean/apps/biz-namefate-service.xml" />
+	<import resource="classpath:corner/bean/apps/biz-namefate-cache.xml" />
+	<import resource="classpath:corner/bean/apps/biz-namefate-dao.xml" />
 </beans>

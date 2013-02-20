@@ -20,8 +20,7 @@
 				itemUrl = itemUrl.toLowerCase() ;
 				var isTaobaoItemUrl = false  ;
 				var itemIdArray = ['id','itemid','item_id','mallstitemid','default_item_id'] ;
-				if(itemUrl.indexOf('taobao.com') != -1 || itemUrl.indexOf("tmall.com") != -1 ){
-					
+				if(itemUrl.indexOf('taobao.com') != -1 || itemUrl.indexOf("tmall.com") != -1 ){	
 					for(var i = 0 ; i < itemIdArray.length ; i++){
 						var id = itemIdArray[i] + '=';
 						if(itemUrl.indexOf(id) != -1){
@@ -29,7 +28,6 @@
 							return true;
 						}
 					}
-					
 				}
 				return false;
 			});

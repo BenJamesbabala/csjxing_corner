@@ -4,13 +4,13 @@
 
 <input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
 <input type="hidden"  id="dcItemPicRoot" value="$env.itemUploadedRoot"/>
-<div class="dc-item-main clr-both">
+<div class="dc-item-main clr-both taobaoke-item" data-num-iid="$!item.nativeId" data-outcode="" data-model="bopsDcome" data-prom-price="$!item.itemPromPrice">
 	<div class="item-src box100 clr-both">
 		<div>
 			<form id="search-form" method="get" action="${env.bopsRoot}/bops/dcome/qq/item_operate.htm">
 				<input type="text" id="wd" name="wd" value="$!item.srcUrl" placeHolder="请录入淘宝商品链接" />
 				<input type="hidden" id="alipayId" name="alipayId" value="vip@diandianzhe.com" />
-				<button id="submit" type="submit">下一步</button>
+				<button id="submit" type="submit">查询</button>
 			</form>
 		</div>
 		<span class="clr-both"></span>
@@ -21,7 +21,7 @@
 			<div class="item-pic clr-both">
 				<div class="item-pic-s460">
 					<a id="" href="#" target="_blank">
-						#if($$!item.picUrlList[0].indexOf('http://') == -1)
+						#if($!item.picUrlList[0].indexOf('http://') == -1)
 							<img id="cur-pic" src="$env.itemUploadedRoot$!item.picUrlList[0]"/>
 						#else
 						    <img id="cur-pic" src="$!item.picUrlList[0]"/>
@@ -52,14 +52,30 @@
 					<ul class="item-meta-info">
 						<li class="item-detail">
 							<span class="item-price-label label">价格：￥</span>
-							<input type="input" id="itemPrice" name="itemPrice" value="$!item.itemPrice"/>
+							<input type="input" id="itemPrice" name="itemPrice" value="$!item.itemPrice" style="width:80px;"/>
+							<span class="label">活动价格：￥</span>
+							<input type="input" id="itemPromPrice" name="itemPromPrice" value="$!item.itemPromPrice" style="width:80px;"/>
+							#set($commissionRate = $!item.commissionRate*100)
+							#if($item.itemPromPrice)
+								#set($commission = $!item.commissionRate * $item.itemPrice)
+							#else
+								#set($commission = $!item.commissionRate * $item.itemPromPrice)
+							#end
+							<span class="label">返利比率：<span class="commission-rate">$!item.commissionRate</span>%（&yen;<span class="commission"></span>）</span>
+							<br/>
+							<input type="hidden" name="commissionRate" value="$!item.commissionRate"/>
 							<span class="item-code-label label">商品编号：</span>
 							<span class="item-code label label">$!item.nativeId</span>
 							<input type="hidden" name="nativeId" value="$!item.nativeId"/>
+							<span>是否包邮</span>
+							<select name="postalEnable">
+							    <option value="N">自付邮费</option>
+							    <option value="Y" #if($!item.postalEnable=='Y')selected="true"#end>包邮</option>
+							</select>
 						</li>
 						<li class="item-category item-detail">
 							<span>商品类目：</span>
-							<select name="categoryId" data-selCatId="$item.categoryId"  data-init-dcCategorySelect="select"></select>
+							<select name="categoryId" data-selCatId="#if($item.categoryId)$item.categoryId#else$item.possibleCategoryId#end"  data-init-dcCategorySelect="select"></select>
 							<span>淘宝类目ID：$!item.nativeCategoryId</span>
 							<input type="hidden" name="nativeCategoryId" value="$!item.nativeCategoryId"/>
 							<span>商品来源：</span>
@@ -75,11 +91,11 @@
 						</li>
 						<li class="item-taoke-url item-detail clr-both">
 							<div><span class="lable">淘客url：</span></div>
-							<div><a href="javascript:;" title="重新生成淘客链接">重新生成</a></div>
+							<!--<div><a href="javascript:;" title="重新生成淘客链接">重新生成</a></div>-->
 							<span class="click-info"></span>
 							<span>
-								<a class="url" target="_blank" href="$!item.clickUrl">$!item.clickUrl</a>
-								<input type="hidden" name="clickUrl" value="$!item.clickUrl" />
+                                <a class="url click-url" target="_blank" href="$!item.clickUrl"><span class="click-url">$!item.clickUrl</span></a>
+								<input type="hidden" name="clickUrl" value="" class="click-url"/>
 							</span>
 						</li>
 						<li class="item-sell-info item-detail clr-both">
@@ -142,5 +158,8 @@
  <div id="backgroundPopup"></div>
 
 #DDZ_JS(["../bops/itemOperate.js", "../js/lib/jquery.form.js"])
-
+#** 
+<script src="http://a.tbcdn.cn/apps/top/x/sdk.js?appkey=12560096"></script>
+#DDZ_JS(["home/control/widget/taobao.widget.adapter.js"])
+**#
 

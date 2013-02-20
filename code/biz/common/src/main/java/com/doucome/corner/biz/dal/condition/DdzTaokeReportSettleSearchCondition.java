@@ -11,7 +11,7 @@ import com.doucome.corner.biz.dal.model.OrderAndSortModel;
 /**
  * 报表结算查询
  * 
- * @author shenjia.caosj 2012-5-6
+ * @author langben 2012-5-6
  */
 public class DdzTaokeReportSettleSearchCondition {
 	
@@ -71,6 +71,13 @@ public class DdzTaokeReportSettleSearchCondition {
      * 排序
      */
     private String order ;
+    
+    /**
+     * outcodeType
+     */
+    private String outcodeType ;
+    
+    private String[] outcodeTypeList ;
         
     public Map<String,Object> toMap(){
     	Map<String,Object> condition = new HashMap<String,Object>() ;
@@ -85,6 +92,8 @@ public class DdzTaokeReportSettleSearchCondition {
 		condition.put("settleInDays", this.getSettleInDays());
 		condition.put("gmtCreateStart", this.getGmtCreateStart()) ;
 		condition.put("gmtCreateEnd", this.getGmtCreateEnd()) ;
+		condition.put("outcodeType", this.getOutcodeType()) ;
+		condition.put("outcodeTypeList", this.getOutcodeTypeList()) ;
 		
 		OrderAndSortModel osm = new OrderAndSortModel(this.order, orderOptions) ;
 		if(osm.isFormat()){
@@ -182,5 +191,20 @@ public class DdzTaokeReportSettleSearchCondition {
 		this.order = order;
 	}
 
-	
+	public String getOutcodeType() {
+		return outcodeType;
+	}
+
+	public void setOutcodeType(String outcodeType) {
+		this.outcodeType = outcodeType;
+	}
+
+	public String[] getOutcodeTypeList() {
+		return outcodeTypeList;
+	}
+
+	public void setOutcodeTypeList(String[] outcodeTypeList) {
+		this.outcodeTypeList = outcodeTypeList;
+	}
+
 }

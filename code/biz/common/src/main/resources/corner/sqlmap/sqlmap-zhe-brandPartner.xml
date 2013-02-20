@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="ddzBrandPartner">
+	<typeAlias alias="TA-ddzBrandPartner"
+		type="com.doucome.corner.biz.dal.dataobject.DdzBrandPartnerDO" />
+
+	<resultMap id="RM-ddzBrandPartner" class="TA-ddzBrandPartner">
+		<result property="id" column="ID" />
+		<result property="sid" column="SID" jdbcType="VARCHAR" />
+		<result property="shopTitle" column="SHOP_TITLE" jdbcType="VARCHAR" />
+		<result property="commissionRate" column="COMMISSION_RATE" jdbcType="DECIMAL" />
+		<result property="clickUrl" column="CLICK_URL" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<select id="queryBrandPartner" resultMap="RM-ddzBrandPartner">
+		SELECT 
+			ID,SID,SHOP_TITLE,COMMISSION_RATE,CLICK_URL,GMT_CREATE
+		FROM
+		 	DDZ_BRAND_PARTNER
+	</select>
+	
+	<select id="queryBrandPartnerBySid" resultMap="RM-ddzBrandPartner">
+		SELECT 
+			ID,SID,SHOP_TITLE,COMMISSION_RATE,CLICK_URL,GMT_CREATE
+		FROM
+		 	DDZ_BRAND_PARTNER
+		 WHERE 
+		  	SID = #sid#
+		 LIMIT 1
+	</select>
+	
+</sqlMap>

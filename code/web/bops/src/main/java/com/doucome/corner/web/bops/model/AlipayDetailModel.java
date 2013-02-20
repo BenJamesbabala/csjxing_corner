@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * 
- * @author shenjia.caosj 2012-7-2
+ * @author langben 2012-7-2
  *
  */
 public class AlipayDetailModel {

@@ -1,0 +1,96 @@
+#set($layout="bops/default_bops.vm")
+#DDZ_JS(["../bops/auction.js"])
+#set($navigation = "积分竞拍商品列表")
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcAuctionItemList"/>
+
+#set($pagination = $auctionQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/prom/auction_item_list.htm?")
+#set($searchQuery = ["id:$!id","userId:$!userId","gmtStart:$!gmtStart","auctionStatus:$!auctionStatus"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/dcome/prom/auction_item_list.htm" method="GET">
+		<div class="MB10 MT10">
+			活动id：<input  type="text" name="id" value="$!id" />
+			UserId：<input  type="text" name="userId" value="$!userId" />
+			&nbsp;&nbsp;
+			活动时间：	<input type="text" id="gmtStart" name="gmtStart"  value="$!dateUtils.format($!gmtStart,'yyyy-MM-dd')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate"/>
+			活动状态：
+			<select name="auctionStatus">
+				<option value="" #if($!auctionStatus == "") selected #end>全部</option>
+				<option value="C" #if($!auctionStatus == "C") selected #end>正在进行</option>
+				<option value="E" #if($!auctionStatus == "E") selected #end>已结束</option>
+				<option value="N" #if($!auctionStatus == "N") selected #end>未开始</option>
+				<option value="U" #if($!auctionStatus == "U") selected #end>未完善</option>
+			</select>
+			&nbsp;&nbsp;
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	#parse("/common/bops/dcome.prom/auctionItemListPagination.vm")
+	
+	 <table width="960" style="font-size:14px;" id="auctionItemTable">
+		<tr>
+			<th width="30">ID</th>
+			<th width="40">商品ID</th>
+			<th width="160">商品</th>
+			<th width="40">价格</th>
+			<th width="80">起拍价格</th>
+			<th width="40">加价单位</th>
+			<th width="40">开始时间</th>
+			<th width="80">结束时间</th>
+			<th width="80">当前出价</th>
+			<th width="80">竞价用户id</th>
+			<th width="120">竞价用户昵称</th>
+			<th width="80">状态</th>
+			<th width="120">操作</th>
+    	</tr>
+		#if($auctionQuery.totalRecords > 0)
+    		#foreach($item in $auctionQuery.items)
+				#set($dcItem = $itemMap[$item.itemId])
+            	<tr data-auctionid="$!item.id">
+                    <td align="center">$!item.id</td>
+                    <td align="center">$!item.itemId</td>
+					<td><a href="${env.bopsRoot}/bops/dcome/prom/redirect_item.htm?itemId=$!item.itemId" target="_blank">$!item.itemTitle</a></td>
+					<td>$!item.itemPrice</td>
+					<td><input name="baseIntegral" value="$!item.baseIntegral" style="width:50px;"/></td>
+					<td><input name="integralPer" value="$!item.integralPer" style="width:50px;"/></td>
+					<td><input name="gmtStart" value="$!dateUtils.format($!item.gmtStart , 'yyyy-MM-dd HH:mm')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="Wdate"/></td>
+					<td><input name="gmtEnd" value="$!dateUtils.format($!item.gmtEnd , 'yyyy-MM-dd HH:mm')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="Wdate"/></td>
+                    <td>$!item.bidIntegral</td>
+					<td>$!item.bidUserId</td>
+					<td>$!item.bidUserNick</td>
+					<td>
+						#if($!item.reviewStatus == 'U') 待开奖
+					    #elseif($!item.reviewStatus == 'S') 已成功
+					    #elseif($!item.reviewStatus == 'F') 开奖失败
+						#else 未知（$!item.reviewStatus） #end
+					</td>
+					<td><input type="button" value="保存" class="auction-update-button"/>
+						#if($!item.reviewStatus != 'S')
+						<input type="button" value="开奖" class="auction-kaijiang-button"/>
+						#end
+					</td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="8">
+                    
+			</td></tr>
+		#end
+     </table>
+	 	 
+	 #parse("/common/bops/dcome.prom/auctionItemListPagination.vm")
+	
+</div>
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

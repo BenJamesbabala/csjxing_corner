@@ -2,14 +2,19 @@ package com.doucome.corner.web.common.toolbox;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
+
+import com.doucome.corner.biz.dal.model.KeyValuePair;
 
 public class StringUtilsToolbox extends StringUtils {
 
@@ -92,31 +97,72 @@ public class StringUtilsToolbox extends StringUtils {
      * @param arr2
      * @return
      */
-    public static Set<Map.Entry<String, String>> combineQueryArray(List<String> list1, List<String> list2) {
-        Map<String, String> queryMap = new HashMap<String, String>();
-        if (!CollectionUtils.isEmpty(list1)) {
-            for (String keyval : list1) {
-                String[] a = StringUtils.split(keyval, ":");
-                if (a != null && a.length == 2) {
-                    queryMap.put(a[0], a[1]);
+    public static List<KeyValuePair> combineQueryArray(List<String> oriQuery, List<String> overlapList) {
+    	
+    	Map<String,KeyValuePair> overlapMap = new HashMap<String,KeyValuePair>();
+        
+    	List<KeyValuePair> oriKVList = new ArrayList<KeyValuePair> () ;
+        
+        if (CollectionUtils.isNotEmpty(oriQuery)) {
+            for (String keyval : oriQuery) {
+            	KeyValuePair kv = parseStr2KV(keyval) ;
+                if(kv != null){
+                	oriKVList.add(kv) ;
                 }
             }
         }
-        if (!CollectionUtils.isEmpty(list2)) {
-            for (String keyval : list2) {
-                String[] a = StringUtils.split(keyval, ":");
-                if (a != null) {
-                    if (a.length == 1) {
-                        queryMap.put(a[0], null);
-                    } else if (a.length == 2) {
-                        queryMap.put(a[0], a[1]);
-                    }
-
+        
+        if (CollectionUtils.isNotEmpty(overlapList)) {
+            for (String keyval : overlapList) {
+                KeyValuePair kv = parseStr2KV(keyval) ;
+                if(kv != null){
+                	overlapMap.put(kv.getKey(), kv) ;
                 }
             }
         }
 
-        return queryMap.entrySet();
+        if(MapUtils.isNotEmpty(overlapMap)) {
+        	Set<Entry<String,KeyValuePair>> entrySet = overlapMap.entrySet() ;
+        	for(Entry<String,KeyValuePair> entry : entrySet){
+        		String key = entry.getKey() ;
+        		KeyValuePair value = entry.getValue() ;
+        		boolean exists = false ;
+        		for(KeyValuePair oriKV : oriKVList) {
+        			if(StringUtils.equals(oriKV.getKey() , key)){
+        				oriKV.setValue(value.getValue()) ;
+        				exists = true ;
+        				break ;
+        			}
+        		}
+        		if(!exists) {
+        			oriKVList.add(value) ;
+        		}
+        	}
+        }
+        
+        return oriKVList ;
+    }
+    
+    /**
+     * ½âÎö¸ñÊ½£º a:b=> key=a , value=b
+     * @param str
+     * @return
+     */
+    private static KeyValuePair parseStr2KV(String str){
+    	String[] a = StringUtils.split(str, ":");
+    	if(a == null || a.length == 0){
+    		return null ;
+    	} else {
+    		 if (a.length == 1) {
+             	return new KeyValuePair(a[0], "");
+             } else {
+             	return new KeyValuePair(a[0] , a[1]) ;
+             }
+    	}
+    }
+    
+    public String trimTo(String str) {
+    	return str == null? str: str.trim();
     }
 
 }

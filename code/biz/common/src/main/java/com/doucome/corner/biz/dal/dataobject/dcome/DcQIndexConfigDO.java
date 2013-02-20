@@ -2,12 +2,14 @@ package com.doucome.corner.biz.dal.dataobject.dcome;
 
 import java.util.Date;
 
+import com.doucome.corner.biz.dal.model.AbstractModel;
+
 /**
  * QQø’º‰ ◊“≥ ≈‰÷√
- * @author shenjia.caosj 2012-7-26
+ * @author langben 2012-7-26
  *
  */
-public class DcQIndexConfigDO {
+public class DcQIndexConfigDO extends AbstractModel {
 
 	/**
 	 * ID

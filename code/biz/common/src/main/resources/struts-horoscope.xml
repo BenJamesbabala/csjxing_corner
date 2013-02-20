@@ -1,0 +1,57 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="frame-h" namespace="/frame/hs" extends="default">
+		<interceptors>
+            <interceptor-stack name="hsDefaultStack">
+				 <interceptor-ref name="cornerDefaultStack" />
+				 <interceptor-ref name="setHsContextInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<action name="qqLogin" class="com.doucome.corner.web.horoscope.action.HsQqLoginAction">
+			<interceptor-ref name="hsDefaultStack" />
+			<result name="success" type="redirect">/frame/hs/index.htm</result>
+		</action>
+		
+		<action name="index" class="com.doucome.corner.web.horoscope.action.HsIndexAction">
+		    <interceptor-ref name="hsDefaultStack" />
+			<result name="success" type="velocity">/horoscope/frame.hs/index.vm</result>
+		</action>
+		<action name="horoscope" class="com.doucome.corner.web.horoscope.action.HsHoroscopeAction">
+		    <interceptor-ref name="hsDefaultStack" />
+			<result name="success" type="velocity">/horoscope/frame.hs/horoscope.vm</result>
+		</action>
+	</package>
+	
+	<package name="frame-hs-remote" namespace="/frame/hs/remote" extends="struts-json">
+		<interceptors>
+            <interceptor-stack name="hsDefaultStack">
+				 <interceptor-ref name="cornerDefaultStack" />
+				 <interceptor-ref name="setHsContextInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<action name="query_tomorrow_hsfate_ajax" class="com.doucome.corner.web.horoscope.action.ajax.HsFateAjaxAction" method="queryTomorrowHsFate">
+			<interceptor-ref name="hsDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="query_week_hsfate_ajax" class="com.doucome.corner.web.horoscope.action.ajax.HsFateAjaxAction" method="queryWeekHsFate">
+			<interceptor-ref name="hsDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="query_month_hsfate_ajax" class="com.doucome.corner.web.horoscope.action.ajax.HsFateAjaxAction" method="queryMonthHsFate">
+			<interceptor-ref name="hsDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="qzone_fans_ajax" class="com.doucome.corner.web.horoscope.action.ajax.HsUserAjaxAction" method="qzoneFans">
+			<interceptor-ref name="hsDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="follow_qzone_ajax" class="com.doucome.corner.web.horoscope.action.ajax.HsUserAjaxAction" method="followQzone">
+			<interceptor-ref name="hsDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+	</package>
+</struts>

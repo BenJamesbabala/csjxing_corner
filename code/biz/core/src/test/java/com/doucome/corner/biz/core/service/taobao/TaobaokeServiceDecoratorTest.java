@@ -43,6 +43,12 @@ public class TaobaokeServiceDecoratorTest extends AbstractBaseJUnit4Test {
 	}
 	
 	@Test
+	public void test_list(){
+		String url  = taobaokeServiceDecorator.getListurl("女装", "keyword") ;
+		System.out.println(url);
+	}
+	
+	@Test
 	public void test_item(){
 		List<TaobaokeItemDTO> o = taobaokeServiceDecorator.conventItems(new String[]{"12222224756"} , "ibsuccess" , new String[]{
 				TaokeItemConst.click_url ,
@@ -55,6 +61,34 @@ public class TaobaokeServiceDecoratorTest extends AbstractBaseJUnit4Test {
 		for(TaobaokeItemDTO a : o){
 			System.out.println(a);
 		}
+	}
+	
+	@Test
+	public void test_itemWidget(){
+		TaobaokeItemDTO o = taobaokeServiceDecorator.widgetConventItem("12222224756", "ibsuccess", new String[]{
+				TaokeItemConst.click_url ,
+				TaokeItemConst.commission ,
+				TaokeItemConst.commission_volume , 
+				TaokeItemConst.commission_rate ,
+				TaokeItemConst.price ,
+				TaokeItemConst.pic_url
+		}) ;
+		
+		System.out.println(o);
+	}
+	
+	@Test
+	public void test_itemsWidget(){
+		List<TaobaokeItemDTO> o = taobaokeServiceDecorator.widgetConventItems(new String[]{"12222224756","15386438674"}, "ibsuccess", new String[]{
+				TaokeItemConst.click_url ,
+				TaokeItemConst.commission ,
+				TaokeItemConst.commission_volume , 
+				TaokeItemConst.commission_rate ,
+				TaokeItemConst.price ,
+				TaokeItemConst.pic_url
+		}) ;
+		
+		System.out.println(o);
 	}
 
 	@Test
@@ -88,7 +122,7 @@ public class TaobaokeServiceDecoratorTest extends AbstractBaseJUnit4Test {
 		TaokeItemSearchCondition condition = new TaokeItemSearchCondition() ;
 		//condition.setArea("杭州");
 		
-		condition.setKeyword("淘金币！ 膜法世家1908草莓酸奶面膜100g 美白保湿补水抗敏抗辐射");
+		condition.setKeyword("女装");
 		condition.setAutoSend(false) ;
 		condition.setOuterCode("code") ;
 		condition.setEndCommissionNum(102L) ;
@@ -107,7 +141,8 @@ public class TaobaokeServiceDecoratorTest extends AbstractBaseJUnit4Test {
 	@Test
 	public void test_getCaturl(){
 		TaokeCaturlCondition condition = new TaokeCaturlCondition() ;
-		condition.setCid(150401L) ;
+		//condition.setCid(150401L) ;
+		condition.setQ("女装") ;
 		String url = taobaokeServiceDecorator.getCaturl(condition) ;
 		System.out.println(url);
 	}

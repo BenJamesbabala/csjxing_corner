@@ -15,6 +15,11 @@ public class DdzAuthzTemp {
     private String uid;
 
     private String password;
+    
+    /**
+     * Ö§¸¶±¦µÇÂ½µÄ·ÖÅäID
+     */
+    private String nativeAlipayId ;
 
     private long   loginTime;
 
@@ -55,6 +60,14 @@ public class DdzAuthzTemp {
     public void generateSignature() {
         this.signature = createSignature();
     }
+    
+    public String getNativeAlipayId() {
+		return nativeAlipayId;
+	}
+
+	public void setNativeAlipayId(String nativeAlipayId) {
+		this.nativeAlipayId = nativeAlipayId;
+	}
 
     private String createSignature() {
         StringBuilder builder = new StringBuilder();
@@ -66,7 +79,8 @@ public class DdzAuthzTemp {
         return MD5Util.getMD5(builder.toString());
     }
 
-    public boolean checkSignature() {
+
+	public boolean checkSignature() {
         return StringUtils.equals(signature, createSignature());
     }
 

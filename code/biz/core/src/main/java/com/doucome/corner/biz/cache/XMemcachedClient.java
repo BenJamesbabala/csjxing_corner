@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
@@ -18,9 +19,11 @@ import net.rubyeye.xmemcached.utils.AddrUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.doucome.corner.biz.core.exception.CacheFailedException;
+
 /**
  * XMemcached µœ÷
- * @author shenjia.caosj 
+ * @author langben 
  * @date 2010-11-11 œ¬ŒÁ04:21:20
  *
  */
@@ -57,6 +60,7 @@ public class XMemcachedClient implements CacheClient {
 		try{
 			client = builder.build() ;
 			this.defaultExpireTime = defaultExpireTime ;
+			executor = Executors.newFixedThreadPool(10);
 		}catch(IOException e) {
 			if(logger.isErrorEnabled()){
 				logger.error("xmemcached init error ,"+e.getMessage() , e) ;
@@ -137,7 +141,7 @@ public class XMemcachedClient implements CacheClient {
 		try{
 			return client.decr(key, by) ;
 		}catch(Exception e){
-			logger.error(e.getMessage() , e) ;
+			logger.error(e.getMessage()) ;
 		}
 		return -1;
 	}
@@ -147,7 +151,7 @@ public class XMemcachedClient implements CacheClient {
 		try{
 			return client.delete(key) ;
 		}catch(Exception e){
-			logger.error(e.getMessage() , e) ;
+			logger.error(e.getMessage()) ;
 		}
 		return false;
 	}
@@ -155,9 +159,9 @@ public class XMemcachedClient implements CacheClient {
 	@Override
 	public <T> T get(String key) {
 		try{
-			return (T)client.get(key) ;
+			return (T)client.get(key);
 		}catch(Exception e){
-			logger.error(e.getMessage() , e) ;
+			logger.error(e.getMessage()) ;
 		}
 		return null;
 	}
@@ -167,7 +171,7 @@ public class XMemcachedClient implements CacheClient {
 		try{
 			return client.get(Arrays.asList(keys)) ;
 		}catch(Exception e){
-			logger.error(e.getMessage() , e) ;
+			logger.error(e.getMessage()) ;
 		}
 		return null;
 	}
@@ -177,7 +181,7 @@ public class XMemcachedClient implements CacheClient {
 		try{
 			return client.get(keys) ;
 		}catch(Exception e){
-			logger.error(e.getMessage() , e) ;
+			logger.error(e.getMessage()) ;
 		}
 		return null;
 	}
@@ -187,7 +191,7 @@ public class XMemcachedClient implements CacheClient {
 		try{
 			return client.incr(key, by);
 		}catch(Exception e){
-			logger.error(e.getMessage() , e) ;
+			logger.error(e.getMessage()) ;
 		}
 		return -1 ;
 	}
@@ -202,24 +206,24 @@ public class XMemcachedClient implements CacheClient {
 		try{
 			return client.set(key, (int)(expireTime/1000), value) ;
 		}catch(Exception e){
-			logger.error(e.getMessage() , e) ;
+			logger.error(e.getMessage()) ;
 		}
 		return false ;
 	}
 
 	@Override
-	public <T> boolean putIfAbsent(String key, T value) {
+	public <T> boolean putIfAbsent(String key, T value) throws CacheFailedException {
 		return putIfAbsent(key , value , this.defaultExpireTime );
 	}
 
 	@Override
-	public <T> boolean putIfAbsent(String key, T value, long expireTime) {
-		try{
-			return client.add(key, (int)(expireTime/1000), value) ;
-		}catch(Exception e){
-			logger.error(e.getMessage() , e) ;
+	public <T> boolean putIfAbsent(String key, T value, long expireTime) throws CacheFailedException {
+		try {
+			return client.add(key, (int)(expireTime/1000), value);
+		} catch (Exception e) {
+			logger.error(e);
+			throw new CacheFailedException(e);
 		}
-		return false;
 	}
 
 	

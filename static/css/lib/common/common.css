@@ -97,3 +97,23 @@
 .color-green {
 	color: #45A022;
 }
+
+.jfb-icon19x19 {
+	width:19px;
+	height: 19px;
+}
+
+.jfb-icon16x16 {
+	width:16px;
+	height: 16px;
+}
+
+.jfb-icon12x12 {
+	width: 12px;
+	height: 12px;
+}
+
+.jfb-icon10x10 {
+	width: 10px;
+	height: 10px;
+}

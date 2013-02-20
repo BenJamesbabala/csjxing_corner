@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+#set($user = $user)
+<html>
+	<head>
+		#parse("/common/dcome.hs/head.vm")
+    </head>
+	
+    <body>
+    	<div class="dc-body">
+			<div class="head">
+				<div class="logo dd-l"></div>
+				<a class="topic dd-r" href="${env.hsRoot}/frame/hs/index.htm"></a>
+				<div class="weibo dd-r" id="weibo">
+				    <a class="close-btn" href="javascript:"></a>
+					<iframe class="weibo-btn" src="http://follow.v.t.qq.com/index.php?c=follow&a=quick&name=doucomewang&style=5&t=1355811341634&f=0" frameborder="0" scrolling="auto" width="125" height="24" marginwidth="0" marginheight="0" allowtransparency="true"></iframe>
+				</div>
+			</div>
+			<input type="hidden" id="envRoot" value="${env.hsRoot}" />
+			<input type="hidden" id="userId" value="$!user.userId" />
+			
+			<div class="main-body">
+			    <div class="header dd-l">
+				    <ul class="hs-list dd-l">
+					    <li class="aries">
+						    <a class="horoscope #if($hsId == 1)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=1" data-id="1" title="白羊座"></a>
+						</li>
+						<li class="taurus">
+						    <a class="horoscope #if($hsId == 2)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=2" data-id="2" title="金牛座"></a>
+						</li>
+						<li class="genimi">
+						    <a class="horoscope #if($hsId == 3)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=3" data-id="3" title="双子座"></a>
+						</li>
+						<li class="cancer">
+						    <a class="horoscope #if($hsId == 4)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=4" data-id="4" title="巨蟹座"></a>
+						</li>
+						<li class="lion">
+						    <a class="horoscope #if($hsId == 5)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=5" data-id="5" title="狮子座"></a>
+						</li>
+						<li class="virgo">
+						    <a class="horoscope #if($hsId == 6)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=6" data-id="6" title="处女座"></a>
+						</li>
+						<li class="libra">
+						    <a class="horoscope #if($hsId == 7)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=7" data-id="7" title="天秤座"></a>
+						</li>
+						<li class="scorpio">
+						    <a class="horoscope #if($hsId == 8)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=8" data-id="8" title="巨蟹座"></a>
+						</li>
+						<li class="sagittarius">
+						    <a class="horoscope #if($hsId == 9)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=9" data-id="9" title="射手座"></a>
+						</li>
+						<li class="capricorn">
+						    <a class="horoscope #if($hsId == 10)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=10" data-id="10" title="摩羯座"></a>
+						</li>
+						<li class="aquarius">
+						    <a class="horoscope #if($hsId == 11)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=11" data-id="11" title="水瓶座"></a>
+						</li>
+						<li class="pisces">
+						    <a class="horoscope #if($hsId == 12)selected #end" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=12" data-id="12" title="双鱼座"></a>
+						</li>
+					</ul>
+				</div>
+				$screen_content
+			</div>
+			
+			<div class="foot" style="text-align: center;">
+				<span>您的ID是$!user.getExternalId()，如有问题请联系客服：vip@doucome.com&nbsp;&nbsp;版权所有&nbsp;&copy;&nbsp;豆蔻</span>
+			</div>
+		</div>
+	    <script type="text/javascript" charset="utf-8" src="http://fusion.qq.com/fusion_loader?appid=100677380&platform=qzone"></script>
+	    #DC_QRES(["jquery-1.7.2-min.js"])
+	    #HS_QRES(["qq.fusion2.adapter.js", "index.js"])
+    </body>
+	
+</html>

@@ -11,7 +11,7 @@ import com.doucome.corner.biz.core.constant.Constant;
 
 /**
  * ÅÄÅÄÇ©ÃûUtil
- * @author shenjia.caosj 2012-8-7
+ * @author langben 2012-8-7
  *
  */
 public class PaipaiUtils {

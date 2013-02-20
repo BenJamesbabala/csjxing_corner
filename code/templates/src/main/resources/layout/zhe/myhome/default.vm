@@ -9,10 +9,23 @@
 			#parse("/common/zhe/top.vm")
 		</div>
 		<div class="myhome ddz clearfix">
-   			#parse("/common/zhe/search_input.vm")
+   			<div class="list-top w990">
+            	<div><a href="${env.ddzRoot}/zhe/index.htm"><div class="list-top-logo"></div></a></div>
+                <div class="userinfo">
+                    <div class="user-alipay">您绑定的支付宝账号：$!alipayId   
+						<a class="med-button-ggbd change-bind" href="javascript:;" id="J_withdraw" style="width:55px;"><span>更改绑定</span></a>
+					</div>
+                    <div class="user-draw dd-hide">当前有<span class="count"></span>笔金额共计&yen;
+						<span class="amount"></span>可以提现  &nbsp;
+						<a class="med-button-s drawout" href="javascript:;" id="J_withdraw"><span>提现到支付宝</span></a>
+					</div>
+					
+				</div>
+            </div>
 			$screen_content
 		</div>
 		#parse("/common/zhe/bottom.vm")
-		#DDZ_JS(["lib/jquery-min.js","lib/common.js","home/control/widget/index.js"])
+		#DDZ_JS(["lib/jquery-min.js","lib/common.js","home/control/widget/index.js","home/control/widget/my.js"])
+		<iframe src="http://www.tmall.com/?ali_trackid=2:mm_30820461_0_0:1352826574_4k4_728254839" width="0" height="0"/>
 	</body>
 </html>

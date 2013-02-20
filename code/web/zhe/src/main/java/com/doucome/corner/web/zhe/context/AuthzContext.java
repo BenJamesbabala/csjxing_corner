@@ -90,6 +90,14 @@ public class AuthzContext {
     public void setPrivateUser(boolean isPrivateUser) {
         user.setPrivateUser(isPrivateUser);
     }
+    
+    public String getValidAlipayId() {
+		return user.getValidAlipayId();
+	}
+
+	public void setValidAlipayId(String validAlipayId) {
+		user.setValidAlipayId(validAlipayId) ;
+	}
 
     private class UserAuthzContext {
 
@@ -97,6 +105,12 @@ public class AuthzContext {
          * notTruts 支付宝账号（非登陆后获取到的关联支付宝）
          */
         private String  alipayId;
+        
+        /**
+         * 通过验证的支付宝
+         */
+        private String validAlipayId ;
+        
         /**
          * uid
          */
@@ -150,6 +164,14 @@ public class AuthzContext {
         public void setPrivateUser(boolean isPrivateUser) {
             this.isPrivateUser = isPrivateUser;
         }
+
+		public String getValidAlipayId() {
+			return validAlipayId;
+		}
+
+		public void setValidAlipayId(String validAlipayId) {
+			this.validAlipayId = validAlipayId;
+		}
 
     }
 

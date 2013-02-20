@@ -17,6 +17,11 @@ public class TaobaoClientWrapper implements InitializingBean{
 	private String serverUrl ;
 	
 	/**
+	 * widget组件服务URL
+	 */
+	private String widgetServerUrl ;
+	
+	/**
 	 * app key
 	 */
 	private String appKeys ;
@@ -30,6 +35,8 @@ public class TaobaoClientWrapper implements InitializingBean{
 	 * session
 	 */
 	private String topSessions ;
+	
+	private String nick ;
 	
 	private List<String> appKeyList ;
 	
@@ -63,6 +70,22 @@ public class TaobaoClientWrapper implements InitializingBean{
 	 */
 	public TaobaoClient newClient(){
 		TaobaoClient client = new DefaultTaobaoClient(serverUrl, appKeyList.get(index), appSecretList.get(index)) ;
+		if(appKeyList.size() > 1){
+			int nextIndex = index + 1 ;
+			if(nextIndex >= appKeyList.size()){
+				nextIndex = 0 ;
+			}
+			index = nextIndex ;
+		}
+		return client ;
+	}
+	
+	/**
+	 * widget client
+	 * @return
+	 */
+	public TaobaoClient newWidgetClient(){
+		TaobaoClient client = new DefaultTaobaoWidgetClient(widgetServerUrl, appKeyList.get(index), appSecretList.get(index) , nick) ;
 		if(appKeyList.size() > 1){
 			int nextIndex = index + 1 ;
 			if(nextIndex >= appKeyList.size()){
@@ -136,10 +159,21 @@ public class TaobaoClientWrapper implements InitializingBean{
 		this.topSessions = topSessions;
 	}
 
+	public String getNick() {
+		return nick;
+	}
 
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
 
-	
+	public String getWidgetServerUrl() {
+		return widgetServerUrl;
+	}
 
-	
+	public void setWidgetServerUrl(String widgetServerUrl) {
+		this.widgetServerUrl = widgetServerUrl;
+	}
+
 	
 }

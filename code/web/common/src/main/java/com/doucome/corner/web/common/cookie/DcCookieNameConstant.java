@@ -24,7 +24,15 @@ public interface DcCookieNameConstant {
      */
     public static final String DC_LOGIN_SOURCE = "__dc_login_source";
     /**
+     * 非重要的浏览器临时属性，不加密，不与用户绑定
+     */
+    public static final String DC_PROMOTYPE    = "__dc_promotype";
+    /**
      * 标识是否为内部用户
      */
     public static final String DC_IS_PRIVATE   = "__dc_private";
+    /**
+     * 标识浏览器的id
+     */
+    public static final String DC_UBID         = "__dc_u";
 }

@@ -12,6 +12,8 @@ import com.doucome.corner.biz.core.model.page.QueryResult;
 import com.doucome.corner.biz.dal.condition.dcome.DcSceneSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.dcome.DcSceneDO;
 import com.doucome.corner.biz.dal.dcome.DcSceneDAO;
+import com.doucome.corner.biz.dal.dcome.DcSceneDetailDAO;
+import com.doucome.corner.biz.dcome.cache.DcSceneCache;
 import com.doucome.corner.biz.dcome.model.DcSceneDTO;
 import com.doucome.corner.biz.dcome.service.DcSceneService;
 
@@ -20,6 +22,12 @@ public class DcSceneServiceImpl implements DcSceneService {
 	@Autowired
 	private DcSceneDAO dcSceneDAO ;
 	
+	@Autowired
+	private DcSceneDetailDAO dcSceneDetailDAO ;
+	
+	@Autowired
+	private DcSceneCache dcSceneCache ;
+	
 	@Override
 	public Long createScene(DcSceneDO scene) {
 		return dcSceneDAO.insertScene(scene) ;
@@ -27,21 +35,47 @@ public class DcSceneServiceImpl implements DcSceneService {
 
 	@Override
 	public DcSceneDTO getSceneById(long sceneId) {
-		DcSceneDO scene = dcSceneDAO.querySceneById(sceneId) ;
-		if(scene == null){
-			return null ;
+		
+		DcSceneDTO dto = dcSceneCache.get(sceneId) ;
+		if(dto == null){
+			DcSceneDO scene = dcSceneDAO.querySceneById(sceneId) ;
+			if(scene == null){
+				return null ;
+			}
+			dto =  new DcSceneDTO(scene);
 		}
-		return new DcSceneDTO(scene);
+		
+		return dto ;
+	}
+	
+	@Override
+	public DcSceneDTO getSceneWithDetailsById(long sceneId) {
+		DcSceneDTO dto = dcSceneCache.get(sceneId) ;
+		if(dto == null){
+			DcSceneDO scene = dcSceneDAO.querySceneById(sceneId) ;
+			if(scene == null){
+				return null ;
+			}
+			dto =  new DcSceneDTO(scene);
+			List<Long> itemIdList = dcSceneDetailDAO.queryItemsBySceneWithPagination(sceneId, 1 , 200) ;
+			dto.setItemIdList(itemIdList) ;
+			dcSceneCache.set(dto) ;
+		}
+		return dto;
 	}
 
 	@Override
 	public int updateSceneById(DcSceneDO scene) {
-		return dcSceneDAO.updateSceneById(scene);
+		int effectCount = dcSceneDAO.updateSceneById(scene);  
+		triggerCacheModified(scene.getId()) ;
+		return effectCount ;
 	}
 
 	@Override
 	public int updateSceneActiveById(long sceneId, TrueFalseEnums active) {
-		return dcSceneDAO.updateSceneActiveById(sceneId, active.getValue()) ;
+		int effectCount = dcSceneDAO.updateSceneActiveById(sceneId, active.getValue()) ;
+		triggerCacheModified(sceneId) ;
+		return effectCount ;
 	}
 	
 	@Override
@@ -62,5 +96,9 @@ public class DcSceneServiceImpl implements DcSceneService {
         return new QueryResult<DcSceneDTO>(dtoList, pagination, totalRecords);
 	}
 
+	
+	private void triggerCacheModified(Long id) {
+		dcSceneCache.remove(id) ;
+	}
 	
 }

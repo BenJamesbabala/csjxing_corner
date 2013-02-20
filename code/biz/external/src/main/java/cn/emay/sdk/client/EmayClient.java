@@ -12,7 +12,7 @@ import cn.emay.sdk.api.SDKService;
 
 /**
  * 亿美短信客户端
- * @author shenjia.caosj 2012-7-19
+ * @author langben 2012-7-19
  *
  */
 public class EmayClient implements SmsClientWrapper ,InitializingBean {

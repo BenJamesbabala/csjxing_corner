@@ -5,8 +5,8 @@
 
 #if($item)
     
-	#set($userCommission = $!item.userCommission)
-	#set($userCommissionRate = $decimalUtils.formatTaobaoRate($!item.userCommissionRate))
+	#set($userCommission = $!item.userJfbByMoney)
+	#set($userCommissionRate = $decimalUtils.formatTaobaoRate($!item.userJfbRate))
 	
 	<input type="hidden" id="userCommissionRate" value="$!userCommissionRate" />
 	<input type="hidden" id="itemId" value="$!item.numIid" />
@@ -40,16 +40,28 @@
                 			<a href="$!itemClickUrl" title="$!item.title" gtrack="virtual/zhe/taobao/item?id=$!item.numIid&from=titleUrl" target="_blank">$!item.title</a>
                 		</div>
                 		<div class="discount-rate-view">
-							
-                			<span class="discount-rate-num-int-view" id="maskCommissionRate">$decimalUtils.integerPart($userCommissionRate)<span class="discount-rate-num-float-view">$decimalUtils.fractionFormat($userCommissionRate,".0")</span></span>
-							
+							#if($domain == 'ju.taobao.com')
+								<div class="juhuasuan">
+									该商品是聚划算活动商品，平均返利比例为<span>1%-3%</span>
+                                </div>
+                			#else
+							<span class="discount-rate-num-int-view" id="maskCommissionRate">$decimalUtils.integerPart($userCommissionRate)<span class="discount-rate-num-float-view">$decimalUtils.fractionFormat($userCommissionRate,".00")</span></span>
                 			<span class="discount-rate-percent-view">%</span>
-							
+							#end
                 		</div>
                 		<div class="item-price-view">
                             <span class="item-price-origin-view">原价:<span data-originPrice="" >$decimalUtils.format($!item.showPrice,'0.00')</span></span>
-                            <span class="item-price-discount-view item-price-discount">返利:<strong id="itemUserCommissionShow">&yen;<span data-userCommission="">$decimalUtils.format($userCommission,'0.00')</span></strong></span>
+							#if($domain != 'ju.taobao.com')
+                            <span class="item-price-discount-view item-price-discount">
+                                <span class="commission-label">可省约&nbsp;&yen;</span>
+								<!--<span class="jfb-icon">#JFB_ICON("12x12")</span>-->
+								<strong id="itemUserCommissionShow"><span data-userCommission="">$decimalUtils.format($!userCommission,'0.00')</span></strong>
+							</span>
+							#end
+							<dt class="rumour"><i></i>请放心，付款价格以店铺实际活动价为准</dt>
                 		</div>
+						
+						
                 	</li>
                 </ul>
         	</div>
@@ -62,9 +74,15 @@
             		<a href="javascript:;" id="change_alipay"><strong>更改支付宝账号>></strong></a>
 				</div>
             	<div class="item-buy-url">
-            		<a href="$!itemClickUrl" id="buy_go_url" target="_blank" gtrack="virtual/zhe/taobao/item?id=$!item.numIid&from=buyUrl"><strong>$!itemClickUrl</strong></a>
+					<a href="$!itemClickUrl" id="buy_go_url" target="_blank" gtrack="virtual/zhe/taobao/item?id=$!item.numIid&from=buyUrl" class="go-btn">
+                        <div class="">去购物，拿返利</div>
+					</a>
+					<div id="tixian-tip" class="select-tips dd-hide">
+                		<div class="content">确认收货后记得回来提现哦~</div>
+						<div class="angle-top" style="top: -7px;left:140px;"></div>
+                	</div>
             	</div>
-            	<div class="item-buy-go"></div>
+            	
 				<div id="ckepop">
 					
                     <span class="jiathis_txt alipay-text-buy">分享到：</span>
@@ -78,6 +96,7 @@
 			##显示输入支付宝的页面
             <div class="item-ipt">
 				<form method="get" action="${env.ddzRoot}/zhe/item.htm" name="alipay-form" id="alipay_form">
+					<input type="hidden" name="domain" value="$!domain"/>
 					<input type="hidden" name="id" value="$!id"/>
 					#if($userGuide)
 						<input type="hidden" name="userGuide" value="true" id="userGuide"/>
@@ -102,15 +121,21 @@
 			#end
         </div>
 		
-		
-		
 #else
 	<div class="find-none dd-clr">
-		对不起，您输入的淘宝商品链接错误！
+		#if($errorCode == "ddz.item.dangerKeyword")
+			对不起，您搜索的商品包含非法信息
+		#elseif($errorCode == "ddz.item.notFound")
+			对不起，您输入的淘宝商品链接错误！
+		#end
 	</div>
 #end
-
+	
+	<div class="jfb_study">自2013年1月1日起，淘宝返利将由提现到支付宝余额升级为提现至支付宝集分宝&nbsp;<a href="${env.ddzHelproot}/help/jfb.html" target="_blank">查看详情>></a> &nbsp;<a href="javascript:;" class="jfb-study-video">什么是支付宝集分宝>></a></div>
 </div>
+
+
+
 
 #if($alipayId)
 <!-- JiaThis Button BEGIN -->

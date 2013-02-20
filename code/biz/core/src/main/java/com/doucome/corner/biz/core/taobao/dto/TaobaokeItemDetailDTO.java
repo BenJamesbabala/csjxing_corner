@@ -1,11 +1,11 @@
 package com.doucome.corner.biz.core.taobao.dto;
 
-import com.doucome.corner.biz.core.utils.ReflectUtils;
+import com.doucome.corner.biz.common.utils.ReflectUtils;
 import com.taobao.api.domain.TaobaokeItemDetail;
 
 /**
  * 淘宝客商品详情 
- * @author shenjia.caosj 2012-4-9
+ * @author langben 2012-4-9
  *
  */
 public class TaobaokeItemDetailDTO {

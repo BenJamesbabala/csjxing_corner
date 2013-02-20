@@ -1,0 +1,67 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "活动 - 投票列表")
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcPromotionRateDetailList"/>
+
+
+#set($pagination = $rateQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/prom/rate_detail_list.htm?")
+#set($searchQuery = ["itemId:$!itemId","rateUserId:$!rateUserId","promotionId:$!promotionId"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/dcome/prom/rate_detail_list.htm" method="GET">
+		<div class="MB10 MT10">
+			商品ID： <input  type="text" name="itemId" value="$!itemId" />
+			活动ID：<input  type="text" name="promotionId" value="$!promotionId" />
+			&nbsp;&nbsp;
+			投票UserID： <input  type="text" name="rateUserId" value="$!rateUserId" />
+			&nbsp;&nbsp;
+			&nbsp;&nbsp;
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	#parse("/common/bops/dcome.prom/rateDetailPagination.vm")
+	
+	 <table width="960" style="font-size:14px;" id="itemTable">
+		<tr>
+    		<th width="30">序号</th>
+			<th width="60">活动ID</th>
+			<th width="60">投票会员</th>
+			<th width="60">商品ID</th>
+			<th width="50">状态</th>
+			<th width="80">创建时间</th>
+			<th width="30">操作</th>
+    	</tr>
+		#if($rateQuery.totalRecords > 0)
+    		#foreach($item in $rateQuery.items)
+				#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
+            	<tr data-index="$!item.id">
+            		<td>$idx</td>
+                    <td>$!item.promotionId</td>
+                    <td>$!item.rateUserId</td>
+					<td align="center">$!item.itemId</td>
+					<td align="center">$!item.status</td>
+                    <td>$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+                    <td></td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="6">没有查询到记录</td></tr>
+		#end
+     </table>
+	 
+	 #parse("/common/bops/dcome.prom/rateDetailPagination.vm")
+	
+</div>
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

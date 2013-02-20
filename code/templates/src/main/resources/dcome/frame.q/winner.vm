@@ -1,0 +1,118 @@
+#set($page_nav = "winner")
+#set($layout="dcome/frame.q/default.vm")
+
+<input type="hidden" id="envRoot" value="${env.root}" />
+
+<div class="idx-cnt">
+	<div class="winner-game">
+	
+		<div class="play-box" data-current-index="1" data-running="false">
+			<ul>
+				<li class="box-0-4"><div class="card apple"></div></li>
+				<li class="box-0-5"><div class="card cattle"></div></li>
+				<li class="box-0-6"><div class="card coconut"></div></li>
+				<li class="box-1-6"><div class="card watermelons"></div></li>
+				<li class="box-2-6"><div class="card cattle"></div></li>
+				<li class="box-3-6"><div class="card oncemore"></div></li>
+				<li class="box-4-6"><div class="card apple"></div></li>
+				<li class="box-5-6"><div class="card cattle"></div></li>
+				<li class="box-6-6"><div class="card orange"></div></li>
+				<li class="box-6-5"><div class="card alarm"></div></li>
+				<li class="box-6-4"><div class="card cattle"></div></li>
+				<li class="box-6-3"><div class="card sevenseven"></div></li>
+				<li class="box-6-2"><div class="card apple"></div></li>
+				<li class="box-6-1"><div class="card cattle"></div></li>
+				<li class="box-6-0"><div class="card coconut"></div></li>
+				<li class="box-5-0"><div class="card starstar"></div></li>
+				<li class="box-4-0"><div class="card cattle"></div></li>
+				<li class="box-3-0"><div class="card oncemore"></div></li>
+				<li class="box-2-0"><div class="card apple"></div></li>
+				<li class="box-1-0"><div class="card cattle"></div></li>	
+				<li class="box-0-0"><div class="card orange"></div></li>
+				<li class="box-0-1"><div class="card alarm"></div></li>
+				<li class="box-0-2"><div class="card barbar"></div></li>
+				<li class="box-0-3"><div class="card barbarbar"></div></li>
+			</ul>v>
+		</div>
+		
+		<div class="bet-box">
+			<div class="score-box">
+				<div class="credit-box">
+					<span class="label"><span>积分：</span></span>
+					<span class="credit-count"><span>$!user.integralCount</span></span>
+				</div>
+				<div class="seperator"></div>
+				<div class="bonus-win-box">
+					<span class="label"><span>得分：</span></span>
+					<span class="bonus-win-count"><span>$!user.winnerScore</span></span>
+				</div>
+			</div>
+            
+			<ul class="bet-btn">
+				<li data-bet="apple" gtrack="/virtual/winner/winner_bet">
+					<div class="score bg-red"><span>$!winnerConfigMap['apple'].score</span></div>
+					<div class="card apple"></div>
+					<div class="bet-count">&nbsp;<span></span></div>
+				</li>
+				<li data-bet="watermelons" gtrack="/virtual/winner/winner_bet">
+					<span class="light light-group1"></span>
+					<div class="score"><span>$!winnerConfigMap['watermelons'].score</span></div>
+					<div class="card watermelons"></div>
+					<div class="bet-count">&nbsp;<span></span></div>
+				</li>
+				<li data-bet="starstar" gtrack="/virtual/winner/winner_bet">
+					<span class="light light-group1"></span>
+					<div class="score"><span>$!winnerConfigMap['starstar'].score</span></div>
+					<div class="card starstar"></div>
+					<div class="bet-count">&nbsp;<span></span></div>
+				</li>
+				<li data-bet="sevenseven" gtrack="/virtual/winner/winner_bet">
+					<span class="light light-group1"></span>
+					<div class="score"><span>$!winnerConfigMap['sevenseven'].score</span></div>
+					<div class="card sevenseven"></div>
+					<div class="bet-count">&nbsp;<span></span></div>
+				</li>
+				<li data-bet="barbar" gtrack="/virtual/winner/winner_bet">
+					<div class="score bg-red"><span>$!winnerConfigMap['barbar'].score</span></div>
+					<div class="card barbar"></div>
+					<div class="bet-count">&nbsp;<span></span></div>
+				</li>
+				<li data-bet="alarm" gtrack="/virtual/winner/winner_bet">
+					<span class="light light-group2"></span>
+					<div class="score"><span>$!winnerConfigMap['alarm'].score</span></div>
+					<div class="card alarm"></div>
+					<div class="bet-count">&nbsp;<span></span></div>
+				</li>
+				<li data-bet="coconut" gtrack="/virtual/winner/winner_bet">
+					<span class="light light-group2"></span>
+					<div class="score"><span>$!winnerConfigMap['coconut'].score</span></div>
+					<div class="card coconut"></div>
+					<div class="bet-count">&nbsp;<span></span></div>
+				</li>
+				<li data-bet="orange" gtrack="/virtual/winner/winner_bet">
+					<span class="light light-group2"></span>
+					<div class="score"><span>$!winnerConfigMap['orange'].score</span></div>
+					<div class="card orange"></div>
+					<div class="bet-count">&nbsp;<span></span></div>
+				</li>
+				<li data-bet="cattle" gtrack="/virtual/winner/winner_bet">
+					<div class="score bg-red"><span>$!winnerConfigMap['cattle'].score</span></div>
+					<div class="card cattle"></div>
+					<div class="bet-count">&nbsp;<span></span></div>
+				</li>
+			</ul>
+			
+			<div class="start-guide-dialog dd-hide">
+				<div class="tip">请先选择要下注的卡片</div>
+			</div>
+			
+			<div class="biaoqing dd-hide" data-leiben="${env.staticroot}/dcome/q/imgs/leiben.gif"><img></img></div>
+			
+            <div style="clear: both;" class="winner-start"><a href="javascript:;" class="bet-start-click disable" gtrack="/virtual/winner/winner_start"><span>开始</span></a></div>
+		</div>
+		
+        
+	</div>
+	
+</div>
+	

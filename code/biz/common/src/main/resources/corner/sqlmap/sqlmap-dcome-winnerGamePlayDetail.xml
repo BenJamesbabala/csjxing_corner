@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcWinnerGamePlayDetail">
+
+	<typeAlias alias="TA-DcWinnerGamePlayDetailDO" type="com.doucome.corner.biz.dal.dataobject.dcome.DcWinnerGamePlayDetailDO"/>
+	
+	<resultMap id="RM-DcWinnerGamePlayDetailDO" class="TA-DcWinnerGamePlayDetailDO">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userNick" column="USER_NICK"/>
+		<result property="winScore" column="WIN_SCORE"/>
+		<result property="betIntegral" column="BET_INTEGRAL"/>
+		<result property="betParam" column="BET_PARAM"/>
+		<result property="result" column="RESULT"/>
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertPlayDetail">
+		INSERT INTO DC_WINNER_GAME_PLAY_DETAIL
+			(ID,USER_ID,USER_NICK,WIN_SCORE,BET_INTEGRAL,BET_PARAM,RESULT,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#userId#,#userNick#,#winScore#,#betIntegral#,#betParam#,#result#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="countPlayDetaiByUser" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(ID) 
+		FROM 
+			DC_WINNER_GAME_PLAY_DETAIL
+		WHERE
+			USER_ID = #userId# 
+		AND
+		<![CDATA[
+			GMT_CREATE >= #gmtCreateStart#
+		]]>
+		AND
+		<![CDATA[
+			GMT_CREATE <= #gmtCreateEnd#
+		]]>
+	</select>
+</sqlMap>

@@ -7,7 +7,7 @@ import com.doucome.corner.biz.core.service.upyun.UpYunUtils;
 
 /**
  * 
- * @author shenjia.caosj 2012-7-22
+ * @author langben 2012-7-22
  *
  */
 public class UpyunDataEntity {

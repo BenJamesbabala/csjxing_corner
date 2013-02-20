@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:roma="http://roma.alibaba.com/schema"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://roma.alibaba.com/schema http://roma.alibaba.com/schema/roma-component.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+	
+	<bean id="hsOpenApiV3" class="com.qq.open.OpenApiV3">
+		<property name="appid" value="${corner.horoscope.appid}"/>
+		<property name="appkey" value="${corner.horoscope.appkey}"/>
+		<property name="serverName" value="${corner.horoscope.servername}"/>
+	</bean>
+	
+	<bean id="hsQqQueryService" class="com.doucome.corner.biz.core.qq.impl.HsQqQueryServiceImpl">
+	    <property name="openApiV3"><ref bean="hsOpenApiV3"/></property>
+	</bean>
+	<bean id="hsUserService" class="com.doucome.corner.biz.dcome.service.horoscope.impl.HsUserServiceImpl"></bean>
+	<bean id="hsDailyFateService" class="com.doucome.corner.biz.dcome.service.horoscope.impl.HsDailyFateServiceImpl"></bean>
+	<bean id="hsWeekFateService" class="com.doucome.corner.biz.dcome.service.horoscope.impl.HsWeekFateServiceImpl"></bean>
+	<bean id="hsMonthFateService" class="com.doucome.corner.biz.dcome.service.horoscope.impl.HsMonthFateServiceImpl"></bean>
+	<bean id="hsTopicService" class="com.doucome.corner.biz.dcome.service.horoscope.impl.HsTopicServiceImpl"></bean>
+</beans>

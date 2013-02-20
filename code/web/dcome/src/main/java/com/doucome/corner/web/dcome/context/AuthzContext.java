@@ -12,7 +12,10 @@ import com.doucome.corner.biz.dcome.enums.DcLoginSourceEnums;
  */
 public class AuthzContext {
 
-    private Map<AuthzContextModelEnum, Object> modelMap = new HashMap<AuthzContextModelEnum, Object>();
+    private Map<AuthzContextModelEnum, Object> modelMap  = new HashMap<AuthzContextModelEnum, Object>();
+
+    private Map<String, String>                promotype = new HashMap<String, String>();
+
     /**
      * 是否需要重写cookie
      */
@@ -20,7 +23,9 @@ public class AuthzContext {
 
     private boolean                            authentication;
 
-    private UserAuthzContext                   user     = new UserAuthzContext();
+    private UserAuthzContext                   user      = new UserAuthzContext();
+
+    private EnvContext                         env       = new EnvContext();
 
     public Object getModel(AuthzContextModelEnum key) {
         return modelMap.get(key);
@@ -54,11 +59,11 @@ public class AuthzContext {
     }
 
     public boolean isPrivateUser() {
-        return user.isPrivateUser();
+        return env.isPrivateUser();
     }
 
     public void setPrivateUser(boolean isPrivateUser) {
-        user.setPrivateUser(isPrivateUser);
+        env.setPrivateUser(isPrivateUser);
     }
 
     public long getUserId() {
@@ -109,6 +114,56 @@ public class AuthzContext {
         user.setOpenKey(openKey);
     }
 
+    public String getUbid() {
+        return env.getUbid();
+    }
+
+    public void setUbid(String ubid) {
+        env.setUbid(ubid);
+    }
+
+    public Map<String, String> getPromotype() {
+        return promotype;
+    }
+
+    public void setPromotype(Map<String, String> promotype) {
+        this.promotype = promotype;
+    }
+
+    /**
+     * 类AuthzContext.java的实现描述：环境信息
+     * 
+     * @author ib 2012-9-16 下午4:24:39
+     */
+    private class EnvContext {
+
+        /**
+         * 是否内部人员
+         */
+        private boolean isPrivateUser;
+        /**
+         * 标识浏览器唯一性的id
+         */
+        private String  ubid;
+
+        public boolean isPrivateUser() {
+            return isPrivateUser;
+        }
+
+        public void setPrivateUser(boolean isPrivateUser) {
+            this.isPrivateUser = isPrivateUser;
+        }
+
+        public String getUbid() {
+            return ubid;
+        }
+
+        public void setUbid(String ubid) {
+            this.ubid = ubid;
+        }
+
+    }
+
     /**
      * 类AuthzContext.java的实现描述：登录状态上下文，会写入cookie
      * 
@@ -141,11 +196,6 @@ public class AuthzContext {
          */
         private String             dcTemp;
 
-        /**
-         * 是否内部人员
-         */
-        private boolean            isPrivateUser;
-
         public long getUserId() {
             return userId;
         }
@@ -168,14 +218,6 @@ public class AuthzContext {
 
         public void setDcTemp(String dcTemp) {
             this.dcTemp = dcTemp;
-        }
-
-        public boolean isPrivateUser() {
-            return isPrivateUser;
-        }
-
-        public void setPrivateUser(boolean isPrivateUser) {
-            this.isPrivateUser = isPrivateUser;
         }
 
         public String getExternalId() {

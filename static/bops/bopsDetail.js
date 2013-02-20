@@ -1,3 +1,5 @@
+var errorAvatarUrl = $("#picUploadedRoot").val() + "/avatar/0/0/0/0/0.jpg" ;
+
 !(function(){
     var envRoot = $("#envRoot").val() ;
 	var index = {
@@ -6,6 +8,7 @@
 			this._initAddLove();
 			this._initAddComment();
 			this._initImageSlide();
+			this._initAvatar($('.init-avatar'));
 		},
 		
 		/**
@@ -215,15 +218,81 @@
 			
 			var maxlen = parseInt(_this.find(".comment").attr("data-maxlen")) ;
 			
+			var appendTbCommentFailInfo = function(message) {
+				$(".taobao-comment").find("table").append('<tr><td class="content">' 
+	    				+ message + '</td><td class="del-opt"></td></tr>');
+			}
+			
+			var resetCommentDivHeight = function() {
+				var tempHeight = $(".title").height() + $(".comment-category-title").height()
+				  + $(".dcome-comment").height() + $(".comment-category-title").height()
+				  + $(".taobao-comment").height() + $(".submit").height() + 60;
+				_this.height(tempHeight);
+			}
+			
+			var delTbComment = function() {
+				var tempTr = $(this).parent().parent();
+				tempTr.remove();
+				resetCommentDivHeight();
+			}
+			
 		    $(".dc-comment-add").click(function() {
-		        var top = $(".dc-comment-add").offset().top ;
+		        var top = $(".detail-main").offset().top ;
 			    var left = $(".dc-comment-add").offset().left;
+			    var bottom = top + _this.height();
+				var right = left + _this.width();
+				if (bottom > 1300) {
+				    top = 1300 - _this.height() - 20;
+				}
+				if (right > 760) {
+				    left = 760 - _this.width() - 20;
+				}
 			    _this.css("top" , top) ;
 			    _this.css("left" , left) ;
 			    _this.find(".comment").val('');
 			    $("#ilikeDialog").addClass("dd-hide") ;
 			    _this.removeClass("dd-hide") ;
 			    info("请输入评论内容");
+			    
+			    //请求淘宝评论
+			    $(".taobao-comment table").find("tr").remove();
+			    var taobaoCommentsUrl = envRoot + "/bops/dcome/qq/remote/feed_item_comments_ajax.htm"
+			    var commentDiv = _this.find(".taobao-comment");
+			    var nativeItemId = commentDiv.attr("data-native-id"), itemSource = commentDiv.attr("data-item-source"),
+			         sellerUserId = commentDiv.attr("data-seller-id");
+			    $.ajax({
+			    	url : taobaoCommentsUrl ,
+					type : "POST" ,
+					data : {"nativeItemId": nativeItemId, "sellerUserId": sellerUserId, "itemSource": itemSource},
+			    	success: function(data) {
+			    	    var result = data.result;
+			    	    if (result.code == "success") {
+			    	    	var comments = result.data;
+			    	    	if (comments.length > 0) {
+			    	    		for (var i = 0; i < comments.length && i < 10; i++) {
+			    	    			$(".taobao-comment").find("table").append('<tr><td class="content">' 
+			    	    				+ comments[i].content + '</td><td class="del-opt"><a>删除</a></td></tr>');
+			    	    		}
+			    	    	} else {
+			    	    		$(".taobao-comment").find("table").append('<tr><td>商品没有评论数据.</td><td></td></tr>');
+			    	    	}
+			    	    } else {
+			    	    	if (result.detail == "invalid.request.param") {
+			    	    		appendTbCommentFailInfo("加载淘宝评论数据失败,无法识别的请求参数");
+			    	    	} else if (result.detail == "request.comment.failed") {
+			    	    		appendTbCommentFailInfo("加载淘宝评论数据失败，请稍后重试");
+			    	    	} else {
+			    	    		appendTbCommentFailInfo("加载淘宝评论数据失败,服务端未知错误");
+			    	    	}
+			    	    }
+			    	    //绑定删除事件
+			    	    $(".taobao-comment .del-opt").find("a").click(delTbComment);
+			    	    resetCommentDivHeight();
+			    	},
+			    	error: function(data) {
+			    		appendTbCommentFailInfo("加载淘宝评论数据失败");
+			    	}
+			    });
 		    }); 
             //关闭
 			_this.find(".close").click(function(){
@@ -232,17 +301,13 @@
 			var commentUrl = envRoot + '/bops/dcome/qq/remote/add_bops_comment_ajax.htm';
 			//提交评论
 			_this.find(".submit").click(function(){
-				var content = _this.find(".comment").val() ;
-				
-				if(content == '' || content == _this.find(".comment").attr('placeholder')){
-					error("评论内容不能为空哦~") ;
-					return ;
-				}
-				
-				if(commentLen() > maxlen){
-					return ;
-				}
-				
+				var content = [];
+				var dcContent = _this.find(".comment").val();
+				content.push(dcContent);
+				$(".taobao-comment").find(".content").each(function() {
+					content.push($(this).html());
+				});
+				content = content.join(";");
 				var itemId = $('.dc-op-ilike').attr("data-item-id");
 				//发送请求
 				$.ajax({
@@ -283,16 +348,13 @@
 						  		_this.css("opacity",100) ;
 						  	});
 						} else {
-							if(code == 'ill_args'){
-								if(detail == 'dcome.addComment.content.required') {
-									error('评论内容不能为空哦~！');
-								} else if(detail == 'dcome.addComment.content.maxLength') {
-									error('评论内容太长啦~！');
-								} else if(detail == 'dcome.addComment.userId.required') {
-									error('评论失败，请刷新页面') ;
-								} else if(detail == 'dcome.addComment.itemId.required') {
-									error('评论失败，请刷新页面') ;
-								}
+							var detail = json.detail;
+							if(detail == 'content.required') {
+								error('评论内容不能为空！');
+							} else if(detail == 'server.error') {
+								error('服务器内部错误！');
+							} else if(detail == 'itemId.required') {
+								error('评论失败，请刷新页面') ;
 							} else {
 								error('评论失败，请刷新页面') ;
 							}

@@ -1,0 +1,2 @@
+#set($layout="error/default.vm")
+<p>您要查找的商品不存在</p>

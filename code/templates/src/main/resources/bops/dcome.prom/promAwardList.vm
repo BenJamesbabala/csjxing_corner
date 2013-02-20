@@ -1,0 +1,196 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "活动中将记录列表")
+
+<style>
+	.item-title div {
+		height:28px ;
+		overflow:hidden;
+	}
+	
+</style>
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcPromotionAwardList"/>
+
+#set($pagination = $awardQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/prom/prom_award_list.htm?")
+#set($searchQuery = ["promotionId:$!promotionId","sendStatus:$!sendStatus","userId:$!userId","checkCode:$!checkCode","reviewStatus:$!reviewStatus","promotionType:$!promotionType"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/dcome/prom/prom_award_list.htm" method="GET">
+		<div class="settleipt MB10 MT10">
+			活动ID：<input  type="text" name="promotionId" value="$!promotionId" />
+			&nbsp;&nbsp;
+			UserId：<input  type="text" name="userId" value="$!userId" />
+			&nbsp;&nbsp;
+			发奖状态：
+			<select name="sendStatus">
+				<option value="" #if($!sendStatus == "") selected #end>全部</option>
+				<option value="S" #if($!sendStatus == "S") selected #end>已发奖品</option>
+				<option value="U" #if($!sendStatus == "U") selected #end>未发奖</option>>
+			</select>
+			&nbsp;&nbsp;
+			审核状态：
+			<select name="reviewStatus">
+				<option value="" #if($!reviewStatus == "") selected #end>全部</option>
+				<option value="S" #if($!reviewStatus == "S") selected #end>已审核</option>
+				<option value="U" #if($!reviewStatus == "U") selected #end>未审核</option>>
+			</select>
+			<br />
+			核对码： <input type="text" name="checkCode" value="$!checkCode"/>
+			&nbsp;&nbsp;
+			活动类型:
+            <select name="promotionType">
+				<option value="">全部</option>
+				<option value="PK" #if($!promotionType == "PK") selected #end>PK</option>
+				<option value="EX" #if($!promotionType == "EX") selected #end>积分兑换</option>>
+			</select>
+			&nbsp;&nbsp;
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	#parse("/common/bops/dcome.prom/promAwardListPagination.vm")
+	
+	 <table width="1100" style="font-size:14px;" class="prom-award-table">
+		<tr>
+			<th width="30">ID</th>
+			<th width="40">活动ID</th>
+			<th width="40">userId</th>
+			<th width="60">昵称</th>
+			<th width="120">商品</th>
+			<th width="40">票数</th>
+			<th width="40">数量</th>
+			<th width="60">核对码</th>
+			<th width="40">已审核</th>
+			<th width="40">已发送</th>
+			<th width="100">创建时间</th>
+			<th width="80">操作</th>
+			<th width="40">作弊</th>
+			<th width="80">备注</th>
+    	</tr>
+		#if($awardQuery.totalRecords > 0)
+    		#foreach($item in $awardQuery.items)
+				#set($dcItem = $itemMap[$item.itemId])
+            	<tr data-index="$!item.id">
+                    <td align="center">$!item.id</td>
+                    <td align="center">$!item.promotionId</td>
+					<td>$!item.userId</td>
+					<td>$!item.userNick</td>
+                    <td data-item-id="$!item.itemId" data-taobao-item-id="$!dcItem.nativeId" class="item-title">
+						<div><a href="${env.bopsRoot}/bops/dcome/prom/redirect_item.htm?itemId=$!item.itemId" target="_blank">$!dcItem.itemTitle</a></div>
+					</td>
+					<td align="center">$!item.rateCount</td>
+					<td align="center">$!item.itemNum</td>
+					<td>$!item.checkCode</td>
+					<td align="center">#if($!item.reviewStatus == "S") 是 #else 否   #end</td>
+                    <td align="center">#if($!item.sendStatus == "S") <span class="dc-red">是</span> #else 否  #end</td>
+					<td align="center">$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+					<td align="center">
+						
+						#if($!item.reviewStatus != "S") 
+							<a href="javascript:;" class="award-review-click" data-award-id='$!item.id'>审核</a> 
+						#else
+							#if($!item.sendStatus != "S") 
+    							<a href="javascript:;" class="award-send-click" data-award-id='$!item.id'>发送奖品</a> 
+    						#else
+    							<span class="dc-green">已发送</span>
+							#end
+							
+							<a href="javascript:;" title="查看收货信息" class="award-delivery-click" >
+                                <span class="person-icon #if($item.delName && $item.delName != "") person-icon-active #end"></span>
+    						</a>
+						#end
+						<div style="position:relative;">
+                            <div class="settle-memo-dialog user-delivery-dialog dd-hide">
+                                <div class="settle-memo-dialog-head">
+                            		<span class="L">收货信息</span>
+									<a class="W_close_color layer_tips_close R" href="javascript:;"></a>
+                            	</div>
+                                <div class="line">奖品类型：#if($item.itemType == "V") 虚拟商品  #else 实物  #end</div>
+                                <div class="line"><span>姓名： $!item.delName </span></div>
+								<div class="line"><span>联系电话/充值号码/支付宝： $!item.delMobile </span></div>
+                                <div class="line"><span>尺码：[$!item.itemSize] / 颜色：[$!item.itemColor]</span></div>
+                                <div class="line">
+    								<span>收货地址：</span>
+                                    <div>$!item.delAddr</div>
+    							</div>
+								<div class="line">
+    								<span>用户备注：</span>
+                                    <div>$!item.delOther</div>
+    							</div>
+    							<div class="line">
+    								<input type="text" class="message" name="message" value="你的奖品收货信息填写不完整" />
+                                    <a class="send-btn" href="javascript:;" data-user-id="$!item.userId" title="向用户发送消息">发送</a>
+    							</div>
+                                <div class="user-delivery-dialog-foot"></div>
+                            	<div class="angle-top" style="left:360px;"></div>
+                            </div>
+						</div>
+					</td>
+					<td align="center">
+                        <a href="javascript:;" title="检测" class="award-cheat-click" data-promotion-id='$!item.promotionId' data-user-id='$!item.userId'>
+                            <span class="clock-icon clock-icon-active"></span>
+						</a>
+                    </td>
+                    <td>
+                    	$!item.memo
+                    </td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="8">
+                    
+			</td></tr>
+		#end
+     </table>
+	 	 
+	 #parse("/common/bops/dcome.prom/promAwardListPagination.vm")
+	
+	 <div id="treatDetailDialog" class="dd-hide treat-detail-dialog">
+        <a href="javascript:;" class="close" >关闭</a>
+        <div class="main">
+            <div class="user"></div> 
+			<div class="MB10">本次活动轨迹---------------</div>
+            <span class="title">同IP记录</span>
+            <ul class="treat-ip-list">
+                
+			</ul>
+            <div class="dd-hide treat-ip-template">
+				<li class="record">
+                    <div>@ip-user-name@(@ip-user-id@)   at  @ip-gmt-create@ | IP : @ip-login-ip@ | UBID : @ip-ubid@ </div>
+                    <div class="agent">Agent:@ip-agent@</div>
+				</li>
+			</div>		
+			<span class="title">同浏览器记录</span>
+            <ul class="treat-ubid-list">
+                
+			</ul>
+			<div class="dd-hide treat-ubid-template">
+				<li class="record">
+                    <div>@ubid-user-name@(@ubid-user-id@)   at  @ubid-gmt-create@ | IP : @ubid-login-ip@  |  UBID : @ubid-ubid@ </div>
+                    <div class="agent">Agent:@ubid-agent@</div>
+				</li>
+			</div>		
+			<span class="title">中奖记录</span>
+			<ul class="treat-award-history-list">
+
+			</ul>
+			<div class="dd-hide treat-award-history-template">
+				<li class="record">
+                    <div>@award-history-gmt-create@ 商品ID：@award-history-item-id@  <a href="${env.bopsRoot}/bops/dcome/prom/redirect_item.htm?itemId=@award-history-item-id@" target="_blank">查看奖品</a></div>
+				</li>
+			</div>	
+		</div>
+	 </div>
+</div>
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

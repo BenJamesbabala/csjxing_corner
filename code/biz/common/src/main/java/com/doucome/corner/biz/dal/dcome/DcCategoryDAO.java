@@ -7,7 +7,7 @@ import com.doucome.corner.biz.dal.dataobject.dcome.DcCategoryDO;
 
 /**
  * ¶¹Þ¢ÀàÄ¿
- * @author shenjia.caosj 2012-7-23
+ * @author langben 2012-7-23
  *
  */
 public interface DcCategoryDAO {

@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * 淘宝客接口用的时间格式
- * @author shenjia.caosj 2012-2-26
+ * @author langben 2012-2-26
  *
  */
 public class TaobaokeDate {

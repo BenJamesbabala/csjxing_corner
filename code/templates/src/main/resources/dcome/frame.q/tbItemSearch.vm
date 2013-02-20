@@ -1,0 +1,67 @@
+#set($page_nav = "tb_index")
+#set($layout="dcome/frame.q/default.vm")
+#if($taobaokeItemFacade)
+    #set($item = $taobaokeItemFacade)
+    #set($clickUrl = $item.clickUrl)
+#else
+	#set($item = $taobaoItemDTO)
+	#set($clickUrl = $item.detailUrl)
+#end
+
+<input type="hidden" id="userCommissionRate" value="$!item.userIntegralRate" />
+<input type="hidden" id="itemId" value="$!item.numIid" />
+
+<div class="tb-search">
+	#parse("/common/dcome.qq/tb_search.vm")
+	<div class="tb-content">
+    #if($item)
+        <div class="tb-item-main">
+            <div class="tb-item-pic"><img src="$!item.picUrl"/></div>
+    		<div class="tb-item-main-text">
+                <div class="tb-item-title"><a href="$!clickUrl" title="$!item.title" target="_blank">$!item.title</a></div>
+        		<div class="tb-shop">
+                    <span class="label">店掌柜：
+						#if($item.shopClickUrl)
+						<a href="$!item.shopClickUrl" target="_blank">$!item.nick</a>
+						#else
+                        <span>$!item.nick</span>
+						#end
+					</span>
+                </div>
+                <div class="tb-commission">
+                    <div><span class="label">价&nbsp;格：</span><span class="tb-item-price"><i>&yen;</i>$!item.price</span></div>
+                    <div>
+						#if($taobaokeItemFacade)
+						<span class="label">购买获赠：</span><span class="tb-commission-integral">$!item.userIntegral</span> <span>积分</span>
+						#else
+						<span class="label">该商品不返积分</span>
+						#end
+                        <span class="tb-integral-value">（价值&nbsp;<span class="yen">&yen;</span> <span class="tb-commission-integral-by-money">$decimalUtils.format($!item.userIntegralByMoney,'0.00')</span>）</span>
+                        <!--<span class="tb-integral-usage"><a href="${env.root}/frame/q/tb_integral_pay.htm?tracelog=tbsearch-result">积分有什么用 <span class="yen">>></span></a></span>-->
+					</div>
+        		</div>
+    			<div class="tb-buy">
+    				<a href="$!clickUrl" class="buy-btn" target="_blank">
+                        <span>确认收货后可<strong class="save">优惠 $decimalUtils.format($!item.userIntegralRateX100,"0.00")</strong>%</span>
+                        <b class="go">去购买，拿积分</b>
+                    </a>
+                </div>
+            </div>
+    	</div>
+    #else
+    	<div class="find-none dd-clr">
+			<input type="hidden" id="tbSearchError" value="$errorCode"/>
+			#** 
+    		#if($errorCode == "ddz.item.dangerKeyword")
+    			对不起，您搜索的商品包含非法信息
+    		#elseif($errorCode == "ddz.item.notFound")
+    			对不起，您输入的淘宝商品链接错误！
+    		#else
+    			对不起，您输入的淘宝商品链接错误！
+			#end
+			**#
+    	</div>
+    #end
+    </div>
+</div>
+

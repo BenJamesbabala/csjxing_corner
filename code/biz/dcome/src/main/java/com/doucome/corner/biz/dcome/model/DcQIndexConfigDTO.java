@@ -3,8 +3,10 @@ package com.doucome.corner.biz.dcome.model;
 import java.util.Date;
 
 import com.doucome.corner.biz.dal.dataobject.dcome.DcQIndexConfigDO;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
-public class DcQIndexConfigDTO {
+@SuppressWarnings("serial")
+public class DcQIndexConfigDTO extends AbstractModel {
 
 	private DcQIndexConfigDO config ;
 	

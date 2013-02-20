@@ -17,7 +17,7 @@ import org.springframework.core.io.Resource;
 
 /**
  * commonConfig.properties
- * @author shenjia.caosj 2011-5-17
+ * @author langben 2011-5-17
  *
  */
 public class EnvPropertiesUtil {

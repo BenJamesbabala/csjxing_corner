@@ -22,6 +22,14 @@ public class LogConstant {
      * 邮件发送log
      */
     public static final String reportMail_log      = "reportMail-log";
+
+    public static final String spiderItem_log      = "spiderItem-log";
+    
+    /**
+     * 计算投票数
+     */
+    public static final String calculate_rate_log      = "calculate-rate-log";
+    
     /**
      * 打点log
      */
@@ -31,6 +39,8 @@ public class LogConstant {
 	public static final String recommend_log = "recommend-log" ;
 	
 	public static final String task_syncRecommend_log = "task-syncRecommend-log" ;
+	
+	public static final String task_syncDcItem_log = "task-syncDcItem-log" ;
 	
 	/**
 	 * 短信日志

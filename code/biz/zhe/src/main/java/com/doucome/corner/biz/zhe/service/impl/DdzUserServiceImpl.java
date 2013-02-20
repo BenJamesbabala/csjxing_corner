@@ -48,4 +48,14 @@ public class DdzUserServiceImpl implements DdzUserService {
         ddzUserDAO.updateLastLoginTime(uid);
     }
 
+	@Override
+	public int updateAlipayIdByLoginId(String loginId, String alipayId) {
+		return ddzUserDAO.updateAlipayIdByLoginId(loginId, alipayId) ;
+	}
+
+	@Override
+	public int incrModificationCount(String loginId) {
+		return ddzUserDAO.incrModificationCount(loginId) ;
+	}
+
 }

@@ -2,22 +2,22 @@ package com.doucome.corner.biz.zhe.model;
 
 import java.math.BigDecimal;
 
+import com.doucome.corner.biz.common.utils.ReflectUtils;
 import com.doucome.corner.biz.core.constant.DecimalConstant;
 import com.doucome.corner.biz.core.enums.TaobaoPicEnums;
-import com.doucome.corner.biz.core.model.AbstractModel;
 import com.doucome.corner.biz.core.taobao.dto.TaobaoItemDTO;
 import com.doucome.corner.biz.core.taobao.dto.TaobaokeItemDTO;
 import com.doucome.corner.biz.core.taobao.enums.TaobaoSellerStartCreditEnums;
-import com.doucome.corner.biz.core.utils.ReflectUtils;
+import com.doucome.corner.biz.core.utils.TaobaoPicUtils;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.InternalCommission;
-import com.doucome.corner.biz.zhe.utils.TaobaoPicUtils;
-import com.taobao.api.domain.ItemImg;
+import com.doucome.corner.biz.zhe.utils.DdzJfbConvertUtils;
 
 /**
  * 展示给外部的Item对象
  * 
- * @author shenjia.caosj 2012-3-8
+ * @author langben 2012-3-8
  */
 public class TaobaokeItemFacade extends AbstractModel {
 	
@@ -29,6 +29,17 @@ public class TaobaokeItemFacade extends AbstractModel {
 //			sumPicUrl = TaobaoPicUtils.findPic(picUrl, TaobaoPicEnums.SUM) ;
 //		}
 //	}
+	
+	public TaobaokeItemFacade(TaobaokeItemDTO item,DdzEatDiscountRule rule,boolean isMall){
+		if(item != null){
+			ReflectUtils.reflectTo(item, this) ;
+			sumPicUrl = TaobaoPicUtils.findPic(picUrl, TaobaoPicEnums.SUM) ;
+		}
+		
+		this.isMall = isMall ;
+
+		calcFacadeCommissions(rule) ;
+	}
 	
 	public TaobaokeItemFacade(TaobaokeItemDTO item,DdzEatDiscountRule rule){
 		if(item != null){
@@ -60,7 +71,7 @@ public class TaobaokeItemFacade extends AbstractModel {
     	BigDecimal _userCommission = this.commission ;
     	BigDecimal _price = this.promotionPrice == null ? this.price : this.promotionPrice ;
     	
-    	InternalCommission userCommission = DdzEatDiscountRule.calcUserCommissions(rule, _userCommission, _userCommissionRate, _price) ;
+    	InternalCommission userCommission = DdzEatDiscountRule.calcUserCommissions(rule, _userCommission, _userCommissionRate, _price , isMall) ;
     	
     	this.userCommission = userCommission.getCommission() ;
     	this.userCommissionRate = userCommission.getCommissionRate().multiply(DecimalConstant.HUNDRED) ;
@@ -187,12 +198,15 @@ public class TaobaokeItemFacade extends AbstractModel {
      * 显示给用户的佣金比例
      */
     private BigDecimal userCommissionRate ;
+    
+    /**
+     * 是否商城
+     */
+    private boolean isMall ;
         
     public InternalCommission getInternalUserCommission() {
 		return internalUserCommission;
 	}
-
-	
     
     public String getPic(String type){
     	return TaobaoPicUtils.findPic(this.picUrl, TaobaoPicEnums.toTaobaoPicEnums(type)) ;
@@ -206,6 +220,22 @@ public class TaobaokeItemFacade extends AbstractModel {
     	}
     	String pic = TaobaoSellerStartCreditEnums.fromCode(i).getPic();
     	return "http://pics.taobaocdn.com/newrank/" + pic + ".gif" ;
+    }
+    
+    public int getUserJfb(){
+    	BigDecimal userCommission = getUserCommission() ;
+    	return DdzJfbConvertUtils.convertMoney2Jfb(userCommission) ;
+    }
+    
+    public BigDecimal getUserJfbByMoney(){
+    	int jfb = getUserJfb() ;
+    	BigDecimal money = new BigDecimal(jfb).divide(DecimalConstant.HUNDRED , 4, BigDecimal.ROUND_HALF_EVEN) ;
+    	return money ;
+    }
+    
+    public BigDecimal getUserJfbRate() {
+    	BigDecimal userJfbRate =  DdzJfbConvertUtils.convertJfbCommissionRate(getUserJfb() , getPrice()) ;
+    	return userJfbRate.multiply(DecimalConstant.WAN) ;
     }
     
     /**
@@ -418,6 +448,14 @@ public class TaobaokeItemFacade extends AbstractModel {
 
 	public void setWapDesc(String wapDesc) {
 		this.wapDesc = wapDesc;
+	}
+
+	public boolean isMall() {
+		return isMall;
+	}
+
+	public void setMall(boolean isMall) {
+		this.isMall = isMall;
 	}
 
 }

@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleSearchCondition;
+import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleUpdateCondition;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
+import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleStatisticsDO;
 
 
 /**
@@ -59,6 +61,13 @@ public interface DdzTaokeReportSettleDAO {
 	
 	/**
 	 * 
+	 * @param searchCondition
+	 * @return
+	 */
+	DdzTaokeReportSettleStatisticsDO statisticsWithPagination(DdzTaokeReportSettleSearchCondition searchCondition) ;
+	
+	/**
+	 * 
 	 * @return
 	 */
 	Integer countAlipayItem();
@@ -85,7 +94,15 @@ public interface DdzTaokeReportSettleDAO {
 	 * @param settleStatus
 	 * @return
 	 */
-	int updateSettleStatus(List<Integer> settleIds ,String settleStatus) ;
+	int updateSettleStatus(List<Long> settleIds ,String settleStatus) ;
+	
+	/**
+	 * 更新结算状态
+	 * @param id
+	 * @param settleStatus
+	 * @return
+	 */
+	int updateSettleStatus(DdzTaokeReportSettleUpdateCondition condition , String toSettleStatus , String settleBatchno) ;
 	
 	/**
      * 更新邮件状态
@@ -102,6 +119,14 @@ public interface DdzTaokeReportSettleDAO {
      * @return
      */
     int updateMobileStatus(List<Integer> settleIds , String mobileStatus) ;
+    
+    /**
+     * 更新备注
+     * @param settleId
+     * @param memo
+     * @return
+     */
+    int updateMemoById(Integer settleId , String memo) ;
 
     /**
      * 统计某会员的结算费用
@@ -117,4 +142,5 @@ public interface DdzTaokeReportSettleDAO {
 	 * @return
 	 */
 	int countTotalSettle(String settleAlipay, String[] settleStatus);
+	
 }

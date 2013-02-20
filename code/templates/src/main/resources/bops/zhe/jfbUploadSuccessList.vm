@@ -1,0 +1,6 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "上传集分宝发放成功清单")
+
+<p>
+上传成功
+</p>

@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import com.doucome.corner.biz.core.enums.PictureSizeEnums;
+import com.doucome.corner.biz.core.taobao.dto.TaobaoCommentDTO;
 import com.doucome.corner.biz.core.utils.AvatarUtils;
 import com.doucome.corner.biz.core.utils.PictureUtils;
 import com.doucome.corner.biz.dal.dataobject.dcome.DcCommentDO;
@@ -16,6 +17,10 @@ public class DcCommentDTO extends AbstractModel {
 
 	private DcCommentDO comment ;
 	
+	public DcCommentDTO() {
+		this.comment = new DcCommentDO();
+	}
+	
 	public DcCommentDTO(DcCommentDO comment) {
 		if(comment == null){
 			comment = new DcCommentDO() ;
@@ -23,8 +28,19 @@ public class DcCommentDTO extends AbstractModel {
 		this.comment = comment ;
 	}
 	
+	public DcCommentDTO(TaobaoCommentDTO comment) {
+		this();
+		setSource(comment.getSource());
+		setContent(comment.getContent());
+		setUserNick(comment.getUserNick());
+	}
+	
 	public String getUserAvatar30x30(){
 		return PictureUtils.findPic(AvatarUtils.buildAvatarPath(comment.getUserId()) , PictureSizeEnums._30x30) ;
+	}
+	
+	public String getUserAvatar50x50(){
+		return PictureUtils.findPic(AvatarUtils.buildAvatarPath(comment.getUserId()) , PictureSizeEnums._50x50) ;
 	}
 	
 	public String getContentEsc(){
@@ -46,9 +62,17 @@ public class DcCommentDTO extends AbstractModel {
 	public String getSource() {
 		return comment.getSource();
 	}
-
+	
+	public void setSource(String source) {
+		this.comment.setSource(source);
+	}
+	
 	public String getContent() {
 		return comment.getContent();
+	}
+	
+	public void setContent(String content) {
+		this.comment.setContent(content);
 	}
 
 	public Long getUserId() {
@@ -58,12 +82,14 @@ public class DcCommentDTO extends AbstractModel {
 	public String getUserNick() {
 		return comment.getUserNick();
 	}
-
+	
+	public void setUserNick(String userNick) {
+		this.comment.setUserNick(userNick);
+	}
 	
 	public Date getGmtModified() {
 		return comment.getGmtModified();
 	}
-
 
 	public Date getGmtCreate() {
 		return comment.getGmtCreate();

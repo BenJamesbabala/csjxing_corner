@@ -1,0 +1,611 @@
+<html>
+<head>
+	<meta charset="GBK">
+	<link rel="stylesheet" type="text/css" href="common.css" />
+	<link rel="stylesheet" type="text/css" href="index.css" />
+</head>
+
+<body>
+	<div class="loadingGif dd-hide" id="loadingGif">
+		<span class="loadding18x18 dd-l loading"></span>
+		<span class="msg dd-l">加载中...</span>
+	</div>
+	<div class="only-new-guide dd-hide" id="onlyNewGuide">
+   		<span class="guide-part bubble prom_iwish dd-hide" data-guide-name="prom_iwish"></span>
+   		<span class="guide-part bubble prom_draw_rate dd-hide" data-guide-name="prom_draw_rate"></span>
+   		<span class="guide-part bubble prom_steal_rate dd-hide" data-guide-name="prom_steal_rate"></span>
+   		<span class="guide-part prom_draw_rate_highlight dd-hide"><a href="javascript:;"  class="dc-btn-normal" style="margin:0;cursor: default;">领取5个愿望星</a></span>
+   		<!-- 
+   		<span class="guide-part image-list prom_iwish_highlight dd-hide"><a title="免费领取" class="btn btn-danger" href="javascript:;" style="position: relative;left: 0;top: -22px;line-height: 50px;padding: 5px 13px;">免费领取</a></span>
+   		<span class="guide-part prom_steal_rate_highlight">
+   			<a class="steal-draw-icon" href="">
+   				<span class="undraw-rate-count">5</span>
+   			</a>
+   		</span>
+   		 -->
+   		<span class="guide-part bubble guide-end"><a href="javascript:;">我知道了</a></span>
+   		<div class="shadow"></div> 
+   	</div>
+	<div class="tip-dialog dd-hide" id="tipDialog">
+		<span class="ok-icon dd-l"></span>
+      	<div class="dialog-content dd-l">
+      		<span class="content">投票成功</span>
+      	</div>
+    </div>
+	<div id="shadowBg" class="dd-hide"></div>
+	
+    <div class="wishstar-tip-dialog dd-hide" id="wishTipDialog">
+		<span class="steal-draw-icon dd-l"></span>
+      	<div class="dialog-content dd-l">
+      		<div class="content">你抢到<span class="rate-count">1</span>颗愿望星</div>
+      		<div class="desc dd-hide">消耗<span class="integral">10</span>积分</div>
+      	</div>
+    </div>
+    <div class="wishstar-tip-dialog dd-hide" id="stealNOIntegral">
+    	<div class="head"><span></span><a class="close-icon" href="javascript:;"></a></div>
+      	<div class="dialog-content dd-l">
+      		<div class="content">你的积分不够啦！</div>
+      		<div class="desc">如何赚取积分 <a href="javascript:;" class="gonglue">查看积分攻略</a>  </div>
+      	</div>
+    </div> 
+	<div class="integral-guide" id="integralGuide" style="display: none;">
+		<a class="hide-btn"></a>
+	    <div class="integral-guide-wrap">
+		    <a class="invite-btn guide-btn" href="javascript:;">马上邀请</a>
+			<a class="checkin-btn guide-btn" href="javascript:;">马上签到</a>
+			<a class="buy-btn guide-btn" href="http://dev.doucome.com/frame/q/index.htm">去逛逛</a>
+			<a class="share-item-btn guide-btn" href="${env.root}/frame/q/index.htm"></a>
+			<a class="checkin dd-l dailycheckin-click" title="每日签到领取10积分" href="javascript:;" gtrack="/virtual/qq/dailyCheckin"  gtrack-init="y"></a>
+			<a class="share-app-btn guide-btn" href="javascript:;"></a>
+		</div>
+	</div>
+	<div id="starCollectTip" class="collect-tip" style="position:absolute; left: 0px; top: 20px; z-index: 9999; text-align: left;border: 1px solid #E73939; background-color: #ffffff; width: 400px; border-radius: 4px 4px;">
+	    <a class="close-btn" href="javascript:;"></a>
+		<div class="wrap" style="margin: 6px 10px;">
+		    <ul class="content">
+			    <li></li>
+			    <li>系统从8:00至21:00每个整点送出两颗愿望星，需要用户自己去收集，超过时间不收集，系统将自动回收。</li>
+				<li></li>
+				<li>testet</li>
+			</ul>
+			<a href="javascript:;" style="float: right;">我已经知道啦</a>
+		</div>
+	</div>
+	
+	<div class="ugc-layer" id="ugcLayer" style="display: none;">
+	    <a class="close-btn" href="javascript:;"></a>
+	    <div class="wrap dd-l">
+		    <div class="header">
+				<div class="title dd-l">将宝贝网址粘贴到下面的框中</div>
+				<div class="source-list dd-l">
+				    <span class="dd-l">(支持</span>
+				    <a class="icon-ugc-src icon-tb" href="http://www.taobao.com" target="_blank">淘宝网</a>
+					<a class="icon-ugc-src icon-tm" href="http://www.tmall.com" target="_blank">天猫商城</a>
+					<span>)</span>
+				</div>
+			</div>
+			<div class="content dd-l">
+			    <input class="item-url" placeholder="请粘贴你要购买的淘宝宝贝网址" />
+				<a class="btn query-btn" href="javascript:;">确定</a>
+			</div>
+			<div class="loadding18x18 query-load">获取宝贝信息中...</div>
+			<div class="query-info info">获取宝贝信息失败</div>
+			<div class="ugc-content">
+			    <div class="content-wrap dd-l">
+				    <div class="item-info dd-l">
+						<div class="pic-wrap dd-l" style="">
+							<img src="item80.jpg"/>
+						</div>
+						<div class="text-info dd-l">
+							<div class="title">十周年店庆【拇指斗价】TONYJEANS汤尼俊士专柜正品衬衫秋装新品</div>
+							<div class="other">
+								<span class="ori-price dd-l">原价：&yen;<span>399.00</span></span>
+								<div class="integral-wrap dd-l">
+									<span>购买获赠：</span>
+									<span class="integral">100</span>
+									<span>积分</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="ugc-oper dd-l">
+					    <div class="loadding18x18 buy-load" style="">正在为你生成购物链接...</div>
+						<div class="buy-info info" style="">商品有误，不能生成购买链接</div>
+					    <a class="ugc-buy dd-l" href="javascript:;">去购买,拿积分</a>
+						<div class="share dd-l">
+							<input type="checkbox" id="shareToApp" class="share-to-app" checked="true" />
+							<label>分享</label>
+							<label class="share-info info">(已经有人分享过啦,去找一个没有的商品吧~~~)</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tips dd-clr dd-l">
+			    <strong class="dd-l">友情提示：</strong>
+				<div class="content dd-l"></div>
+			</div>
+		</div>
+	</div>
+	<div id="ugcSucc" style="display: none;">
+	    <a class="close-btn" href="javascript:;"></a>
+		<div class="wrap">
+		    <div class="info">商品发布成功~~~</div>
+		    <a class="ugc-buy btn" taoke-href="" data-item-id="" gtrack="" title="购买送积分">购买送积分</a>
+			<a href="javascript:;" class="ugc-browse">去看看</a>
+		</div>
+	</div>
+	
+    <div class="wish-dialog wish-show" id="wishDialog" style="display: none;">
+	    <div class="wish-wrap">
+			<div class="wish-header">
+				<div class="wish-title">免费领取</div>
+				<div class="wish-info">(您已经许了愿，赶快去收集愿望星吧)</div>
+				<a id="wish-hide" class="wish-hide" href="javascript:;"></a>
+			</div>
+			<div class="wish-main">
+				<div class="wish-item">
+					<div class="item-pic">
+						<a href="#" style="" target="_blank">
+							<img src="item160.jpg" />
+						</a>
+						<div class="text-ellipsis">
+							<a class="item-title" title="商品名称tlejtkjetrio ejrt e" href="file:///E:/creative/qqv2/static/dcome/q/pk/index.html" target="_blank">
+								商品名称tlejtkjetrio ejrt e
+							</a>
+						</div>
+					</div>
+					<div class="item-info">
+						<div class="info">市场价：<span class="item-price">&yen;29</span></div>
+						<div class="info">已许愿：208人</div>
+						<div class="faq-rule-title wish-faq-pic"></div>
+						<div class="faq-rule wish-faq-pic"></div>
+						<a href="javascript:;" class="wish-confirm btn" id="wishConfirm" data-item-id=""data-submit="0">确&nbsp;&nbsp;&nbsp;认</a>
+					</div>
+					<div class="collect-star dd-hide">
+						<div class="faq-star-guide-title"></div>
+					    <div class="faq-star-guide"></div>
+						<a href="${env.root}/frame/q/promotion.htm" id="wishCollect" class="wish-collect-btn btn" data-item-id="">立即去拿</a>
+					</div>
+				</div>
+				<div class="wish-info dd-hide">许愿信息fdjsdljfdkls fdksjf;dksjfklsdf dskjfjdskjfksjfkd</div>
+				<div class="loadding32x32" style="display: none;"></div>
+			</div>
+		</div>
+	</div>
+	<div id="awardDialog" class="award-dialog" style="display: none;">
+		<div class="head">
+		    <a class="close-icon" href="javascript:;"></a>
+		    <span>我的中奖信息</span>
+		</div>
+		<div class="main">
+			<dl>
+				<dt><span class="time">中奖时间</span><span class="rate">愿望星</span><span class="name">名称</span><span class="code">领取码</span></dt>
+				<dd>
+				    <span class="time">2012-03-22</span><span class="rate">232</span><span class="name text-hide">三朵玫瑰花海边草编草帽大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒</span>
+				    <span class="code"><a class="share-award" title="凭分享后生成的领取码领取商品" href="javascript:;">好高兴，分享给朋友啊</a></span>
+				</dd>
+				<dd><span class="time">2012-03-22</span><span class="rate">232</span><span class="name text-hide">三朵玫瑰花海边草编草帽大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒</span><span class="code">CM948HO8CPDPP55BLBZT</span></dd>
+				<dd><span class="time">2012-03-22</span><span class="rate">232</span><span class="name text-hide">三朵玫瑰花海边草编草帽大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒</span><span class="code">CM948HO8CPDPP55BLBZT</span></dd>
+				<dd><span class="time">2012-03-22</span><span class="rate">232</span><span class="name text-hide">三朵玫瑰花海边草编草帽大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒</span><span class="code">CM948HO8CPDPP55BLBZT</span></dd>
+				<dd><span class="time">2012-03-22</span><span class="rate">232</span><span class="name text-hide">三朵玫瑰花海边草编草帽大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒</span><span class="code">CM948HO8CPDPP55BLBZT</span></dd>
+				<dd><span class="time">2012-03-22</span><span class="rate">232</span><span class="name text-hide">三朵玫瑰花海边草编草帽大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒</span><span class="code">CM948HO8CPDPP55BLBZT</span></dd>
+				<dd><span class="time">2012-03-22</span><span class="rate">232</span><span class="name text-hide">三朵玫瑰花海边草编草帽大檐帽女夏天遮阳帽子沙滩帽韩版韩国防晒</span><span class="code">CM948HO8CPDPP55BLBZT</span></dd>
+				<dd>没有中奖记录</dd>
+			</dl>
+		</div>
+		<div class="foot">请凭领取码联系我们客服QQ ： 34206043</div>
+	</div>
+	<div class="dc-body" id="dc-body">
+		<div class="header" id="header">
+			<div class="bg"></div>
+			<a href="javascript:;" class="rule-detail-btn"></a>
+			<div class="logo"><img src="index-logo.png"/></div>
+			<div class="menu-nav">
+				<div class="dd-l nav">
+					<ul>
+						<li class="on">首页</li>
+						<li class="lborder">
+    						<dl>
+    							<dt><a href="${env.root}/frame/q/promotion.htm">活动</a></dt>
+    							<dd><a href="${env.root}/frame/q/rank.htm">排行榜</a></dd>
+    							<dd><a href="javascript:;" class="my-award">中奖信息</a></dd>
+    							<!-- 
+    							<dd><a href="${env.root}/frame/q/my_promotion.htm">我的活动</a></dd>
+    							 -->
+    						</dl>
+    					</li>
+					</ul>
+				</div>
+				<div class="dd-r info">
+					<ul class="dd-l">
+						<li><img src="user50.jpg" class="user-pic dd-l"><span class="dd-l">积分 ：50</span></li>
+					</ul>
+				    <a class="earn-integral-icon earn-integral-btn" href="javascript:;"></a>
+					<a class="earn-integral earn-integral-btn" href="javascript:;">赚积分</a>
+					<a class="checkin dd-l"></a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="idx-cnt">	
+			<div class="cnt-top">
+			    <div class="award-wrap">
+					<div class="award-his-title"></div>
+					<div class="dd-l dynamic-rolling" id="idxDynamicRolling">
+						<div class="main">
+							<div class="dynamic">
+								<ul>
+									<li>
+										<img alt="" src="user30.jpg" class="user-pic dd-l">
+										<div class="dd-l">
+											<div>
+												<div class="user-name dd-l">浪奔浪楼 </div>
+												<div class="want-label dd-l">拿到了</div>
+											</div>
+											<div class="desc">
+												<div class="item-title dd-l"><a href="">韩版复古非我非的弯曲的威风无发热玩法单肩包潮休</a></div>
+												<div class="item-price dd-r">价值 &yen;99</div>
+											</div> 
+										</div>
+									</li>
+									<li>
+										<img alt="" src="user30.jpg" class="user-pic dd-l">
+										<div class="dd-l">
+											<div>
+												<div class="user-name dd-l">浪奔浪楼 </div>
+												<div class="want-label dd-l">拿到了</div>
+											</div>
+											<div class="desc">
+												<div class="item-title dd-l"><a href="">韩版古非我非的弯曲的威古非我非的弯曲的威复古单肩包潮休</a></div>
+												<div class="item-price dd-r">价值 &yen;99</div>
+											</div> 
+										</div>
+									</li>
+									<li>
+										<img alt="" src="user30.jpg" class="user-pic dd-l">
+										<div class="dd-l">
+											<div>
+												<div class="user-name dd-l">浪奔浪楼 </div>
+												<div class="want-label dd-l">拿到了</div>
+											</div>
+											<div class="desc">
+												<div class="item-title dd-l"><a href="">韩版复古单肩包潮休</a></div>
+												<div class="item-price dd-r">价值 &yen;99</div>
+											</div> 
+										</div>
+									</li>
+									<li>
+										<img alt="" src="user30.jpg" class="user-pic dd-l">
+										<div class="dd-l">
+											<div>
+												<div class="user-name dd-l">浪奔浪楼 </div>
+												<div class="want-label dd-l">拿到了</div>
+											</div>
+											<div class="desc">
+												<div class="item-title dd-l"><a href="">韩版复古单肩包潮休</a></div>
+												<div class="item-price dd-r">价值 &yen;99</div>
+											</div> 
+										</div>
+									</li>
+									<li>
+										<img alt="" src="user30.jpg" class="user-pic dd-l">
+										<div class="dd-l">
+											<div>
+												<div class="user-name dd-l">浪奔浪楼 </div>
+												<div class="want-label dd-l">拿到了</div>
+											</div>
+											<div class="desc">
+												<div class="item-title dd-l"><a href="">韩版复古单肩包潮休</a></div>
+												<div class="item-price dd-r">价值 &yen;99</div>
+											</div> 
+										</div>
+									</li>
+									<li>
+										<img alt="" src="user30.jpg" class="user-pic dd-l">
+										<div class="dd-l">
+											<div>
+												<div class="user-name dd-l">浪奔浪楼 </div>
+												<div class="want-label dd-l">拿到了</div>
+											</div>
+											<div class="desc">
+												<div class="item-title dd-l"><a href="">韩版复古单肩包潮休</a></div>
+												<div class="item-price dd-r">价值 &yen;99</div>
+											</div> 
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="iwish">
+					<div class="iwish-wrap dd-l">
+					    <div style="">
+							<div class="wish-pic-wrap dd-l">
+								<div class="wish-offer">
+									<ul>
+										<li>
+											<div class="head"></div>
+											<div class="main">
+												<div class="dd-clear item-pic">
+													<div class="top-cover dd-hide">
+														<span class="item-price">&yen;12.33</span>
+														<span class="go"><a href="">去看看</a></span>
+													</div>
+													<img alt="" src="item160.jpg">
+												</div>
+												<div class="user-cover">
+													<span class="user-name">我的愿望卡</span>
+												</div>
+											</div>
+											<div class="ws_ft"></div>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="wish-info-wrap dd-l">
+								<div class="wish-star dd-l">
+									<div class="icon dd-l">
+										<div class="star-num">35</div>
+										<div class="rank-num loadding18x18" data-prom-item-id="1"></div>
+									</div>
+								</div>
+								<div class="wish-star-present dd-l ">
+									<a href="javascript:;" id="receiveStar" class="dc-btn-normal drawRate-btn-click disabled">领取<span>5</span>颗愿望星</a>
+								</div>
+								<div class="select-tips dd-hide" style="left: 200px; top: 160px;" id="drawRateTip">
+									<div class="content">每个整点可领取5个愿望星</div>
+									<div class="angle-top" style="top:-7px;left:120px"></div>
+								</div>
+							</div>
+						</div>
+						<div style="display:none;">
+						    <div class="prom-desc"></div>
+							<a href="javascript:;" class="unwish-btn"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="cnt-ugc" style="display:none;">
+				
+				<div class="dd-l ugc-main">
+					<div class="prom-head">
+						<span class="title">活动</span>
+						<span class="remain">离今日开榜还有</span>
+						<span class="remain-time" id="promotionRemainTime">10:28:00</span>
+					</div>
+					<div class="wish-offer" id="idxUgc">
+						<ul>
+							
+							<li>
+								<div class="head"></div>
+								<div class="main">
+									<div class="dd-clear item-pic">
+										<div class="top-cover dd-hide">
+											<span class="item-price">&yen;12.33</span>
+											<span class="go"><a href="">去看看</a></span>
+										</div>
+										<img alt="" src="item160.jpg">
+									</div>
+									<div class="user-cover">
+										<span class="user-pic"><img alt="" src="user30.jpg" ></span>
+										<span class="user-name">小熊维尼的愿望</span>
+										<span class="wish-icon-small" title="TA收集的愿望星"></span>
+										<span class="rate-count">135</span>
+									</div>
+								</div>
+								<div class="foot">
+									<span class="qiang"></span>
+									<div class="steal-draw-icon stealRate-btn-click">
+										<span class="undraw-rate-count">5</span>
+									</div>
+								</div>
+								<div class="ws_ft"></div>
+							</li>
+							
+							<li>
+								<div class="head"></div>
+								<div class="main">
+									<div class="dd-clear item-pic">
+										<div class="top-cover dd-hide">
+											<span class="item-price">&yen;12.33</span>
+											<span class="go"><a href="">去看看</a></span>
+										</div>
+										<img alt="" src="item160.jpg">
+									</div>
+									<div class="user-cover">
+										<span class="user-pic"><img alt="" src="user30.jpg" ></span>
+										<span class="user-name"><a href="javascript:;" title="去看看">小熊维尼的愿望</a></span>
+										<span class="wish-icon-small" title="TA收集的愿望星"></span>
+										<span class="rate-count">135</span>
+									</div>
+								</div>
+								<div class="foot">
+									<span class="qiang"></span>
+									<div class="steal-draw-icon stealRate-btn-click">
+										<span class="undraw-rate-count">5</span>
+									</div>
+								</div>
+								<div class="rate-track">
+									<ul class="">
+										<li>
+											<span class="rate-user-pic"><img src="user30.jpg"></span><span class="rate-desc">被<span class="rate-user-name">小白兔</span>抢走了愿望星</span>
+										</li>
+										<li>
+											<span class="rate-user-pic"><img src="user30.jpg"></span><span class="rate-desc">被<span class="rate-user-name">小白兔</span>抢走了愿望星</span>
+										</li>
+										<li>
+											<span class="rate-user-pic"><img src="user30.jpg"></span><span class="rate-desc">被<span class="rate-user-name">小白兔</span>抢走了愿望星</span>
+										</li>
+									</ul>
+								</div>
+								<div class="ws_ft"></div>
+							</li>
+							
+							
+						
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="cnt-pgc">
+				<div class="item-head">
+					<ul class="item-tab dd-l">
+					    <li class="" style="">
+							<a class="hot-tab" href="javascript:;">限时特价</a>
+						</li>
+						<li class="active" style="">
+							<a class="pgc-tab" href="javascript:;">小编精选</a>
+						</li>
+						<li class="" style="">
+							<a class="ugc-tab" href="javascript:;">用户精选</a>
+						</li>
+						<li class="" style="">
+							<a class="ugc-tab" href="javascript:;">积分竞拍</a>
+							<div class="new-mark"></div>
+						</li>
+					</ul>
+					<div class="other dd-r">
+						<div class="qzone dd-l">
+						    <span class="color-red dd-l" style="">关注空间，送50积分</span>
+							<iframe src="http://open.qzone.qq.com/like?url=http%3A%2F%2Fuser.qzone.qq.com%2F10507600&type=button&width=57&height=23&style=3" allowtransparency="true" scrolling="no" border="0" frameborder="0" style="width:57px;height:23px;border:none;overflow:hidden;"></iframe>
+						</div>
+					</div>
+				</div>
+				<div class="" style="">
+					<div id="waterfall" class="waterfall" style="height: 1890px;">
+						<ul id="tiles" class="image-list">
+							<li class="image-list-item" style="position: absolute; top: 0px; left: 10px;">
+								<div class="bd">
+								    <a gtrack="/virtual/qq/item?tracelog=pgc-offer-img&amp;id=100962" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100962" gtrack-init="y">
+									    <img width="220" height="220" class="item-pic" src="http://itemimg.doucome.com/upload/product/201208/22/222252739536359.jpg_220x220.jpg" alt="韩国饰品镀18K金 迷你 闪钻 爱心项链 锁骨链">
+									</a>
+									<div class="user-info">
+										<span class="dd-l">
+										  <img data-avatar-size="30x30" data-avatar-src="http://img.doucome.com/avatar/1/3/9/0/13900.jpg_30x30.jpg" src="http://img.doucome.com/avatar/1/3/9/0/13900.jpg_30x30.jpg" avatar-init="y">
+										</span>
+										<span class="creator-nick"><span class="color-pink">小点点</span> 提交</span>
+									</div>
+									<h3 class="title text-hide"><a gtrack="/virtual/qq/item?tracelog=pgc-offer-title&amp;id=100962" title="韩国饰品镀18K金 迷你 闪钻 爱心项链 锁骨链" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100962" gtrack-init="y">韩国饰品镀18K金 迷你 闪钻 爱心项链 锁骨链</a></h3>
+								</div>
+								<div class="ft">
+									<div class="info nowrap">
+										<span class="price dd-through">￥28.98</span>
+										<span class="">
+											<span class="only-price-tit">特价</span><span class="price only-price"><span class="rmb">￥</span><span>28.</span><span class="price-small">5</span></span>
+										</span>
+									</div>
+									<div class="button-bar">
+										<div class="side">
+											<p class="rebate-info dd-hide"><!--<b class="icon"><i class="ir">送</i></b>-->购买获赠<span class="integral">0</span>积分</p>
+										</div>
+										<a gtrack="/virtual/qq/item?tracelog=pgc-offer-buy&amp;id=100962" data-item-id="100962" title="去购买" class="btn btn-danger" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100962" gtrack-init="y">去购买</a>
+								    </div>
+								</div>
+							</li>
+									
+							<li class="image-list-item" style="position: absolute; top: 0px; left: 260px;">
+								<div class="bd">
+								    <a gtrack="/virtual/qq/item?tracelog=pgc-offer-img&amp;id=100961" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100961" gtrack-init="y">
+									    <img width="220" height="220" class="item-pic" src="http://itemimg.doucome.com/upload/product/201208/22/222157343957637.jpg_220x220.jpg" alt="创意家居 仿真可爱火柴头 卡通筷子/餐具  2双入">
+									</a>
+									<div class="user-info">
+										<span class="dd-l">
+										  <img data-avatar-size="30x30" data-avatar-src="http://img.doucome.com/avatar/1/3/9/0/13900.jpg_30x30.jpg" src="http://img.doucome.com/avatar/1/3/9/0/13900.jpg_30x30.jpg" avatar-init="y">
+										</span>
+										<span class="creator-nick">小点点 提交</span>
+									</div>
+									<h3 class="title text-hide"><a gtrack="/virtual/qq/item?tracelog=pgc-offer-title&amp;id=100961" title="创意家居 仿真可爱火柴头 卡通筷子/餐具  2双入" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100961" gtrack-init="y">创意家居 仿真可爱火柴头 卡通筷子/餐具  2双入</a></h3>
+								</div>
+								<div class="ft">
+									<div class="info nowrap">
+										<span class="price ">￥11.50</span>
+										<span class="dd-hide">
+											<span class="only-price-tit">特价</span><span class="price only-price"><span class="rmb">￥</span><span>@promotion-price-integer@.</span><span class="price-small">@promotion-price-fraction@</span></span>
+										</span>
+									</div>
+									<div class="button-bar">
+										<div class="side">
+											<p class="rebate-info dd-hide"><!--<b class="icon"><i class="ir">送</i></b>-->购买获赠<span class="integral">0</span>积分</p>
+										</div>
+										<a gtrack="/virtual/qq/item?tracelog=pgc-offer-buy&amp;id=100961" data-item-id="100961" title="去购买" class="btn btn-danger" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100961" gtrack-init="y">去购买</a>
+									</div>
+								</div>
+							</li>
+									
+							<li class="image-list-item" style="position: absolute; top: 0px; left: 510px;">
+								<div class="bd"> <a gtrack="/virtual/qq/item?tracelog=pgc-offer-img&amp;id=100960" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100960" gtrack-init="y"><img width="220" height="220" class="item-pic" src="http://itemimg.doucome.com/upload/product/201208/22/2219082064278960.jpg_220x220.jpg" alt="牛皮钱包 女 韩版真皮玉米纹拉链长款女士钱包皮夹Q166"></a>
+									<h3 class="title text-hide"><a gtrack="/virtual/qq/item?tracelog=pgc-offer-title&amp;id=100960" title="牛皮钱包 女 韩版真皮玉米纹拉链长款女士钱包皮夹Q166" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100960" gtrack-init="y">牛皮钱包 女 韩版真皮玉米纹拉链长款女士钱包皮夹Q166</a></h3>
+								</div>
+								<div class="ft">
+									<div class="info nowrap">
+										<span class="price ">￥82.00</span>
+										<span class="dd-hide">
+											<span class="only-price-tit">特价</span><span class="price only-price"><span class="rmb">￥</span><span>@promotion-price-integer@.</span><span class="price-small">@promotion-price-fraction@</span></span>
+										</span>
+									</div>
+									<div class="button-bar">
+										<div class="side">
+											<p class="rebate-info "><!--<b class="icon"><i class="ir">送</i></b>-->购买获赠<span class="integral">60</span>积分</p>
+										</div>
+										<a gtrack="/virtual/qq/item?tracelog=pgc-offer-buy&amp;id=100960" data-item-id="100960" title="去购买" class="btn btn-danger" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100960" gtrack-init="y">去购买</a>
+									</div>
+								</div>
+							</li>
+									
+							<li class="image-list-item" style="position: absolute; top: 379px; left: 10px;">
+								<div class="bd"> <a gtrack="/virtual/qq/item?tracelog=pgc-offer-img&amp;id=100957" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100957" gtrack-init="y"><img width="220" height="220" class="item-pic" src="http://itemimg.doucome.com/upload/product/201208/22/2208391052843347.jpg_220x220.jpg" alt="大嘴猴松紧腰宽松显瘦卫裤休闲运动女裤子"></a>
+									<h3 class="title text-hide"><a gtrack="/virtual/qq/item?tracelog=pgc-offer-title&amp;id=100957" title="大嘴猴松紧腰宽松显瘦卫裤休闲运动女裤子" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100957" gtrack-init="y">大嘴猴松紧腰宽松显瘦卫裤休闲运动女裤子</a></h3>
+								</div>
+								<div class="ft">
+									<div class="info nowrap">
+										<span class="price ">￥45.00</span>
+										<span class="dd-hide">
+											<span class="only-price-tit">特价</span><span class="price only-price"><span class="rmb">￥</span><span>@promotion-price-integer@.</span><span class="price-small">@promotion-price-fraction@</span></span>
+										</span>
+									</div>
+									<div class="button-bar">
+										<div class="side">
+											<p class="rebate-info "><!--<b class="icon"><i class="ir">送</i></b>-->购买获赠<span class="integral">20</span>积分</p>
+										</div>
+										<a gtrack="/virtual/qq/item?tracelog=pgc-offer-buy&amp;id=100957" data-item-id="100957" title="去购买" class="btn btn-danger" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100957" gtrack-init="y">去购买</a>
+									</div>
+								</div>
+							</li>
+						</ul>
+						<div id="pgcItemTemplate" class="dd-hide">			
+							<li class="image-list-item">
+								<div class="bd"> <a @gtrack@="/virtual/qq/item?tracelog=pgc-offer-img&amp;id=@item_id@" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=@item_id@"><img width="220" height="220" class="item-pic" @src@="@item_url@" alt="@item_title@"></a>
+									<h3 class="title text-hide"><a @gtrack@="/virtual/qq/item?tracelog=pgc-offer-title&amp;id=@item_id@" title="@item_title@" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=@item_id@">@item_title@</a></h3>
+								</div>
+								<div class="ft">
+									<div class="info nowrap">
+										<span class="price @price-through@">￥@item_price@</span>
+										<span class="@promtion-price-display@">
+											<span class="only-price-tit">特价</span><span class="price only-price"><span class="rmb">￥</span><span>@promotion-price-integer@.</span><span class="price-small">@promotion-price-fraction@</span></span>
+										</span>
+									</div>
+									<div class="button-bar">
+										<div class="side">
+											<p class="rebate-info @integral-display@"><!--<b class="icon"><i class="ir">送</i></b>-->购买获赠<span class="integral">@integralCount@</span>积分</p>
+										</div>
+										<a @gtrack@="/virtual/qq/item?tracelog=pgc-offer-buy&amp;id=@item_id@" data-item-id="@item_id@" title="去购买" class="btn btn-danger" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=@item_id@">去购买</a>
+									</div>
+								</div>
+							</li>
+						</div>
+					</div>
+					<div id="waterfallMore" class="more-btn"><a class="waterfallMore" href="javascript:;"></a></div>
+				</div>
+			</div>
+			<div class="footer">
+				<!--  <span>您的ID是，如有问题请联系客服：vip@doucome.com&nbsp;&nbsp;版权所有&nbsp;&copy;&nbsp;豆蔻</span>-->
+			</div>
+		</div>
+	<script type="text/javascript" src="jquery-1.7.2-min.js"></script>
+	<script type="text/javascript" src="jquery.wookmark.js"></script>
+	<script type="text/javascript" src="index.js"></script>
+	
+</body>
+</html>

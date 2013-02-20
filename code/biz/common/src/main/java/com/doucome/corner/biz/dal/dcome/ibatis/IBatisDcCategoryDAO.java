@@ -67,7 +67,7 @@ public class IBatisDcCategoryDAO extends SqlMapClientDaoSupport implements DcCat
 	public int countCategoriesWithPagination(
 			DcCategorySearchCondition searchCondition) {
 		Map<String,Object> condition  = searchCondition.toMap() ;
-		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("DcCategory.countCategoriesWithPagination" , condition)) ;
+		return NumberUtils.parseInt((Integer)getSqlMapClientTemplate().queryForObject("DcCategory.countCategoriesWithPagination" , condition)) ;
 	}
 
 	

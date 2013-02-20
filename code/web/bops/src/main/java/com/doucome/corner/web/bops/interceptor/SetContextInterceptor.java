@@ -9,8 +9,12 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.doucome.corner.biz.core.constant.EnvConstant;
 import com.doucome.corner.biz.core.encrypt.EncryptBean;
+import com.doucome.corner.biz.core.exception.EncryptException;
+import com.doucome.corner.biz.core.utils.EnvPropertiesUtil;
 import com.doucome.corner.biz.core.utils.JacksonHelper;
+import com.doucome.corner.biz.core.utils.TaobaoWidgetUtils;
 import com.doucome.corner.biz.dal.dataobject.BopsAdminDO;
 import com.doucome.corner.web.bops.authz.BopsAuthz;
 import com.doucome.corner.web.bops.authz.model.BopsAuthzTemp;
@@ -19,12 +23,13 @@ import com.doucome.corner.web.bops.context.AuthzContextHolder;
 import com.doucome.corner.web.common.constant.CookieConstants;
 import com.doucome.corner.web.common.cookie.BopsCookieNameConstants;
 import com.doucome.corner.web.common.cookie.CookieHelper;
+import com.doucome.corner.web.common.cookie.TaobaoCoolieNameConstant;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.opensymphony.xwork2.interceptor.PreResultListener;
 
 /**
- * @author shenjia.caosj 2012-3-19
+ * @author langben 2012-3-19
  */
 @SuppressWarnings("serial")
 public class SetContextInterceptor extends AbstractInterceptor {
@@ -115,6 +120,19 @@ public class SetContextInterceptor extends AbstractInterceptor {
                                          CookieConstants.EXPIRY_TIME_SESSION);
             }
         }
+        
+        //每次都植入 淘宝开放平台的相关参数
+//        String timestamp = TaobaoWidgetUtils.timestamp() ;
+//        String appKey = EnvPropertiesUtil.getProperty(EnvConstant.CORNER_API_TAOBAO_APPKEY) ;
+//        String secret = EnvPropertiesUtil.getProperty(EnvConstant.CORNER_API_TAOBAO_SECRET) ;
+//        String sign;
+//		try {
+//			sign = TaobaoWidgetUtils.sign(secret, appKey, timestamp);
+//		} catch (EncryptException e) {
+//			sign = null ;
+//		}
+//        CookieHelper.writeCookie(ServletActionContext.getResponse(), domain, TaobaoCoolieNameConstant.SIGN, sign, CookieConstants.EXPIRY_TIME_SESSION) ;
+//        CookieHelper.writeCookie(ServletActionContext.getResponse(), domain, TaobaoCoolieNameConstant.TIMESTAMP, timestamp, CookieConstants.EXPIRY_TIME_SESSION) ;
     }
 
     /**

@@ -1,109 +1,101 @@
 #set($layout="dcome/frame.q/default.vm")
-
-#if($!item.itemTitle)
-    #set($title = "$!item.itemTitle")
-#end
-
-<input type="hidden" id="envRoot" value="${env.root}" />
-<input type="hidden" id="picUploadedRoot" value="${env.picUploadedRoot}" />
-
-#set($clickUrl = $!item.clickUrl)
-#if(!$clickUrl)
-	#set($clickUrl = $!item.srcUrl)
-#end
-	
-<div class="detail-main">
-	<div class="title">
-		<ul>
-			<li>$!category.name</li>
-			<li class="gt-icon">&gt;</li>
-			<li><a href='${env.root}/frame/q/detail.htm?id=$!item.id&sceneId=$!sceneDTO.id'>$!item.itemTitle</a></li>
-		</ul>
-	</div>
-	<div class="detail-content">
-		<div class="image-field">
+#set($itemDTO = $itemMap[$id])
+<div class="detail-top">
+    <span class="nav dd-l"><a href="${env.root}/frame/q/index.htm">首页</a> &gt; $!itemDTO.itemTitle</span>
+	<span class="dd-r"></span>
+</div>
+<div class="detail-cnt">
+	<div class="detail-item">
+		<div class="image-field dd-l">
 			<div class="image-big">
-				<a data-href="$!clickUrl" title="$!item.itemTitle" data-target="_blank" gtrack="virtual/frame/q/detail/buy?itemId=$!item.id&from=pic&userId=$!userId">
-					<img id="show-big-image" alt="" src="${env.itemUploadedRoot}$item.getPicUrl(0,'278x278')" width="278" height="278" />
+				<a gtrack="" data-target="_blank" title="$!itemDTO.itemTitle" data-href="" href="" target="_blank">
+					<img id="show-big-image" alt="" src="$itemDTO.getPicUrl(0,'278x278')" width="278" height="278" />
 				</a>
 			</div>
 			<div class="image-other">
 				<ul>
-					#foreach($picUrl in $item.picUrlList)
+					#foreach($picUrl in $itemDTO.picUrlList)
 						#set($index = $velocityCount - 1)
 						#if($index < 4)
-						<li data-src="${env.itemUploadedRoot}$item.getPicUrl($index,'278x278')" #if($index > 0) class="ml13" #end><a href="javascript:;" title=""><img alt="$item.itemTitle" src="${env.itemUploadedRoot}$item.getPicUrl($index,'60x60')" width="60" height="60"/></a></li>
+						<li data-src="$itemDTO.getPicUrl($index,'278x278')" #if($index > 0) class="ml13" #end ><a href="javascript:;" title=""><img src="$itemDTO.getPicUrl($index,'60x60')" width="60" height="60"/></a></li>
 						#end
 					#end
 				</ul>
 			</div>
 		</div>
-		<div class="detail-info">
-            <div class="detail-title"><span class="src-logo-$!item.source"></span><a data-href="$!clickUrl" data-target="_blank" gtrack="virtual/frame/q/detail/buy?itemId=$!item.id&from=title&userId=$!userId">$!item.itemTitle</a></div>
-            <div class="detail-description" title="$!item.itemDesc"><span>推荐理由：</span>$!item.itemDesc</div>
-			<div class="extra-info">
-                <div class="detail-buy">
-    				<a data-href="$!clickUrl" data-target="_blank" gtrack="virtual/frame/q/detail/buy?itemId=$!item.id&userId=$!userId&from=btn"><div class="go-target">&yen;&nbsp;$decimalUtils.format($item.itemPrice , "0.00")</div></a>
-    			</div>
-    			<div class="detail-other dd-clr">
-    				<!--detail-like-->
-    				<span class="like dc-op-ilike" id="detailLike" data-item-id="$!item.id" data-loved="false"><a href="javascript:;" title="我喜欢" gtrack="virtual/frame/q/detail/love?itemId=$!item.id" class="loveCount">$!item.loves</a></span>
-    				<span class="comment">$!item.comments</span>
-    			</div>
-    			<div class="comment-info" id="commentInfo">
-    				<div class="comment-title dd-clr" id="commentPage" data-item-id="$!item.id" data-comment-count="$!item.comments" data-cur-page="1" data-page-size="5">
-    					<span class="title-text">评论</span>
-                        <span class="comment-op-page" data-type="pre"><a href="javascript:;" class="pre" title="上一页"  ></a></span>
-                        <span class="comment-op-page" data-type="back"><a href="javascript:;" class="back" title="下一页"></a></span>
-    				</div>
-    				<ul class="comment-detail-list">
-    					#foreach($comment in $commentList)
-    					<li class="dd-clr">
-                            <img alt="$!comment.userNick" data-src="$avatarUtils.getAvatarUrl($!comment.userId,'30x30')" class="avatar init-avatar" data-init-avatar="30x30"></img><span class="list-content">$!comment.contentEsc</span>
-    					</li>
-    					#end
-    				</ul>
-    			</div>
-            </div>
+		
+		<div class="info-field dd-r">
+			<div class="item-title">
+				<span class="src-logo-TB item-src"></span>
+				<span>$!itemDTO.itemTitle</span>
+			</div>
+			<div class="item-desc">$!itemDTO.recommReason &nbsp;</div>
+			<!--
+			<div class="dd-mt5"><span class="rate-count">236</span><span class="dd-ml10">票</span><span class="dd-ml20">最近销量:</span><span class="sell-count">84</span></div>
+			<div class="dd-mt5">品牌：Xopoz/橡皮擦 | 标签：橡皮</div>
+			<div class="dd-mt5">推荐人：衣级棒168</div>
+			-->
+			<div class="dd-mt20 oprate-field">
+				<a href="javascript:;" class="buy-btn"><span>去看看</span></a>
+				<!--<a href="javascript:;" class="rate-btn"><span class="arrow"></span><span>顶一下(268)</span></a>-->
+				<!--<a href="javascript:;" class="invite-btn"><span>邀请投票</span></a>-->
+			</div>
+			
+			#if($integralCount > 0) 
+            <div class="integral"><span>送积分</span> 单件送 <span class="integral-count">$!integralCount</span> <a href="javascript:;">金币</a></div>
+			#end
 		</div>
 	</div>
+	
+	<div class="detail-comment">
+		<div class="main">
+			<div class="comment-nav" id="comment-nav">
+				<dl>
+					<dt></dt>
+					<dd class=""><a href="javascript:;"><span>评论</span></a></dd>
+					<!--
+					<dd class="on lb"><a href="javascript:;"><span>喜欢的人说(20)</span></a></dd>
+					<dd class="lb"><a href="javascript:;"><span>买过的人说(10)</span></a></dd>
+					-->
+				</dl>
+			</div>
+			<div class="comment-pub dd-clear" data-maxlen="140" data-item-id="$!itemDTO.id">
+				<div class="dd-ml10 dd-mt10">
+					<img data-avatar-src="$avatarUtils.getAvatarUrl($dcAuthz.userId , '50x50')" data-avatar-size="50x50" class="user-img"></img>
+					<textarea class="content"></textarea>
+                    <div class=""></div>
+					<div>
+						<a href="javascript:;" class="comment-btn" id="submit"><span>评论</span></a>
+					</div>
+				</div>
+			</div>
+			<ul class="list dd-clear">
+				#foreach($comment in $commentList)
+				<li>
+					<div class="user-pic"><img data-avatar-src="$avatarUtils.getAvatarUrl($comment.userId , '50x50')" data-avatar-size="50x50"></div>
+					<div class="dd-l">
+						<div class="user-name">$!comment.userNick&nbsp;<span class="worth"></span></div>
+						<div class="content">$!comment.content</div>
+					</div>
+					<div class="source">来自 #if($comment.source == 'qq_qzone') QQ空间 #elseif($comment.source == 'qq_pengyou') 朋友网  #else 互联网  #end</div>
+				</li>
+				#end
+			</ul>
+            <div class="dd-hide" id="commentTemplate">
+				<div class="user-pic"><img data-avatar-src="@user_avatar@" data-avatar-size="50x50"></div>
+    				<div class="dd-l">
+    					<div class="user-name">@user_nick@<span class="worth"></span></div>
+    					<div class="content">@comment_content@</div>
+    				</div>
+    			<div class="source">来自 @comment_source@</div>
+			</div>
+		</div>
+	</div>
+	
 </div>
 
-<div class="content-list">
-	<div class="nav">
-		<dl id="cat-list">
-			<dt>今日热荐:</dt>
-		</dl>
-		<!--
-		<div class="more">
-			<a href="#" title="更多">更多</a>
-		</div>
-		-->
-	</div>
-	<div class="list dd-clr" id="content-list">
-		<ul>
-		#set($relItemCount = 1)
-		#foreach($relItem in $relativeItemList)
-			#if($relItemCount < 9 && $relItem.id != $item.id)
-			<li class="dc-item">
-				<div class="image">
-					<a href="${env.root}/frame/q/detail.htm?id=$!relItem.id&sceneId=$!sceneDTO.id&tracelog=detail_$!item.id#header" title="$!relItem.itemTitle">
-						<img alt="$!relItem.itemTitle" src="${env.itemUploadedRoot}$!relItem.getPicUrl(0,'154x154')" />
-					</a>
-					<a class="ilike dd-hide dc-op-ilike" href="javascript:;" title="我喜欢" data-item-id="$!relItem.id" data-loved="false" gtrack="virtual/frame/q/detail/love?itemId=$!relItem.id&from=pic">我喜欢</a>
-				</div>
-				<div class="title"><a href="${env.root}/frame/q/detail.htm?id=$!relItem.id&sceneId=$!sceneDTO.id&tracelog=detail_$!item.id#header" title="$!relItem.itemTitle">$!relItem.itemTitle</a></div>
-                <div class="price">&yen;$decimalUtils.format($relItem.itemPrice,"0.00")</div>
-				<div class="other">
-					<span href="javascript:;" title="我喜欢" class="like dc-op-ilike" data-item-id="$!relItem.id" data-loved="false" gtrack="virtual/frame/q/detail/love?itemId=$!relItem.id">
-                        <span class="loveCount">$relItem.loves</span>
-					</span>
-					<span href="javascript:;" class="comment">$relItem.comments</span>
-				</div>
-			</li>
-			#set($relItemCount = $relItemCount + 1) 
-			#end
-		#end
-		</ul>
-	</div>
+<div class="cnt-pgc">
+	<div class="separator-dot"></div>
+	<div class="banner-pic"></div>
+	#parse("/common/dcome.qq/pgc_recommend.vm")
 </div>

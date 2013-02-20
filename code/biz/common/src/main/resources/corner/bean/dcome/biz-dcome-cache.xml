@@ -11,29 +11,147 @@
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
 		default-autowire="byName">
 		
-	<bean id="dcCategoryCache" class="com.doucome.corner.biz.dcome.cache.impl.DcCategoryCacheImpl">
-		<property name="cacheClient" ref="jvmCacheClient"/>
-		<property name="regionName" value="dc_category"/>
+	
+	<bean id="dcCategoryCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcCategoryCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_category"/>
+			</bean>
+		</property>
 	</bean>
 	
-	<bean id="dcSceneCache" class="com.doucome.corner.biz.dcome.cache.impl.DcSceneCacheImpl">
-		<property name="cacheClient" ref="jvmCacheClient"/>
-		<property name="regionName" value="dc_scene"/>
+	<bean id="dcSceneCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcSceneCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_scene"/>
+			</bean>
+		</property>
 	</bean>
 	
-	<bean id="dcQIndexCache" class="com.doucome.corner.biz.dcome.cache.impl.DcQIndexCacheImpl">
-		<property name="cacheClient" ref="jvmCacheClient"/>
-		<property name="regionName" value="dc_qindex"/>
+	<bean id="dcCommentCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcCommentCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_comment"/>
+			</bean>
+		</property>
 	</bean>
 	
-	<bean id="dcCommentCache" class="com.doucome.corner.biz.dcome.cache.impl.DcCommentCacheImpl">
-		<property name="cacheClient" ref="jvmCacheClient"/>
-		<property name="regionName" value="dc_comment"/>
+	<bean id="dcItemCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcItemCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_item"/>
+			</bean>
+		</property>
 	</bean>
 	
-	<bean id="dcItemCache" class="com.doucome.corner.biz.dcome.cache.impl.DcItemCacheImpl">
-		<property name="cacheClient" ref="jvmCacheClient"/>
-		<property name="regionName" value="dc_comment"/>
+	<bean id="dcQIndexConfigCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcQIndexConfigCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_qindex_conf"/>
+			</bean>
+		</property>
 	</bean>
 	
+	<bean id="dcUserCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcUserCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_user"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="dcTaobaoItemCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcTaobaoItemCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_taobao_item"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="dcPromotionCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcPromotionCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_prom"/>
+			</bean>
+		</property>
+	</bean>
+	<bean id="dcPromotionItemCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcPromotionItemCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_prom_item"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="dcItemRateStatisticsCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcItemRateStatisticsCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_item_rate_statist"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="dcItemRateTimeCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcItemRateTimeCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_item_rate_time"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="dcPromotionDynamicCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcPromotionDynamicCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_prom_dynamic"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="dcMessageCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcMessageCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_messages"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="dcAuctionItemCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcAuctionItemCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_auction_item"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="dcPromotionSnapInfoCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcPromotionSnapInfoCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_prom_snap_info"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="dcWinnerGameConfigCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dcome.cache.impl.DcWinnerGameConfigCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="dc_winner_game_config"/>
+			</bean>
+		</property>
+	</bean>
 </beans>

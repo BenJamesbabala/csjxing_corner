@@ -13,7 +13,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * ÌÔ±¦¿Í±¨±í
- * @author shenjia.caosj 2012-4-17
+ * @author langben 2012-4-17
  *
  */
 @SuppressWarnings("serial")

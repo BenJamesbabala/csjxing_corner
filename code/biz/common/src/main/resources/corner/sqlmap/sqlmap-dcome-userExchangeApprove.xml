@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcUserExchangeApprove">
+	<typeAlias alias="TA-DcUserExchangeApprove"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcUserExchangeApproveDO" />
+
+	<resultMap id="RM-DcUserExchangeApprove" class="TA-DcUserExchangeApprove">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userNick" column="USER_NICK" />
+		<result property="source" column="SOURCE"/>
+		<result property="consumeIntegralCount" column="CONSUME_INTEGRAL_COUNT"  />
+		<result property="exItemId" column="EX_ITEM_ID" />
+		<result property="exItemType" column="EX_ITEM_TYPE" />
+		<result property="exItemNum" column="EX_ITEM_NUM" />
+		<result property="delName" column="DEL_NAME" />
+		<result property="delMobile" column="DEL_MOBILE" />
+		<result property="delAlipay" column="DEL_ALIPAY" />
+		<result property="delQq" column="DEL_QQ" />
+		<result property="delAddr" column="DEL_ADDR" />
+		<result property="userSku" column="USER_SKU" />
+		<result property="userMemo" column="USER_MEMO" />
+		<result property="checkCode" column="CHECK_CODE" />
+		<result property="memo" column="MEMO" />
+		<result property="status" column="STATUS" />
+		<result property="settleId" column="SETTLE_ID" />
+		<result property="gmtCreate" column="GMT_CREATE" />
+		<result property="gmtModified" column="GMT_MODIFIED" />
+	</resultMap>
+	
+	<insert id="insertExchangeApprove">
+		INSERT INTO
+			DC_USER_EXCHANGE_APPROVE(ID,USER_ID,USER_NICK,SOURCE,CONSUME_INTEGRAL_COUNT,EX_ITEM_ID,EX_ITEM_TYPE,EX_ITEM_NUM,DEL_NAME,DEL_MOBILE,DEL_ALIPAY,DEL_QQ,DEL_ADDR,USER_SKU,USER_MEMO,CHECK_CODE,MEMO,STATUS,SETTLE_ID,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#userId#,#userNick#,#source#,#consumeIntegralCount#,#exItemId#,#exItemType#,#exItemNum#,#delName#,#delMobile#,#delAlipay#,#delQq#,#delAddr#,#userSku#,#userMemo#,#checkCode#,#memo#,#status#,#settleId#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryExchangeApproveWithPagination" resultMap="RM-DcUserExchangeApprove">
+	    SELECT 
+			ID,USER_ID,USER_NICK,SOURCE,CONSUME_INTEGRAL_COUNT,EX_ITEM_ID,EX_ITEM_TYPE,EX_ITEM_NUM,DEL_NAME,DEL_MOBILE,DEL_ALIPAY,DEL_QQ,DEL_ADDR,USER_SKU,USER_MEMO,CHECK_CODE,MEMO,STATUS,SETTLE_ID,GMT_CREATE,GMT_MODIFIED
+	    FROM 
+	    	DC_USER_EXCHANGE_APPROVE
+	    <dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+		    	<isNotEmpty property="userId" prepend="AND">
+					    USER_ID = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="exItemTypeList" prepend="AND">
+					    EX_ITEM_TYPE IN
+				    <iterate prepend="" property="exItemTypeList" open="("  close=")"  conjunction=",">
+					      #exItemTypeList[]#
+					</iterate>
+				</isNotEmpty>
+				<isNotEmpty property="status" prepend="AND">
+					    STATUS = #status#
+				</isNotEmpty>
+				<isNotEmpty property="checkCode" prepend="AND">
+					    CHECK_CODE = #checkCode#
+				</isNotEmpty>
+	    	</isParameterPresent>
+	    </dynamic>
+	    ORDER BY 
+	    	GMT_CREATE DESC
+	    LIMIT 
+	    	#start#, #size#
+	</select>
+	
+	<select id="countExchangeApproveWithPagination" resultClass="java.lang.Integer">
+	    SELECT 
+	    	COUNT(ID)
+	    FROM 
+	    	DC_USER_EXCHANGE_APPROVE
+	    <dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+		    	<isNotEmpty property="userId" prepend="AND">
+					    USER_ID = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="exItemTypeList" prepend="AND">
+					    EX_ITEM_TYPE IN
+				    <iterate prepend="" property="exItemTypeList" open="("  close=")"  conjunction=",">
+					      #exItemTypeList[]#
+					</iterate>
+				</isNotEmpty>
+				<isNotEmpty property="status" prepend="AND">
+					    STATUS = #status#
+				</isNotEmpty>
+				<isNotEmpty property="checkCode" prepend="AND">
+					    CHECK_CODE = #checkCode#
+				</isNotEmpty>
+	    	</isParameterPresent>
+	    </dynamic>
+	</select>
+	
+	<update id="updateStatusBySettleIdList">
+		UPDATE
+			DC_USER_EXCHANGE_APPROVE
+		SET
+			STATUS = #status# ,
+			GMT_MODIFIED = now() 
+		WHERE
+			SETTLE_ID IN
+		    <iterate prepend="" property="settleIdList" open="("  close=")"  conjunction=",">
+			      #settleIdList[]#
+			</iterate>
+	</update>
+	
+	<update id="updateStatusAndUserMemoById">
+		UPDATE
+			DC_USER_EXCHANGE_APPROVE
+		SET
+			STATUS = #status# ,
+			<isNotNull property="userMemo">
+				    USER_MEMO = #userMemo# ,
+			</isNotNull>
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #id#
+	</update>
+</sqlMap>

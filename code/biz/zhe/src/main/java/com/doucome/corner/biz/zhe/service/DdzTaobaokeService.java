@@ -7,7 +7,7 @@ import com.doucome.corner.biz.zhe.model.TaobaokeShopFacade;
 
 /**
  * 品牌
- * @author shenjia.caosj 2012-6-28
+ * @author langben 2012-6-28
  *
  */
 public interface DdzTaobaokeService {
@@ -35,6 +35,14 @@ public interface DdzTaobaokeService {
 	 * @return
 	 */
 	TaobaokeItemFacade conventItem(String itemId , String outCode);
+	
+	/**
+	 * 转换商品
+	 * @param itemId
+	 * @param outCode
+	 * @return
+	 */
+	TaobaokeItemFacade conventItem(String itemId , String outCode , boolean isTmall);
 	
 	/**
 	 * 查询淘宝商品

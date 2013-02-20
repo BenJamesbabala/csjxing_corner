@@ -1,0 +1,10 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "index")
+
+<input type="hidden"  id="bopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="bopsPage" value="index"/>
+
+<div class="bops">
+    <h1>ª∂”≠ π”√ Back Office Process System!</h1>
+</div>

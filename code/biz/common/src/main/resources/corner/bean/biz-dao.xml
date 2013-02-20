@@ -9,13 +9,62 @@
 			http://roma.alibaba.com/schema http://roma.alibaba.com/schema/roma-component.xsd
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
-		default-autowire="byName">
+	default-autowire="byName">
 
 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
 		<property name="configLocation" value="classpath:sqlmap.xml" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+
+	<bean id="baseDAOProxyFactoryBean" class="org.springframework.aop.framework.ProxyFactoryBean" abstract="true">
+		<property name="interceptorNames">
+			<value>dbPerformanceInterceptor</value>
+		</property>
+	</bean>
+
+	<bean id="dbPerformanceInterceptor"
+		class="com.doucome.corner.biz.common.monitor.PerformanceInterceptor">
+		<property name="infoValve">
+			<value>20</value>
+		</property>
+		<property name="warnValve">
+			<value>50</value>
+		</property>
+		<property name="errorValve">
+			<value>1000</value>
+		</property>
+		<property name="fatalValve">
+			<value>3000</value>
+		</property>
+	</bean>
 	
-	<bean id="shortUrlDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisShortUrlDAO" />
+	<bean id="shortUrlDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisShortUrlDAO" />
+		</property>
+	</bean>
+
+	<bean id="spiderItemDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisSpiderItemDAO" />
+		</property>
+	</bean>
 	
+	<bean id="spiderConfigDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisSpiderConfigDAO" />
+		</property>
+	</bean>
+	
+	<bean id="smsLogDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisSmsLogDAO" />
+		</property>
+	</bean>
+	
+	<bean id="bannerConfigDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisBannerConfigDAO" />
+		</property>
+	</bean>
 </beans>

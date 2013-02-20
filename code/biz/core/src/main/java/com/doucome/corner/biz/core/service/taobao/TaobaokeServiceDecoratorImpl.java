@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.doucome.corner.biz.common.utils.ReflectUtils;
 import com.doucome.corner.biz.core.constant.LogConstant;
 import com.doucome.corner.biz.core.exception.TaobaoRemoteException;
 import com.doucome.corner.biz.core.model.page.Pagination;
@@ -19,7 +20,6 @@ import com.doucome.corner.biz.core.taobao.model.TaobaokeDate;
 import com.doucome.corner.biz.core.taobao.model.TaokeCaturlCondition;
 import com.doucome.corner.biz.core.taobao.model.TaokeItemSearchCondition;
 import com.doucome.corner.biz.core.utils.ArrayStringUtils;
-import com.doucome.corner.biz.core.utils.ReflectUtils;
 import com.taobao.api.ApiException;
 import com.taobao.api.TaobaoClient;
 import com.taobao.api.domain.TaobaokeItem;
@@ -32,16 +32,18 @@ import com.taobao.api.request.TaobaokeItemsGetRequest;
 import com.taobao.api.request.TaobaokeListurlGetRequest;
 import com.taobao.api.request.TaobaokeReportGetRequest;
 import com.taobao.api.request.TaobaokeShopsConvertRequest;
+import com.taobao.api.request.TaobaokeWidgetItemsConvertRequest;
 import com.taobao.api.response.TaobaokeCaturlGetResponse;
 import com.taobao.api.response.TaobaokeItemsConvertResponse;
 import com.taobao.api.response.TaobaokeItemsGetResponse;
 import com.taobao.api.response.TaobaokeListurlGetResponse;
 import com.taobao.api.response.TaobaokeReportGetResponse;
 import com.taobao.api.response.TaobaokeShopsConvertResponse;
+import com.taobao.api.response.TaobaokeWidgetItemsConvertResponse;
 
 /**
  * 淘宝开放平台接口封装
- * @author shenjia.caosj 2012-2-24
+ * @author langben 2012-2-24
  *
  */
 public class TaobaokeServiceDecoratorImpl extends AbstractTaobaoService implements TaobaokeServiceDecorator  {
@@ -132,6 +134,73 @@ public class TaobaokeServiceDecoratorImpl extends AbstractTaobaoService implemen
 		}
 		return list.iterator().next() ;
 	}
+	
+	@Override
+	public List<TaobaokeItemDTO> widgetConventItems(String[] itemIds,
+			String outCode, Boolean isMobile, String[] fields)
+			throws TaobaoRemoteException {
+		TaobaokeWidgetItemsConvertRequest req = new TaobaokeWidgetItemsConvertRequest() ;
+		req.setFields(ArrayStringUtils.toString(fields)) ;
+		req.setOuterCode(outCode) ;
+		if(isMobile != null){
+			req.setIsMobile(isMobile) ;
+		}
+		if(StringUtils.isNotBlank(outCode)){
+			req.setOuterCode(outCode);
+		}
+		req.setNumIids(ArrayStringUtils.toString(itemIds));
+		try {
+			TaobaoClient taobaoClient = taobaoClientWrapper.newWidgetClient() ;
+			TaobaokeWidgetItemsConvertResponse response = taobaoClient.execute(req);
+			boolean isSuccess = response.isSuccess() ;
+			if(!isSuccess){
+								
+				if(taobaoLog.isErrorEnabled()){
+					taobaoLog.error("input [" + ArrayStringUtils.toString(itemIds) + "|" + outCode +  "]  response : " + response.getBody()) ;
+				} 
+				throwTaobaoErrorResponse(response) ;
+				return null ;
+			}
+			
+			List<TaobaokeItemDTO> itemDTOs = new ArrayList<TaobaokeItemDTO>() ;
+			List<TaobaokeItem> items =  response.getTaobaokeItems() ;
+			if(!CollectionUtils.isEmpty(items)){
+				for(TaobaokeItem item : items){
+					TaobaokeItemDTO dto = new TaobaokeItemDTO(item) ;
+					itemDTOs.add(dto) ;
+				}
+			} else {
+				taobaoLog.error("response is empty, response body: " + response.getBody());
+			}
+			
+			return itemDTOs ;
+			
+		} catch (ApiException e) {
+			throw new TaobaoRemoteException(e.getErrMsg() , e , e.getErrCode()) ;
+		}
+	}
+	
+	@Override
+	public List<TaobaokeItemDTO> widgetConventItems(String[] itemIds, String outCode,String[] fields) throws TaobaoRemoteException {
+		return this.widgetConventItems(itemIds, outCode, null, fields) ;
+	}
+	
+	@Override
+	public TaobaokeItemDTO widgetConventItem(String itemId ,  String outCode , String[] fields) throws TaobaoRemoteException {
+		return this.widgetConventItem(itemId, outCode, null, fields) ;
+	}
+	
+	@Override
+	public TaobaokeItemDTO widgetConventItem(String itemId, String outCode,Boolean isMobile, String[] fields) throws TaobaoRemoteException {
+		List<TaobaokeItemDTO> list = widgetConventItems(new String[]{itemId}, outCode , isMobile , fields) ;
+		if(CollectionUtils.isEmpty(list)){
+			return null ;
+		}
+		return list.iterator().next() ;
+	}
+
+	
+
 
 	@Override
 	public TaobaokeShopDTO conventShop(String shopId, String outCode, String[] fields) throws TaobaoRemoteException {
@@ -285,6 +354,8 @@ public class TaobaokeServiceDecoratorImpl extends AbstractTaobaoService implemen
 		
 	}
 
+	
+	
 	
 	
 	

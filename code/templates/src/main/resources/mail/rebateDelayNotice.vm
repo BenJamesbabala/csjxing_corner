@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="gbk" />
+		<title>点点折-购物待返现通知</title>
+		<style type="text/css">
+			body {
+			}
+			.ddz-mail {
+				width: 770px;
+				margin: 20px auto;
+			}
+			.thanks {
+				padding-left: 32px;
+			}
+			.bill-list th {
+				background-color: #FF6A00;
+				height: 36px;
+				border: 1px solid #CCCCCC;
+				color: #FFF;
+			}
+			.bill-list tr a:link, .bill-list tr a:visited {
+				color: #666666;
+				text-decoration: none;
+			}
+			.bill-list tr a:hover {
+				color: #FF6A00;
+				text-decoration: none;
+			}
+			.bill-list tr {
+				color: #666666;
+			}
+			.color-green {
+				color: #45A022;
+			}
+			.color-blue {
+				color: #0000EE;
+			}
+			.remark {
+				color: #FF6A00;
+				font-weight: bold;
+			}
+			.remarks ul li {
+				list-style: none outside none;
+				margin-left: -30px;
+				line-height: 28px;
+			}
+			.signature {
+				float: right;
+			}
+			a:link, a:visited {
+				color: #0000EE;
+			}
+			.ddz-logo a{
+				text-decoration: none;
+			}
+			.jfb-icon10x10 {
+            	background-image: url(http://style.diandianzhe.com/corner/images/jfb10x10.png);
+            	background-repeat: no-repeat;
+            	background-color: transparent;
+                display: inline-block;
+            	width: 10px;
+            	height: 10px;
+            }
+		</style>
+	</head>
+	<body>
+		<div class="ddz-mail" style="width: 770px;margin: 20px auto;">
+			<div class="ddz-logo" style="text-decoration: none;">
+				<a href="http://diandianzhe.com?trace_log=reportemail" target="_blank"><img src="http://style.diandianzhe.com/corner/img/logo_white_200x60.png" border="0"/></a>
+			</div>
+			<div>
+				<p>
+					$!username，您好
+				</p>
+				<p class="thanks" style="padding-left: 32px;">
+					感谢您使用点点折，我们收到您的一笔返利记录，当前状态为 【返利确认中】。以下是您的购物返利记录: 
+				</p>
+				<table class="bill-list" cellpadding="0" cellspacing="0" border="0">
+					<tr style="color: #666666;">
+						<th width="160" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">确认收货时间</th>
+						<th width="140" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">商品名称</th>
+						<th width="60" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">数量</th>
+						<th width="80" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">成交价格</th>
+						<th width="80" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">返利比例</th>
+						<th width="80" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">返利金额</th>
+						<th width="160" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">结算状态</th>
+					</tr>
+					#if($reportDOs)
+						#foreach($report in $reportDOs)
+        					<tr align="center" style="color: #666666;">
+        						<td>$dateUtils.format($report.gmtPaid, "yyyy-MM-dd hh:mm:ss")</td>
+        						<td><a href="http://diandianzhe.com/zhe/item/${report.numIid}?trace_log=reportemail">$report.itemTitle</a></td>
+        						<td>${report.itemNum}</td>
+        						<td>&yen;${report.realPayFee}</td>
+        						<td class="color-green" style="color: #45A022;">
+									#if($report.outcodeType == "J")
+									$!decimalUtils.formatRatio(${report.userJfbRate})
+									#else
+									$!decimalUtils.formatRatio(${report.userCommissionRate})
+									#end
+								</td>
+        						<td class="color-green" style="color: #45A022;">
+                                    #if($report.outcodeType == "J") <a href="http://help.alipay.com/lab/help_detail.htm?help_id=211851" target="_blank" title="支付宝集分宝"><img src="http://style.diandianzhe.com/corner/images/jfb10x10.png" alt="支付宝集分宝"></img></a> $!report.settleJfb #else &yen;$!decimalUtils.formatPrice(${report.settleFee}) #end
+								</td>
+        						<td>待返利</td>
+        					</tr>
+						#end
+					#end
+				</table>
+			</div>
+			<div class="remarks">
+				<p class="remark" style="color: #FF6A00;font-weight: bold;">
+					[备注]
+				</p>
+				<ul>
+					<li style="list-style: none outside none;margin-left: -30px;line-height: 28px;">
+						1.为保证返利款顺利支付，若返利金额大于50元，需对相关交易做有效性确认，确认期为收货后15-30日。
+					</li>
+					<li style="list-style: none outside none;margin-left: -30px;line-height: 28px;">
+						2.在此期间如果返利关联交易发生退款，该返利记录将自动取消。
+					</li>
+					<li style="list-style: none outside none;margin-left: -30px;line-height: 28px;">
+						3.待该笔返利确认有效后，款项将自动汇入您的支付宝账号$!alipayId，请注意查收。
+					</li>
+					<li style="list-style: none outside none;margin-left: -30px;line-height: 28px;">
+						4.若有任何疑问请发邮件至 <a href="mailto:vip@diandianzhe.com">vip@diandianzhe.com</a> 咨询。
+					</li>
+				</ul>
+			</div>
+			<p class="signature" style="float: right;">
+				【新浪微博:<a href="http://weibo.com/diandianzhe" target="_blank">@点点折网</a>】折扣尽享,点缀生活
+			</p>
+		</div>
+		<img style="display:none;" src="http://diandianzhe.com/zhe/click.htm?type=delay_settle_report_mail&id=$!{settleDO.id}&email=$!{emailAddress}"/>
+	</body>
+</html>

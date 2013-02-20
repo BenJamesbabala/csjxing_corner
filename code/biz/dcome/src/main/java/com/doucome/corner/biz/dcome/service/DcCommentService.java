@@ -11,7 +11,7 @@ import com.doucome.corner.biz.dcome.model.DcCommentDTO;
 
 /**
  * ÆÀÂÛ
- * @author shenjia.caosj 2012-7-22
+ * @author langben 2012-7-22
  *
  */
 public interface DcCommentService {

@@ -6,7 +6,7 @@ import com.doucome.corner.biz.dcome.model.DcCommentDTO;
 
 /**
  * ÆÀÂÛ»º´æ
- * @author shenjia.caosj 2012-7-28
+ * @author langben 2012-7-28
  *
  */
 public interface DcCommentCache {

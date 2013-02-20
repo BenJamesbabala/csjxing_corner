@@ -1,0 +1,70 @@
+<div class="week-fate period-fate dd-l">
+	<div class="effect-date">有效日期：$!dateUtils.format($!effectDateStart, 'yyyy-MM-dd')至$!dateUtils.format($!effectDateEnd, 'yyyy-MM-dd')</div>
+    <ul class="fate-list dd-l" style="">
+	    <li class="summary-fate fate-detail dd-l">
+		    <div class="index" style="">综合运势</div>
+			<div class="text dd-l">
+				<p class="fate-content">#if($!hsFate.summary)$!hsFate.summary#else暂时还没有本月运势解析呢，请稍等~~#end</p>
+				#if($!hsFate.summary)
+				<div class="toolbar dd-hide">
+					 <iframe class="qzone-btn" src="http://open.qzone.qq.com/like?url=http%3A%2F%2Fuser.qzone.qq.com%2F10507600&type=button&width=65&height=40&style=3" allowtransparency="true" scrolling="no" border="0" frameborder="0"></iframe>
+				     <a class="invite-btn btn" href="javascript:;" title="邀请好友">邀请好友</a>
+			         <a class="share-btn btn" href="javascript:;" title="分享">分享</a>
+				 </div>
+				#end
+			</div>
+		</li>
+		<li class="love-fate fate-detail dd-l">
+		    <div class="index">#if($!hsFate.loveIndex)$!{hsFate.loveIndex}%#end</div>
+		    <div class="text dd-l">
+				<p class="fate-content">#if($!hsFate.loveDesc)$!hsFate.loveDesc#else暂时还没有本月恋情解析呢，请稍等~~#end</p>
+			    #if($!hsFate.loveDesc)
+				<div class="toolbar dd-hide">
+					 <iframe class="qzone-btn" src="http://open.qzone.qq.com/like?url=http%3A%2F%2Fuser.qzone.qq.com%2F10507600&type=button&width=65&height=40&style=3" allowtransparency="true" scrolling="no" border="0" frameborder="0"></iframe>
+				     <a class="invite-btn btn" href="javascript:;" title="邀请好友">邀请好友</a>
+			         <a class="share-btn btn" href="javascript:;" title="分享">分享</a>
+				 </div>
+				#end
+			</div>
+		</li>
+		<li class="wealth-fate fate-detail dd-l">
+		    <div class="index">#if($!hsFate.wealthIndex)$!{hsFate.wealthIndex}% #end</div>
+		    <div class="text dd-l">
+				<p class="fate-content">#if($!hsFate.wealthDesc)$!hsFate.wealthDesc#else暂时还没有本月财运解析呢，请稍等~~#end</p>
+			    #if($!hsFate.wealthDesc)
+				<div class="toolbar dd-hide">
+					 <iframe class="qzone-btn" src="http://open.qzone.qq.com/like?url=http%3A%2F%2Fuser.qzone.qq.com%2F10507600&type=button&width=65&height=40&style=3" allowtransparency="true" scrolling="no" border="0" frameborder="0"></iframe>
+				     <a class="invite-btn btn" href="javascript:;" title="邀请好友">邀请好友</a>
+			         <a class="share-btn btn" href="javascript:;" title="分享">分享</a>
+				 </div>
+				#end
+			</div>
+		</li>
+		<li class="work-fate fate-detail dd-l">
+		    <div class="index">#if($!hsFate.workIndex)$!{hsFate.workIndex}% #end</div>
+		    <div class="text dd-l">
+				<p class="fate-content">#if($!hsFate.workDesc)$!hsFate.workDesc#else暂时还没有本月事业解析呢，请稍等~~#end</p>
+			    #if($!hsFate.workDesc)
+				<div class="toolbar dd-hide">
+					 <iframe class="qzone-btn" src="http://open.qzone.qq.com/like?url=http%3A%2F%2Fuser.qzone.qq.com%2F10507600&type=button&width=65&height=40&style=3" allowtransparency="true" scrolling="no" border="0" frameborder="0"></iframe>
+				     <a class="invite-btn btn" href="javascript:;" title="邀请好友">邀请好友</a>
+			         <a class="share-btn btn" href="javascript:;" title="分享">分享</a>
+				 </div>
+				#end
+			</div>
+		</li>
+		<li class="health-fate fate-detail dd-l">
+		    <div class="index">#if($!hsFate.healthIndex)$!{hsFate.healthIndex}% #end</div>
+		    <div class="text dd-l">
+				<p class="fate-content">#if($!hsFate.healthDesc)$!hsFate.healthDesc#else暂时还没有本月健康解析呢，请稍等~~#end</p>
+			    #if($!hsFate.healthDesc)
+				<div class="toolbar dd-hide">
+					 <iframe class="qzone-btn" src="http://open.qzone.qq.com/like?url=http%3A%2F%2Fuser.qzone.qq.com%2F10507600&type=button&width=65&height=40&style=3" allowtransparency="true" scrolling="no" border="0" frameborder="0"></iframe>
+				     <a class="invite-btn btn" href="javascript:;" title="邀请好友">邀请好友</a>
+			         <a class="share-btn btn" href="javascript:;" title="分享">分享</a>
+				 </div>
+				#end
+			</div>
+		</li>
+	</ul>
+</div>

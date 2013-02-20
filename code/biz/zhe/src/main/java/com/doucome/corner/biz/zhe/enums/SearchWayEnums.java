@@ -2,7 +2,7 @@ package com.doucome.corner.biz.zhe.enums;
 
 /**
  * ≤È—Ø∑Ω Ω
- * @author shenjia.caosj 2012-3-7
+ * @author langben 2012-3-7
  *
  */
 public enum SearchWayEnums {

@@ -9,7 +9,7 @@
 	<package name="task" namespace="/task/zhe" extends="default">
 				
 		<action name="syncReport" class="com.doucome.corner.task.zhe.action.SyncReportAction">
-			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="cornerDefaultStack" />
 			<result name="success" type="velocity">/task/zhe/syncReport.vm</result>
 		</action>
 		

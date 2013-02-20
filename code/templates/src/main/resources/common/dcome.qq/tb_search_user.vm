@@ -1,0 +1,92 @@
+#set($canExchangeCount = $!user.canExchangeCount)
+<input type="hidden" id="canExchangeCount" value="$!canExchangeCount"/>
+<div class="tb-account">
+	<div class="tb-my-account">
+    	<div class="user-pic">
+    		<img data-avatar-src="$avatarUtils.getAvatarUrl($!user.userId , '50x50')" data-avatar-size="50x50">
+    	</div>
+    	<div class="user-nick">
+            <span>$!user.nick</span>
+        </div>
+        <div class="user-integral">
+            <span class="integral-icon" title="积分"></span><span class="integral-count"><a href="${env.root}/frame/q/tb_my.htm?tracelog=tbuser-integral">$!user.integralCount</a></span>
+    	</div>		
+		<div class="select-tips dd-hide">
+        	<div class="content">看看积分明细</div>
+        	<div class="angle-top" style="top: -6px;left:40px;"></div>
+        </div>
+	</div>
+    <div class="tb-can-exchange">
+        <div class="ex-item">
+            <div class="jfb-icon #if($user.integralCount < 1) disable #end"></div>
+			<div class="content">
+                <div class="title">
+					#if($user.integralCount >= 1000)
+						<span class="ok-icon"></span><span class="enable">支付宝集分宝</span>
+					#else
+						<span>支付宝集分宝</span>
+					#end
+				</div>
+    			<div class="desc">
+					#if($user.integralCount < 1)  
+					<span><i class="num-dis">1</i>积分即可兑换</span>
+					#else
+					<span>你可兑换<i class="num">$!user.integralCount</i>个</span>
+					#end
+				</div>
+			</div>
+		</div>
+		
+		<div class="ex-item">
+            <div class="sjhf-icon #if($user.integralCount < 1000) disable #end"></div>
+			<div class="content">
+                <div class="title">
+                    #if($user.integralCount >= 1000)
+						<span class="ok-icon"></span><span class="enable">手机话费</span>
+					#else
+						<span>手机话费</span>
+					#end
+				</div>
+    			<div class="desc">
+				#if($user.integralCount >= 5000)
+				<span>你可兑换<i class="num">50</i>元话费</span>
+				#elseif($user.integralCount >= 3000)
+				<span>你可兑换<i class="num">30</i>元话费</span>
+				#elseif($user.integralCount >= 1000)
+				<span>你可兑换<i class="num">10</i>元话费</span>
+				#else
+				<span><i class="num-dis">1000</i>积分可兑换</span>
+				#end
+				</div>
+			</div>
+		</div>
+		
+		<div class="ex-item">
+            <div class="qb-icon #if($user.integralCount < 1000) disable #end"></div>
+			<div class="content">
+                <div class="title">
+					#if($user.integralCount >= 1000)
+						<span class="ok-icon"></span><span class="enable">Q币</span>
+					#else
+						<span>Q币</span>
+					#end
+				</div>
+    			<div class="desc">
+				#if($user.integralCount >= 5000)
+				<span>你可兑换<i class="num">50</i>个Q币</span>
+				#elseif($user.integralCount >= 3000)
+				<span>你可兑换<i class="num">30</i>个Q币</span>
+				#elseif($user.integralCount >= 1000)
+				<span>你可兑换<i class="num">10</i>个Q币</span>
+				#else
+				<span><i class="num-dis">1000</i>积分可兑换</span>
+				#end
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="tb-integral-usage">
+		<span>本月还可兑换 <span>$!canExchangeCount</span> 次 </span><a href="${env.root}/frame/q/tb_integral_pay.htm?tracelog=tbuser-exchangelink">马上兑换<span>>></span></a>
+    </div>
+</div>

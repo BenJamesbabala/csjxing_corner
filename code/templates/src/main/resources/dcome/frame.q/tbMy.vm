@@ -1,0 +1,80 @@
+#set($page_nav = "tb_index")
+#set($layout="dcome/frame.q/default.vm")
+
+#set($pagination = $queryResult.pagination)
+#set($searchUrl = ${env.root}+"/frame/q/tb_my.htm?")
+#set($searchQuery = ["inOutType:$!inOutType"])
+
+<div class="tb-content tb-content-my">
+	<div class="my">
+		<div class="trade-record">
+        	<table cellpadding="0" cellspacing="0">
+        		<thead>
+        			<tr>
+                    	<th width="30">序号</th>
+            			<th width="100">日期</th>
+                        <th width="220">名称</th>             
+            			<th width="80">收入</th>
+            			<th width="80">支出</th>
+                        <th width="80">积分余额</th>
+                        <th width="80">备注</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			#if($queryResult.totalRecords > 0)
+                		#foreach($item in $queryResult.items)
+            			#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
+            			<tr #if($idx % 2 == 1) class="split" #end>
+                            <td>$idx</td>
+            				<td>$dateUtils.format($item.gmtCreate , "yyyy-MM-dd")</td>
+                            <td>
+								#set($desc_title = $!item.descModel.title)
+								#if(!$desc_title || $desc_title == "")
+									#if($item.inOutType == "I")
+										#set($desc_title = "赠送" + $item.integralCount + "积分")
+									#else
+										#set($desc_title = "扣除" + $item.integralCount + "积分")
+									#end
+								#end
+								<div class="title"><span class="source">[#DC_USER_INTEGRAL_SOURCE($item.source)] $desc_title</span></div>
+							</td>
+            				<td class="income amount">
+            					#if($item.inOutType == "I")
+            						$!item.integralCount
+            					#else
+									&nbsp;
+								#end
+            				</td>
+            				<td class="outlay amount">
+            					#if($item.inOutType == "O")
+            						-$!item.integralCount
+            					#else
+									&nbsp;
+								#end
+                            </td>
+            				<td>$!item.integralBalance</td>
+                            <td>
+								#if($item.status == 'P')
+                                    <span class="">处理中</span>
+								#elseif($item.status == 'C')
+                                    <span class="">取消</span>
+								#elseif($item.status == 'S')
+									<span class="">已完成</span>
+								#else
+									&nbsp;
+								#end
+							</td>
+                        </tr>
+            			#end
+        			#else
+						<tr>
+							<td colspan="7" align="left"><dt class="tip-rumour"><i></i>没有相关记录！</dt></td>
+						</tr>
+        			#end
+        		</tbody>
+        	</table>
+		</div>
+		
+		#parse("/common/dcome.qq/pagination/tbMyPagination.vm")
+    </div>
+</div>

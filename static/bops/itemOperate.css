@@ -229,8 +229,6 @@ ul {
 
 .operate-list li.active {
     background: #C30008;
-	padding: 2px;
-	height: 20px;
 }
 
 .item-meta .item-property .item-operate {
@@ -243,7 +241,7 @@ ul {
     z-index: 999;
 	position: absolute;
 	top: 180px;
-	left: 580px;
+	left: 500px;
 }
 
 .item-operate  a {

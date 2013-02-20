@@ -34,6 +34,18 @@
 			 	<param name="domain">${corner_domainName}</param>
 			 </interceptor>
 			 
+			 <interceptor name="setHsContextInterceptor" class="com.doucome.corner.web.horoscope.interceptor.SetContextInterceptor">
+			 	<param name="domain">${corner_horoscope_domainName}</param>
+			 </interceptor>
+			 
+			 <interceptor name="setWryneckContextInterceptor" class="com.doucome.corner.web.wryneck.interceptor.SetContextInterceptor">
+			 	<param name="domain">${corner_wryneck_domainName}</param>
+			 </interceptor>
+			 
+			 <interceptor name="setNamefateContextInterceptor" class="com.doucome.corner.web.namefate.interceptor.SetContextInterceptor">
+				<param name="domain">${corner_namefate_domainName}</param>
+			</interceptor>
+			 
 			 <interceptor name="setBopsContextInterceptor" class="com.doucome.corner.web.bops.interceptor.SetContextInterceptor">
 			 	<param name="domain">${corner_bops_domainName}</param>
 			 </interceptor>
@@ -42,6 +54,21 @@
 			 <interceptor name="dcomeAuthzContextInterceptor" class="com.doucome.corner.web.dcome.interceptor.AuthzInterceptor">
 			 	<param name="errorResult">dcomeQQError</param>
 			 </interceptor>
+			 
+			 <interceptor-stack name="cornerDefaultStack">
+				<interceptor-ref name="defaultStack">
+					<param name="exception.logEnabled">true</param>  
+    				<param name="exception.logLevel">error</param> 
+				</interceptor-ref>
+				
+			</interceptor-stack>
+			
+			<interceptor-stack name="cornerBasicStack">
+				<interceptor-ref name="basicStack">
+					<param name="exception.logEnabled">true</param>  
+    				<param name="exception.logLevel">error</param> 
+				</interceptor-ref>
+			</interceptor-stack>
 		</interceptors>
 		 
 		<global-results>
@@ -65,6 +92,10 @@
             <result-type name="json" class="org.apache.struts2.json.JSONResult">
             	<param name="excludeNullProperties">true</param>
             </result-type>
+			<result-type name="json2" class="org.apache.struts2.json.JSONResult">
+            	<param name="excludeNullProperties">true</param>
+            	<param name="root">json</param>
+            </result-type>
         </result-types>
         <interceptors>
             <interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"/>
@@ -74,10 +105,13 @@
     
 	<include file="struts-zhe.xml" />
 	<include file="struts-bops.xml" />
+	<include file="struts-bops-zhe.xml" />
 	<include file="struts-bops-dcome.xml" />
 	<include file="struts-home.xml"/>
 	<include file="struts-dcome.xml"/>
 	<include file="struts-task.xml" />
 	<include file="struts-shortUrl.xml" />
-
+    <include file="struts-horoscope.xml" />
+	<include file="struts-wryneck.xml" />
+	<include file="struts-namefate.xml" />
 </struts>

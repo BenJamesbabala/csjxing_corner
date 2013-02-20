@@ -1,0 +1,291 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "淘宝客报表")
+
+<style>
+	.report-item-title a {
+		color:#444;
+		text-decoration:underline ;
+	}
+	
+	.report-item-title {
+		text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: normal;
+		width:200px;
+		overflow:hidden;
+	}
+	
+	.settleIpt {
+		padding:10px;
+		margin-top:15px;
+		border-top:1px solid #aaaaaa;
+		border-bottom:1px solid #aaaaaa;
+		text-align:center;
+		text-align:left;
+	}
+	
+	.alipayBatchno {
+		width:80px;
+		overflow:hidden;
+		text-overflow:ellipsis ;
+	}
+	
+	.settleAlipay {
+		width:140px;
+		overflow:hidden;
+		text-overflow:ellipsis ;
+	}
+	
+	.settleFee {
+		margin-left:5px;
+		font-family:"helvetica";
+	}
+	
+	.settleFeeTitle a , .settleFeeTitle a:hover ,.settleFeeTitle a:active , .settleFeeTitle a:visited {
+		text-decoration:none ;
+		color : #000;
+	}
+	
+	.dateIpt {
+		width:100px;
+	}
+	
+	.settleIptMore {
+		margin-top:10px;
+		padding:5px 0 0 10px;
+		border-top: 1px solid #cccccc;
+		font-size:14px;
+	}
+	
+	.smallDate {
+		font-size:10px;
+	}
+	
+	.item-id-search {
+		width: 100px;
+    }
+	
+	.report-trade-id {
+		width:50px;
+		overflow:hidden;
+		text-overflow:ellipsis ;
+	}
+</style>
+
+#set($gmtSettledStartFormat = $dateUtils.format($!gmtSettledStart,'yyyy-MM-dd'))
+#set($gmtSettledEndFormat = $dateUtils.format($!gmtSettledEnd,'yyyy-MM-dd'))
+#set($gmtCreateStartFormat = $dateUtils.format($!gmtCreateStart,'yyyy-MM-dd'))
+#set($gmtCreateEndFormat = $dateUtils.format($!gmtCreateEnd,'yyyy-MM-dd'))
+
+#set($page = $reportQuery.pagination.page)
+#set($totalPages = $reportQuery.pagination.totalPages)
+#set($size = $reportQuery.pagination.size)
+
+
+##分页
+#set($searchUrl = ${env.bopsRoot}+"/bops/zhe/taoke_report_list.htm?")
+#set($searchQuery = ["settleAlipay:$!settleAlipay","settleStatus:$!settleStatus","tradeId:$!tradeId","sellerNick:$!sellerNick","keywords:$!keywords","outcodeType:$!outcodeType",
+	"gmtSettledStart:$!gmtSettledStartFormat","gmtSettledEnd:$!gmtSettledEndFormat",
+	"gmtCreateStart:$!gmtCreateStartFormat","gmtCreateEnd:$!gmtCreateEndFormat","numIid:$!numIid","dcItemId:$!dcItemId","dcUserId:$!dcUserId","refundStatus:$!refundStatus"])
+
+<input type="hidden"  id="bopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="taokeReportList"/>
+
+<div class="bops">
+	<form action="${env.bopsRoot}/bops/zhe/taoke_report_list.htm" method="GET" id="reportForm">
+    	<div class="settleIpt">
+			
+			<div>
+    			订单号： <input  type="text" name="tradeId" value="$!tradeId" />
+    			&nbsp;&nbsp;
+    			支付宝 ：<input  type="text" name="settleAlipay" value="$!settleAlipay" />
+				&nbsp;&nbsp;
+				类型：
+				<select name="outcodeType">
+					#DDZ_REPORT_OUTCODE_OPTIONS()
+				</select>
+				&nbsp;&nbsp;
+    			结算状态：
+        		<select name="settleStatus">
+	                <option value="" #if($settleStatus == "") selected #end>全部</option>
+	    			<option value="U" #if($settleStatus == "U") selected #end>未结算</option>
+	    			<option value="P" #if($settleStatus == "P") selected #end>结算中</option>
+					<option value="JP" #if($settleStatus == "JP") selected #end>JFB结算中</option>
+	    			<option value="F" #if($settleStatus == "F") selected #end>失败</option>
+	    			<option value="S" #if($settleStatus == "S") selected #end>成功</option>
+	    			<option value="C" #if($settleStatus == "C") selected #end>取消</option>
+	    			<option value="D" #if($settleStatus == "D") selected #end>延迟结算</option>
+					<option value="R" #if($settleStatus == "R") selected #end>维权已清</option>
+	            </select>
+    			&nbsp;&nbsp;
+        		<input type="submit" value="查询" /> [<a href="javascript:;"id="settleIptMoreBtn" style="font-size:12px;">更多查询条件</a>]
+			</div>
+            <div class="settleIptMore" style="border-top:none;">
+				关键字： <input  type="text" name="keywords" value="$!keywords" />
+    				&nbsp;&nbsp;
+				卖家昵称 ：<input  type="text" name="sellerNick" value="$!sellerNick" class="item-id-search"/>
+				&nbsp;&nbsp;
+				淘宝ID ：<input  type="text" name="numIid" value="$!numIid" class="item-id-search" />
+				&nbsp;&nbsp;
+				DcItemID ：<input  type="text" name="dcItemId" value="$!dcItemId" class="item-id-search" />
+				&nbsp;&nbsp;
+				DcUserID ：<input  type="text" name="dcUserId" value="$!dcUserId" class="item-id-search" />
+				&nbsp;&nbsp;
+            </div>
+			<div id="settleIptMore" class="settleIptMore #if(!$gmtSettledStart && !$gmtSettledEnd && !$gmtCreateStart && !$gmtCreateEnd && !$refundStatus) dd-hide #end">
+				记录创建时间： 
+					<input type="text" id="gmtCreateStart" name="gmtCreateStart" class="dateIpt" value="$!gmtCreateStartFormat"/> - 
+					<input type="text" id="gmtCreateEnd" name="gmtCreateEnd"class="dateIpt" value="$!gmtCreateEndFormat"/>
+                &nbsp;&nbsp;
+				结算时间： 
+					<input type="text" id="gmtSettledStart" name="gmtSettledStart" class="dateIpt" value="$!gmtSettledStartFormat"/> - 
+					<input type="text" id="gmtSettledEnd" name="gmtSettledEnd" class="dateIpt" value="$!gmtSettledEndFormat"/>
+				&nbsp;&nbsp; | &nbsp;&nbsp; 
+				维权：
+					<select name="refundStatus">
+						<option value="" #if($refundStatus == "") selected #end>全部</option>
+						<option value="T" #if($refundStatus == "T") selected #end>维权</option>
+						<option value="B" #if($refundStatus == "B") selected #end>维权已清</option>
+                    </select>
+			</div>
+			
+			
+    	</div>
+    </form>
+	
+	<div id="calcTotalCommission">
+        <input type="button" class="calcTotalAmount" value="统计总佣金" />	
+        <span class="loadingText"></span>
+    	<span class="totalSettleAmount" style="color:red;"></span>
+	</div>
+	
+	<div id="calcTotalSettleFee">
+        <input type="button" class="calcTotalAmount" value="统计用户结算佣金" />	
+        <span class="loadingText"></span>
+    	<span class="totalSettleAmount" style="color:red;"></span>
+	</div>
+	
+	
+	#if($reportQuery.totalRecords > 0)
+	
+    	#parse("/common/bops/zhe/reportPagination.vm")
+		
+        <table width="1080" style="font-size:14px;" id="settleTable">
+        	<tr>
+        		<th width="30">序号</th>
+				<th width="160">商品名</th>
+				<th width="50">支付宝</th>
+				<th width="120">豆蔻</th>
+                <th width="35">支付</th>
+				<th width="35">实付</th>
+				<th width="30">数量</th>
+				<th width="50">报表佣金</th>
+				<th width="50">用户佣金</th>
+				<th width="40">结算</th>
+				<th width="40">类型</th>
+				<th width="50">结算</th>
+				<th width="60">交易号</th>
+				<th width="100">创建时间</th>
+				<th width="35">维权</th>
+        	</tr>
+        	
+            #foreach($item in $reportQuery.items)
+        		#set($idx = (($page-1)*$size) + $velocityCount )
+				#set($settleColor = "settle_" + $!item.settleStatus)
+        		        		
+        		<tr data-trIndex="$velocityCount" class="settleTableTr">
+            		<td align="center">$idx</td>
+					<td align="">
+                        <div class="report-item-title"><a href="http://item.taobao.com/item.htm?id=$!item.numIid" target="_blank">$!item.itemTitle</a></div>
+                        <div class="TAL dc-gray">
+                            <span><span class="wangwang-icon" title="卖家昵称"></span>$!item.sellerNick</span>
+                            <span class="ML5 report-trade-id"><span class="money-icon" title="商品ID"></span>$!item.numIid</span>
+						</div>
+					</td>
+                    <td>$!item.settleAlipay</td>
+					<td>
+                        <div class="dc-gray">
+							#if($item.dcUserId)
+							<span><span class="person-icon" title="豆蔻用户ID"></span>$!item.dcUserId</span>
+							#end
+							#if($item.dcItemId)
+							<span class="ML5"><span class="clock-icon" title="豆蔻商品ID"></span>$!item.dcItemId</span>
+							#end
+						</div>
+					</td>
+					<td><div class="">$decimalUtils.format($!item.payPrice,"0.00")</div></td>
+					<td><div class="">$decimalUtils.format($!item.realPayFee,"0.00")</div></td>
+                    <td align="center">$!item.itemNum</td>
+					<td>
+                        <span class="$settleColor settleFee">$decimalUtils.format($!item.commission,'0.00')（$decimalUtils.format($decimalUtils.multiply($!item.commissionRate,100),"0.00")%）</span>
+        			</td>
+					<td>
+                        <span class="$settleColor settleFee">$decimalUtils.format($!item.userCommission,'0.00')（$decimalUtils.format($decimalUtils.multiply($!item.userCommissionRate,100),"0.00")%）</span>
+        			</td>
+					<td>
+                        <span class="$settleColor settleFee">
+							#if($item.outcodeType == "J")
+                            <span class="jfb-icon10x10"></span>$!item.settleJfb
+							#else
+							&yen; $decimalUtils.format($!item.settleFee,'0.00')
+							#end
+						</span>
+        			</td>
+                    <td align="center">
+						$!item.outcodeType <span class="info-icon report-outcode-click" title="$!item.outCode"></span>
+                        <div class="dd-hide dc-gray report-outcode">$!item.outCode</div>
+					</td>
+        			<td align="center">
+						#DDZ_REPORT_SETTLE($!item.settleStatus)
+        			</td>
+					<td><div class="dc-gray report-trade-id" title="$!item.tradeId">$!item.tradeId</div></td>
+    				<td align="center">
+                        <div>$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</div>
+						#if($item.gmtSettled)
+                        <div><span class="money-icon money-icon-active" title="结算时间"></span>$!dateUtils.format($!item.gmtSettled , 'yyyy-MM-dd HH:mm')</div>
+						#end
+    				</td>
+					<td align="center">
+						#if($item.refundStatus == 'T')
+                            <span class="money-icon money-icon-active" title="已经维权退款"></span>
+						#elseif($item.refundStatus == 'B')
+							<span class="money-icon money-icon-active" title="已经维权退款"></span>
+							<span class="dc-green">已还</span>
+						#else
+                            <a href="javascript:;" data-report-id="$!item.id" class="account-refund-click" title="维权加标">
+								<span class="money-icon"></span>
+							</a>
+						#end
+					</td>
+            	</tr>
+        	#end
+           
+        </table>
+        
+        #parse("/common/bops/zhe/reportPagination.vm")
+	#else
+		没有查询到记录
+	#end
+</div>
+
+<div class="layer_tips layer_tips_version layer_tips_intro alipay_detail_tips dd-hide" id="outCode_detail_tips" >
+	<div class="layer_tips_bg">
+		<a class="W_close_color layer_tips_close" href="javascript:;" data-id="alipay_detail_tips"></a>
+		<div node-type="inner" class="layer_tips_cont">
+			<ul>
+                <li>OutCode：<span id="outCode"></span></li>
+				<li>内部商品ID：<span id="itemId"></span></li>
+				<li>商品：<span id="itemTitle"></span></li>
+				<li>用户：<span id="user"></span></li>
+				<li>返积分：<span id="integral"></span></li>
+			</ul>
+		</div>
+		<span class="arrow_left" node-type="arrow" style=""></span>
+	</div>
+</div>
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

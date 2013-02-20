@@ -7,7 +7,7 @@ import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * ÍÆ¼ö
- * @author shenjia.caosj 2012-5-22
+ * @author langben 2012-5-22
  *
  */
 public class DdzRecommendDO extends AbstractModel {

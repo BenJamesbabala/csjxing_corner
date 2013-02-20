@@ -6,14 +6,6 @@
 #set($size = $settleResult.pagination.size)
 
 <style>
-	.settleIpt {
-		padding:10px;
-		margin-top:15px;
-		border-top:1px solid #aaaaaa;
-		border-bottom:1px solid #aaaaaa;
-		text-align:center;
-		text-align:left;
-	}
 	
 	.alipayBatchno {
 		width:80px;
@@ -35,18 +27,7 @@
 		text-decoration:none ;
 		color : #000;
 	}
-	
-	.dateIpt {
-		width:100px;
-	}
-	
-	.settleIptMore {
-		margin-top:10px;
-		padding:5px 0 0 10px;
-		border-top: 1px solid #cccccc;
-		font-size:14px;
-	}
-	
+
 	.smallDate {
 		font-size:10px;
 	}
@@ -64,7 +45,8 @@
 		color: #444444;
         text-decoration: underline;
 	}
-		
+	
+	
 </style>
 
 <style>
@@ -79,12 +61,13 @@
 
 ##分页
 #set($searchUrl = ${env.bopsRoot}+"/bops/zhe/taoke_report_settle.htm?")
-#set($searchQuery = ["settleAlipay:$!settleAlipay","settleStatus:$!settleStatus","settleBatchno:$!settleBatchno",
+#set($searchQuery = ["settleAlipay:$!settleAlipay","settleStatus:$!settleStatus","settleBatchno:$!settleBatchno","outcodeType:$!outcodeType",
 	"gmtSettledStart:$!gmtSettledStartFormat","gmtSettledEnd:$!gmtSettledEndFormat",
 	"gmtCreateStart:$!gmtCreateStartFormat","gmtCreateEnd:$!gmtCreateEndFormat",
 	"order:$!order","size:$!size"])
 
 <input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="bopsRoot" value="${env.bopsRoot}"/>
 <input type="hidden"  id="ddzBopsPage" value="taokeReportSettle"/>
 
 <div class="bops">
@@ -94,13 +77,23 @@
     			结算批号： <input  type="text" name="settleBatchno" value="$!settleBatchno" />
     			&nbsp;&nbsp;
     			支付宝 ：<input  type="text" name="settleAlipay" value="$!settleAlipay" />
+				&nbsp;&nbsp;
+				类型：
+				<select name="outcodeType">
+					<option value="" #if($outcodeType == "") selected #end>全部</option>
+	    			<option value="A" #if($outcodeType == "A") selected #end>（A）点点折</option>
+					<option value="B" #if($outcodeType == "B") selected #end>（B）点点折手动提现</option>
+					<option value="J" #if($outcodeType == "J") selected #end>（J）点点折集分宝</option>
+					<option value="U" #if($outcodeType == "U") selected #end>（U）豆蔻提现集分宝</option>
+				</select>
     			&nbsp;&nbsp;
         		结算状态：
         		<select name="settleStatus">
 	                <option value="" #if($settleStatus == "") selected #end>全部</option>
 	    			<option value="U" #if($settleStatus == "U") selected #end>未结算</option>
 	    			<option value="P" #if($settleStatus == "P") selected #end>结算中</option>
-	    			<option value="F" #if($settleStatus == "F") selected #end>失败</option>
+					<option value="JP" #if($settleStatus == "JP") selected #end>JFB结算中</option>
+	    			<option value="F" #if($settleStatus == "F") selected #end>失败</option>					
 	    			<option value="S" #if($settleStatus == "S") selected #end>成功</option>
 	    			<option value="C" #if($settleStatus == "C") selected #end>取消</option>
 	    			<option value="D" #if($settleStatus == "D") selected #end>延迟结算</option>
@@ -129,24 +122,18 @@
 			
     	</div>
     </form>
-	#if($settleResult.totalRecords > 0)
-	<form action="${env.bopsRoot}/bops/zhe/settle_sms_export.htm" method="get" id="exportSmsForm">
-		<input type="hidden" name="settleStatus" value="S"/>
-		<input type="hidden" name="format" value="txt"/>
-		<input type="hidden" name="settleBatchno" value="$!settleBatchno" />
-		<input  type="hidden" name="settleAlipay" value="$!settleAlipay" />
-		<input type="hidden" name="gmtSettledStart" value="$!gmtSettledStartFormat"/>
-		<input type="hidden" name="gmtSettledEnd"  value="$!gmtSettledEndFormat"/>
-		<input type="hidden" name="gmtCreateStart" value="$!gmtCreateStartFormat"/>
-		<input type="hidden" name="gmtCreateEnd"  value="$!gmtCreateEndFormat"/>
-		
-		<input type="submit" value="导出短信模板" />
-    </form>
-	#end
+	
+	<a href="javascript:;" class="yellow-btn jfb-settle-statistic-click"><span>导出积分宝结算模板</span></a>
+	<div class="jfb-settle-csv-export dd-hide">
+            <span>集分宝：<span class="jfb-count"></span></span>
+            <span>|</span>
+            <span>支付宝：<span class="alipay-count"></span></span>
+			<span><a href="${env.bopsRoot}/bops/zhe/export_jfb_settle_csv.htm" target="_blank" class="jfb-settle-csv-export-click">确定导出</a></span>
+	</div>
 	
 	#if($settleResult.totalRecords > 0)
 	
-    	#parse("/common/bops/zhe/reportPagination.vm")
+    	#parse("/common/bops/zhe/reportSettlePagination.vm")
 		
 		#if($order == "settle_fee--desc")
 			#set($sortStyle = "dbsort_desc")
@@ -165,10 +152,11 @@
                 <th width="70" class="settleFeeTitle"><a href="#if($order == 'settle_fee--desc') #SEARCH_URL(['order:settle_fee--asc']) #else #SEARCH_URL(['order:settle_fee--desc']) #end ">结算金额<span class="$sortStyle sortBtn"></span></a></th>
 				<th width="50">状态</th>
 				<th width="70">支付宝状态</th>
-				<th width="120">结算时间</th>
-				<th width="120">创建时间</th>
+				<th width="30">类型</th>
+				<th width="100">结算时间</th>
+				<th width="100">创建时间</th>
         		<th width="70">查看</th>
-				<th width="50">操作</th>
+				<th width="70">操作</th>
         	</tr>
         	
             #foreach($settle in $settleResult.items)
@@ -183,26 +171,20 @@
 					<td>
 						<div class="darkGray alipayBatchno" title="$!settle.alipayBatchno">$!settle.alipayBatchno</div>
 					</td>
-                    <td>$!settle.settleAlipay <a href="javascript:;" data-alipay="$!settle.settleAlipay"><img src="${env.ddzStaticroot}/img/info.png" title="点击查看支付宝详情"></img></a></td>
+                    <td>$!settle.settleAlipay 
+						<a href="javascript:;" data-alipay="$!settle.settleAlipay"><img src="${env.ddzStaticroot}/img/info.png" title="点击查看支付宝详情"></img></a>
+					</td>
 					<td>
-                        <span class="$settleColor B settleFee">&yen; $decimalUtils.format($!settle.settleFee,'0.00')</span>
+                        <span class="$settleColor B settleFee">
+							#if($settle.outcodeType == "J" || $settle.outcodeType == "U")
+                            <span class="jfb-icon10x10"></span>$!settle.settleJfb
+							#else
+							&yen; $decimalUtils.format($!settle.settleFee,'0.00')
+							#end
+						</span>
         			</td>
         			<td align="center">
-        				#if($settle.settleStatus == "U")
-        					<span class="$settleColor">未结算</span>
-        				#elseif($settle.settleStatus == "S")
-        					<span class="$settleColor">成功</span>
-        				#elseif($settle.settleStatus == "P")
-        					<span class="$settleColor">结算中</span>
-        				#elseif($settle.settleStatus == "F")
-        					<span class="$settleColor">失败</span>
-						#elseif($settle.settleStatus == "C")
-        					<span class="$settleColor">取消</span>
-        			    #elseif($settle.settleStatus == "D")
-        					<span class="$settleColor">延迟结算</span>
-        				#else
-        					<span class="settle_f">异常（$settle.settleStatus）</span>
-        				#end
+						#DDZ_REPORT_SETTLE($!settle.settleStatus)
         			</td>
 					<td align="center">
 						#if($settle.settleStatus == "F")
@@ -212,65 +194,71 @@
 						#end
 					</td>
 					<td align="center">
+						$!settle.outcodeType
+                    </td>
+					<td align="center">
                         <div>$!dateUtils.format($!settle.gmtSettled , 'yyyy-MM-dd HH:mm')</div>
     				</td>
     				<td align="center">
                         <div>$!dateUtils.format($!settle.gmtCreate , 'yyyy-MM-dd HH:mm')</div>
 						<div class="dd-hide">$!dateUtils.format($!settle.gmtModified , 'yyyy-MM-dd HH:mm')</div>
     				</td>
-        			<td align="center" class="updown-select-btn">
-        				<a href="javascript:;" data-settleId="$settle.id" data-trIndex="$velocityCount" data-settleDetail="">详情<span class="icon-pull-down">&nbsp;</span></a>
+        			<td align="" class="updown-select-btn" style="padding-left:10px;">
+        				<a href="javascript:;" class="L" data-settleId="$settle.id" data-trIndex="$velocityCount" data-settleDetail="">详情<span class="icon-pull-down">&nbsp;</span></a>
+						<span class="memo-icon L #if($settle.memo) memo-icon-active #end add-memo-click" data-memo="$!settle.memo" data-settle-id="$settle.id" style="margin:2px 0 0 8px;"></span>
         			</td>
-					<td align="center" class="ui-customize-select updown-select-btn">
-                        <div class="current-item" data-trIndex="$velocityCount"><a href="javascript:;">订正</a><span class="icon-pull-down">&nbsp;</span>
-							<div class="ui-customize-select-list dd-hide" style="margin:-18px 0 0 -4px;">
-                            	<ul class="normal-list">
-                            		<li class="first" dead="true" >
-                            			<span>订正状态</span>
-                            		</li>
-									
-                                    #if($!settle.settleStatus == 'U')
-									<li class="split" tips="所有操作都记录在案，请谨慎操作" data-settleTo="D" data-settleId="$!settle.id">
-										<span>延迟结算</span>
-									</li>
-                                    #end
-									#if($!settle.settleStatus != 'S')
-									<li class="split" tips="所有操作都记录在案，请谨慎操作" data-settleTo="S" data-settleId="$!settle.id">
-                            			<span>成功</span>
-                            		</li>
-									#end
-									#if($!settle.settleStatus != 'F')
-                            		<li class="split" tips="所有操作都记录在案，请谨慎操作" data-settleTo="F" data-settleId="$!settle.id">
-                            			<span>失败</span>
-                            		</li>
-									#end
-									#if($!settle.settleStatus == 'U' || $!settle.settleStatus == 'D')
-                                    <li class="split" tips="所有操作都记录在案，请谨慎操作" data-settleTo="C" data-settleId="$!settle.id">
-										<span>取消</span>
-									</li>
-									#end
-									#if($!settle.settleStatus == 'F' || $!settle.settleStatus == 'C' || $!settle.settleStatus == 'D')
-                                    <li class="split" tips="所有操作都记录在案，请谨慎操作" data-settleTo="U" data-settleId="$!settle.id">
-										<span>重新结算</span>
-									</li>
-									#end
-									<li class="last" dead="true">
-										<span></span>
-									</li>
-                            	</ul>
-                            </div>
-						</div>
+					<td align="center">
+						<div class="ui-customize-select updown-select-btn">
+                            <div class="current-item" data-trIndex="$velocityCount"><a href="javascript:;">订正</a><span class="icon-pull-down">&nbsp;</span>
+    							<div class="ui-customize-select-list dd-hide" style="margin:-18px 0 0 -4px;">
+                                	<ul class="normal-list">
+                                		<li class="first" dead="true" >
+                                			<span>订正状态</span>
+                                		</li>
+    									
+                                        #if($!settle.settleStatus == 'U')
+    									<li class="split" tips="所有操作都记录在案，请谨慎操作" data-settleTo="D" data-settleId="$!settle.id">
+    										<span>延迟结算</span>
+    									</li>
+                                        #end
+    									#if($!settle.settleStatus != 'S')
+    									<li class="split" tips="所有操作都记录在案，请谨慎操作" data-settleTo="S" data-settleId="$!settle.id">
+                                			<span>成功</span>
+                                		</li>
+    									#end
+    									#if($!settle.settleStatus != 'F')
+                                		<li class="split" tips="所有操作都记录在案，请谨慎操作" data-settleTo="F" data-settleId="$!settle.id">
+                                			<span>失败</span>
+                                		</li>
+    									#end
+    									#if($!settle.settleStatus == 'U' || $!settle.settleStatus == 'D')
+                                        <li class="split" tips="所有操作都记录在案，请谨慎操作" data-settleTo="C" data-settleId="$!settle.id">
+    										<span>取消</span>
+    									</li>
+    									#end
+    									#if($!settle.settleStatus == 'F' || $!settle.settleStatus == 'C' || $!settle.settleStatus == 'D' || $!settle.settleStatus == 'P')
+                                        <li class="split" tips="所有操作都记录在案，请谨慎操作" data-settleTo="U" data-settleId="$!settle.id">
+    										<span>重新结算</span>
+    									</li>
+    									#end
+    									<li class="last" dead="true">
+    										<span></span>
+    									</li>
+                                	</ul>
+                                </div>
+    						</div>
+                        </div>
 						
                     </td>
             	</tr>
 				<tr class="dd-hide taokeReportDetail" align="center" data-keepTrIndex="$velocityCount">
-                    <td colspan="11"></td>
+                    <td colspan="12"></td>
                 </tr>
         	#end
            
         </table>
         
-        #parse("/common/bops/zhe/reportPagination.vm")
+        #parse("/common/bops/zhe/reportSettlePagination.vm")
 	#else
 		没有查询到记录
 	#end
@@ -295,7 +283,25 @@
 
 <div id="J-select-tips-container" class="select-tips dd-hide">
 	<div class="content">安全提醒：自行编辑，非系统消息</div>
-	<div class="angle" style="top: 7px;"></div>
+	<div class="angle-right" style="top: 7px;"></div>
+</div>
+
+<div id="settle-memo-tips-container" class="select-tips dd-hide">
+	<div class="content">memo</div>
+	<div class="angle-top" style="top: -7px;left:20px;"></div>
+</div>
+
+<div id="add-settle-memo-dialog" class="settle-memo-dialog dd-hide" data-settle-id="">
+    <div class="settle-memo-dialog-head">
+		<a class="W_close_color layer_tips_close" href="javascript:;"></a>
+		<span>备注</span>
+	</div>
+    <div><textarea class="content"></textarea></div>
+	<div>
+        <span class="msg">请输入内容</span>
+		<a href="javascript:;" class="submit">提交</a>
+	</div>
+	<div class="angle-top"></div>
 </div>
 
 <script>

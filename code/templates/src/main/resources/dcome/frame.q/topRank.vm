@@ -1,0 +1,105 @@
+#set($page_nav = "rank")
+#set($layout="dcome/frame.q/default.vm")
+
+<input type="hidden" id="pageName" value="topRank" />
+
+<div class="rank-layer" id="rankLayer" style="display: none;">
+    <div class="head">
+	    <h2 class="title"><span class="time">昨日</span>榜单</h2>
+		<div class="hide-btn"></div>
+		<!--div class="more dd-r">
+		   &lt;
+		   <a class="prev" data-num="-1" href="javascript:;">前一天</a>
+		   &nbsp;|&nbsp;
+		   <a class="next" data-num="1" href="javascript:;">后一天</a>
+		   &gt;
+		</div-->
+	</div>
+	<div class="rank-wrap">
+		<div class="template" style="display:none">
+		    <li class="dd-l">
+			    <div class="rank-num dd-l">@rank@</div>
+				<div class="wish-info dd-l">
+				    <img class="item-pic dd-l" alt="" src="@item-pic@" />
+					<div class="info dd-l">
+						<div class="item-info">
+							<div class="title" style="">@item-title@</div>
+							<div class="price">&yen;@item-price@</div>
+						</div>
+						<div class="user-info">
+							<span class="name" style="">@user-name@</span>的愿望
+						</div>
+					</div>
+				</div>
+				<div class="rate dd-l">
+					<div><span class="rate-count" style="">@rate-count@</span>颗愿望星</div>
+					<div class="status">@status@</div>
+				</div>
+			</li>
+		</div>
+		<div class="loadding32x32"></div>
+	    <ul class="rank-list"></ul>
+	</div>
+</div>
+
+<div class="rank-cnt">
+	<div class="rank-top">
+		<div class="rank-logo"></div>
+		<div class="rank-countdown">
+			<div class="label">离今日开榜还有</div>
+			<div class="time" id="promotionRemainTime">23:59:59</div>
+		</div>
+		<a class="history-rank" href="javascript:;">昨日榜单</a>
+	</div>
+	<div class="rank-stripe"><span></span></div>
+	<div class="rank-list">
+		<ul class="prom-items">
+			#set($rowNO = 1)
+			#foreach($promItem in $!rankPromItems)
+			<li class="prom-item" data-rowno="$rowNO" data-rank="$!promItem.rank" data-promItemId="$!promItem.id">
+				<span class="rank-num #if($!promItem.rank < 6)top-rate#end"> $!promItem.rank. </span>
+				<a class="item-pic" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!promItem.itemId" gtrack='virtual/qq/item?tracelog=myWish&id=$!promItem.itemId'><img alt="" src="$!promItem.itemPic80x80"></a>
+				<div class="info">
+					<div class="item-title"><a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!promItem.itemId" gtrack='virtual/qq/item?tracelog=myWish&id=$!promItem.itemId'>$!promItem.itemTitle</a></div>
+					<div class="item-price">&yen;$!promItem.itemPrice</div>
+					<div class="">
+						<span class="user-name">$!promItem.userNick <span>想要</span></span>
+					</div>
+				</div>
+				<div class="rate">
+					<span class="rate-count">$!promItem.rateCount</span>愿望星
+				</div>
+			</li>
+			#set($rowNO = $rowNO + 1)
+			#end
+		</ul>
+	</div>
+	<div id="rank-template" class="dd-hide">
+		<li class="prom-item" data-rowno="@rowno@" data-rank="@rank@" data-promItemId="@promItemId@">
+			<span class="rank-num top-rate">@rank@</span>
+			<div class="item-pic">
+				<img alt="" src="@itemPic80x80@">
+			</div>
+			<div class="info">
+				<div class="item-title"><a href="">@itemTitle@</a></div>
+				<div class="item-price">&yen;@itemPrice@</div>
+				<div class="">
+					<span class="user-pic">
+						<img data-avatar-src="@avatarUrl@" data-avatar-size="50x50" />
+					</span>
+					<span class="user-name">@userNick@<span>想要</span></span>
+				</div>
+			</div>
+			<div class="rate">
+				<span class="rate-count">@rateCount@</span>愿望星
+			</div>
+		</li>
+	</div>
+	<div class="rank-more"></div>
+	 
+	<div class="cnt-pgc">
+		#parse("/common/dcome.qq/pgc_recommend.vm")
+	</div>
+	
+	<div class="bot">&nbsp;</div>
+</div>

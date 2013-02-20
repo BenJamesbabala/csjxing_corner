@@ -1,0 +1,109 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "淘宝客链接转换")
+
+<style>
+	.bops {
+		margin:50px;
+	}
+	
+	.search-input {
+        line-height: 30px;
+        width: 520px;
+        height: 30px;
+        color: #999;
+    }
+	
+	.search-input-label {
+		font-size:14px;
+		font-weight:bold;
+	}
+	
+	.search-input-submit {
+		width: 80px;
+		height: 30px;
+	}
+	
+	.search-input-mobile {
+		font-size:12px;
+		margin-left:10px;
+		margin-top:10px;
+	}
+	
+	.result-seperator {
+		border-top:2px solid #aaa;
+	}
+	
+	.item div {
+		margin:10px 0 ;
+	}
+	
+	.item .item-title {
+		
+	}
+	
+	.item .item-img {
+		border:1px solid #ddd;
+		width:140px;
+	}
+	
+	.item .click-url input {
+		width:500px;
+	}	
+	
+</style>
+
+<input type="hidden"  id="bopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="bopsPage" value="jfbSettleRecordList"/>
+
+<div class="bops">
+	
+	<form action="${env.bopsRoot}/bops/zhe/taoke_convert.htm" method="get" id="search_input_form">
+    
+		<div>
+			<span class="search-input-label">淘宝链接：</span>
+			<input type="text" name="wd" class="search-input" id="search_input"/>
+            <span><input type="submit" value="查询"/></span>
+		</div>
+		<div class="MT10 F12">
+			<span class="ML10 MR10">
+				<span>自定义参数（最长11位）：</span><input type="text" name="outCode" value="$!outCode"/> 
+			</span>
+        	<span class="search-input-mobile">
+        		<input type="checkbox" name="isMobileCheck" #if($isMobileCheck) checked #end/><span style="margin-left:5px;">移动端</span>
+        	</span>
+		</div>
+	</form>
+	#if($noCommission)
+        <div style="margin-left:10px;color:#ff0000;">该商品没有返利</div>
+		<div class="item">
+			<div class="click-url">url: <input type="text" value="$!wd"/> <a href="$!wd" target="_blank">查看</a></div>
+		</div>
+	#elseif($itemDTO)
+    <div class=""></div>
+	<div class="item">
+        <div class="item-img"><img src="$itemDTO.picUrl" width="140"></div>
+		<div class="item-title"><a href="$!itemDTO.clickUrl" target="_blank">$itemDTO.title</a></div>
+        <div class="click-url">url: <input type="text" value="$!itemDTO.clickUrl"/> <a href="$!itemDTO.clickUrl" target="_blank">查看</a></div>
+        <div class="price">
+            <span>价格：$!itemDTO.price</span>
+		</div>
+        <div>
+			<span>返利比例：$decimalUtils.formatTaobaoRatio($!itemDTO.commissionRate) %</span>
+			<span>返利金额：$!itemDTO.commission 元</span>
+		</div>
+    </div>
+	#end
+</div>
+	
+<script>
+!(function($){
+	$("#search_input_form").submit(function(){
+		var wd = $("#search_input").val();
+		if(wd == ''){
+			alert('请输入要查询的商品地址');
+			return false ;
+		}
+		return true ;
+	});
+})(jQuery);
+</script>

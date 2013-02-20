@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	#parse("/common/dcome.qq/head.vm")
+</head>
+<body>
+	
+	<div class="header" id="header">
+		<ul class="other">
+			<!--
+			<li><a href="#" title="会看前几天" class="lookback">会看前几天</a></li>
+			<li><a href="#" title="我来爆料" class="ido">我来爆料</a></li>
+			-->
+		</ul>
+		<a href="${env.root}/frame/q/index.htm" class="logo" title="豆蔻 - 美丽帮你挑">豆蔻</a>
+	</div>
+	<div class="content">
+		$screen_content
+		<div class="like-dialog dd-hide" id="ilikeDialog">
+        	<div class="dialog-content">
+        		<span class="content">已添加喜欢</span>
+        		<a href="javascript:;" class="add-comment dc-op-comment" title="多说两句">多说两句</a>
+        	</div>
+        </div>
+        
+        <div class="like-dialog dd-hide" style="width:400px;height:240px;" id="commentDialog">
+        	<div class="dialog-comment">
+        		<div class="title">豆蔻评论<a href="javascript:;" class="close"></a></div>
+        		<div class="dialog-comment-content">
+        			<textarea class="comment" placeholder="请输入您对该商品的感觉" data-maxlen="140"></textarea>
+        			<div>
+                        <span class="error"></span><span class="info"></span>
+        				<a href="javascript:;" class="submit" title="确定">确&nbsp;定</a>
+        			</div>
+        		</div>
+        	</div>	
+        </div>
+	</div>
+	<div class="footer">
+		<span>您的ID是$!dcAuthz.getExternalId()，如有问题请联系客服：vip@doucome.com&nbsp;&nbsp;版权所有&nbsp;&copy;&nbsp;豆蔻</span>
+	</div>
+	
+	
+	#parse("/common/dcome.qq/bottom.vm")
+	
+	#DC_QRES(["jquery-1.7.2-min.js","jquery.roundabout-2.4.2.js","index.js"])
+	
+	#if($loginSource == 'pengyou' || $loginSource == 'qzone') 
+	<script type="text/javascript" charset="utf-8" src="http://fusion.qq.com/fusion_loader?appid=100645865&platform=$!loginSource"></script>
+	#end
+	#DC_QRES(["qq.fusion2.adapter.js"])
+</body>
+</html>
+	

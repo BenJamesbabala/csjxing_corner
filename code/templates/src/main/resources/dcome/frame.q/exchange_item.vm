@@ -1,0 +1,75 @@
+#set($page_nav = "exchange")
+#set($layout="dcome/frame.q/default.vm")
+<div class="banner-config-init" data-banner-id="dc_exchange_top"></div>
+<div class="idx-cnt">
+	<div class="cnt-pgc">
+		<div class="">
+			<div class="waterfall">
+		    	<ul class="exchange-list" id="tiles">
+		    		#if($collectionUtils.isEmpty($exchangeItems))
+     		    	    <li>暂时还没有兑换商品数据，<a href="${env.root}/frame/q/index.htm" title="看看别的">去看看别的吧...</a></li>
+     		    	#else
+		    	    #foreach($exchange in $exchangeItems)
+		    	    	<li class="main dd-l">
+							<div class="item-info dd-l">
+							    <a class="img-wrap" gtrack="/virtual/qq/item?tracelog=exchange-offer-title&amp;id=$!exchange.itemId" title="$!exchange.itemTitle" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!exchange.itemId">
+								    <img width="220" height="220" class="item-pic" src="$!exchange.getPicUrl(0, '220x220')" alt="$!exchange.itemTitle">
+								</a>
+								<div class="other dd-l">
+								    <h3 class="title text-hide dd-l">
+									    <a gtrack="/virtual/qq/item?tracelog=exchange-offer-title&amp;id=$!exchange.itemId" title="$!exchange.itemTitle" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!exchange.itemId">$!exchange.itemTitle</a>
+									</h3>
+								    <span class="price dd-r">&yen;$!exchange.itemPriceFmt</span>
+								</div>
+							</div>
+							<div class="exchange-info dd-l">
+								<div class="integral-info dd-l">
+								    <div class="integral-wrap dd-l">
+									    <span class="lbl">需要</span>
+										<span class="ex-integral">$!exchange.exIntegral</span>
+										<span class="lbl">积分</span>
+								    </div>
+									<div class="cd-wrap dd-r">
+										#if($!exchange.scheduleValue != 'EN')
+											<span>还有</span>
+											<span class="rest-num">$!exchange.exCount</span>
+											<span>件</span>
+										#else
+										    <span>$!exchange.exSuccCount商品已兑完</span>
+										#end
+									</div>
+								</div>
+								#if($!exchange.scheduleValue == 'EN')
+								    <div class="exchange-bar exchange-end">
+										<div class="dd-r">TM兑换了</div>
+								    </div>
+							    #else
+							      <div class="exchange-bar dd-l">
+									  <a class="exchange-btn btn #if($!exchange.scheduleValue == 'ON')enable-btn#else disable-btn#end" href="javascript:;" data-exchange-id="$!exchange.id" data-exintegral="$!exchange.exIntegral">#if($!exchange.scheduleValue == 'ON')立即兑换#else即将开始#end</a>
+									  <a class="earn-integral-btn" href="javascript:;" title="赚积分" style="font-size: 10px;">积分不够？</a>
+							      </div>
+							    #end
+							</div>
+							<div class="ws-ft"></div>
+						</li>
+    	    		#end
+    	    		#end
+		    	</ul>
+		    </div>
+		</div>
+	</div>
+</div>
+
+<div class="ex-layer" style="display: none;">
+    <a class="close-btn" href="javascript:;"></a>
+    <dl class="content">
+	    <dt class="lbl"><span>兑换数量：</span></dt>
+		<dd class="ex-info">
+		    <span><input type="text" name="exNum" class="ex-num" value="1" title="请输入兑换数量"/></span>件
+			<span>(还有<span class="rest-num">2</span>件)</span>
+		</dd>
+	</dl>
+	<div class="info"></div>
+	<a class="confirm-btn btn" href="javascript:;" title="立即兑换" data-exchange-id="" data-exintegral="">立即兑换</a>
+	<div class="foot-shadow"></div>
+</div>

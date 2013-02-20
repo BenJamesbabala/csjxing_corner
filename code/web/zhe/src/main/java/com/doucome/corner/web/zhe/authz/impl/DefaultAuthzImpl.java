@@ -32,7 +32,13 @@ public class DefaultAuthzImpl implements DdzAuthz {
         if (accountDO == null) {
             String uid = authzContext.getUid();
             if (StringUtils.isNotEmpty(uid)) {
-                accountDO = ddzAccountService.queryAccountDOByUid(uid);
+            	DdzUserDO user = ddzUserService.getByUid(uid) ;
+            	if(user != null){
+            		String alipayId = user.getAlipayId() ;
+            		if(StringUtils.isNotBlank(alipayId)){
+            			accountDO = ddzAccountService.queryAccountDOByAlipayId(alipayId);
+            		}
+            	}
             } else {
                 String alipayId = authzContext.getAlipayId();
                 accountDO = ddzAccountService.queryAccountDOByAlipayId(alipayId);

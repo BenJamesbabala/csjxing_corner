@@ -4,11 +4,43 @@
 	#parse("/common/zhe/head.vm")
 </head>
 <body>
+	<div class="tixian-notify-dialog dd-hide" id="tixian-notify-dialog">
+		<div class="content">
+            <img src="${env.staticroot}/images/tixian_update.png"></img>
+		</div>
+		<div class="ikonw"><a href="javascript:;" class="tixian-ikonw-click">我知道了</a></div>
+	</div>
+	<div id="shadow-overlay" class="xbox-overlay-bg dd-hide"></div>
+	
+	<div id="xbox-mock" style="width: 600px; height: auto; top: 187px; left:409px;" class="ui-video-xbox ui-xbox-transparent dd-hide">
+		<div class="ui-xbox-action">
+			<a href="javascript:;" class="close-flash-xbox"></a>
+		</div>
+		<div class="ui-xbox-content">
+			<div class="ui-show-video">
+				<div class="flashXbox">
+					<object id="player" width="550" height="400" type="application/x-shockwave-flash" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+						<param value="flv=null" name="flashvars">
+						<param value="" name="movie" class="flash-src">
+						<param value="" name="src" class="flash-src">
+						<param value="transparent" name="wmode">
+						<param value="-1" name="play">
+						<param value="-1" name="loop">
+						<param value="high" name="quality">
+						<param value="always" name="allowscriptaccess">
+						<param value="scale" name="scale">
+						<param value="0" name="profileport">
+						<param value="all" name="allownetworking">
+						<param value="true" name="allowfullscreen">
+						<param value="true" name="swLiveConnect">
+						<embed allowfullscreen="true" width="550" height="400" wmode="transparent" swliveconnect="true" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" src="" class="flash-src" allowscriptaccess="always" flashvars="flv=null">
+					</object>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<div class="ddz">
-		<style>
-    		
-    	</style>
 		<div id="ddDialogOverlay" class="dd-hide dd-dialog-overlay"></div>
 		<form target="_blank" action="${env.ddzRoot}/zhe/shop.htm" method="get" id="ddBrandsIptAlipayForm">
     		<input type="hidden" name="sid" value="" class="brandsShopId"/>
@@ -45,9 +77,11 @@
     	</form>
 		
 		<input type="hidden" id="ddzRoot" value="${env.ddzRoot}" />
+		<input type="hidden" id="envRoot" value="${env.ddzRoot}" />
 		<input type="hidden" id="alipayAccount" value="$!alipayAccount" />
 		#parse("/common/zhe/top.vm")
 		#parse("/common/zhe/tools.vm")
+		<div class="banner-config-init" data-banner-id="ddz_top"></div>
 		<div id="content" class="w952 bglight content">
 			<div class="main">
 				<div class="dd-clr">
@@ -96,8 +130,8 @@
 	</div>
 	
 	#DDZ_JS(["lib/jquery-min.js","lib/common.js","home/control/widget/index.js"])
-	#DDZ_JS(["lib/jcarousel.js"])
+	<script src="http://a.tbcdn.cn/apps/top/x/sdk.js?appkey=12560096"></script>
+	#DDZ_JS(["home/control/widget/loadBanner.js"])
 	#parse("/common/zhe/google_analytics.vm")
-	
 </body>
 </html>

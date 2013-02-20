@@ -34,6 +34,21 @@
 		<from>/frame/q/qqLogin.(vm|do|action)\\?(.*)</from>
 		<to type="forward">/frame/q/qqLogin.htm?$2</to>
 	</rule>
-	
+	<rule>
+		<from>/frame/hs/qqLogin.(vm|do|action)\\?(.*)</from>
+		<to type="forward">/frame/hs/qqLogin.htm?$2</to>
+	</rule>
+	<rule>
+		<from>/frame/wryneck/qqLogin.(vm|do|action)\\?(.*)</from>
+		<to type="forward">/frame/wryneck/qqLogin.htm?$2</to>
+	</rule>
+	<rule>
+		<from>/frame/namefate/qqLogin.(vm|do|action)\\?(.*)</from>
+		<to type="forward">/frame/wryneck/qqLogin.htm?$2</to>
+	</rule>
+	<rule>
+		<from>/frame/namefate/index/(\w+)</from>
+		<to type="forward">/frame/namefate/index.htm?extId=$1</to>
+	</rule>
 </urlrewrite>
 

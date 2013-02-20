@@ -22,6 +22,33 @@ html {
     -moz-opacity:0.5;
 }
 
+.go-btn {
+	border: medium none;
+	cursor: pointer;
+	font-size: 15px;
+	font-weight: bold;
+	height: 35px;
+	line-height: 36px;
+	padding-bottom: 2px;
+	margin-right: 20px;
+	text-align: b;
+	display: inline-block;
+	color: white;
+	text-shadow: 1px 1px 1px #F30;
+	background-position: -2px -78px;
+	width: 202px;
+}
+
+.go-btn:hover {
+	color:#ffffff;
+	text-decoration: none;
+}
+
+.go-btn .small {
+	font-size:12px;
+	font-weight: normal;
+}
+
 .ddz {
 	text-align: center;
 }
@@ -58,6 +85,15 @@ html {
 	text-align: center;
 }
 
+.ddz .login-tip {
+	background-position: 0 0 ;
+	width:192px;
+	height:50px;
+	position: absolute;
+	left:-150px;
+	top:40px;
+}
+
 .ddz .header {
 	color: #c2ced2;
 	width: 100%;
@@ -79,6 +115,7 @@ html {
 	padding: 0;
 	height: 28px;
 	line-height: 28px;
+	position: relative;
 }
 
 .ddz .header-right {
@@ -198,9 +235,9 @@ html {
 }
 
 .ddz .main-result-ipt .item-ipt,.ddz .main-result-ipt .item-view {
+	position: relative;
 	margin-top: 5px;
-	float: left;
-	display: block;
+float: left;
 }
 
 .ddz .main-result-ipt .item-buy {
@@ -273,6 +310,7 @@ html {
 	margin: -2px 0 0 15px;
 	padding: 2px 0 0 0;
 	color: #ffffff;
+	font-family: Arial ;
 }
 
 .ddz .main-result-ipt .item-ipt .alipay-text-ipt {
@@ -331,8 +369,16 @@ html {
 	float: none;
 }
 
+.ddz .main-result-buy .item-buy .select-tips {
+	position: absolute;
+	left: 170px;
+	top: 225px;
+	font-weight: bold;
+}
+
 .ddz .main-result-buy .item-view {
 	height: 132px;
+	position: relative;
 }
 
 .ddz .main-result-buy .item-ipt {
@@ -357,6 +403,9 @@ html {
 	width: 235px;
 	text-align: left;
 	font-size: 14px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .ddz .main-result-buy .item-view .item-title-view a {
@@ -377,6 +426,28 @@ html {
 
 .ddz .main-result-buy .item-view .discount-rate-num-int-view {
 	font-size: 80px;
+}
+
+.ddz .main-result-buy .item-view .juhuasuan {
+	position: absolute;
+	left: 420px;
+	top: 60px;
+	width: 200px;
+	font-size: 14px;
+}
+
+.ddz .main-result-ipt .item-view .juhuasuan {
+	position: absolute;
+	top: 80px;
+	left: 156px;
+	width: 140px;
+	font-size: 14px;
+}
+
+.ddz .item-view .juhuasuan span{
+	font-family: arial;
+	font-size: 16px;
+	font-weight: bold;
 }
 
 .ddz .main-result-buy .item-view .discount-rate-num-float-view {
@@ -418,15 +489,28 @@ html {
 }
 
 .ddz .main-result-buy .item-view .item-price-origin-view {
-	float: left;
-	margin: 2px 0 0 0;
+	position: absolute;
+	left: 160px;
+	top: 65px;
 }
 
 .ddz .main-result-buy .item-view .item-price-discount-view {
-	float: left;
-	margin: 2px 0 0 15px;
+	position: absolute;
+	left: 250px;
+	top: 62px;
 	padding: 2px 0 0 0;
 	color: #ffffff;
+	font-family: Arial ;
+}
+
+
+.ddz .main-result-buy .item-view .select-tips {
+	position: absolute;
+	left: 60px;
+	top: 105px;
+	width: 160px;
+	font-size: 10px;
+	padding: 2px 5px;
 }
 
 .ddz .main-result-buy .item-buy .alipay-text-buy {
@@ -452,9 +536,7 @@ html {
 }
 
 .ddz .main-result-buy .item-buy .item-buy-url a {
-	font-size: 14px;
-	color: #f45e29;
-	margin-left: -60px;
+
 }
 
 .ddz .main-result-buy .item-buy .item-buy-go {
@@ -468,6 +550,10 @@ html {
 	background-position: 0 -600px;
 	width: 108px;
 	height: 25px;
+}
+
+.ddz .item-price-discount .commission-label {
+	font-size:12px;
 }
 
 /**list**/
@@ -1243,4 +1329,211 @@ html {
 	text-align: left;
 	top: 120px;
 	z-index: 9999;
+}
+
+
+.select-tips {
+	background-color: #FEFECC;
+	border: 1px solid #EEEE99;
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+	font-family: Arial;
+	padding: 4px 8px;
+	position: absolute;
+	width: 200px;
+	z-index: 99;
+	font: 12px/1.5 tahoma, arial, ËÎÌו;
+	color: #4D4D4D;
+}
+
+
+.price-tips {
+	background-color: #FEFECC;
+	border: 1px solid #EEEE99;
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+	font-family: Arial;
+	padding: 4px 8px;
+	position: absolute;
+	width: 200px;
+	z-index: 99;
+	font: 12px/1.5 tahoma, arial, ËÎÌו;
+	color: #4D4D4D;
+}
+
+.angle-right {
+	background-position: 0 0;
+	height: 13px;
+	position: absolute;
+	width: 7px;
+	z-index: 1;
+	right: -7px;
+}
+
+.angle-top {
+	background-position: 0 0;
+	height: 13px;
+	position: absolute;
+	width: 15px;
+	z-index: 1;
+	right: -7px;
+}
+
+.xbox-overlay-bg {
+	position: absolute;
+	z-index: 997;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: black;
+	filter: alpha(opacity=50);
+	-moz-opacity: .50;
+	opacity: .50;
+}
+
+.tixian-notify-dialog {
+	width:480px;
+	height:400px;
+	position: absolute;
+	z-index: 998;
+	background-color: #ffffff;
+	font-size:24px ;
+	padding: 20px;
+	left:400px;
+	top:200px;
+	border:6px solid #999;
+}
+
+.tixian-notify-dialog .title {
+	color: #d7570b;
+	text-align: center;
+}
+
+.tixian-notify-dialog .content {
+	color:2b8ce6;
+	font-size:22px ;
+	height:360px;
+	clear:both;
+}
+
+.tixian-notify-dialog .ikonw {
+	text-align: right;
+}
+
+.tixian-notify-dialog .ikonw a {
+	margin-right:20px;
+}
+
+.ddz-shadow {
+	position: absolute;
+    z-index: 990;
+    top: 190px;
+    left: 215px;
+    width: 635px;
+    height: 250px;
+    background-color: #000;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+
+.ddz-shadow .loading {
+	margin-top:100px;
+}
+
+.ddz-shadow .loading-text {
+	font-size:16px;
+	font-weight:bold;
+	color:#fff;
+}
+
+.ddz .item-price-view .rumour {
+	border: 1px solid #F69696;
+	margin-top: 3px;
+	_margin-bottom: 5px;
+	font-size: 12px;
+	display: inline-block;
+	padding: 0 5px 0 0;
+	line-height: 20px;
+	height: 20px;
+	background: #FCC;
+	color: #666;
+}
+
+.ddz .item-price-view .rumour i{
+	background-position: 0 -98px;
+	width: 16px;
+	height: 20px;
+	margin: 0 5px;
+	vertical-align: middle;
+	float: left;
+}
+
+
+.ddz .main-result-buy .item-price-view .rumour { 
+	position: absolute;
+	top:90px;
+	left:160px;
+}
+
+.ddz .main-result-ipt .item-price-view .rumour { 
+	position: absolute;
+	top:210px;
+	left:40px;
+}
+
+.ui-video-xbox {
+	position: absolute;
+	background: white;
+	z-index: 1002;
+	color: black;
+	text-align: left;
+	top: 16%;
+	left: 30%;
+	width: 600px;
+	background: none;
+	overflow: visible;
+}
+
+.ui-video-xbox .ui-xbox-action {
+	right: 10px;
+	top: 4px;
+}
+
+.ui-video-xbox .close-flash-xbox {
+	height: 37px;
+	width: 33px;
+	position: absolute;
+	top: 15px;
+	right: 0px;
+	cursor: pointer;
+	z-index: 2;
+}
+
+.ui-video-xbox .ui-show-video {
+	width: 600px;
+	height: 440px;
+	z-index: 1;
+	position: absolute;
+}
+
+.ui-video-xbox .flashXbox {
+	width: 550px;
+	height: 400px;
+	position: absolute;
+	left: 18px;
+	top: 21px;
+}
+
+.dd-item-main .jfb-icon img {
+	margin:0 0 -1px 5px ;
+}
+
+.ddz .jfb_study {
+	color:#666;
+	margin-top:10px;
+}
+
+.ddz .jfb_study a {
+	color:#999;
 }

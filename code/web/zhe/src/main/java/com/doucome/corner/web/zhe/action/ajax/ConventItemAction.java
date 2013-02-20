@@ -18,7 +18,7 @@ import com.doucome.corner.web.common.utils.TaobaoUrlUtils;
 
 /**
  * 转换商品接口
- * @author shenjia.caosj 2012-3-8
+ * @author langben 2012-3-8
  *
  */
 @SuppressWarnings("serial")

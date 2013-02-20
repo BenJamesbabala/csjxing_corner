@@ -1,0 +1,30 @@
+#set($page_nav = "index")
+#set($layout="horoscope/frame.hs/default.vm")
+
+<div class="content dd-l">
+	#if($collectionUtils.isEmpty($hsTopics))
+	    <div class="topic">
+		    <div class="lbl"></div>
+	        <div class="title">暂时还没有星语分享呢~~~</div>
+	        <div class="empty-placehold"></div>
+	    </div>
+	#else
+	    #foreach($hsTopic in $hsTopics)
+	    <div class="topic">
+		    <div class="lbl"></div>
+	        <div class="title">$!hsTopic.title</div>
+		    <div class="detail">
+			    <div class="placehold dd-l"></div>
+		        <div class="text">$!hsTopic.content</div>
+			    <div class="picture" data-share-pic="$!hsTopic.getPicUrl('220x220')" style="height: $!{hsTopic.picModel.height}px">
+			        <img src="$env.itemUploadedRoot$!hsTopic.picModel.path" width="$!hsTopic.picModel.width" min-height="$!hsTopic.picModel.height" alt="星语图示" />
+			    </div>
+		    </div>
+			<div class="toolbar dd-l">
+				 <a class="invite-btn btn" href="javascript:;" title="邀请好友">邀请好友</a>
+				 <a class="share-btn btn" href="javascript:;" title="分享">分享</a>
+			 </div>
+	    </div>
+	    #end
+    #end
+</div>

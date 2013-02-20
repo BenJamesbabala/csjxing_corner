@@ -12,8 +12,7 @@
 	default-autowire="byName">
 
 
-	<!-- Sync report -->
-	<bean id="syncReportTaskService" class="com.doucome.corner.task.zhe.syncReport.SyncReportTaskService"></bean>
+	
 	<!-- 
 	<bean id="syncReportJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" autowire="no">
 		<property name="targetObject" ref="syncReportTaskService" />

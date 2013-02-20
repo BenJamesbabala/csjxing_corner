@@ -1,0 +1,131 @@
+#set($page_nav = "index")
+#set($layout="null.vm")
+
+
+<html>
+	<head>
+		<meta charset="GBK">
+        <title>#if($title && $title != "") $title - #end 豆蔻 - 歪脖子 </title>
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+        <meta name="keywords" content="豆蔻,头像,女人,美丽" />
+        <meta name="description" content="歪脖子是一款生活娱乐类应用。在这里你可以找到专属自己的歪脖子形像。#if($title && $title != "")豆蔻-$title#end"/>
+        #RESOURCE(["dcome/common.css","dcome/wryneck/index.css"])
+    </head>
+	
+    <body>
+		
+		<input type="hidden" id="envRoot" value="${env.wryneckRoot}" />
+		<input type="hidden" id="picUploadedRoot" value="${env.picUploadedRoot}" />
+		<input type="hidden" id="userId" value="$!user.userId" />
+		
+    	<div class="dc-body">
+			<div class="head">
+				
+				<div class="logo">
+    				#if($user.wryneckTestModel)
+                    <div><img src="${env.picUploadedRoot}/wryneck/$!{user.wryneckTestModel.name}.jpg_80x80.jpg"></img></div>
+                    <div class="logo-label">
+                        <span class="my-wryneck-text">$!user.wryneckTestModel.showText</span>
+					</div>
+    				#else
+                    <div><img src="${env.staticroot}/dcome/wryneck/images/logo.png"></img></div>
+    				#end
+				</div>
+				
+                <div class="slogan">
+                    <div>歪脖子拯救地球</div>
+					<div class="sub-slogan">这时节，不歪脖子一下，都好像对地球缺少贡献..</div>
+				</div>
+				
+			</div>
+			<div class="main-body">
+				 
+				#if($user.wryneckTestModel)
+                    <div class="download-guide"> &nbsp;<span class="gt">>></span>&nbsp;在下面找到你喜欢的歪脖子头像并下载</div>
+                	<div class="pic-list">
+        				<ul>
+                    	#foreach($index in [1..96])
+                            <li data-name="${index}.jpg" title="下载完整头像" gtrack="/vitual/wryneck/download?id=$index">
+                                <div class="cover">&nbsp;</div>
+    							<img src="${env.picUploadedRoot}/wryneck/${index}.jpg_50x50.jpg"/>
+    						</li>
+        				#end
+                        </ul>
+                	</div>
+    				<div class="pic-list">
+        				<ul>
+                    	#foreach($index in [1..62])
+                            <li data-name="ql/${index}.jpg" title="下载完整头像" gtrack="/vitual/wryneck/download?id=ql-$index">
+    							<div class="cover">&nbsp;</div>
+    							<img src="${env.picUploadedRoot}/wryneck/ql/${index}.jpg_50x50.jpg"/>
+    						</li>
+        				#end
+                        </ul>
+                	</div>
+				#else
+					<div class="test">
+    					<div class="test-pic-list">
+    						<ul>
+                                <li><img src="${env.picUploadedRoot}/wryneck/8.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/10.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/12.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/14.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/16.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/18.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/20.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/22.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/24.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/26.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/28.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/30.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/32.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/34.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/36.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/38.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/40.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/42.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/44.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/46.jpg_80x80.jpg"/></li>
+    							<li><img src="${env.picUploadedRoot}/wryneck/48.jpg_80x80.jpg"/></li>
+    						</ul>
+    					</div>
+                        
+    					<a class="test-btn test-btn-click" href="javascript:;" gtrack="/virtual/wryneck/test"><span class="label">测测你是哪种歪脖子</span><b class="cheap-sale">开始测试</b></a>
+    					
+    				</div>
+				#end
+				
+            </div>
+		</div>
+        
+		<div class="blank-wrap">&nbsp;</div>
+	
+        <div class="ad">
+    		<script type="text/javascript"> 
+            alimama_pid="mm_30820461_3408416_11202693"; 
+            alimama_width=728; 
+            alimama_height=90; 
+            </script> 
+            <script src="http://a.alimama.cn/inf.js" type="text/javascript"> </script>
+		</div>
+	
+		<div class="blank-wrap">&nbsp;</div>
+		
+		<div class="foot" style="text-align: center;">
+			<span>您的ID是$!user.getExternalId()，如有问题请联系客服：vip@doucome.com&nbsp;&nbsp;版权所有&nbsp;&copy;&nbsp;豆蔻</span>
+		</div>
+	    <script type="text/javascript" charset="utf-8" src="http://fusion.qq.com/fusion_loader?appid=100680474&platform=qzone"></script>
+	    #DC_QRES(["jquery-1.7.2-min.js"])
+	    #RESOURCE(["dcome/wryneck/qq.fusion2.adapter.js","dcome/common.js","dcome/wryneck/index.js"])
+		
+		#parse("/common/dcome/google_analytics_qzonapps.vm")
+		
+		
+    </body>
+	
+</html>
+
+
+
+	

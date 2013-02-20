@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="spiderItem">
+	<typeAlias alias="TA-SPIDER-ITEM"
+		type="com.doucome.corner.biz.dal.dataobject.SpiderItemDO" />
+
+	<resultMap id="RM-SPIDER-ITEM" class="TA-SPIDER-ITEM">
+		<result property="id" column="ID" />
+		<result property="spiderFrom" column="SPIDER_FORM" jdbcType="VARCHAR" />
+		<result property="extId" column="EXT_ID" jdbcType="VARCHAR" />
+		<result property="itemId" column="ITEM_ID"/>
+		<result property="picUrl" column="PIC_URL" jdbcType="VARCHAR" />
+		<result property="category" column="CATEGORY" jdbcType="VARCHAR" />
+		<result property="price" column="PRICE"/>
+		<result property="rate" column="RATE"/>
+		<result property="commission" column="COMMISSION"  />
+		<result property="volume" column="VOLUME" />
+		<result property="creditScore" column="CREDIT_SCORE" />
+		<result property="title" column="TITLE" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertItem">
+		INSERT INTO SPIDER_ITEM
+			(ID,SPIDER_FORM,EXT_ID,ITEM_ID,PIC_URL,PRICE,RATE,COMMISSION,VOLUME,CREDIT_SCORE,TITLE,CATEGORY,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#spiderFrom#,#extId#,#itemId#,#picUrl#,#price#,#rate#,#commission#,#volume#,#creditScore#,#title#,#category#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="countItems" resultClass="java.lang.Long">
+	 	select count(*)
+	 	from SPIDER_ITEM
+		<dynamic>
+            <isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="id" prepend="AND">
+				    ID = #id#
+				</isNotEmpty>
+				<isNotEmpty property="gmtModifyStart" prepend="AND">
+					<![CDATA[
+				    GMT_MODIFIED >= #gmtModifyStart#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtModifyEnd" prepend="AND">
+					<![CDATA[
+				    GMT_MODIFIED <= #gmtModifyEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="priceStart" prepend="AND">
+					<![CDATA[
+				    PRICE >= #priceStart#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="priceEnd" prepend="AND">
+					<![CDATA[
+				    PRICE <= #priceEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="creditStart" prepend="AND">
+					<![CDATA[
+				    CREDIT_SCORE >= #creditStart#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="creditEnd" prepend="AND">
+					<![CDATA[
+				    CREDIT_SCORE <= #creditEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="volumeStart" prepend="AND">
+					<![CDATA[
+				    VOLUME >= #volumeStart#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="volumeEnd" prepend="AND">
+					<![CDATA[
+				    VOLUME <= #volumeEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="commissionStart" prepend="AND">
+					<![CDATA[
+				    RATE >= #commissionStart#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="commissionEnd" prepend="AND">
+					<![CDATA[
+				    RATE <= #commissionEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="category" prepend="AND">
+					<![CDATA[
+				    category = #category#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="categoryKeywords" prepend="AND">
+				    CATEGORY like CONCAT('%', #categoryKeywords#, '%')
+				</isNotEmpty>
+				<isNotEmpty property="keywords" prepend="AND">
+				    TITLE like CONCAT('%', #keywords#, '%')
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+	</select>
+	
+	<select id="queryItemByItemId" resultMap="RM-SPIDER-ITEM">
+	 	select ID,SPIDER_FORM,EXT_ID,ITEM_ID,PIC_URL,PRICE,RATE,COMMISSION,VOLUME,CREDIT_SCORE,TITLE,CATEGORY,GMT_CREATE,GMT_MODIFIED
+	 	from SPIDER_ITEM
+	 	where ITEM_ID= #itemId#
+	</select>
+	
+	<select id="searchItems" resultMap="RM-SPIDER-ITEM">
+	 	select ID,SPIDER_FORM,EXT_ID,ITEM_ID,PIC_URL,PRICE,RATE,COMMISSION,VOLUME,CREDIT_SCORE,TITLE,CATEGORY,GMT_CREATE,GMT_MODIFIED
+	 	from SPIDER_ITEM
+		<dynamic>
+            <isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="id" prepend="AND">
+				    ID = #id#
+				</isNotEmpty>
+				<isNotEmpty property="gmtModifyStart" prepend="AND">
+					<![CDATA[
+				    GMT_MODIFIED >= #gmtModifyStart#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtModifyEnd" prepend="AND">
+					<![CDATA[
+				    GMT_MODIFIED <= #gmtModifyEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="priceStart" prepend="AND">
+					<![CDATA[
+				    PRICE >= #priceStart#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="priceEnd" prepend="AND">
+					<![CDATA[
+				    PRICE <= #priceEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="creditStart" prepend="AND">
+					<![CDATA[
+				    CREDIT_SCORE >= #creditStart#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="creditEnd" prepend="AND">
+					<![CDATA[
+				    CREDIT_SCORE <= #creditEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="volumeStart" prepend="AND">
+					<![CDATA[
+				    VOLUME >= #volumeStart#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="volumeEnd" prepend="AND">
+					<![CDATA[
+				    VOLUME <= #volumeEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="commissionStart" prepend="AND">
+					<![CDATA[
+				    RATE >= #commissionStart#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="commissionEnd" prepend="AND">
+					<![CDATA[
+				    RATE <= #commissionEnd#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="category" prepend="AND">
+					<![CDATA[
+				    category = #category#
+				     ]]>
+				</isNotEmpty>
+				<isNotEmpty property="categoryKeywords" prepend="AND">
+				    CATEGORY like CONCAT('%', #categoryKeywords#, '%')
+				</isNotEmpty>
+				<isNotEmpty property="keywords" prepend="AND">
+				    TITLE like CONCAT('%', #keywords#, '%')
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+		<isEqual property="orderBy" compareValue="rate">
+		    ORDER BY RATE DESC, GMT_MODIFIED DESC
+		</isEqual>
+		<isEqual property="orderBy" compareValue="price">
+		    ORDER BY PRICE DESC, GMT_MODIFIED DESC
+		</isEqual>
+		<isEmpty property="orderBy" prepend="time">
+			ORDER BY GMT_MODIFIED DESC
+		</isEmpty>
+		LIMIT 
+			#start#, #size#
+	</select>
+</sqlMap>

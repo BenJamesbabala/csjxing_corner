@@ -66,4 +66,17 @@ public class CalendarUtils {
 		}
 		return cal.get(Calendar.MILLISECOND) ;
 	}
+	
+	private static final int[] CALENDAR_FIELDS = {Calendar.MILLISECOND, Calendar.SECOND, Calendar.MINUTE,
+		  Calendar.HOUR_OF_DAY, Calendar.DAY_OF_MONTH};
+	
+	public static boolean trimTo(Calendar calendar, int calendarField) {
+		for (int field: CALENDAR_FIELDS) {
+			calendar.set(field, 0);
+			if (field == calendarField) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

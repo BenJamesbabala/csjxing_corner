@@ -1,0 +1,55 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="frame-namefate" namespace="/frame/namefate" extends="default">
+		<interceptors>
+            <interceptor-stack name="namefateDefaultStack">
+				 <interceptor-ref name="cornerDefaultStack" />
+				 <interceptor-ref name="setNamefateContextInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<action name="qqLogin" class="com.doucome.corner.web.namefate.action.NamefateQqLoginAction">
+			<interceptor-ref name="namefateDefaultStack" />
+			<result name="success" type="redirect">/frame/namefate/index.htm</result>
+		</action>
+		
+		<action name="index" class="com.doucome.corner.web.namefate.action.NamefateIndexAction">
+		    <interceptor-ref name="namefateDefaultStack" />
+			<result name="success" type="velocity">/namefate/index.vm</result>
+			<result name="list" type="velocity">/namefate/trickList.vm</result>
+		</action>
+		
+		<action name="trick_result" class="com.doucome.corner.web.namefate.action.NamefateTrickResultAction">
+		    <interceptor-ref name="namefateDefaultStack" />
+			<result name="success" type="velocity">/namefate/trickResult.vm</result>
+		</action>
+		
+		<action name="trick_list" class="com.doucome.corner.web.namefate.action.NamefateTrickListAction">
+		    <interceptor-ref name="namefateDefaultStack" />
+			<result name="success" type="velocity">/namefate/trickList.vm</result>
+		</action>
+		
+	</package>
+	
+	<package name="frame-namefate-remote" namespace="/frame/namefate/remote" extends="struts-json">
+		<interceptors>
+            <interceptor-stack name="namefateDefaultStack">
+				 <interceptor-ref name="cornerDefaultStack" />
+				 <interceptor-ref name="setNamefateContextInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<action name="namefate_trick_ajax" class="com.doucome.corner.web.namefate.action.ajax.NamefateTrickAjaxAction">
+			<interceptor-ref name="namefateDefaultStack" />
+			<result name="success" type="json2"></result>
+		</action>
+		
+		<action name="is_qzone_fans_ajax" class="com.doucome.corner.web.namefate.action.ajax.NamefateQzoneAjaxAction" method="isQzoneFans">
+			<interceptor-ref name="namefateDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+	</package>
+</struts>

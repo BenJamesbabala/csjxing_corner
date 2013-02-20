@@ -1,0 +1,16 @@
+<div class="pagination" id="pagination">
+	#parse("/common/bops/_pagination.vm")
+	<form method="get" action="$searchUrl" id="form_page">
+		<input  type="hidden" name="promotionId" value="$!promotionId" />
+		<input type="hidden" name="sendStatus" value="$!sendStatus" />
+		<input type="hidden" name="reviewStatus" value="$!reviewStatus" />
+		<input type="hidden" name="userId" value="$!userId" />
+		<input type="hidden" name="checkCode" value="$!checkCode" />
+		<input type="hidden" name="promotionType" value="$!promotionType" />
+		
+		<div class="page-op">
+    		<span class="total-page">共 $totalPages 页</span>到<input type="text" name="page" value="$!curPage">页
+    		<input type="submit" value="确定">
+    	</div>
+    </form>
+</div>

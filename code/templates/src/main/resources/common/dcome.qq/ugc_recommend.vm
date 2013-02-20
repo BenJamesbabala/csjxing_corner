@@ -1,0 +1,32 @@
+<div class="dd-hide" id="ugcItemTemplate">			
+	<li class="image-list-item">
+		<div class="bd">
+			<a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item_id@" @gtrack@='/virtual/qq/item?tracelog=pgc-offer-img&id=@item_id@' title="@item_title@">
+				<img  width="220" height="220" alt="@item_title@" @src@="@item_url@" class="item-pic">
+			</a>
+			<div class="user-info">
+				<span class="dd-l">
+				  <img data-avatar-size="30x30" data-avatar-src="@avatar_url@">
+				</span>
+				<span class="creator-nick text-hide"><span class="@color_pink@">@creator_nick@</span> 推荐</span>
+			</div>
+			<h3 class="title text-hide"><a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item_id@" title="@item_title@" @gtrack@='/virtual/qq/item?tracelog=pgc-offer-title&id=@item_id@'>@item_title@</a></h3>
+		</div>
+		<div class="ft">
+			<div class="info nowrap">
+				<span class="price @price-through@">&yen;@item_price@</span>
+				<span class="@promtion-price-display@">
+					<span class="only-price-tit">特价</span><span class="price only-price"><span class="rmb">&yen;</span><span>@promotion-price-integer@.</span><span class="price-small">@promotion-price-fraction@</span></span>
+                </span>
+			</div>
+		
+			<div class="button-bar">
+				<div class="side">
+                    <p class="rebate-info @integral-display@">购买获赠<span class="integral">@integralCount@</span>积分</p>
+				</div>
+				<a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item_id@" class="btn btn-danger" title="去购买" data-item-id="@item_id@" @gtrack@='/virtual/qq/item?tracelog=pgc-offer-buy&id=@item_id@'>去购买</a>
+			</div>
+		</div>
+    </li>
+</div>
+<div class="more-btn dd-hide" id="waterfallUgcMore"><a href="javascript:;" class="waterfallMore"></a></div>

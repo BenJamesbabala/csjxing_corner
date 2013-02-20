@@ -33,7 +33,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * 结算短信xls导出
- * @author shenjia.caosj 2012-6-17
+ * @author langben 2012-6-17
  *
  */
 @SuppressWarnings("serial")

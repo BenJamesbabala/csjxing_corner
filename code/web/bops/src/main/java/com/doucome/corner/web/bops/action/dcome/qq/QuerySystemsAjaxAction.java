@@ -12,7 +12,7 @@ import com.doucome.corner.web.bops.model.JsonModel;
 
 /**
  * ²éÑ¯ÏµÍ³APP
- * @author shenjia.caosj 2012-7-26
+ * @author langben 2012-7-26
  *
  */
 @SuppressWarnings("serial")

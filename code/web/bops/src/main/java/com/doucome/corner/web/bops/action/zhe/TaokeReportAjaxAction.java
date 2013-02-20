@@ -7,20 +7,20 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
-import com.doucome.corner.biz.zhe.model.TaobaokeReportFacade;
+import com.doucome.corner.biz.zhe.model.DdzTaokeReportDTO;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportService;
 import com.doucome.corner.web.bops.action.BopsBasicAction;
 import com.doucome.corner.web.bops.model.JsonModel;
 
 /**
  * 
- * @author shenjia.caosj 2012-4-22
+ * @author langben 2012-4-22
  *
  */
 @SuppressWarnings("serial")
 public class TaokeReportAjaxAction extends BopsBasicAction{
 
-	private JsonModel<List<TaobaokeReportFacade>> json = new JsonModel<List<TaobaokeReportFacade>>();
+	private JsonModel<List<DdzTaokeReportDTO>> json = new JsonModel<List<DdzTaokeReportDTO>>();
 	
 	/**
 	 * 批量修改的Report id
@@ -41,9 +41,9 @@ public class TaokeReportAjaxAction extends BopsBasicAction{
 		}
 	
 		List<DdzTaokeReportDO> reportResult = ddzTaokeReportService.getReportsBySettleId(Integer.valueOf(settleId)) ;
-		List<TaobaokeReportFacade> facadeList = new ArrayList<TaobaokeReportFacade>() ;
+		List<DdzTaokeReportDTO> facadeList = new ArrayList<DdzTaokeReportDTO>() ;
 		for(DdzTaokeReportDO report : reportResult){
-			facadeList.add(new TaobaokeReportFacade(report)) ;
+			facadeList.add(new DdzTaokeReportDTO(report)) ;
 		}
 		json.setCode(JsonModel.CODE_SUCCESS) ;
 		json.setData(facadeList) ;
@@ -56,7 +56,7 @@ public class TaokeReportAjaxAction extends BopsBasicAction{
 		this.settleId = settleId;
 	}
 
-	public JsonModel<List<TaobaokeReportFacade>> getJson() {
+	public JsonModel<List<DdzTaokeReportDTO>> getJson() {
 		return json;
 	}
 	

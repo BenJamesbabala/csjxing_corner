@@ -1,0 +1,73 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "星话题列表")
+
+<input type="hidden"  id="hsBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="hsBopsPage" value="topic_list"/>
+
+<style>
+</style>
+
+#set($pagination = $hsTopicQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/hs/topic_list.htm?")
+#set($searchQuery = ["gmtDay:$!gmtDay"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/dcome/hs/topic_list.htm" method="GET">
+		<div class="settleipt MB10 MT10">
+			星话题日期：<input name="gmtDay" value="$!dateUtils.format($!gmtDay, 'yyyy-MM-dd')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate"/>
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	<div class="MB20 MT20"><a href="${env.bopsRoot}/bops/dcome/hs/topic.htm" target="_blank">新增星语</a></div>
+	
+		
+	#parse("/common/bops/dcome.hs/hsFatePagination.vm")
+	
+	 <table width="1000" style="font-size:14px;" id="hsTopicTable" class="hs-table">
+		<tr>
+			<th width="25">ID</th>
+			<th>星话题名称</th>
+    		<th>概述</th>
+			<th>图片</th>
+			<th width="70">星话题日期</th>
+			<th width="70">创建日期</th>
+			<th width="70">操作</th>
+    	</tr>
+		#if($hsTopicQuery.totalRecords > 0)
+    		#foreach($hsTopic in $hsTopicQuery.items)
+            	<tr data-index="$!hsTopic.id">
+					<td>$!hsTopic.id</td>
+					<td>$!hsTopic.title</td>
+            		<td style="position: relative;">
+            			<div class="desc">$!hsTopic.content</div>
+            			<div class="detail dd-hide">$!hsTopic.content</div>
+            		</td>
+                    <td align="center">
+                        <img src ="$env.itemUploadedRoot$!hsTopic.picModel.path" width="80" height="80" alt="星话题图片" />
+                    </td>
+                    <td align="center">$!dateUtils.format($!hsTopic.gmtDay , 'yyyy-MM-dd')</td>
+					<td align="center">$!dateUtils.format($!hsTopic.gmtCreate , 'yyyy-MM-dd')</td>
+					<td>
+						<a href="${env.bopsRoot}/bops/dcome/hs/topic.htm?id=$!hsTopic.id" target="_blank">修改</a>
+						<a class="delete-topic-btn" href="javascript:;" title="删除">删除</a>
+					</td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="7">没有查询到记录$hsTopicQuery.totalRecords</td></tr>
+		#end
+     </table>
+	 #parse("/common/bops/dcome.hs/hsFatePagination.vm")
+	
+</div>
+#DDZ_JS(["../bops/hs/bops.js"])
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

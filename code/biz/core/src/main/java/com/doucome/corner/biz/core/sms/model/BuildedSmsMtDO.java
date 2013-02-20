@@ -2,9 +2,9 @@ package com.doucome.corner.biz.core.sms.model;
 
 import java.io.Serializable;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
-public class BuildedSmsMtDO extends AbstractModel implements Serializable {
+public class BuildedSmsMtDO extends AbstractModel {
 
 	private static final long serialVersionUID = -3698994591791564878L;
 

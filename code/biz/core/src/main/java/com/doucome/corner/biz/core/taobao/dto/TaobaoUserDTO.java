@@ -2,7 +2,7 @@ package com.doucome.corner.biz.core.taobao.dto;
 
 import java.util.Date;
 
-import com.doucome.corner.biz.core.utils.ReflectUtils;
+import com.doucome.corner.biz.common.utils.ReflectUtils;
 import com.taobao.api.domain.User;
 
 public class TaobaoUserDTO {

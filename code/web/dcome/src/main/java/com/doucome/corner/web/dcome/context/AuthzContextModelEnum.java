@@ -5,5 +5,5 @@ public enum AuthzContextModelEnum {
     /**
      * 用户模型
      */
-    DC_USER_MODEL
+    DC_USER_DTO
 }

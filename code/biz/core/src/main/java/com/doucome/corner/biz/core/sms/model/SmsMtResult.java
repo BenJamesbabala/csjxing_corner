@@ -1,15 +1,22 @@
 package com.doucome.corner.biz.core.sms.model;
 
-public class SmsMtResult {
+import org.apache.commons.lang.StringUtils;
 
-	private boolean isSuccess ;
+public class SmsMtResult {
+	
+	private String resultCode ;
 
 	public boolean isSuccess() {
-		return isSuccess;
+		return StringUtils.equals(StringUtils.trim(resultCode), "0");
 	}
 
-	public void setSuccess(boolean isSuccess) {
-		this.isSuccess = isSuccess;
+	public String getResultCode() {
+		return resultCode;
 	}
+
+	public void setResultCode(String resultCode) {
+		this.resultCode = resultCode;
+	}
+	
 	
 }

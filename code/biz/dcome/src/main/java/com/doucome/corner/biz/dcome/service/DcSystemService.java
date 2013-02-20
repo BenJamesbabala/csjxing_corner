@@ -6,7 +6,7 @@ import com.doucome.corner.biz.dcome.model.DcSystemDTO;
 
 /**
  * ¶¹Þ¢ÏµÍ³
- * @author shenjia.caosj 2012-7-26
+ * @author langben 2012-7-26
  *
  */
 public interface DcSystemService {

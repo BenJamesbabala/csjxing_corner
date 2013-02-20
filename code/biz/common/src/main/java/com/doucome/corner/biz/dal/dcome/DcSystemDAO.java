@@ -6,7 +6,7 @@ import com.doucome.corner.biz.dal.dataobject.dcome.DcSystemDO;
 
 /**
  * ¶¹Þ¢ÏµÍ³
- * @author shenjia.caosj 2012-7-21
+ * @author langben 2012-7-21
  *
  */
 public interface DcSystemDAO {

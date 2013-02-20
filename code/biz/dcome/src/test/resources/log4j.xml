@@ -5,7 +5,7 @@
   -
   - 请使用专用的XML编辑器编辑此文件，以确保其符合log4j.dtd。
   -
-  - @author Michael Zhou
+  - @author langben
  -->
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
@@ -15,29 +15,23 @@
     
         <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
 		      <param name="Target" value="System.out" />
-		      <param name="Threshold" value="DEBUG" />
+		      <param name="Threshold" value="info" />
 		      <layout class="org.apache.log4j.PatternLayout">
 		         <param name="ConversionPattern" value="%d [%-5p](%C{2},%L) - %m%n" />
 		      </layout>
 	    </appender>
     
-    <appender name="PROJECT" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="file" value="${loggingRoot}/sys/sys.log"/> 
-        <param name="append" value="false"/>
-        <param name="encoding" value="GBK"/>
-        <param name="threshold" value="info"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
-        </layout>
-    </appender>
-  
+     	<logger name="com.google.code.yanf4j.nio.impl.AbstractNioSession" additivity="true">
+	    	<level value="info"></level>
+	    </logger>
+ 		<logger name="com.google.code.yanf4j.nio.impl.NioTCPSession" additivity="true">
+	    	<level value="info"></level>
+	    </logger>
     <!-- ===================================================================== -->
     <!--  Root logger的定义                                                    -->
     <!-- ===================================================================== -->
     <root>
         <level value="info"/>
-        <appender-ref ref="PROJECT"/>
-        <appender-ref ref="ExceptionAppender" />
            <appender-ref ref="CONSOLE" />
         <!-- <appender-ref ref="ASYNC" /> -->
     </root>

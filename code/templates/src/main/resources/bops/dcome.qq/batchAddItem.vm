@@ -1,0 +1,46 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "批量添加商品")
+
+<input type="hidden"  id="bopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="bopsPage" value="dcBatchAddItem"/>
+
+<div class="bops">
+	
+	<form action="${env.bopsRoot}/bops/dcome/qq/do_batch_add_item.htm" method="get">
+        <table width="1000" style="font-size:14px;" id="itemTable">
+    		<tr>
+        		<th width="40">商品ID</th>
+    			<th width="50">图片</th>
+    			<th width="100">标题</th>
+        		<th width="40">原价</th>
+                <th width="50">返利</th>
+				<th width="40">包邮</th>
+				<th width="50">操作</th>
+    		</tr>
+			#foreach($taobaoItem in $taobaoItemList)
+				#set($taobaokeItem = $taobaokeItemMap[$taobaoItem.numIid])
+				<tr>
+                    <td align="center">
+						<span>$!taobaoItem.numIid</span>
+						<input type="hidden" name="numIidList" value="$!taobaoItem.numIid" class="taobao-num-iid"/>
+					</td>
+					<td align="center"><img src="$!taobaoItem.getPic('100x100')" width="60" height="60"></td>
+					<td align="">$!taobaoItem.title</td>
+					<td align="center">$!taobaoItem.price</td>
+					#set($commissionRate = $taobaokeItem.commissionRate / 100)
+					<td align="center">$!commissionRate %</td>
+                    <td align="center">#if($taobaoItem.freePostage) <span class="dc-red">是</span>  #else 否 #end</td>
+					<td align="center">
+                        <span class="taobao-item-exists dd-hide dc-red" data-num-iid="$!taobaoItem.numIid">[已存在]</span>
+						<a href="javascript:;" class="dc-blue remove-item-click">移除</a>
+					</td>
+                </tr>
+			#end
+		</table>
+		
+		<input type="submit" value="确认批量添加" />
+   </form>
+	
+</div>
+	

@@ -1,51 +1,30 @@
 <div class="dd-recommend" id="ddRecomends">
     <div class="dd-brands-tip"><!--<span class="darkgray">商家返利快速通道：</span><span class="gray">无需生成返利链接，全店商品自动返利。</span>-->&nbsp;</div>
-    <div class="dd-brands" id="ddBrands">
-			
-    		<div class="dd-brands-tab">
-    			<ul>
+
+	<div class="idx-brands" id="ddBrands">
+		<div class="title">点点折用户专享高返利通道，点击进入购买全店商品自动返利</div>
+		<div class="separator">&nbsp;</div>
+		<div>
+			<ul class="list dd-clearfix">
+				#foreach($brand in $brandsList)
+    				#if($velocityCount < 6)
     				<li>
-                        <span class="dd-brands-tab-down"></span>
-						品牌返利
-					</li>
-    				<!--
-    				<li class="r-border l-border">女装</li>
-    				<li class="r-border l-border">化妆品</li>
-    				<li class="r-border l-border">鞋包</li>
-    				<li class="l-border">男装</li>
-    				-->
-    			</ul>
-    		</div>
-    		<div class="dd-brands-panel">
-				#foreach($col in [0..2])
-					<ul class="dd-brands-list #if($col != 2) b-border #end">
-					#foreach($row in [0..4])
-						#set($index = 5*$col + $velocityCount - 1)
-						#if($brandsList.size() > $index)
-    						#set($brand = $brandsList[$index])
-    						#if($brand)
-    						<li>
-            					<a href="$!brand.clickUrl" data-shopId="$!brand.sid" target="_blank" data-brandsRecommend="" gtrack="virtual/zhe/brands/shop?sid=$!brand.sid">
-            						<img src="" data-imgsrc="${env.ddzStaticroot}/img/brand/$!{brand.sid}.jpg" height="50" width="90" alt="$brandsList[$index].shopTitle" title="$brandsList[$index].shopTitle" />
-                                    <div class="dd-fanli-item-box">
-            							<div class="dd-fanli-item-text">返利</div><div class="dd-fanli-item-rate">$decimalUtils.format($brand.userCommissionRate,'0')%</div>
-            						</div>
-            					</a>
-                            </li>
-    						#end
-						#end
-					#end
-					</ul>
+    					<a href="$!brand.userClickUrl" data-shopId="$!brand.sid" target="_blank" data-brandsRecommend="" gtrack="virtual/zhe/brands/shop?sid=$!brand.sid">
+    						<img src="" data-imgsrc="${env.ddzStaticroot}/img/brand/$!{brand.sid}.jpg" alt="$!brand.userShopTitle" title="$!brand.userShopTitle" />
+    						<div class="fanli">
+    							<div class="rate"><span class="label">平均返利</span><span>$decimalUtils.format($brand.userCommissionRate,'0')%</span></div>
+    							<span class="bg"></span>
+    						</div>
+    					</a>
+    				</li>
+    				#end
 				#end
-				
-                
-            </div>
-    		
-    		
-    	
-    </div>
+			</ul>
+		</div>
+	</div>
+	
     #if($buyingRecommendList.size() > 6)
-    <div class="dd-buyings">
+    <div class="dd-buyings dd-hide">
     	<div class="dd-buyings-tab">
     		<ul>
     			<li class="r-border"><span class="dd-buyings-tab-down"></span>大家正在买...</li>

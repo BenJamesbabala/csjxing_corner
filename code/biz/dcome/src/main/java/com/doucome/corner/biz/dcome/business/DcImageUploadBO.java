@@ -1,6 +1,9 @@
 package com.doucome.corner.biz.dcome.business;
 
+import java.awt.Dimension;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,12 +13,16 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.ImageUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,13 +33,17 @@ import com.doucome.corner.biz.core.service.upyun.UpYunUtils;
 import com.doucome.corner.biz.core.service.upyun.model.UpyunDataEntity;
 import com.doucome.corner.biz.core.utils.ArrayStringUtils;
 import com.doucome.corner.biz.core.utils.AvatarUtils;
+import com.doucome.corner.biz.core.utils.DcHttpUtils;
+import com.doucome.corner.biz.dcome.model.DcPictureModel;
 
 /**
  * 
- * @author shenjia.caosj 2012-7-23
+ * @author langben 2012-7-23
  *
  */
 public class DcImageUploadBO implements InitializingBean {
+	
+	private static final Log log = LogFactory.getLog(DcImageUploadBO.class) ;
 	
 	private List<String> allowExtensionsList ;
 	
@@ -41,12 +52,12 @@ public class DcImageUploadBO implements InitializingBean {
 	/**
 	 * 头像最大50KB
 	 */
-	private static final int AVATAR_MAX_SIZE = 50 * 1024 ;
+	private static final int AVATAR_MAX_SIZE = 50 * 1024;
 	
 	/**
 	 * 图片最大500KB
 	 */
-	private static final int IMAGE_MAX_SIZE = 500 * 1024 ;
+	private static final int IMAGE_MAX_SIZE = 500 * 1024;
 	
 	@Autowired
 	private UpYunService upYunService ;
@@ -134,7 +145,7 @@ public class DcImageUploadBO implements InitializingBean {
 	 * @return 图片的相对地址（Path） ,比如 
 	 * <p>图片地址对应 ， http://img.doucome.com/item/0/5/4/0545454554.jpg ， 则返回的是 /item/0/5/4/0545454554.jpg</p>
 	 */
-	public String uploadItemPicture(File file, String extName) throws UpyunException {
+	public DcPictureModel uploadItemPicture(File file, String extName) throws UpyunException {
 		if(file == null){
 			throw new IllegalArgumentException("null file!") ;
 		}
@@ -171,8 +182,12 @@ public class DcImageUploadBO implements InitializingBean {
 			upyunEntity.setData(data) ;
 			upyunEntity.setToPath(toPath) ;
 			upYunService.upload(upyunEntity) ;
+			DcPictureModel picModel = new DcPictureModel();
+			picModel.setPath(toPath) ;
 			
-			return toPath ;
+			picModel.setDimension(ImageUtils.getImageDimension(new FileInputStream(file), Workbook.PICTURE_TYPE_JPEG)) ;
+			
+			return picModel ;
 		}catch (UpyunException e) {
 			throw e ;
 		}catch(Exception e){
@@ -186,7 +201,7 @@ public class DcImageUploadBO implements InitializingBean {
 	 * @return 图片的相对地址（Path） ,比如 
 	 * <p>图片地址对应 ， http://img.doucome.com/item/0/5/4/0545454554.jpg ， 则返回的是 /item/0/5/4/0545454554.jpg</p>
 	 */
-	public String uploadItemPictureFromUrl(String pictureUrl){
+	public DcPictureModel uploadItemPictureFromUrl(String pictureUrl){
 		if(StringUtils.isBlank(pictureUrl)){
 			throw new IllegalArgumentException("pictureUrl is blank !") ;
 		}
@@ -212,7 +227,9 @@ public class DcImageUploadBO implements InitializingBean {
 			if(len > IMAGE_MAX_SIZE){
 				throw new IllegalArgumentException("IMAGE max size is 500KB.") ;
 			}
+			DcPictureModel picModel = new DcPictureModel();
 			InputStream is = entry.getContent();  
+			
 			byte[] imgBuffer = UpYunUtils.inputStream2Buf(is , (int)entry.getContentLength());
 			if(imgBuffer == null){
 				throw new IllegalArgumentException("img url is not correct .") ;
@@ -238,7 +255,12 @@ public class DcImageUploadBO implements InitializingBean {
 			upyunEntity.setToPath(toPath) ;
 			upYunService.upload(upyunEntity) ;
 		
-			return toPath ;
+			
+			picModel.setPath(toPath) ;
+			InputStream picIs = DcHttpUtils.getInputStream(pictureUrl) ;
+			picModel.setDimension(ImageUtils.getImageDimension(picIs, Workbook.PICTURE_TYPE_JPEG)) ;
+			
+			return picModel ;
 		}catch (UpyunException e) {
 			throw e ;
 		}catch(Exception e){
@@ -303,4 +325,9 @@ public class DcImageUploadBO implements InitializingBean {
 		this.allowExtensions = allowExtensions;
 	}
 
+	
+	public static void main(String[] args) throws FileNotFoundException {
+		Dimension dimension = ImageUtils.getImageDimension(new FileInputStream(new File("d:/11111.JPG")), org.apache.poi.ss.usermodel.Workbook.PICTURE_TYPE_PNG) ;
+		System.out.println(dimension);
+	}
 }

@@ -6,14 +6,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.taobao.api.internal.mapping.Reader;
 import com.taobao.api.internal.util.StringUtils;
 
 import com.doucome.corner.biz.core.constant.Constant;
-import com.doucome.corner.biz.zhe.utils.StreamUtil;
+import com.doucome.corner.biz.core.utils.StreamUtils;
 
 public enum BanKeywords {
 	INSTANCE;
@@ -34,7 +30,7 @@ public enum BanKeywords {
 		} catch (Throwable e) {
 //			logger.error("load ban keywords failed", e);
 		} finally {;
-			StreamUtil.close(reader);
+			StreamUtils.close(reader);
 		}
 	}
 	

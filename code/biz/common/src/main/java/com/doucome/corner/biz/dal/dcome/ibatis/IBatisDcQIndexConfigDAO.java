@@ -11,7 +11,7 @@ import com.doucome.corner.biz.dal.dcome.DcQIndexConfigDAO;
 
 /**
  * 
- * @author shenjia.caosj 2012-7-26
+ * @author langben 2012-7-26
  *
  */
 public class IBatisDcQIndexConfigDAO extends SqlMapClientDaoSupport implements DcQIndexConfigDAO {

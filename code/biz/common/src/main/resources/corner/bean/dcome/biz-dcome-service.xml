@@ -11,7 +11,25 @@
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
 	default-autowire="byName">
 	
-	<bean id="dcTaobaokeService" class="com.doucome.corner.biz.dcome.service.impl.DcTaobaokeServiceImpl"></bean>
+	<bean id="ctuConfigService" class="com.doucome.corner.biz.dcome.ctu.CtuConfigService">
+		<property name="calculateFrequency">
+			<value>${corner.ctu.calculate.frequency}</value>
+		</property>
+		<property name="rateLimitForIP">
+			<value>${corner.ctu.rateLimit.forIP}</value>
+		</property>
+		<property name="ipLimitSeconds">
+			<value>${corner.ctu.ipLimit.seconds}</value>
+		</property>
+		<property name="calculateRateInMinutes">
+			<value>${corner.ctu.calculate.rateInMinutes}</value>
+		</property>
+		<property name="successTimeCheckCode">
+			<value>${corner.ctu.successTime.checkCode}</value>
+		</property>
+	</bean>
+	
+	<bean id="dcTaobaoService" class="com.doucome.corner.biz.dcome.service.impl.DcTaobaoServiceImpl"></bean>
 	
 	<bean id="dcCommentService" class="com.doucome.corner.biz.dcome.service.impl.DcCommentServiceImpl"></bean>
 	
@@ -20,6 +38,8 @@
 	<bean id="dcLoveDetailService" class="com.doucome.corner.biz.dcome.service.impl.DcLoveDetailServiceImpl"></bean>
 	
 	<bean id="dcSceneService" class="com.doucome.corner.biz.dcome.service.impl.DcSceneServiceImpl"></bean>
+	
+	<bean id="dcRateEventService" class="com.doucome.corner.biz.dcome.service.impl.DcRateEventServiceImpl"></bean>
 	
 	<bean id="dcUserService" class="com.doucome.corner.biz.dcome.service.impl.DcUserServiceImpl"></bean>
 		
@@ -31,5 +51,61 @@
 	
 	<bean id="dcSystemService" class="com.doucome.corner.biz.dcome.service.impl.DcSystemServiceImpl"/>
 	
+	<bean id="dcPromotionAwardService" class="com.doucome.corner.biz.dcome.service.impl.DcPromotionAwardServiceImpl"></bean>
 	
+	<bean id="dcRateDetailService" class="com.doucome.corner.biz.dcome.service.impl.DcRateDetailServiceImpl"></bean>
+	
+	<bean id="dcPromotionService" class="com.doucome.corner.biz.dcome.service.impl.DcPromotionServiceImpl"></bean>
+	
+	<bean id="dcPromotionItemService" class="com.doucome.corner.biz.dcome.service.impl.DcPromotionItemServiceImpl"></bean>
+	
+	<bean id="dcPromotionRateDetailService" class="com.doucome.corner.biz.dcome.service.impl.DcPromotionRateDetailServiceImpl"></bean>
+	
+	<bean id="dcUserIntegralDetailService" class="com.doucome.corner.biz.dcome.service.impl.DcUserIntegralDetailServiceImpl"></bean>
+	
+	<bean id="dcItemSyncService" class="com.doucome.corner.biz.dcome.service.impl.DcItemSyncServiceImpl" />
+	
+	<bean id="dcMessageService" class="com.doucome.corner.biz.dcome.service.impl.DcMessageServiceImpl" />
+	
+	<bean id="dcUserLoginTraceService" class="com.doucome.corner.biz.dcome.service.impl.DcUserLoginTraceServiceImpl" />
+	
+	<bean id="dcUserClickStatisticsService" class="com.doucome.corner.biz.dcome.service.impl.DcUserClickStatisticsServiceImpl" />
+	
+	<bean id="dcGameRuleService" class="com.doucome.corner.biz.dcome.service.impl.DcGameRuleServiceImpl" />
+	
+	<bean id="dcUserFilterService" class="com.doucome.corner.biz.dcome.service.impl.DcUserFilterServiceImpl">
+	    <property name="whiteListUserIds">
+	         <list>
+	             <value>10001</value>
+	             <value>10002</value>
+	             <value>10003</value>
+	             <value>10006</value>
+	             <value>10008</value>
+	             <value>10011</value>
+	             <value>10012</value>
+	             <value>13900</value>
+	             <value>15481</value>
+	             <value>100441</value>
+	         </list>
+	    </property>
+	</bean>
+	
+	<bean id="dcAuctionItemService" class="com.doucome.corner.biz.dcome.service.impl.DcAuctionItemServiceImpl" />
+	
+	<bean id="dcPromotionSnapInfoService" class="com.doucome.corner.biz.dcome.service.impl.DcPromotionSnapInfoServiceImpl"></bean>
+	
+	<bean id="dcExchangeItemService" class="com.doucome.corner.biz.dcome.service.impl.DcExchangeItemServiceImpl"></bean>
+	
+	<bean id="dcAppVoteService" class="com.doucome.corner.biz.dcome.service.impl.DcAppVoteServiceImpl"></bean>
+	
+	<bean id="dcWinnerGameConfigService" class="com.doucome.corner.biz.dcome.service.impl.DcWinnerGameConfigServiceImpl"></bean>
+	
+	<bean id="dcWinnerGamePlayDetailService" class="com.doucome.corner.biz.dcome.service.impl.DcWinnerGamePlayDetailServiceImpl"></bean>
+	
+
+	<bean id="dcUserIntegralRecordService" class="com.doucome.corner.biz.dcome.service.impl.DcUserIntegralRecordServiceImpl"/>	
+	<bean id="dcUserExchangeApproveService" class="com.doucome.corner.biz.dcome.service.impl.DcUserExchangeApproveServiceImpl"/>
+	<bean id="dcSearchLogService" class="com.doucome.corner.biz.dcome.service.impl.DcSearchLogServiceImpl"></bean>
+	<bean id="dcAutoExchangeService" class="com.doucome.corner.biz.dcome.service.impl.DcAutoExchangeServiceImpl"></bean>
+
 </beans>

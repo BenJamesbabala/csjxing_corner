@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="dcAuctionItem">
+	<typeAlias alias="TA-DcAuctionItem" type="com.doucome.corner.biz.dal.dataobject.dcome.DcAuctionItemDO"/>
+	
+	<resultMap id="RM-DcAuctionItem" class="TA-DcAuctionItem">
+		<result property="id" column="ID" />
+		<result property="itemId" column="ITEM_ID"/>
+		<result property="itemTitle" column="ITEM_TITLE"/>
+		<result property="itemPictures" column="ITEM_PICTURES"/>
+		<result property="itemPrice" column="ITEM_PRICE" jdbcType="DECIMAL"/>
+		<result property="baseIntegral" column="BASE_INTEGRAL"/>
+		<result property="integralPer" column="INTEGRAL_PER"/>
+		<result property="gmtStart" column="GMT_START" jdbcType="TIMESTAMP" />
+		<result property="gmtEnd" column="GMT_END" jdbcType="TIMESTAMP" />
+		<result property="bidIntegral" column="BID_INTEGRAL"/>
+		<result property="bidUserId" column="BID_USER_ID"/>
+		<result property="bidUserNick" column="BID_USER_NICK"/>
+		<result property="reviewStatus" column="REVIEW_STATUS"/>
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertAuctionItem">
+		INSERT INTO DC_AUCTION_ITEM
+			(ID, ITEM_ID, ITEM_TITLE, ITEM_PRICE, ITEM_PICTURES, BASE_INTEGRAL, INTEGRAL_PER, REVIEW_STATUS, GMT_START, GMT_END, GMT_MODIFIED, GMT_CREATE)
+		VALUES
+			(#id#, #itemId#, #itemTitle#, #itemPrice#, #itemPictures#, #baseIntegral#, #integralPer#, #reviewStatus#, #gmtStart#, #gmtEnd#, now(), now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="getAuctionItem" resultMap="RM-DcAuctionItem">
+		SELECT ID, ITEM_ID, ITEM_TITLE, ITEM_PICTURES, ITEM_PRICE, BASE_INTEGRAL, INTEGRAL_PER, REVIEW_STATUS, GMT_START, GMT_END, BID_INTEGRAL, BID_USER_ID,
+		       BID_USER_NICK, GMT_MODIFIED, GMT_CREATE
+		  FROM DC_AUCTION_ITEM
+		  WHERE ID = #id#
+		  LIMIT 1
+	</select>
+	
+	
+	<select id="queryAuctionWithPagination" resultMap="RM-DcAuctionItem">
+		SELECT 
+			ID, ITEM_ID, ITEM_TITLE, ITEM_PICTURES, ITEM_PRICE, BASE_INTEGRAL, INTEGRAL_PER, GMT_START, GMT_END, BID_INTEGRAL, BID_USER_ID,
+		       BID_USER_NICK, REVIEW_STATUS , GMT_MODIFIED, GMT_CREATE
+		FROM 
+			DC_AUCTION_ITEM
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="id" prepend="AND">
+					<![CDATA[
+					ID = #id#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="userId" prepend="AND">
+					<![CDATA[
+					BID_USER_ID = #userId#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtStart" prepend="AND">
+					<![CDATA[
+					TO_DAYS(GMT_START) = TO_DAYS(#gmtStart#)
+					]]>
+				</isNotEmpty>
+				<isEqual property="auctionStatus" compareValue="N" prepend="AND">
+					<![CDATA[
+					GMT_START > now()
+					]]>
+				</isEqual>
+				<isEqual property="auctionStatus" compareValue="C" prepend="AND">
+					<![CDATA[
+					GMT_START < now() and now() < GMT_END
+					]]>
+				</isEqual>
+				<isEqual property="auctionStatus" compareValue="E" prepend="AND">
+					<![CDATA[
+					GMT_END < now()
+					]]>
+				</isEqual>
+				<isEqual property="auctionStatus" compareValue="U" prepend="AND">
+					<![CDATA[
+					（GMT_END IS NULL OR GMT_START IS NULL OR BASE_INTEGRAL IS NULL OR INTEGRAL_PER IS NULL）
+					]]>
+				</isEqual>
+			</isParameterPresent>
+		</dynamic>
+		<isEqual property="order" compareValue="ACTIVE_TIME">
+		    ORDER BY 
+		    	GMT_START DESC , 
+		    	GMT_END DESC
+		</isEqual>
+		<isEmpty property="order" prepend="">
+			ORDER BY GMT_CREATE DESC
+		</isEmpty>
+		LIMIT 
+			#start# , #size#
+	</select>
+	
+	<select id="countAuctionWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			count(*)
+		FROM 
+			DC_AUCTION_ITEM
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="id" prepend="AND">
+					<![CDATA[
+					ID = #id#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="userId" prepend="AND">
+					<![CDATA[
+					BID_USER_ID = #userId#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtStart" prepend="AND">
+					<![CDATA[
+					TO_DAYS(GMT_START) = TO_DAYS(#gmtStart#)
+					]]>
+				</isNotEmpty>
+				<isEqual property="auctionStatus" compareValue="N" prepend="AND">
+					<![CDATA[
+					GMT_START > now()
+					]]>
+				</isEqual>
+				<isEqual property="auctionStatus" compareValue="C" prepend="AND">
+					<![CDATA[
+					GMT_START < now() and now() < GMT_END
+					]]>
+				</isEqual>
+				<isEqual property="auctionStatus" compareValue="E" prepend="AND">
+					<![CDATA[
+					GMT_END < now()
+					]]>
+				</isEqual>
+				<isEqual property="auctionStatus" compareValue="U" prepend="AND">
+					<![CDATA[
+					（GMT_END IS NULL OR GMT_START IS NULL OR BASE_INTEGRAL IS NULL OR INTEGRAL_PER IS NULL）
+					]]>
+				</isEqual>
+			</isParameterPresent>
+		</dynamic>
+	</select>
+
+	<update id="updatePromoInfoById">
+	    UPDATE DC_AUCTION_ITEM
+	      SET BASE_INTEGRAL=#baseIntegral#, INTEGRAL_PER=#integralPer#, GMT_START=#gmtStart#, GMT_END=#gmtEnd#, GMT_MODIFIED = now()
+	      WHERE ID=#id#
+	</update>
+	
+	<update id="updateBidInfo">
+	    UPDATE DC_AUCTION_ITEM
+	      SET BID_INTEGRAL=#integral#, BID_USER_ID=#userId#, BID_USER_NICK=#userNick#, GMT_MODIFIED = now()
+	      WHERE ID=#id# AND (BID_INTEGRAL <![CDATA[ < ]]> #integral# OR BID_INTEGRAL IS NULL) 
+	        AND GMT_START <![CDATA[ <= ]]> NOW() AND GMT_END <![CDATA[ >= ]]> NOW()
+	</update>
+	
+	<select id="getAuctionItemInIng" resultMap="RM-DcAuctionItem">
+		SELECT ID, ITEM_ID, ITEM_TITLE, ITEM_PICTURES, ITEM_PRICE, BASE_INTEGRAL, INTEGRAL_PER, GMT_START, GMT_END, BID_INTEGRAL, BID_USER_ID,
+		       BID_USER_NICK, REVIEW_STATUS ,GMT_MODIFIED, GMT_CREATE
+		  FROM DC_AUCTION_ITEM
+		  WHERE GMT_START <![CDATA[ <= ]]> #timeStamp# and GMT_END <![CDATA[ > ]]> #timeStamp#
+		  ORDER BY GMT_START
+		  LIMIT #start# , #size#
+	</select>
+	
+	<select id="getAuctionItemInOver" resultMap="RM-DcAuctionItem">
+		SELECT ID, ITEM_ID, ITEM_TITLE, ITEM_PICTURES, ITEM_PRICE, BASE_INTEGRAL, INTEGRAL_PER, GMT_START, GMT_END, BID_INTEGRAL, BID_USER_ID,
+		       BID_USER_NICK, REVIEW_STATUS,GMT_MODIFIED, GMT_CREATE
+		  FROM DC_AUCTION_ITEM
+		  WHERE GMT_END <![CDATA[ <= ]]> #timeStamp# AND GMT_START IS NOT NULL
+		  ORDER BY GMT_END DESC
+		  LIMIT #start# , #size#
+	</select>
+	
+	<select id="getAuctionItemInFuture" resultMap="RM-DcAuctionItem">
+		SELECT ID, ITEM_ID, ITEM_TITLE, ITEM_PICTURES, ITEM_PRICE, BASE_INTEGRAL, INTEGRAL_PER, GMT_START, GMT_END, BID_INTEGRAL, BID_USER_ID,
+		       BID_USER_NICK, REVIEW_STATUS,GMT_MODIFIED, GMT_CREATE
+		  FROM DC_AUCTION_ITEM
+		  WHERE GMT_START <![CDATA[ > ]]> #timeStamp#  AND GMT_END IS NOT NULL
+		  ORDER BY GMT_START
+		  LIMIT #start# , #size#
+	</select>
+	
+	<update id="updateReviewStatusById">
+		UPDATE 
+			DC_AUCTION_ITEM
+		SET 
+			REVIEW_STATUS = #reviewStatus# ,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
+	</update>
+</sqlMap>

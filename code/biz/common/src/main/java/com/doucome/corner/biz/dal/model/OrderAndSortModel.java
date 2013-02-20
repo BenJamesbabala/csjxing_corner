@@ -5,10 +5,12 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * 排序模型
- * @author shenjia.caosj 2012-7-4
+ * @author langben 2012-7-4
  *
  */
 public class OrderAndSortModel {
+	
+	private static final String CONCATSTR = "--" ;
 
 	/**
 	 * 
@@ -23,7 +25,7 @@ public class OrderAndSortModel {
 		
 		orderStr = StringUtils.lowerCase(orderStr) ;
 		
-		String[] orderAndSort = StringUtils.split(orderStr,"--") ;
+		String[] orderAndSort = StringUtils.split(orderStr,CONCATSTR) ;
 		if(orderAndSort == null || orderAndSort.length != 2){
 			return ;
 		}
@@ -43,12 +45,23 @@ public class OrderAndSortModel {
 					break ;
 				}
 			}
+		} else {
+			this.order = order ;
 		}
 		
 		if(StringUtils.isNotBlank(this.sort) && StringUtils.isNotBlank(this.order)){
 			isFormat = true ;
 		}
 		
+	}
+	
+	/**
+	 * 
+	 * @param orderStr 如 name_asc , settle_desc 
+	 * @param orderOptions  允许排序的子段， 如 {"name","settle"}
+	 */
+	public OrderAndSortModel(String order , Sort sort){
+		this(order + CONCATSTR + sort , new String[]{}) ;
 	}
 	
 	/**
@@ -87,5 +100,10 @@ public class OrderAndSortModel {
 		this.isFormat = isFormat;
 	}
 	
-	
+	public static enum Sort {
+		desc , asc ;
+		public String toString() {
+			return this.name().toString() ;
+		};
+	}
 }

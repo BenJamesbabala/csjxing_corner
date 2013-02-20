@@ -15,11 +15,6 @@
 .alipay-count-submit,
 .show-url .left-arrow,
 .light-icon,
-.page-op #jump-sub,
-.pagination .page-start,
-.pagination .page-next,
-.pagination a.page-prev,
-.pagination .page-end,
 .list-top-search button ,
 .item-price-discount-allowance-gift ,
 .end{
@@ -86,7 +81,7 @@
 	background-color: transparent;
 	display: inline-block;	
 }
-.tool .tool-left,.tool .tool-center,.tool .tool-right {
+.tool .tool-center,.tool .tool-right {
 	background-image: url(../../../../img/imgb.png);
 	background-repeat: no-repeat;
 	display: inline-block;
@@ -158,6 +153,74 @@
 }
 .item-buy-go {
 	background-image: url(../../../../img/taobaobuy.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+    display: inline-block;
+}
+
+.ddz .login-tip {
+	background-image: url(../../../../img/login_tip.png);
+	background-repeat: no-repeat;
+}
+
+.angle-right {
+	background-image: url(../../../../images/angle_right.png);
+	display: inline-block;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	background-color: transparent;
+}
+
+.angle-top {
+	background-image: url(../../../../images/angle_top.png);
+	display: inline-block;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	background-color: transparent;
+}
+
+.go-btn {
+	background-image: url(../../../../img/orange_btns.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+.ddz .item-price-view .rumour i {
+	background-image: url(../../../../img/ico_warn.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+.ui-video-xbox .ui-show-video {
+	background-image: url(../../../../img/ui-video-xbox.png);
+	_background-image: url(../../../../img/ui-video-xbox-fix.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+.jfb-icon19x19 {
+	background-image: url(../../../../images/jfb19x19.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+    display: inline-block;
+}
+
+.jfb-icon16x16 {
+	background-image: url(../../../../images/jfb16x16.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+    display: inline-block;
+}
+
+.jfb-icon12x12 {
+	background-image: url(../../../../images/jfb12x12.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+    display: inline-block;
+}
+
+.jfb-icon10x10 {
+	background-image: url(../../../../images/jfb10x10.png);
 	background-repeat: no-repeat;
 	background-color: transparent;
     display: inline-block;

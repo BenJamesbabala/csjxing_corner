@@ -54,6 +54,14 @@
 			.ddz-logo a{
 				text-decoration: none;
 			}
+			.jfb-icon10x10 {
+            	background-image: url(http://style.diandianzhe.com/corner/images/jfb10x10.png);
+            	background-repeat: no-repeat;
+            	background-color: transparent;
+                display: inline-block;
+            	width: 10px;
+            	height: 10px;
+            }
 		</style>
 	</head>
 	<body>
@@ -66,7 +74,7 @@
 					$!username，您好
 				</p>
 				<p class="thanks" style="padding-left: 32px;">
-					感谢您使用点点折，本期返利金额合计：$!decimalUtils.formatPrice($!{settleDO.settleFee})元，以下是您的购物返利记录: 
+					感谢您使用点点折，以下是您本期的购物返利记录: 
 				</p>
 				<table class="bill-list" cellpadding="0" cellspacing="0" border="0">
 					<tr style="color: #666666;">
@@ -75,7 +83,7 @@
 						<th width="60" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">数量</th>
 						<th width="80" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">成交价格</th>
 						<th width="80" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">返利比例</th>
-						<th width="80" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">返利金额</th>
+						<th width="80" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">返利</th>
 						<th width="160" style="background-color: #FF6A00;height: 36px;border: 1px solid #CCCCCC;color: #FFF;">结算时间</th>
 					</tr>
 					#if($reportDOs)
@@ -85,8 +93,16 @@
         						<td><a href="http://diandianzhe.com/zhe/item/${report.numIid}?trace_log=reportemail">$report.itemTitle</a></td>
         						<td>${report.itemNum}</td>
         						<td>&yen;${report.realPayFee}</td>
-        						<td class="color-green" style="color: #45A022;">$!decimalUtils.formatRatio(${report.userCommissionRate})</td>
-        						<td class="color-green" style="color: #45A022;">&yen;$!decimalUtils.formatPrice(${report.settleFee})</td>
+        						<td class="color-green" style="color: #45A022;">
+									#if($report.outcodeType == "J")
+									$!decimalUtils.formatRatio(${report.userJfbRate})
+									#else
+									$!decimalUtils.formatRatio(${report.userCommissionRate})
+									#end
+								</td>
+                                <td class="color-green" style="color: #45A022;"> 
+									#if($report.outcodeType == "J") <a href="http://help.alipay.com/lab/help_detail.htm?help_id=211851" target="_blank" title="支付宝集分宝"><img src="http://style.diandianzhe.com/corner/images/jfb10x10.png" alt="支付宝集分宝"></img></a> $!report.settleJfb #else &yen;$!decimalUtils.formatPrice(${report.settleFee}) #end
+								</td>
         						<td>$dateUtils.format($!{settleDO.gmtSettled}, "yyyy-MM-dd hh:mm:ss")</td>
         					</tr>
 						#end
@@ -99,7 +115,7 @@
 				</p>
 				<ul>
 					<li style="list-style: none outside none;margin-left: -30px;line-height: 28px;">
-						1.以上返利金额已经汇入您的支付宝账号：<span class="color-blue" style="color: #0000EE;">$!alipayId</span>，请及时登录支付宝系统查询。
+						1.以上返利已经汇入您的支付宝账号：<span class="color-blue" style="color: #0000EE;">$!alipayId</span>，请及时登录支付宝系统查询。
 					</li>
 					<li style="list-style: none outside none;margin-left: -30px;line-height: 28px;">
 						2.本记录清单由系统自动生成，实际金额以支付宝到账金额为准。

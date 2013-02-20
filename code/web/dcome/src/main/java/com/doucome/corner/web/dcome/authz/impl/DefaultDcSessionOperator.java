@@ -2,8 +2,8 @@ package com.doucome.corner.web.dcome.authz.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.doucome.corner.biz.dal.dataobject.dcome.DcUserDO;
 import com.doucome.corner.biz.dcome.enums.DcLoginSourceEnums;
+import com.doucome.corner.biz.dcome.model.DcUserDTO;
 import com.doucome.corner.biz.dcome.service.DcUserService;
 import com.doucome.corner.web.dcome.authz.DcSessionOperator;
 import com.doucome.corner.web.dcome.context.AuthzContext;
@@ -18,8 +18,8 @@ public class DefaultDcSessionOperator implements DcSessionOperator {
     private DcUserService dcUserService;
 
     public boolean load(long userId, String nick, String password, String loginSource) {
-
-        DcUserDO userDO = dcUserService.queryUser(userId);
+    	
+    	DcUserDTO userDO = dcUserService.getUser(userId);
 
         if (userDO == null) {
             return false;

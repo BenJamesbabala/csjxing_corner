@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.doucome.corner.biz.core.constant.LogConstant;
-import com.doucome.corner.task.zhe.syncReport.SyncReportTaskService;
+import com.doucome.corner.task.zhe.TaskService;
 
 /**
  * 淘客报表同步启动类
@@ -22,8 +22,11 @@ public class TaokeReportSyncTaskStarter extends TaskStarterEnv {
 	public static void main(String[] args) {
 		syncReportLog.info("------taoke report sync start.");
 		TaokeReportSyncTaskStarter starter = new TaokeReportSyncTaskStarter();
-		SyncReportTaskService syncReportTaskService = (SyncReportTaskService) starter.getBean("syncReportTaskService");
+		Object o = starter.getBean("syncReportTaskService"); 
+		TaskService syncReportTaskService = (TaskService) o; 
 		syncReportTaskService.executeInternal();
 		syncReportLog.info("------taoke report sync end.");
+		//强制退出
+		System.exit(0) ;
 	}
 }

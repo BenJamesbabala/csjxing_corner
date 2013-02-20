@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="NamefateTrick">
+    <typeAlias alias="TA-NamefateTrick" type="com.doucome.corner.biz.dal.namefate.dataobject.NamefateTrickDO" />
+
+	<resultMap id="RM-NamefateTrick" class="TA-NamefateTrick">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userNick" column="USER_NICK" />
+		<result property="trickUserId" column="TRICK_USER_ID"/>
+		<result property="trickUserNick" column="TRICK_USER_NICK"/>
+		<result property="trickInputName" column="TRICK_INPUT_NAME"/>
+		<result property="trickInputTaName" column="TRICK_INPUT_TA_NAME"/>
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertTrick">
+		INSERT INTO 
+			NAMEFATE_TRICK(ID,USER_ID,USER_NICK,TRICK_USER_ID,TRICK_USER_NICK,TRICK_INPUT_NAME,TRICK_INPUT_TA_NAME,GMT_CREATE)
+		VALUES
+			(#id#,#userId#,#userNick#,#trickUserId#,#trickUserNick#,#trickInputName#,#trickInputTaName#,now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryTricksWithPagination" resultMap="RM-NamefateTrick">
+		SELECT 
+			ID,USER_ID,USER_NICK,TRICK_USER_ID,TRICK_USER_NICK,TRICK_INPUT_NAME,TRICK_INPUT_TA_NAME,GMT_CREATE
+		FROM 
+			NAMEFATE_TRICK
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+		    	<isNotEmpty property="userId" prepend="AND">
+					    USER_ID = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="trickUserId" prepend="AND">
+					    TRICK_USER_ID = #trickUserId#
+				</isNotEmpty>
+	    	</isParameterPresent>
+	    </dynamic>
+	    ORDER BY 
+	    	GMT_CREATE DESC
+	    LIMIT 
+	    	#start#, #size#
+	</select>
+	
+	<select id="countTricksWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(ID)
+		FROM 
+			NAMEFATE_TRICK
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+		    	<isNotEmpty property="userId" prepend="AND">
+					    USER_ID = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="trickUserId" prepend="AND">
+					    TRICK_USER_ID = #trickUserId#
+				</isNotEmpty>
+	    	</isParameterPresent>
+	    </dynamic>
+	</select>
+	
+	<select id="queryTrickById" resultMap="RM-NamefateTrick">
+		SELECT 
+			ID,USER_ID,USER_NICK,TRICK_USER_ID,TRICK_USER_NICK,TRICK_INPUT_NAME,TRICK_INPUT_TA_NAME,GMT_CREATE
+		FROM 
+			NAMEFATE_TRICK
+		WHERE
+			ID = #trickId#
+	</select>
+</sqlMap>

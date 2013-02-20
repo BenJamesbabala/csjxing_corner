@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcAppVote">
+
+	<typeAlias alias="TA-DcAppVote" type="com.doucome.corner.biz.dal.dataobject.dcome.DcAppVoteDO"/>
+	
+	<resultMap id="RM-DcAppVote" class="TA-DcAppVote">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="hasVote" column="HAS_VOTE" />
+		<result property="awardStatus" column="AWARD_STATUS" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertAppVote">
+		INSERT INTO 
+			DC_APP_VOTE(ID,USER_ID,HAS_VOTE,GMT_CREATE)
+		VALUES
+			(#id#, #userId#,#hasVote#,now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<update id="updateIsVoteByUserId">
+		UPDATE
+			DC_APP_VOTE
+		SET
+			HAS_VOTE = #hasVote# ,
+			GMT_MODIFIED = now()
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<select id="selectAppVoteByUserId" resultMap="RM-DcAppVote">
+		SELECT 
+			ID,USER_ID,HAS_VOTE,AWARD_STATUS,GMT_CREATE
+		FROM
+			DC_APP_VOTE
+		WHERE
+			USER_ID = #userId#
+	</select>
+	
+	<update id="updateAwardStatus">
+		UPDATE
+			DC_APP_VOTE
+		SET
+			AWARD_STATUS = #status#
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+</sqlMap>

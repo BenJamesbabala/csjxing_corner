@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcPromotionItem">
+
+	<typeAlias alias="TA-DcPromItem" type="com.doucome.corner.biz.dal.dataobject.dcome.DcPromotionItemDO"/>
+	<typeAlias alias="TA-DcPromItemDetail" type="com.doucome.corner.biz.dal.dataobject.dcome.DcPromotionItemDetailDO"/>
+	
+	<resultMap id="RM-DcPromItem" class="TA-DcPromItem">
+		<result property="id" column="ID" />
+		<result property="promotionId" column="PROMOTION_ID" />
+		<result property="itemId" column="ITEM_ID"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="userNick" column="USER_NICK"/>
+		<result property="rateCount" column="RATE_COUNT"/>
+		<result property="shareStatus" column="SHARE_STATUS"/>
+		<result property="hour8" column="HOUR8"/>
+		<result property="hour9" column="HOUR9"/>
+		<result property="hour10" column="HOUR10"/>
+		<result property="hour11" column="HOUR11"/>
+		<result property="hour12" column="HOUR12"/>
+		<result property="hour13" column="HOUR13"/>
+		<result property="hour14" column="HOUR14"/>
+		<result property="hour15" column="HOUR15"/>
+		<result property="hour16" column="HOUR16"/>
+		<result property="hour17" column="HOUR17"/>
+		<result property="hour18" column="HOUR18"/>
+		<result property="hour19" column="HOUR19"/>
+		<result property="hour20" column="HOUR20"/>
+		<result property="hour21" column="HOUR21"/>
+		<result property="hour22" column="HOUR22"/>
+		<result property="newGuide" column="NEW_GUIDE"/>
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertPromotionItem">
+		INSERT INTO DC_PROMOTION_ITEM
+			(ID,PROMOTION_ID,ITEM_ID,USER_ID,USER_NICK,RATE_COUNT,SHARE_STATUS,
+				HOUR8,HOUR9,HOUR10,HOUR11,HOUR12,HOUR13,HOUR14,HOUR15,HOUR16,HOUR17,HOUR18,HOUR19,HOUR20,HOUR21,HOUR22,
+				GMT_MODIFIED,GMT_CREATE)
+		VALUES
+			(#id#, #promotionId#, #itemId#, #userId#, #userNick#, #rateCount#, #shareStatus#,
+				#hour8#,#hour9#,#hour10#,#hour11#,#hour12#,#hour13#,#hour14#,#hour15#,#hour16#,#hour17#,#hour18#,#hour19#,#hour20#,#hour21#,#hour22#,
+				now(), now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryPromotionItemById" resultMap="RM-DcPromItem">
+		SELECT
+			ID, PROMOTION_ID, ITEM_ID, USER_ID, USER_NICK, RATE_COUNT,SHARE_STATUS,NEW_GUIDE,
+				HOUR8,HOUR9,HOUR10,HOUR11,HOUR12,HOUR13,HOUR14,HOUR15,HOUR16,HOUR17,HOUR18,HOUR19,HOUR20,HOUR21,HOUR22,
+				GMT_MODIFIED, GMT_CREATE
+		FROM
+			DC_PROMOTION_ITEM
+		WHERE
+			ID = #id#
+	</select>
+
+	<update id="incrRateCount">
+		UPDATE 
+			DC_PROMOTION_ITEM
+		SET 
+			RATE_COUNT = RATE_COUNT + #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ITEM_ID = #itemId#
+		AND
+			PROMOTION_ID = #promotionId#
+	</update>
+	
+	<update id="incrRateCountById">
+		UPDATE 
+			DC_PROMOTION_ITEM
+		SET 
+			RATE_COUNT = RATE_COUNT + #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #id#
+		<dynamic>
+			<isNotEmpty property="userId" prepend="AND">
+				<![CDATA[
+				USER_ID = #userId#
+				]]>
+			</isNotEmpty>
+		</dynamic>
+	</update>
+	
+	<update id="decrRateCountById">
+		UPDATE 
+			DC_PROMOTION_ITEM
+		SET 
+			RATE_COUNT = RATE_COUNT - #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #id#
+		AND 
+			RATE_COUNT > 0 
+	</update>
+	
+	<update id="drawRateCountByHour">
+		UPDATE 
+			DC_PROMOTION_ITEM
+		SET
+			RATE_COUNT = RATE_COUNT + HOUR#hour# ,
+			HOUR#hour# = 0 ,
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #id#
+	</update>
+	
+	<update id="decrDrawCountByHourAndId">
+		UPDATE 
+			DC_PROMOTION_ITEM
+		SET
+			HOUR#hour# = HOUR#hour# - #count# ,
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #id#
+		AND
+			HOUR#hour# >= #count#
+	</update>
+	
+	
+	<select id="queryPromotionItemsWithPagination" resultMap="RM-DcPromItem">
+		SELECT
+			ID, PROMOTION_ID, ITEM_ID, USER_ID, USER_NICK, RATE_COUNT,SHARE_STATUS,NEW_GUIDE,
+				HOUR8,HOUR9,HOUR10,HOUR11,HOUR12,HOUR13,HOUR14,HOUR15,HOUR16,HOUR17,HOUR18,HOUR19,HOUR20,HOUR21,HOUR22,
+				GMT_MODIFIED, GMT_CREATE
+		FROM
+			DC_PROMOTION_ITEM
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="promotionId" prepend="AND">
+					PROMOTION_ID = #promotionId#
+				</isNotEmpty>
+				<isNotEmpty property="userId" prepend="AND">
+				    USER_ID = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="userIdList" prepend="AND">
+					USER_ID IN 
+				    <iterate prepend="" property="userIdList" open="("  close=")"  conjunction=",">
+					      #userIdList[]#
+					</iterate>
+				</isNotEmpty>
+				<isEqual property="order" compareValue="auto">
+					ORDER BY GMT_MODIFIED DESC
+				</isEqual>
+				<isEqual property="order" compareValue="rate_count">
+					ORDER BY RATE_COUNT 
+					<isEqual property="sort" compareValue="asc">ASC</isEqual>
+					<isNotEqual property="sort" compareValue="asc">DESC</isNotEqual>
+					,GMT_CREATE DESC
+				</isEqual>
+				<isEqual property="order" compareValue="gmt_create">
+					ORDER BY GMT_CREATE 
+					<isEqual property="sort" compareValue="asc">ASC</isEqual>
+					<isNotEqual property="sort" compareValue="asc">DESC</isNotEqual>
+				</isEqual>
+				<isEqual property="order" compareValue="can_draw">
+					<isNotEmpty property="drawHour">
+						ORDER BY HOUR#drawHour# 
+						<isEqual property="sort" compareValue="asc">ASC</isEqual>
+						<isNotEqual property="sort" compareValue="asc">DESC</isNotEqual>
+					</isNotEmpty>
+					
+				</isEqual>
+			</isParameterPresent>
+		</dynamic>
+		LIMIT #start# , #size#
+	</select>
+	
+	<select id="getUsersPromItems" parameterClass="java.util.Map" resultMap="RM-DcPromItem">
+		SELECT ID, PROMOTION_ID, ITEM_ID, USER_ID, USER_NICK, RATE_COUNT,SHARE_STATUS,NEW_GUIDE,
+			HOUR8,HOUR9,HOUR10,HOUR11,HOUR12,HOUR13,HOUR14,HOUR15,HOUR16,HOUR17,HOUR18,HOUR19,HOUR20,HOUR21,HOUR22,
+		    GMT_MODIFIED, GMT_CREATE
+		  FROM DC_PROMOTION_ITEM
+		  WHERE USER_ID = #userId#
+		  ORDER BY GMT_CREATE DESC
+		  LIMIT #pageStart#, #pageSize#
+	</select>
+	
+	<update id="markPromItemShared">
+		UPDATE DC_PROMOTION_ITEM
+		SET SHARE_STATUS = #shareStatus#,
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #promItemId#
+	</update>
+	
+	<update id="updateNewGuide">
+		UPDATE 
+			DC_PROMOTION_ITEM
+		SET 
+			NEW_GUIDE = #newGuide# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #promItemId#
+	</update>
+	
+	<update id="updateRateCountById">
+		UPDATE 
+			DC_PROMOTION_ITEM
+		SET 
+			RATE_COUNT = #rateCount# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #promItemId#
+	</update>
+	
+	<update id="updateUserNickById">
+		UPDATE 
+			DC_PROMOTION_ITEM
+		SET 
+			USER_NICK = #userNick# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #promItemId#
+	</update>
+</sqlMap>

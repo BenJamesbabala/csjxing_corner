@@ -8,11 +8,36 @@ public enum OutCodeEnums {
 	DDZ_ACCOUNT_ID("A") ,
 	
 	/**
-	 * 豆蔻 QQ
+	 * 点点折报表，手动提款
+	 */
+	DDZ_ACCOUNT_ID_MANUAL("B") ,
+	
+	/**
+	 * 点点折集分宝结算
+	 */
+	DDZ_ACCOUNT_ID_JFB("J") ,
+	
+	/**
+	 * 豆蔻 
 	 */
 	DOUCOME("D"),
 	
-	UNKNOWN("UNKNOWN") ,
+	/**
+	 * 豆蔻PK活动
+	 */
+	DOUCOME_PROMOTION("P") ,
+	
+	/**
+	 * 豆蔻user_id
+	 */
+	DOUCOME_USER_ID("U") ,
+	
+	/**
+	 * 系统自动或者没有归类的默认类型
+	 */
+	SYSTEM("S") ,
+	
+	UNKNOWN("UN") ,
 	;
 	
 	private OutCodeEnums(String name) {

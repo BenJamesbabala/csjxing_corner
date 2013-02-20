@@ -6,8 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.doucome.corner.biz.dal.dataobject.dcome.DcUserDO;
+import com.doucome.corner.biz.dcome.model.DcUserDTO;
 import com.doucome.corner.biz.dcome.service.DcUserService;
 
 /**
@@ -28,11 +27,11 @@ public class DcFakeUserBO implements InitializingBean {
 	 * 
 	 * @return
 	 */
-	public DcUserDO getFakeUser() {
+	public DcUserDTO getFakeUser() {
 		return selector.nextUser();
 	}
 	
-	public DcUserDO getFakeUser(Long userId) {
+	public DcUserDTO getFakeUser(Long userId) {
 		if (userId == null) {
 			return null;
 		}
@@ -49,7 +48,7 @@ public class DcFakeUserBO implements InitializingBean {
 				tempUserIds.add(Long.valueOf(temp));
 			}
 			
-			List<DcUserDO> fakeUserDOs = dcUserService.queryUsers(tempUserIds);
+			List<DcUserDTO> fakeUserDOs = dcUserService.queryUsers(tempUserIds);
 			selector.setUsers(fakeUserDOs);
 		}
 	}
@@ -72,21 +71,21 @@ enum DcFakeUserSelector {
 	
 	protected volatile int curIndex = 0;
 	
-	protected List<DcUserDO> fakeUserDOs;
+	protected List<DcUserDTO> fakeUserDOs;
 	
 	private static Object syncObject = new Object();
 	
 	public abstract int nextIndex();
 	
-	public void setUsers(List<DcUserDO> userDOs) {
+	public void setUsers(List<DcUserDTO> userDOs) {
 		this.fakeUserDOs = userDOs;
 	}
 	
-	public List<DcUserDO> getUsers() {
+	public List<DcUserDTO> getUsers() {
 		return this.fakeUserDOs;
 	}
 	
-	public DcUserDO nextUser() {
+	public DcUserDTO nextUser() {
 		int i = -1;
 		while(i > fakeUserDOs.size() || i < 0) {
 			i = nextIndex();
@@ -94,11 +93,11 @@ enum DcFakeUserSelector {
 		return fakeUserDOs.get(i);
 	}
 	
-	public DcUserDO nextUser(Long userId) {
+	public DcUserDTO nextUser(Long userId) {
 		if (userId == null || this.fakeUserDOs == null || this.fakeUserDOs.size() == 0) {
 			return null;
 		}
-		for (DcUserDO temp: this.fakeUserDOs) {
+		for (DcUserDTO temp: this.fakeUserDOs) {
 			if (userId.equals(temp.getUserId())) {
 				return temp;
 			}

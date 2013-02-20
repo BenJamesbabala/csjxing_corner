@@ -6,7 +6,7 @@ import com.doucome.corner.biz.core.sms.model.SmsMtResult;
 
 /**
  * 发送短信服务
- * @author shenjia.caosj 2012-7-19
+ * @author langben 2012-7-19
  *
  */
 public interface SendSmsService {

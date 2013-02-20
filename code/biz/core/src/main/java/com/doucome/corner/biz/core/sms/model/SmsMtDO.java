@@ -1,16 +1,14 @@
 package com.doucome.corner.biz.core.sms.model;
 
-import java.io.Serializable;
-
-import com.doucome.corner.biz.core.model.AbstractModel;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 
 /**
  * ÏÂÐÐ¶ÌÐÅ
- * @author shenjia.caosj 2012-7-19
+ * @author langben 2012-7-19
  *
  */
-public class SmsMtDO extends AbstractModel implements Serializable  {
+public class SmsMtDO extends AbstractModel  {
 
 	private static final long serialVersionUID = -4517943087428707999L;
 

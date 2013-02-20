@@ -1,0 +1,39 @@
+#set($page_nav = "index")
+#set($layout="horoscope/frame.hs/default.vm")
+
+<input type="hidden" id="envRoot" value="${env.hsRoot}" />
+<input type="hidden" id="userId" value="$!user.userId" />
+
+<div class="content dd-l">
+	<div class="top dd-l">
+	     <div class="img $!{horoscope.name}-img dd-l"></div>
+		 <div class="period-nav dd-l">
+		    <div class="hs-title $!{horoscope.name}-title dd-l">
+			    <span>($!horoscope.validPeriodStr)</span>
+			</div>
+			<ul class="tab-list dd-l">
+			    <li class="#if($!hsFatePeriod.id == 1)selected #end dd-l">
+				    <a class="today-tab" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=$!horoscope.id&periodId=1" title="今日运势"></a>
+				</li>
+				<li class="#if($!hsFatePeriod.id == 2)selected #end dd-l">
+				    <a class="tomorrow-tab" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=$!horoscope.id&periodId=2" title="明日运势"></a>
+				</li>
+				<li class="#if($!hsFatePeriod.id == 3)selected #end dd-l">
+				    <a class="week-tab" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=$!horoscope.id&periodId=3" title="本周运势"></a>
+				</li>
+				<li class="#if($!hsFatePeriod.id == 4)selected #end dd-l">
+				    <a class="month-tab" href="${env.hsRoot}/frame/hs/horoscope.htm?hsId=$!horoscope.id&periodId=4" title="本月运势"></a>
+				</li>
+			</ul>
+		 </div>
+	 </div>
+	 #if ($!hsFatePeriod.id == 2)
+	 #parse("/common/dcome.hs/tomorrow-fate.vm")
+	 #elseif ($!hsFatePeriod.id == 3)
+	 #parse("/common/dcome.hs/week-fate.vm")
+	 #elseif ($!hsFatePeriod.id == 4)
+	 #parse("/common/dcome.hs/month-fate.vm")
+	 #else
+	 #parse("/common/dcome.hs/today-fate.vm")
+	 #end
+</div>

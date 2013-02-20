@@ -25,7 +25,7 @@ public class DcCommentCacheImpl extends AbstractCacheSupport implements DcCommen
 		CacheClient cc = getCacheClient() ;
 		String key = buildCachekeyWithArgs(itemId , pageSize) ;
 		InternalStoreItem<List<DcCommentDTO>> store = new InternalStoreItem<List<DcCommentDTO>>(comments) ;
-		cc.put(key, store) ;
+		cc.put(key, store , ONE_HOUR_MILLISECONDS) ;
 	}
 
 	@Override

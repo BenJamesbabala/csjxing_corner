@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+#set($user = $user)
+<html>
+	<head>
+		#parse("/common/dcome.qq/head.vm")
+    </head>
+	
+    <body>
+		<div id="shadowBg" style="display: none;"></div>
+		<div id="dcDialogOverlay" class="dd-dialog-overlay dd-hide" style="height:100%"></div>
+		
+        <div class="message-layer" id="messageLayer" style="display: none;">
+		    <div class="head">
+				<h2>我的消息</h2>
+				<a class="hide-btn" href="javascript:;"></a>
+			</div>
+			<div class="message-area">
+				<ul class="message-list">
+		    	</ul>
+		    	<a class="more" href="javascript:;" data-page="1">更多...</a>
+		    </div>
+    	</div>
+		
+		#if($user.unreadMsg > 0)
+		<div class="select-tips" style="left: 230px; top: 165px;" id="imsgDialog">
+			<div class="content">您有$!user.unreadMsg条中奖信息</div>
+			<div class="angle-top" style="top:-7px;left:70px"></div>
+		</div>
+		#end
+		<input type="hidden" id="envRoot" value="${env.root}" />
+		<input type="hidden" id="envStaticroot" value="${env.staticroot}" />
+		<input type="hidden" id="userIntegralCount" value="${user.integralCount}" />
+		<input type="hidden" id="itemUploadedRoot" value="${env.itemUploadedRoot}" />
+		<input type="hidden" id="picUploadedRoot" value="${env.picUploadedRoot}" />
+		<input type="hidden" id="userId" value="$!dcAuthz.userId" />
+		<input type="hidden" id="userNick" value="$!dcAuthz.pfNick" />
+		<input type="hidden" id="promoMillisOfEndTime" value="$dateUtils.timeMillisOf($promotion.endTime)"/>
+		<input type="hidden" id="promotionId" value="$!promotion.id" />
+		<input type="hidden" id="myPromotionItemId" value="$!myPromotionItem.id" /> 
+		<input type="hidden" id="sysTimeMills" value="$dateUtils.currentTimeMillis()" />
+		<input type="hidden" id="unreadMsg" value="$!user.unreadMsg" />
+		<input type="hidden" id="newGuideJson" value='$!user.getGuideJson("prom_iwish,prom_steal_rate,prom_draw_rate")' />
+		<input type="hidden" id="promotionItemNewGuideJson" value='$!myPromotionItem.getGuideJson("prom_hourly_draw,golden_egg")' />
+		<div class="dc-body" id="dc-body">
+    		<div class="header" id="header">
+    			<div class="bg"></div>
+    			#if($promotion)
+    			<a href="javascript:;" class="rule-detail-btn"></a>
+    			#end
+				<div class="user">
+					<img data-avatar-src="$avatarUtils.getAvatarUrl($!user.userId , '30x30')" data-avatar-size="30x30" class="user-avatar dd-l">
+					<span class="user-nick">$!user.nick</span>
+				</div>
+				<div class="logo">
+                    <a href="${env.root}/frame/q/tb_index.htm"><img src="${env.staticroot}/dcome/q/pk/index-logo.png"/></a>
+				</div>
+				
+				
+    			<div class="menu-nav" id="menuNav">
+    				<div class="wrap dd-l">
+	    				<div class="dd-l nav">
+	    					<ul class="menu-list">
+								<li class="hot #if($page_nav == 'tb_index')cur#end">
+							        <a href="${env.root}/frame/q/tb_index.htm" class="hot-menu">首页</a>
+								</li>
+	    						<li class="hot #if($page_nav == 'index')cur#end">
+							        <a href="${env.root}/frame/q/index.htm" class="hot-menu">限时特价</a>
+								</li>
+								<li class="pgc #if($page_nav == 'pgcs')cur#end">
+								    <a class="pgc-menu" href="${env.root}/frame/q/pgcs.htm">小编精选</a>
+								</li>
+								<li class="exchange #if($page_nav == 'exchange')cur#end">
+								    <a class="exchange-menu split" href="${env.root}/frame/q/index.htm">积分兑换</a>
+								</li>
+	    					</ul>
+	    				</div>
+	    				<div class="dd-r info">
+	    					<div class="message-area dd-l">
+	    						<div class="messages" style="display: none;">
+									<div class="head">
+										<h3>
+											<span class="head-lbl">消息通知&nbsp;&nbsp;|</span>
+											<span class="normal-title title">
+											    <a class="cur" href="javascript:;">我的消息</a>
+											</span>
+											<span class="award-title title">
+											    <a class="my-award" href="javascript:;">中奖消息</a>
+											</span>
+										</h3>
+									</div>
+									<ul class="content-list">
+										<li class="none-message">暂时还么有消息</li>
+									</ul>
+									<div class="foot-shadow"></div>
+								</div>
+					    	</div>
+	    					<div class="user-area dd-l">
+								<div class="icon dd-l"></div>
+								<div class="dd-l integral-area">
+                                    <div class="active">积分:<span class="integral-count">$!user.integralCount</span></div>
+    								<div class="frozen" style="font-size: 10px;">已冻结:<span class="frozen-integral-count">$!user.frozenIntegralCount</span></div>
+								</div>
+							</div>
+	    					<a class="earn-integral earn-integral-btn dd-l" href="javascript:;" gtrack="/virtual/qq/earn-integral"></a>
+	    				</div>
+	    			</div>
+                    <div class="weibo dd-hide">
+						<iframe src="http://follow.v.t.qq.com/index.php?c=follow&a=quick&name=doucomewang&style=5&t=1355811341634&f=0" frameborder="0" scrolling="auto" width="125" height="24" marginwidth="0" marginheight="0" allowtransparency="true"></iframe>
+					</div>
+				</div>
+    		</div>
+			<div class="tb-main">
+				#parse("/common/dcome.qq/tb_search_user.vm")
+        		$screen_content
+			</div>
+    		<div class="footer">
+    			<span>您的ID是$!dcAuthz.getExternalId()，如有问题请联系客服：vip@doucome.com&nbsp;&nbsp;版权所有&nbsp;&copy;&nbsp;豆蔻</span>
+    		</div>
+    	</div>
+	
+    	<script type="text/javascript" charset="utf-8" src="http://fusion.qq.com/fusion_loader?appid=100645865&platform=qzone"></script>
+    	#DC_QRES(["jquery-1.7.2-min.js","pk/jquery.wookmark.js","qq.fusion2.adapter.js","pk/index.js"])
+		#DC_QRES(["js/winner.js","js/tb-index.js"])
+		#DDZ_JS(["home/control/widget/loadBanner.js"])
+		#parse("/common/dcome.qq/bottom.vm")
+		#**
+		#DC_QRES(["../../debug/firebug-lite-debug.js"])
+		**#
+</body>
+	
+</html>

@@ -18,7 +18,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 /**
  * BasicActionSupport
  * 
- * @author shenjia.caosj 2012-2-24
+ * @author langben 2012-2-24
  */
 @SuppressWarnings("serial")
 public class BasicAction extends ActionSupport {

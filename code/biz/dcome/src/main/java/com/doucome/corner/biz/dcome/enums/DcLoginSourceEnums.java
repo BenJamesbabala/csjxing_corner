@@ -1,7 +1,6 @@
 package com.doucome.corner.biz.dcome.enums;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**

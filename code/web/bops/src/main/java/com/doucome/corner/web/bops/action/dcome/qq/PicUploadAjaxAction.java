@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.dcome.business.DcImageUploadBO;
+import com.doucome.corner.biz.dcome.model.DcPictureModel;
 import com.doucome.corner.web.bops.action.BopsBasicAction;
 import com.doucome.corner.web.bops.model.JsonModel;
 
@@ -37,7 +38,11 @@ public class PicUploadAjaxAction extends BopsBasicAction {
 		String picUrl = null;
 		try {
 			String extName = FilenameUtils.getExtension(picFileFileName);
-			picUrl = dcImageUploadBO.uploadItemPicture(picFile, extName);
+			DcPictureModel model = dcImageUploadBO.uploadItemPicture(picFile, extName);
+			if(model != null){
+				picUrl = model.getPath() ;
+			}
+
 			result.setCode(JsonModel.CODE_SUCCESS);
 			result.setData(picUrl);
 		} catch(IllegalArgumentException e) {

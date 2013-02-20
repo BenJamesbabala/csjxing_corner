@@ -14,7 +14,7 @@ import com.doucome.corner.web.bops.model.JsonModel;
 
 /**
  * 根据支付宝账号获取详细信息
- * @author shenjia.caosj 2012-7-2
+ * @author langben 2012-7-2
  *
  */
 @SuppressWarnings("serial")

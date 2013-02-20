@@ -7,14 +7,16 @@ import com.doucome.corner.biz.dal.model.AbstractModel;
 /**
  * 豆蔻用户
  * 
- * @author shenjia.caosj 2012-7-21
+ * @author langben 2012-7-21
  */
 public class DcUserDO extends AbstractModel {
 
-    /**
+	private static final long serialVersionUID = 3922526789052919961L;
+
+	/**
      * 系统生成的UserId
      */
-    private long   userId;
+    private Long   userId;
     /**
      * 外部平台id
      */
@@ -52,18 +54,93 @@ public class DcUserDO extends AbstractModel {
      * 会员来源
      */
     private String source;
+    
+    /**
+     * 积分点
+     */
+    private Integer integralCount ;
+    /**
 
+     * 冻结的积分
+     */
+    private Integer frozenIntegralCount ;
+    
+    /**
+     * 连续签到天数
+     */
+    private Integer checkInCount;
+    /**
+
+     * 金蛋个数
+     */
+    private Integer goldEggCount ;
+    
+    /**
+     * 未读消息
+     */
+    private Integer unreadMsg ;
+    
+    /**
+     * 新手指引
+     */
+    private Long newGuide;
+    
+    private Integer level;
+    /**
+     * 老虎机得分
+     */
+    private Integer winnerScore ;
+    
+    /**
+     * 支付宝账号
+     */
+    private String alipayAccount ;
+    
+    /**
+     * 扩展描述(Map类型的JSON字符串)
+     */
+    private String extendDesc ;
+    
     private Date   gmtModified;
 
     private Date   gmtCreate;
-
+    
+    /**
+     * 上次登陆时间
+     */
     private Date   gmtLastLogin;
+    
+    /**
+     * 上次签到时间
+     */
+    private Date gmtLastCheckin ;
+    /**
+     * 上次分享时间.
+     */
+    private Date gmtLastShare;
+    
+    /**
+     * 登陆信息
+     */
+    private String lastLoginTrace ;
+    /**
+     * 关注空间时间
+     */
+    private Date gmtFollowQzone;
 
-    public long getUserId() {
+    public String getLastLoginTrace() {
+		return lastLoginTrace;
+	}
+
+	public void setLastLoginTrace(String lastLoginTrace) {
+		this.lastLoginTrace = lastLoginTrace;
+	}
+
+	public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -155,4 +232,108 @@ public class DcUserDO extends AbstractModel {
         this.gmtLastLogin = gmtLastLogin;
     }
 
+	public Integer getIntegralCount() {
+		return integralCount;
+	}
+
+	public void setIntegralCount(Integer integralCount) {
+		this.integralCount = integralCount;
+	}
+
+	public Integer getCheckInCount() {
+		return checkInCount;
+	}
+
+	public void setCheckInCount(Integer checkInCount) {
+		this.checkInCount = checkInCount;
+	}
+
+	public Integer getGoldEggCount() {
+		return goldEggCount == null ? 0: goldEggCount;
+	}
+
+	public void setGoldEggCount(Integer goldEggCount) {
+		this.goldEggCount = goldEggCount;
+	}
+
+	public Date getGmtLastCheckin() {
+		return gmtLastCheckin;
+	}
+
+	public void setGmtLastCheckin(Date gmtLastCheckin) {
+		this.gmtLastCheckin = gmtLastCheckin;
+	}
+
+	public Integer getUnreadMsg() {
+		return unreadMsg;
+	}
+
+	public void setUnreadMsg(Integer unreadMsg) {
+		this.unreadMsg = unreadMsg;
+	}
+
+	public Long getNewGuide() {
+		return newGuide;
+	}
+
+	public void setNewGuide(Long newGuide) {
+		this.newGuide = newGuide;
+	}
+
+	public Date getGmtLastShare() {
+		return gmtLastShare;
+	}
+
+	public void setGmtLastShare(Date gmtLastShare) {
+		this.gmtLastShare = gmtLastShare;
+	}
+
+	public Integer getFrozenIntegralCount() {
+		return frozenIntegralCount;
+	}
+
+	public void setFrozenIntegralCount(Integer frozenIntegralCount) {
+		this.frozenIntegralCount = frozenIntegralCount;
+	}
+	
+
+	public Date getGmtFollowQzone() {
+		return gmtFollowQzone;
+	}
+
+	public void setGmtFollowQzone(Date gmtFollowQzone) {
+		this.gmtFollowQzone = gmtFollowQzone;
+	}
+
+	public Integer getWinnerScore() {
+		return winnerScore;
+	}
+
+	public void setWinnerScore(Integer winnerScore) {
+		this.winnerScore = winnerScore;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public String getAlipayAccount() {
+		return alipayAccount;
+	}
+
+	public void setAlipayAccount(String alipayAccount) {
+		this.alipayAccount = alipayAccount;
+	}
+
+	public String getExtendDesc() {
+		return extendDesc;
+	}
+
+	public void setExtendDesc(String extendDesc) {
+		this.extendDesc = extendDesc;
+	}
 }

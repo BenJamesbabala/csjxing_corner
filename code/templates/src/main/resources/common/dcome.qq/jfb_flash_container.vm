@@ -1,0 +1,27 @@
+<div id="xbox-mock" style="width: 600px; height: auto; top: 187px; left:80px;" class="ui-video-xbox ui-xbox-transparent dd-hide">
+	<div class="ui-xbox-action">
+		<a href="javascript:;" class="close-flash-xbox"></a>
+	</div>
+	<div class="ui-xbox-content">
+		<div class="ui-show-video">
+			<div class="flashXbox">
+				<object id="player" width="550" height="400" type="application/x-shockwave-flash" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+					<param value="flv=null" name="flashvars">
+					<param value="" name="movie" class="flash-src">
+					<param value="" name="src" class="flash-src">
+					<param value="transparent" name="wmode">
+					<param value="-1" name="play">
+					<param value="-1" name="loop">
+					<param value="high" name="quality">
+					<param value="always" name="allowscriptaccess">
+					<param value="scale" name="scale">
+					<param value="0" name="profileport">
+					<param value="all" name="allownetworking">
+					<param value="true" name="allowfullscreen">
+					<param value="true" name="swLiveConnect">
+					<embed allowfullscreen="true" width="550" height="400" wmode="transparent" swliveconnect="true" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" src="" class="flash-src" allowscriptaccess="always" flashvars="flv=null">
+				</object>
+			</div>
+		</div>
+	</div>
+</div>

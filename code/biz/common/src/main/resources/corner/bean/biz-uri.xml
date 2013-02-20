@@ -22,9 +22,14 @@
 				<entry key="ddzStaticServer" value="${corner.static.url}"/>
 				<entry key="ddzHelpServer" value="${corner.ddz.helpUrl}"/>
 				<entry key="taobaoLoginLink" value="${corner.api.taobao.login.url}?response_type=user&amp;client_id=${corner.api.taobao.appkey}&amp;redirect_uri=http://${corner.domainName}:${corner.port}/zhe/tblogin_pass.htm"/>
+				<entry key="alipayLoginServer" value="${corner.alipay.gateway}"/>
 				<entry key="surlServer" value="${corner.surl.url}"/>
 				<entry key="bopsServer" value="http://${corner.bops.domainName}:${corner.port}"/>
 				<entry key="bopsLoginLink"  value="http://${corner.bops.domainName}:${corner.port}/bops/login.htm" />
+				<entry key="hsServer"  value="http://${corner.horoscope.domainName}:${corner.port}" />
+				<entry key="hsStaticServer" value="${corner.static.url}"/>
+				<entry key="wryneckServer"  value="http://${corner.wryneck.domainName}:${corner.port}" />
+				<entry key="namefateServer"  value="http://${corner.namefate.domainName}:${corner.port}" />
 			</map>
 		</property>
 	</bean>

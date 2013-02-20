@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * 
- * @author shenjia.caosj 2012-4-24
+ * @author langben 2012-4-24
  *
  */
 public class DdzSyncReportTaskSearchCondition {

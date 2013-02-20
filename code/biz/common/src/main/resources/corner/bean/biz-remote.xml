@@ -21,9 +21,11 @@
 	<!-- 淘宝客应用 -->
 	<bean id="taobaokeClientWrapper" class="com.doucome.corner.biz.core.service.taobao.TaobaoClientWrapper">
 		<property name="serverUrl" value="${corner.api.taobao.url}"/>
+		<property name="widgetServerUrl" value="${corner.api.taobao.widget.url}"/>
 		<property name="appKeys" value="${corner.api.taobaoke.appkeys}"/>
 		<property name="appSecrets" value="${corner.api.taobaoke.secrets}"/>
 		<property name="topSessions" value="${corner.api.taobaoke.topSessions}" />
+		<property name="nick" value="${corner.api.taobao.nickname}" />
 	</bean>
 	
 

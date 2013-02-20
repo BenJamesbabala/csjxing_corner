@@ -1,3 +1,3 @@
 #set($layout="bops/default_bops.vm")
 
-查询不到相关商品！！  <a href="${env.bopsRoot}/bops/dcome/qq/item_operate.htm">返回</a>
+查询不到相关商品，可能是商品已经下架！ <a href="${env.bopsRoot}/bops/dcome/qq/item_operate.htm" title="返回">返回</a>

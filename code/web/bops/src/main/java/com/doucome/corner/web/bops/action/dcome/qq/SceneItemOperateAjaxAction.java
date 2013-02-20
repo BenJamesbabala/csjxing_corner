@@ -16,7 +16,7 @@ import com.doucome.corner.web.bops.model.JsonModel;
 
 /**
  * 场景下的商品操作
- * @author shenjia.caosj 2012-7-24
+ * @author langben 2012-7-24
  *
  */
 @SuppressWarnings("serial")
@@ -79,7 +79,7 @@ public class SceneItemOperateAjaxAction extends  BopsBasicAction {
 			if(CollectionUtils.isNotEmpty(catCountList)) {
 				for(DcCatCountDO catCount : catCountList){
 					if(item.getCategoryId().equals(catCount.getCategoryId())){
-						int count = NumberUtils.integerToInt(catCount.getItemCount()) ;
+						int count = NumberUtils.parseInt(catCount.getItemCount()) ;
 						if(count >= MAX_ITEM_COUNT_PER_CAT) {
 							//该类目下商品到达上限
 							json.setCode(JsonModel.CODE_ILL_ARGS) ;

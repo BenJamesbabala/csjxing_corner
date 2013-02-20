@@ -17,7 +17,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 /**
  * 创建或者更新
- * @author shenjia.caosj 2012-7-24
+ * @author langben 2012-7-24
  *
  */
 @SuppressWarnings("serial")
@@ -101,10 +101,10 @@ public class CreateSceneAction  extends BopsBasicAction implements ModelDriven<D
 			isValid = false ;
 		}
 		
-		if(dto.getCategoryIdList() == null){
+		if(dto.getCatIdList() == null){
 			addFieldError("categoryIds", "dcome.createScene.categoryIds.size") ;
 			isValid = false ;
-		}else if(CollectionUtils.size(dto.getCategoryIdList()) != 4){
+		}else if(CollectionUtils.size(dto.getCatIdList()) != 4){
 			addFieldError("categoryIds", "dcome.createScene.categoryIds.size") ;
 			isValid = false ;
 		}

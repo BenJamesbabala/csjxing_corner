@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:roma="http://roma.alibaba.com/schema"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://roma.alibaba.com/schema http://roma.alibaba.com/schema/roma-component.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+	
+	<bean id="wryneckOpenApiV3" class="com.qq.open.OpenApiV3">
+		<property name="appid" value="${corner.wryneck.appid}"/>
+		<property name="appkey" value="${corner.wryneck.appkey}"/>
+		<property name="serverName" value="${corner.qq.servername}"/>
+	</bean>
+	
+	<bean id="wryneckQqQueryService" class="com.doucome.corner.biz.core.qq.impl.V3QqQueryServiceImpl">
+	    <property name="openApiV3"><ref bean="wryneckOpenApiV3"/></property>
+	</bean>
+	
+	<bean id="wryneckUserService" class="com.doucome.corner.biz.dcome.service.wryneck.WryneckUserServiceImpl"></bean>
+	<bean id="wryneckTestService" class="com.doucome.corner.biz.dcome.service.wryneck.WryneckTestServiceImpl"></bean>
+	
+	<bean id="wryneckTestBO" class="com.doucome.corner.biz.dcome.business.wryneck.WryneckTestBO"></bean>
+	
+	<bean id="wryneckUserRegisterBO" class="com.doucome.corner.biz.dcome.business.wryneck.WryneckUserRegisterBO"></bean>
+</beans>

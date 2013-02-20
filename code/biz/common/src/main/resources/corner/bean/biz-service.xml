@@ -80,5 +80,36 @@
 		<property name="serverName" value="${corner.qq.servername}"/>
 	</bean>
 	
+	<bean id="spiderItemService" class="com.doucome.corner.biz.core.service.impl.SpiderItemServiceImpl"></bean>
+	
 	<bean id="qqQueryService" class="com.doucome.corner.biz.core.qq.impl.V3QqQueryServiceImpl"></bean>
+	
+	<bean id="taobaoCommentService" class="com.doucome.corner.biz.core.service.taobao.TaobaoCommentServiceImpl"/>
+	
+	<bean id="bannerConfigService" class="com.doucome.corner.biz.core.service.impl.BannerConfigServiceImpl"></bean>
+	
+	<bean id="abstractSettleConfig" class="com.doucome.corner.biz.core.taobao.config.SettleConfig" abstract="true">
+		<property name="delaySettleAmount" value="50.00"/>
+		<property name="delaySettleDays" value="15"/>
+		<property name="eatCommissionRate" value="12.00"/>
+		<property name="jfbTaxRate" value="10.00"></property>
+		<property name="taobaoTaxRate" value="10.00"></property>
+	</bean>
+	
+	<bean id="ddzSettleConfig" parent="abstractSettleConfig" class="com.doucome.corner.biz.core.taobao.config.SettleConfig">
+		<property name="eatCommissionRate" value="12.00"/>
+	</bean>
+	
+	<bean id="dcTaobaoSettleConfig" parent="abstractSettleConfig" class="com.doucome.corner.biz.core.taobao.config.SettleConfig">
+		<property name="eatCommissionRate" value="20.00"/>
+	</bean>
+	
+	<bean id="settleConfigMgr" class="com.doucome.corner.biz.core.taobao.config.SettleConfigMgr" lazy-init="false">
+		<property name="configMap">
+			<map>
+				<entry key="ddzSettleConfig" value-ref="ddzSettleConfig" />
+				<entry key="dcTaobaoSettleConfig" value-ref="dcTaobaoSettleConfig" />
+			</map>
+		</property>
+	</bean>
 </beans>

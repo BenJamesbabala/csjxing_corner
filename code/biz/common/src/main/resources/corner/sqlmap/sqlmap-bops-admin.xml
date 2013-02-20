@@ -18,5 +18,6 @@
 		ID,ADMIN_ID,PASSWORD,SITE,GMT_CREATE,GMT_MODIFIED
 		FROM BOPS_ADMIN
 		WHERE ADMIN_ID = #adminId# and PASSWORD= #password#
+		LIMIT 1
 	</select>
 </sqlMap>

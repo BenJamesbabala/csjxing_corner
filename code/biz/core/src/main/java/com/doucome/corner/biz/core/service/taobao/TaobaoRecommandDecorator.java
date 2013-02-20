@@ -9,7 +9,7 @@ import com.doucome.corner.biz.core.taobao.model.TaobaoRecommendItemCondition;
 
 /**
  * ÌÔ±¦¹ØÁªÍÆ¼ö
- * @author shenjia.caosj 2012-3-22
+ * @author langben 2012-3-22
  *
  */
 public interface TaobaoRecommandDecorator {

@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * qq空间首页 发布状态
- * @author shenjia.caosj 2012-7-25
+ * @author langben 2012-7-25
  *
  */
 public enum DcQIndexPubStatusEnums {

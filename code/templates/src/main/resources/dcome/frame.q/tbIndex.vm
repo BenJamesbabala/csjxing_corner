@@ -1,0 +1,11 @@
+#set($page_nav = "tb_index")
+#set($layout="dcome/frame.q/default.vm")
+
+<div class="tb-search">
+	#parse("/common/dcome.qq/tb_search.vm")
+</div>
+
+
+<div class="tb-content">
+    <div class="banner-config-init dd-hide idx-search-banner" data-banner-id="dc_tb_index_search"></div>
+</div>

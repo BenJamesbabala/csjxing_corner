@@ -1,0 +1,73 @@
+<html>
+	<head>
+		<meta charset="GBK">
+		<link rel="stylesheet" type="text/css" href="common.css" />
+		<link rel="stylesheet" type="text/css" href="index.css" />
+		
+		<style>
+		    .dd-l {
+			    float: left;
+			}
+			.content-box {
+			    width: 500px;
+			}
+			.content-box li {
+			    margin-bottom: 10px;
+			}
+			.content-box .entry {
+			
+			}
+			.content-box .entry-r {
+			    margin-left: 20px;
+			}
+			.content-box .entry .lbl, .content-box .entry-r .lbl {
+			    width: 90px;
+			}
+			.content-box .entry input {
+			    width: 100px;
+			}
+			.content-box .entry .hs-id {
+			    width: 100px;
+			}
+			.content-box .entry textarea, .content-box .entry-r textarea{
+			    width: 365px;
+				height: 100px;
+				float: left;
+				padding: 5px 5px;
+			}
+		</style>
+	</head>
+	<body>
+        <div class="main-box">
+		    <ul class="content-box dd-l">
+			    <li class="dd-l">
+				    <div class="entry dd-l">
+						<span class="lbl dd-l">星话题：</span>
+						<input class="topic-title" name="title"/>
+					</div>
+					<div class="entry-r dd-l">
+					    <span class="lbl dd-l">有效时间：</span>
+						<input name="gmtDay" value="$!dateUtils.format($!gmtDay, 'yyyy-MM-dd')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate"/>
+					</div>
+				</li>
+				<li class="dd-l">
+				    <div class="entry dd-l">
+					    <span class="lbl dd-l">概述：</span>
+						<textarea class="summary"></textarea>
+					</div>
+				</li>
+				<li class="dd-l">
+				    <div class="entry dd-l">
+						<span class="lbl dd-l">图片：</span>
+						<input type="file" id="picFile" name="picFile" class="upfile-text file-input" value="" />
+					</div>
+				</li>
+				<li class="dd-l" style="clear: both;">
+					<div class="entry dd-l">
+						<input type="submit" name="fateSubmit" text="提交" />
+					</div>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>

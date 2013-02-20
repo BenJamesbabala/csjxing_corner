@@ -20,7 +20,7 @@ import com.doucome.corner.biz.core.exception.EncryptException;
 /**
  * taobao util
  * 
- * @author shenjia.caosj 2012-3-21
+ * @author langben 2012-3-21
  * 
  */
 public class TaobaoSignUtils {

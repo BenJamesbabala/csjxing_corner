@@ -1,0 +1,76 @@
+.jfb{
+	margin:0 auto;
+	width:948px;
+	border:1px solid #dfdfdf;
+	overflow:hidden;
+	margin-bottom:20px;
+	margin-top: 30px;
+	color: #555;
+}
+.jfb-banner{
+	width:948px;
+	height:226px;
+	margin-bottom:20px;
+}
+.jfb .text {
+	padding:0 0 0 45px;
+}
+.jfb .text h2{
+	font-size:20px;
+	font-weight:bolder;
+	border-left:4px solid #FF6300;
+	line-height:22px;
+	text-indent:0.6em;
+	margin:10px 0 10px 0;
+}
+.jfb .text p {
+	width:840px;
+	font-size:14px;
+	line-height:28px;
+	color:#7D7F7A;
+}
+.jfb .text .blockquote {
+	display: block;
+	width: 676px;
+	padding: 5px;
+	margin: 35px 0 15px 0;
+	border: 1px solid #fcf4de;
+	background: #fcf8e3;
+	font-size: 18px;
+	font-weight: bolder;
+}
+.jfb .text h3 {
+	font-size: 16px;
+	font-weight: bolder;
+	line-height: 20px;
+	margin: 15px 0 10px 0;
+}
+.jfb .text .link {
+	color: #FE4E00;
+	font-weight: bolder;
+}
+
+.jfb .text .red {
+	color: #ff0000;
+}
+
+.alert-block {
+    padding-bottom: 14px;
+    padding-top: 14px;
+}
+.alert {
+    background-color: #FCF8E3;
+    border: 1px solid #FBEED5;
+    border-radius: 4px 4px 4px 4px;
+    margin-bottom: 18px;
+    padding: 8px 14px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.alert-block p, .alert-block ul {
+margin-bottom: 5px;
+}
+
+.container {
+	margin:0 auto;
+}

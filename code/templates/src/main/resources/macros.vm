@@ -24,10 +24,8 @@
     #set($combineQuery = $stringUtils.combineQueryArray($searchQuery,$newQuery))
 	#set($_outputUrl = $searchUrl)
 	#foreach($entry in $combineQuery)
+		#set($entry_value  = "")
 		#set($entry_value = $entry.value)
-		#if(!$entry_value)
-			#set($entry_value  = "")
-		#end
 		#if($velocityCount == 1)
 			#set($_outputUrl = $_outputUrl + $!entry.key + "=" + $entry_value)
 		#else
@@ -42,4 +40,21 @@
 
 #macro(FIELD_ERROR $fieldName)
 	$!fieldErrorHelper.getErrorText($fieldName)
+#end
+
+#macro(JFB_ICON $iconSize)
+	<a href="https://jf.alipay.com/prod/pout.htm" target="_blank" title="支付宝集分宝" gtrack="/virtual/zhe/what_is_jfb"><img src="${env.staticroot}/images/jfb$!{iconSize}.png" alt="支付宝集分宝"></img></a> 
+#end
+
+#macro(DC_USER_INTEGRAL_SOURCE $source)##
+#if($source == "BUY")购物返积分##
+#elseif($source == "EX")积分兑换##
+#elseif($source == "REFD")维权退款##
+#elseif($source == "CHK")签到##
+#elseif($source == "REG")新用户注册##
+#elseif($source == "SHR")分享##
+#elseif($source == "INVED")邀请朋友##
+#elseif($source == "FOL")关注认证空间##
+#else 其他 ##
+#end
 #end

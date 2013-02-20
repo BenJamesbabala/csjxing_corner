@@ -8,7 +8,7 @@
 		<interceptors>
 			<!-- authz stack -->
             <interceptor-stack name="dcomeDefaultStack">
-				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="cornerDefaultStack" />
 				 <interceptor-ref name="setDcContextInterceptor" />
 				 <!-- <interceptor-ref name="dcomeAuthzContextInterceptor" /> -->
 			 </interceptor-stack>
@@ -21,34 +21,93 @@
 		
 		<action name="qqLogin" class="com.doucome.corner.web.dcome.action.frame.q.QqLoginAction">
 			<interceptor-ref name="dcomeBasicStack" />
-			<result name="success" type="redirect">/frame/q/index.htm</result>
+			<result name="success" type="redirect">/frame/q/best_sale.htm</result>
 		</action>
 		
-		<action name="index" class="com.doucome.corner.web.dcome.action.frame.q.IndexAction">
+		<action name="index" class="com.doucome.corner.web.dcome.action.frame.q.DcExchangeItemAction">
 			<interceptor-ref name="dcomeDefaultStack" />
 			<result name="success" type="velocity">/dcome/frame.q/index.vm</result>
 		</action>
 		
-		<action name="preview" class="com.doucome.corner.web.dcome.action.frame.q.IndexAction" method="preview">
+		<action name="best_sale" class="com.doucome.corner.web.dcome.action.frame.q.DcBestSaleAction">
 			<interceptor-ref name="dcomeDefaultStack" />
-			<result name="success" type="velocity">/dcome/frame.q/index.vm</result>
+			<result name="success" type="velocity">/dcome/frame.q/bestSale.vm</result>
 		</action>
 		
-		<action name="detail" class="com.doucome.corner.web.dcome.action.frame.q.ItemDetailAction">
+		<action name="pgcs" class="com.doucome.corner.web.dcome.action.frame.q.DcPgcItemsAction">
 			<interceptor-ref name="dcomeDefaultStack" />
-			<result name="success" type="velocity">/dcome/frame.q/detail.vm</result>
+			<result name="success" type="velocity">/dcome/frame.q/pgcs.vm</result>
 		</action>
 		
+		<action name="preview" class="com.doucome.corner.web.dcome.action.frame.q.DcPgcItemsAction" method="preview">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="velocity">/dcome/frame.q/pgcs.vm</result>
+		</action>
+		
+		<action name="promotion" class="com.doucome.corner.web.dcome.action.frame.q.PromotionPKAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="velocity">/dcome/frame.q/promotion_pk.vm</result>
+		</action>
+		
+		<action name="join_app_vote" class="com.doucome.corner.web.dcome.action.frame.q.JoinAppVoteAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="velocity"></result>
+		</action>
+		
+		<action name="winner" class="com.doucome.corner.web.dcome.action.frame.q.WinnerAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="velocity">/dcome/frame.q/winner.vm</result>
+		</action>
+		
+		<action name="tb_index" class="com.doucome.corner.web.dcome.action.frame.q.DcTbIndexAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="velocity">/dcome/frame.q/tbIndex.vm</result>
+		</action>
+		
+		<action name="tb_search" class="com.doucome.corner.web.dcome.action.frame.q.DcTbSearchAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="item" type="redirect">/frame/q/tb_item.htm?id=${id}&amp;domain=${domain}</result>
+		</action>
+		
+		<action name="tb_item" class="com.doucome.corner.web.dcome.action.frame.q.DcTbItemSearchAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="velocity">/dcome/frame.q/tbItemSearch.vm</result>
+		</action>
+		
+		<action name="tb_integral_pay" class="com.doucome.corner.web.dcome.action.frame.q.DcTbIndexAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="velocity">/dcome/frame.q/tbIntegralPay.vm</result>
+		</action>
+		
+		<action name="tb_my" class="com.doucome.corner.web.dcome.action.frame.q.DcTbMyAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="velocity">/dcome/frame.q/tbMy.vm</result>
+		</action>
 	</package>
 	
 	<package name="frame-q-remote-rest" namespace="/frame/q/remote/rest" extends="struts-json">
 		<interceptors>
 			 <!-- Basic stack -->
             <interceptor-stack name="dcomeDefaultStack">
-				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="cornerDefaultStack" />
 				 <interceptor-ref name="setDcContextInterceptor" />
 			 </interceptor-stack>
 		</interceptors>
+		
+		<action name="query_tb_promotion_price_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.QueryTBPromotionPriceAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json2"></result>
+		</action>
+		
+		<action name="user_exchange_approve_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcUserExchangeApproveAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json2"></result>
+		</action>
+		
+		<action name="winner_game_start_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcWinnerGameStartAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
 		
 		<action name="add_comment_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.CommentOperateAjaxAction" method="add">
 			<interceptor-ref name="dcomeDefaultStack" />
@@ -64,5 +123,236 @@
 			<interceptor-ref name="dcomeDefaultStack" />
 			<result name="success" type="json"></result>
 		</action>
+		
+		<action name="query_items_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.QueryItemsAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="query_ugc_items_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.QueryUgcsAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="query_hots_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.QueryHotsAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="add_promotion_rate_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.PromotionItemOperateAjaxAction" method="addRate">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="steal_promotion_rate_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.PromotionItemOperateAjaxAction" method="stealRate">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="draw_promotion_rate_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.PromotionItemOperateAjaxAction" method="drawRate">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="query_promotion_items_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.QueryPromotionItemsAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="dcitem_takein_prom_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcTakeinPromAjaxAction" method="dcItemTakeinProm">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="is_takein_prom_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcTakeinPromAjaxAction" method="isUserTakeinProm">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="user_daily_checkin_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.UserAjaxAction" method="dailyCheckin">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="prom_item_rank_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcPromItemRankAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="add_user_new_guide_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcUserNewGuideOperateAjaxAction" method="addGuide">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="share_promotion_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcShareAjaxAction" method="sharePromotion">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="share_app_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcShareAjaxAction" method="shareApp">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="share_dcitem_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcShareAjaxAction" method="shareDcItem">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="send_invite_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcShareAjaxAction" method="sendFriendInvite">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="share_award_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcDrawAwardAjaxAction" method="shareAward">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="query_award_addr_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcDrawAwardAjaxAction" method="queryAwardAddr">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="my_message_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.MyMessageAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="redirect_item" class="com.doucome.corner.web.dcome.action.frame.q.ajax.RedirectItemAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="user_message_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcMessageAjaxAction" method="queryUserMessages">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="app_message_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcMessageAjaxAction" method="queryAppMessages">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="notify_message_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcMessageAjaxAction" method="queryNotifyMessages">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="smash_egg_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcGameAwardAjaxAction" method="smashEgg">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="game_data_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcGameDataAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="add_notify_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcNotifyMessageAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="prom_award_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcPromAwardAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="query_ugc_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcUgcQueryAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="sub_ugc_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcUgcSubmitAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="is_qzone_fans_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcQzoneAjaxAction" method="isQzoneFans">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="is_weibo_fans_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcWeiboAjaxAction" method="isWeiboFans">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="follow_qzone_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcQzoneAjaxAction" method="followQzone">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="query_auctions_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcAuctionAjaxAction" method="queryAuctions">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="bid_item_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcAuctionBidAjaxAction" method="bidItem">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="query_bid_history_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcAuctionBidAjaxAction" method="queryBidHistory">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="query_awards_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcAwardAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="menu_cd_time_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcCountdownTimeAjaxAction" method="queryMenuCDTime">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="count_user_message_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcUserAjaxAction" method="countUserMessage">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="prom_rank_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcPromRankAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="query_integral_status_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcUserAjaxAction" method="queryIntegralCollectStatus">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="add_promotion_itemm_new_guide_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcPromotionItemNewGuideOperateAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="exchange_item_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcExchangeAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="read_message_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcUserAjaxAction" method="updateMessageReadStatus">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="update_award_addr_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcAwardAddrAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="query_flayer_show_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcUserGuideAjaxAction" method="queryFLayerShow">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="mark_guide_done_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcUserGuideAjaxAction" method="markGuideDone">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="query_ugc_awards_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcUgcAjaxAction" method="queryUgcAwards">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="query_ugc_example_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcUgcAjaxAction" method="queryUgcExample">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		<action name="ugc_ex_submit_ajax" class="com.doucome.corner.web.dcome.action.frame.q.ajax.DcAutoExchangeSubmitAjaxAction">
+			<interceptor-ref name="dcomeDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
 	</package>
 </struts>

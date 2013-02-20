@@ -1,33 +1,47 @@
 package com.doucome.corner.biz.core.cache;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 import com.doucome.corner.biz.cache.CacheClient;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 缓存基类实现
  * 
- * @author shenjia.caosj 2011-4-7
+ * @author langben 2011-4-7
  * 
  */
 public class AbstractCacheSupport implements InitializingBean {
 
-	protected static final long ONE_YEAR_MILLISECONDS = 3600L * 1000 * 24 * 365; // 1年
+	protected static final long ONE_YEAR_MILLISECONDS = 3600L * 1000l * 24l * 365l; // 1年
 
-	protected static final long ONE_MONTH_MILLISECONDS = 3600L * 1000 * 24 * 30; // 1个月
+	protected static final long ONE_MONTH_MILLISECONDS = 3600L * 1000l * 24l * 30l; // 1个月
 
-	protected static final long ONE_HOUR_MILLISECONDS = 3600L * 1000; // 1小时
+	protected static final long ONE_HOUR_MILLISECONDS = 3600L * 1000l; // 1小时
 
-	protected static final long ONE_DAY_MILLISECONDS = 3600L * 1000 * 24; // 1天
+	protected static final long ONE_DAY_MILLISECONDS = 3600L * 1000l * 24l; // 1天
 	
-	protected static final long ONE_MINUTES_MILLISECONDS = 60L * 1000  ; //10分钟
+	protected static final long ONE_MINUTES_MILLISECONDS = 60L * 1000L  ; //1分钟
 	
-	protected static final long ONE_SECOND_MILLISECONDS = 1000 ;
+	protected static final long TEN_MINUTES_MILLISECONDS = 600L * 1000L  ; //1分钟
+	
+	protected static final long TEN_SECOND_MILLISECONDS = 1000 * 10L ;
+	
+	protected static final long ONE_SECOND_MILLISECONDS = 1000L ;
+	
+	private static List<AbstractCacheSupport> manageCacheList = new ArrayList<AbstractCacheSupport>() ;
+	
+	public static List<AbstractCacheSupport> getMgrCacheClientList(){
+		return manageCacheList ;
+	}
+	
 
 	/**
 	 * Cache RegionName
@@ -63,6 +77,8 @@ public class AbstractCacheSupport implements InitializingBean {
 		if (StringUtils.isBlank(regionName)) {
 			throw new IllegalStateException("regionName is Blank !");
 		}
+		
+		manageCacheList.add(this) ;
 	}
 	
 	protected String buildCachekeyWithArgs(Object... args){
@@ -70,42 +86,32 @@ public class AbstractCacheSupport implements InitializingBean {
 		StringBuilder key = new StringBuilder(regionName) ;
 		if(!ArrayUtils.isEmpty(args)) {
 			for(Object a : args){
-				key.append("_").append(a) ;
+				if(a != null){
+					key.append("_").append(a) ;
+				}
 			}
 		}
 		return key.toString() ;
 	}
-	
-	protected String buildCachekeyWithArgs(String... args){
-		String regionName = getRegionName() ;
-		StringBuilder key = new StringBuilder(regionName) ;
-		if(!ArrayUtils.isEmpty(args)) {
-			for(String a : args){
-				key.append("_").append(a) ;
-			}
-		}
-		return key.toString() ;
+		
+	public final boolean removeCacheByKey(String keyName){
+		CacheClient cc = getCacheClient() ;
+		return cc.delete(keyName) ;
 	}
 	
-	protected String buildCachekeyWithArgs(Long... args){
-		String regionName = getRegionName() ;
-		StringBuilder key = new StringBuilder(regionName) ;
-		if(!ArrayUtils.isEmpty(args)) {
-			for(Long a : args){
-				key.append("_").append(a) ;
-			}
-		}
-		return key.toString() ;
+	public final Object getCacheByKey(String keyName){
+		CacheClient cc = getCacheClient() ;
+		return cc.get(keyName) ;
 	}
 
 	/**
 	 * 缓存对象
 	 * 
-	 * @author shenjia.caosj 2011-4-12
+	 * @author langben 2011-4-12
 	 * 
 	 * @param <T>
 	 */
-	public static class InternalStoreItem<T> implements Serializable {
+	public static class InternalStoreItem<T> extends AbstractModel implements Serializable {
 		
 		public InternalStoreItem (T item){
 			this.item = item ;

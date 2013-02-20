@@ -1,0 +1,112 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "活动列表")
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcPromotionList"/>
+
+#set($startDateFormat=$dateUtils.format($!startDate,'yyyy-MM-dd'))
+#set($endDateFormat=$dateUtils.format($!endDate,'yyyy-MM-dd'))
+#set($pagination = $promotions.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/prom/prom_list.htm?")
+#set($searchQuery = ["name:$!name","status:$!status","startDate:$!startDateFormat","endDate: $!endDateFormat"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/dcome/prom/prom_list.htm" method="GET">
+		<div class="MB10 MT10">
+			活动名称：<input  type="text" name="name" value="$!name" />
+			活动状态：
+			<select name="status">
+				<option value="" #if($!status == "") selected #end>全部</option>
+				<option value="" #if($!status == "N") selected #end>正常</option>
+				<option value="" #if($!status == "E") selected #end>结束</option>>
+			</select>
+			&nbsp;&nbsp;
+			活动开始时间：
+			<input type="text" id="startDate" name="startDate"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate dateIpt" value="$!startDateFormat"/>-
+			活动结束时间：
+			<input type="text" id="endDate" name="endDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate dateIpt" value="$!endDateFormat"/>
+			&nbsp;&nbsp;
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	#parse("/common/bops/dcome.prom/promListPagination.vm")
+	
+	 <table width="960" style="font-size:14px;" id="itemTable">
+		<tr>
+			<th width="30">ID</th>
+			<th width="40">类型</th>
+			<th width="40">活动状态</th>
+			<th width="50">价格上限</th>
+			<th width="200">活动时间</th>
+			<th width="80">创建时间</th>
+			<th width="80">详细</th>
+    	</tr>
+		#if($promotions.totalRecords > 0)
+    		#foreach($promotion in $promotions.items)
+            	<tr data-index="$!promotion.id">
+                    <td align="center">$!promotion.id</td>
+                    <td align="center">$!promotion.promType</td>
+					<td align="center">
+					    #if($!promotion.status == 'N') 正常
+					    #elseif($!promotion.status == 'D') 关闭
+					    #elseif($!promotion.status == 'E') 已经开奖  
+						#else 未知（$!promotion.status） #end
+					</td>
+					<td align="center">$!promotion.limitTopPrice</td>
+                    <td>
+						$!dateUtils.format($!promotion.startTime , 'yyyy-MM-dd HH:mm:ss') ~ $!dateUtils.format($!promotion.endTime , 'yyyy-MM-dd HH:mm:ss')
+						#set($timeStatus = $promotion.timeStatus)
+						[#if($timeStatus == -1) 未开始  #elseif($timeStaus == 0) 进行中 #else 已结束 #end]
+					</td>
+                    <td>$!dateUtils.format($!promotion.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+					<td align="center">
+						<a href="javascript:;" class="promDetail dc-blue" data-promid="$!promotion.id">详情<span class="icon-pull-down">&nbsp;</span></a>
+                        <a href="${env.bopsRoot}/bops/dcome/prom/prom_award_list.htm?promotionId=$!promotion.id&promotionType=PK" target="_blank" >查看中奖记录</a>
+					</td>
+            	</tr>
+            	<tr class="dd-hide promotion-detail" align="center" data-keepid="$!promotion.id">
+                    <td colspan="8">
+						<table>
+                			<tr><td>开奖ID</td><td>中奖商品</td><td>中奖用户ID</td><td>昵称</td><td>票数</td><td>收货人姓名</td><td>联系电话</td><td>地址</td><td>寄送情况</td><td>核对码</td><td>排名</td><td>审核</td></tr>
+                        </table>
+					</td>
+                </tr>
+    		#end
+		#else
+            <tr><td colspan="8"></td></tr>
+		#end
+     </table>
+	 
+	 <div id="promDetailTrTemplate" class="dd-hide">
+		<table>
+		<tr>
+			<td>@id@</td>
+			<td><a href="${env.bopsRoot}/bops/dcome/prom/redirect_item.htm?itemId=@item_id@" target="_blank">@item_name@</a></td>
+			<td>@userId@</td>
+			<td>@userNick@</td>
+			<td>@rateCount@</td>
+			<td>@delName@</td>
+			<td>@delMobile@</td>
+			<td>@delAddr@</td>
+			<td>@sendStatus@</td>
+			<td>@checkCode@</td>
+			<td>@rank@</td>
+            <td>@reviewStatus@ <a href="javascript:;" data-award-id="@id@" class="dc-blue award-review-click @award-review-display@">审核</a></td>
+		</tr>
+        </table>
+     </div>
+	 
+	 #parse("/common/bops/dcome.prom/promListPagination.vm")
+	
+</div>
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

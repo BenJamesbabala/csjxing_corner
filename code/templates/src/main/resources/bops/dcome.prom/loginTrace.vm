@@ -1,0 +1,71 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "登陆明细")
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcLoginTrace"/>
+
+#set($pagination = $traceQuery.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/prom/login_trace.htm?")
+#set($searchQuery = ["loginIpStr:$!loginIpStr","userId:$!userId","ubid:$!ubid"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/dcome/prom/login_trace.htm" method="GET">
+		<div class="MB10 MT10">
+			IP：<input  type="text" name="loginIpStr" value="$!loginIpStr" />
+			&nbsp;&nbsp;
+			UserId：
+			<input type="text" id="userId" name="userId"  value="$!userId"/>
+			&nbsp;&nbsp;
+			Ubid
+			<input type="text" id="ubid" name="ubid"  value="$!ubid"/>
+			&nbsp;&nbsp;
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	#parse("/common/bops/dcome.prom/loginTracePagination.vm")
+	
+	 <table width="960" style="font-size:14px;" id="itemTable">
+		<tr>
+			<th width="30">ID</th>
+			<th width="40">UserId</th>
+			<th width="40">nick</th>
+			<th width="40">IP</th>
+			<th width="70">ubid</th>
+			<th width="70">ClientAgent</th>
+			<th width="100">注册时间</th>
+			<th width="100">登陆时间</th>
+			<th width="40">详细</th>
+    	</tr>
+		#if($traceQuery.totalRecords > 0)
+    		#foreach($item in $traceQuery.items)
+            	<tr data-index="">
+                    <td align="center">$!item.id</td>
+                    <td align="center">$!item.userId</td>
+					<td align="center">$!item.nick</td>
+					<td align="center">$!item.loginIpStr</td>
+					<td align="center">$!item.ubid</td>
+					<td align="center">$!item.clientAgent</td>
+					<td>$!dateUtils.format($!item.gmtRegister , 'yyyy-MM-dd HH:mm')</td>
+                    <td>$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+					<td align="center"></td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="8">没有记录</td></tr>
+		#end
+     </table>
+	 
+	 #parse("/common/bops/dcome.prom/loginTracePagination.vm")
+	
+</div>
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

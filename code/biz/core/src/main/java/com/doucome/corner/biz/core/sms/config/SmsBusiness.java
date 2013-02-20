@@ -7,11 +7,11 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * SmsBusiness
- * @author shenjia.caosj 2011-3-22
+ * @author langben 2011-3-22
  *
  */
 public class SmsBusiness extends AbstractModel {

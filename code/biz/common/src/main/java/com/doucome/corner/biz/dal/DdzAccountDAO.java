@@ -37,4 +37,34 @@ public interface DdzAccountDAO {
      * @return
      */
     int countAccountsWithPagination(DdzAccountSearchCondition searchCondition) ;
+    
+    /**
+     * 增加维权笔数
+     * @param alipayId
+     * @param count
+     * @return
+     */
+    int incrRefundCountByAlipayId(String alipayId , int count) ;
+    
+    /**
+     * 减少通知次数
+     * @param alipayId
+     * @param count
+     * @return
+     */
+    int decrNotifyCountByAlipayId(String alipayId , int count) ;
+    
+    /**
+     * 更新最后登陆时间
+     * @param alipayId
+     * @return
+     */
+    int updateLastLoginByAlipayId(String alipayId) ;
+    
+    /**
+     * 更新最后访问时间
+     * @param alipayId
+     * @return
+     */
+    int updateLastVisitByAlipayId(String alipayId) ;
 }

@@ -1,0 +1,45 @@
+<div class="tb-search-ipt">
+    <form id="search_form" method="get" action="${env.root}/frame/q/tb_search.htm">
+    	#set($default_text = "请粘贴你要购买的淘宝宝贝网址")
+    	
+    	<div class="search-ipt-container">
+        	<input type="text" name="wd" value="$!keyword" class="search-input" id="search_content" placeholder="$!default_text"/>
+            <button class="search-submit" id="submit" type="submit">查&nbsp;询</button>
+    	</div>
+    	<div class="search-guide" data-new-guide-done="$user.isGuideDone('idx_sch')">
+    		<div class="guide-title"><span>一分钟新手教程</span></div>
+            <div class="new-guide dd-hide">
+    			<div class="pic">
+                    <ul data-idx="0">
+                        <li data-title="复制链接"><img src="${env.staticroot}/dcome/q/imgs/search-guide1.png"></img></li>
+    					<li data-title="查积分"><img src="${env.staticroot}/dcome/q/imgs/search-guide2.png"></img></li>
+    					<li data-title="去购买"><img src="${env.staticroot}/dcome/q/imgs/search-guide3.png"></img></li>
+                        <li data-title="" class="step-url-btn">
+							<img src="${env.staticroot}/dcome/q/imgs/search-guide4.png"></img>
+							<div class="tryme-btn"></div>
+						</li>
+    				</ul>
+    			</div>
+                <div class="slide">
+                    <div class="page"><span class="num">1</span>/<span class="total-num">4</span></div>
+    				<div class="title">复制链接</div>
+                    <a class="prev-icon" href="javascript:;"></a>
+    				<a class="next-icon" href="javascript:;"></a>
+    			</div>
+                <div class="know dd-hide"><a href="javascript:;">知道了，不再提醒</a></div>
+				<div class="step-url">http://item.taobao.com/item.htm?id=9130136035</div>
+    		</div>
+    	</div>
+    </form>
+</div>
+#if(!$id)
+<div class="search-bot">
+	<span class="s-title">将宝贝网址粘贴到上面的框中</span>
+	<span class="s-source-list">
+	    <span class="s-support">(支持</span>
+        <span class="taobao-icon"></span><a href="http://s8.taobao.com/search?q=%C5%AE&amp;cat=16&amp;tab=mall&amp;pid=mm_30820461_0_0&amp;commend=all&amp;unid=keyword&amp;&amp;mode=23&amp;commend=1%2C2&amp;other_filter=tk_rate[2400%2C]%3Bratesum[11%2C]&amp;filter=reserve_price[20%2C99]&amp;fs=1" target="_blank" gtrack="/virtual/qq/tbs8?tracelog=ugc" gtrack-init="y">淘宝网</a>
+		<span class="tmall-icon"></span><a href="http://s.click.taobao.com/t_9?p=mm_30820461_0_0&amp;l=http%3A%2F%2Fwww.tmall.com%2F" target="_blank" gtrack="/virtual/qq/tmall?tracelog=ugc" gtrack-init="y">天猫商城</a>
+		<span class="s-support">)</span>
+	</span>
+</div>
+#end

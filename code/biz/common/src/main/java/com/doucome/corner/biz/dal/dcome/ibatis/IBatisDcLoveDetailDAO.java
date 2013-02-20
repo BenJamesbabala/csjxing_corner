@@ -10,7 +10,7 @@ import com.doucome.corner.biz.dal.dcome.DcLoveDetailDAO;
 
 /**
  * Ï²»¶+1 ÏêÏ¸
- * @author shenjia.caosj 2012-7-22
+ * @author langben 2012-7-22
  *
  */
 public class IBatisDcLoveDetailDAO extends SqlMapClientDaoSupport implements DcLoveDetailDAO{

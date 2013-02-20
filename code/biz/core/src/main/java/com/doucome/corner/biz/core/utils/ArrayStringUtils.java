@@ -9,10 +9,12 @@ import org.springframework.util.CollectionUtils;
 
 /**
  * Array =&gt; String 或者 String =&gt; Array
- * @author shenjia.caosj 2012-2-24
+ * @author langben 2012-2-24
  *
  */
 public class ArrayStringUtils {
+	
+	
 
 	/**
 	 * String以","为分隔成Array
@@ -48,7 +50,7 @@ public class ArrayStringUtils {
 	public static List<String> toList(String str){
 		String[] arr = toArray(str) ;
 		if(ArrayUtils.isEmpty(arr)){
-			return null ;
+			return new ArrayList<String>() ;
 		}
 		List<String> list = new ArrayList<String>() ;
 		for(String s : arr){
@@ -62,7 +64,7 @@ public class ArrayStringUtils {
 	public static List<Long> toLongList(String str){
 		String[] arr = toArray(str) ;
 		if(ArrayUtils.isEmpty(arr)){
-			return null ;
+			return new ArrayList<Long>() ;
 		}
 		List<Long> list = new ArrayList<Long>() ;
 		for(String s : arr){
@@ -89,5 +91,20 @@ public class ArrayStringUtils {
 			}
 		}
 		return strConcat.toString() ;
+	}
+	
+	public static Long[] toLongArray(List<Long> list) {
+		if(list == null){
+			return new Long[] {};
+		}
+		
+		return (Long[])list.toArray(new Long[list.size()]) ;
+	}
+	
+	public static String[] toStringArray(List<String> list) {
+		if(list == null){
+			return new String[] {};
+		}
+		return list.toArray(new String[]{}) ;
 	}
 }

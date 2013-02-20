@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcAutoExchange">
+	<typeAlias alias="TA-DcAutoExchange" type="com.doucome.corner.biz.dal.dataobject.dcome.DcAutoExchangeDO" />
+	
+	<resultMap id="RM-DcAutoExchange" class="TA-DcAutoExchange">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID"/>
+		<result property="userNick" column="USER_NICK" jdbcType="VARCHAR"/>
+		<result property="nativeId" column="NATIVE_ID" jdbcType="VARCHAR" />
+		<result property="itemSize" column="ITEM_SIZE" jdbcType="VARCHAR" />
+		<result property="itemColor" column="ITEM_COLOR" jdbcType="VARCHAR" />
+		<result property="price" column="PRICE" jdbcType="DECIMAL" />
+		<result property="postalFee" column="POSTAL_FEE" jdbcType="DECIMAL" />
+		<result property="memo" column="MEMO" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertAutoExchange">
+		INSERT INTO DC_AUTO_EXCHANGE
+		  (ID, USER_ID, USER_NICK, NATIVE_ID, ITEM_SIZE, ITEM_COLOR, PRICE, POSTAL_FEE, MEMO, GMT_CREATE)
+		VALUES
+			(#id#, #userId#, #userNick#, #nativeId#, #itemSize#, #itemColor#, #price#, #postalFee#, #memo#, now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+</sqlMap>

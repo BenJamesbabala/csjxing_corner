@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * ÆÀÂÛ×´Ì¬
- * @author shenjia.caosj 2012-7-25
+ * @author langben 2012-7-25
  *
  */
 public enum DcCommentStatusEnums {

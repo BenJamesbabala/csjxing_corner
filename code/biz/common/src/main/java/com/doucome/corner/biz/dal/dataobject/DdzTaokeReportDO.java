@@ -3,17 +3,18 @@ package com.doucome.corner.biz.dal.dataobject;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.doucome.corner.biz.common.utils.ReflectUtils;
 import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 淘客报表
  * 
- * @author shenjia.caosj 2012-3-6
+ * @author langben 2012-3-6
  * 
  */
 public class DdzTaokeReportDO extends AbstractModel {
 
-	private int id;
+	private Long id;
 
 	/**
 	 * 实际付款金额
@@ -44,11 +45,6 @@ public class DdzTaokeReportDO extends AbstractModel {
 	 * 商品ID
 	 */
 	private Long numIid;
-	
-	/**
-	 * 图片地址
-	 */
-	private String picUrl ;
 
 	/**
 	 * 标题
@@ -84,6 +80,11 @@ public class DdzTaokeReportDO extends AbstractModel {
 	 * 用户获得的佣金比率
 	 */
 	private BigDecimal userCommissionRate;
+	
+	/**
+	 * 用户获得的集分宝比率
+	 */
+	private BigDecimal userJfbRate ;
 
 	/**
 	 * 卖家的淘宝账号
@@ -109,6 +110,16 @@ public class DdzTaokeReportDO extends AbstractModel {
 	 * 结算的费用
 	 */
 	private BigDecimal settleFee;
+	
+	/**
+	 * 结算的集分宝
+	 */
+	private Integer settleJfb ;
+	
+	/**
+	 * 结算方式（现金、集分宝）
+	 */
+	private String settleWay ;
 
 	/**
 	 * 是否已经结算
@@ -118,6 +129,33 @@ public class DdzTaokeReportDO extends AbstractModel {
 	 * 结算结果.
 	 */
 	private String settleResult;
+	
+	/**
+	 * outCode类型
+	 * @see OutCodeUtils
+	 */
+	private String outcodeType ;
+	
+	/**
+	 * 插入时的批次号
+	 */
+	private String insertBatch ;
+	
+	/**
+	 * 退款维权状态
+	 */
+	private String refundStatus ;
+		
+	/**
+	 * Dcome itemId
+	 */
+	private Long dcItemId ;
+	
+	/**
+	 * Dcome userId
+	 */
+	private Long dcUserId ;
+	
 	/**
 	 * 结算时间
 	 */
@@ -128,6 +166,12 @@ public class DdzTaokeReportDO extends AbstractModel {
 	private Date gmtModified;
 	
 	private Long settleId;
+	
+	public DdzTaokeReportDO deepCopy(){
+		DdzTaokeReportDO reportClone = new DdzTaokeReportDO() ;
+		ReflectUtils.reflectTo(this, reportClone) ;
+		return reportClone ;
+	}
 
 	public String getSettleTaobaoNick() {
 		return settleTaobaoNick;
@@ -153,19 +197,11 @@ public class DdzTaokeReportDO extends AbstractModel {
 		this.userCommissionRate = userCommissionRate;
 	}
 
-	public String getPicUrl() {
-		return picUrl;
-	}
-
-	public void setPicUrl(String picUrl) {
-		this.picUrl = picUrl;
-	}
-
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -336,4 +372,69 @@ public class DdzTaokeReportDO extends AbstractModel {
 	public void setSettleId(Long settleId) {
 		this.settleId = settleId;
 	}
+
+	public String getOutcodeType() {
+		return outcodeType;
+	}
+
+	public void setOutcodeType(String outcodeType) {
+		this.outcodeType = outcodeType;
+	}
+
+	public String getInsertBatch() {
+		return insertBatch;
+	}
+
+	public void setInsertBatch(String insertBatch) {
+		this.insertBatch = insertBatch;
+	}
+
+	public String getRefundStatus() {
+		return refundStatus;
+	}
+
+	public void setRefundStatus(String refundStatus) {
+		this.refundStatus = refundStatus;
+	}
+
+	public Long getDcItemId() {
+		return dcItemId;
+	}
+
+	public void setDcItemId(Long dcItemId) {
+		this.dcItemId = dcItemId;
+	}
+
+	public Long getDcUserId() {
+		return dcUserId;
+	}
+
+	public void setDcUserId(Long dcUserId) {
+		this.dcUserId = dcUserId;
+	}
+
+	public Integer getSettleJfb() {
+		return settleJfb;
+	}
+
+	public void setSettleJfb(Integer settleJfb) {
+		this.settleJfb = settleJfb;
+	}
+
+	public String getSettleWay() {
+		return settleWay;
+	}
+
+	public void setSettleWay(String settleWay) {
+		this.settleWay = settleWay;
+	}
+
+	public BigDecimal getUserJfbRate() {
+		return userJfbRate;
+	}
+
+	public void setUserJfbRate(BigDecimal userJfbRate) {
+		this.userJfbRate = userJfbRate;
+	}
+	
 }

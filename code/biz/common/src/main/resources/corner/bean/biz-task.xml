@@ -16,24 +16,37 @@
 	default-autowire="byName" >
 
 
+	<!-- Sync report -->
+	<bean id="syncReportTaskService" class="com.doucome.corner.task.zhe.syncReport.SyncReportTaskService">
+		<property name="handlerList">
+			<list>
+				<ref local="ddzReportSettleHandler"/>
+				<ref local="dcPromotionReportHandler"/>
+				<ref local="dcBuyRebateIntegralHandler"/>
+			</list>
+		</property>
+	</bean>
 	
+	<!-- ddz handlers -->
+	<bean id="dcPromotionReportHandler" class="com.doucome.corner.task.zhe.syncReport.handler.DcPromotionReportHandler"></bean>
+	<bean id="ddzReportSettleHandler" class="com.doucome.corner.task.zhe.syncReport.handler.DdzReportSettleHandler"></bean>
+	<bean id="dcBuyRebateIntegralHandler" class="com.doucome.corner.task.zhe.syncReport.handler.DcBuyRebateIntegralHandler" />
 	
-	<import resource="zhe/biz-zhe-task.xml"/>
-	
-	
+	<bean id="syncDcItemTaskService" class="com.doucome.corner.task.zhe.syncDcItem.SyncDcItemTaskService"></bean>
+
+	<bean id="statDdzUnactiveUser" class="com.doucome.corner.task.zhe.unactive.StatDdzUnactiveUser"/>
 	<!-- Start Quartz -->
+	<!-- 
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
 		autowire="no">
 		<property name="triggers">
 			<list>
-			<!-- 
 				<ref  bean="syncReportTrigger"/>
-				 -->
 			</list>
 		</property>
 		<property name="applicationContextSchedulerContextKey">
 			<value>applicationContext</value>
 		</property>
 	</bean>
-
+ 	-->
 </beans>

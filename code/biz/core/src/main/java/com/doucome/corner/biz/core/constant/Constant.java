@@ -15,5 +15,5 @@ public class Constant {
 	public static final int DEFAULT_HTTP_PORT = 80 ;
 	
 	public static final String CHARSET_UTF8 = "utf-8" ;
-	
+
 }

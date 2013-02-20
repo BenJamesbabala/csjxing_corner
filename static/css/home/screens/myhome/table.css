@@ -2,6 +2,7 @@
 
 .myhome-table {
 	width:100%;
+	margin-top:20px;
 }
 
 .myhome-table tr a:link, .myhome-table tr a:visited {
@@ -17,6 +18,14 @@
 }
 .myhome-table .title, .myhome-table .nav p{
 	background: url("../../../../img/myhome-rep.png") no-repeat scroll 999px 999px transparent;
+}
+.memo-icon {
+	background: url(../../../../images/flags.png);
+	display: inline-block;
+}
+.med-button-s, .med-button-s-disabled{
+	background: url(../../../../images/tixian.png);
+	display: inline-block;
 }
 .myhome-table .nav {
 	border-bottom: 4px solid #ff6a00;
@@ -85,4 +94,230 @@
 .myhome-table th, .myhome-table td{
 	line-height: 24px;
 	border-bottom: 1px solid #CCCCCC;
+}
+
+.myhome .userinfo {
+	float : left ;
+	margin:30px 0 0 20px;
+	text-align: left;
+}
+
+.myhome .userinfo .user-alipay {
+	font-size:20px;
+}
+
+.myhome .userinfo .user-draw {
+	font-size:14px;
+	border-top:  1px solid #ccc;
+	margin:5px 0 0 -5px ;
+	padding: 5px;
+}
+
+.myhome .userinfo .change-bind {
+	
+}
+
+.memo-icon {
+	cursor: pointer;
+	background-position: -300px -300px;
+	width: 14px;
+	height: 14px;
+	margin-left:5px;
+}
+
+.myhome .userinfo a {
+	color:#ffffff;
+	text-decoration: none ;
+	font-size:12px;
+}
+
+.med-button-s, 
+.med-button-s-disabled {
+	box-shadow: 0 1px 1px #CCC;
+	color: white;
+	padding-left: 10px;
+	background-position: 0 0;
+	position: relative;
+	vertical-align: middle;
+	height:20px;
+	width:80px;
+}
+
+.med-button-ggbd span{
+	color: #1192EB;
+	text-decoration: underline;
+}
+
+.med-button-s-disabled {
+	background-position: 0 -54px;
+	color: #666;
+}
+
+.med-button-s-disabled span {
+	color:#666;
+}
+
+.tip-rumour i , .rumour i {
+	background-image: url(../../../../img/ico_warn.png);
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+.rumour {
+	border: 1px solid #F69696;
+	margin-top: 3px;
+	_margin-bottom: 5px;
+	font-size: 12px;
+	display: inline-block;
+	padding: 0 5px 0 0;
+	line-height: 20px;
+	height: 20px;
+	background: #FCC;
+	color: #666;
+}
+
+.tip-rumour {
+	border: 1px solid #999;
+	margin-top: 10px;
+	_margin-bottom: 5px;
+	margin-left :20px;
+	font-size: 12px;
+	display: inline-block;
+	padding: 0 5px 0 0;
+	line-height: 20px;
+	height: 20px;
+	background: #dedede;
+	color: #797979;
+	float: left ;
+}
+
+.tip-rumour i , .rumour i{
+	background-position: 0 -98px;
+	width: 16px;
+	height: 20px;
+	margin: 0 5px;
+	vertical-align: middle;
+	float: left;
+}
+
+.refund-list {
+	margin:10px 0 0 10px;
+	text-align: left;
+}
+
+.refund-table {
+	margin-top:35px;
+}
+
+.refund-table tr a:link, .refund-table tr a:visited {
+	color: #666;
+	text-decoration: none;
+}
+
+.refund-table tr a:hover {
+	text-decoration: underline;
+}
+
+
+.refund-table {
+	border-collapse: collapse;
+}
+
+.refund-table th {
+	text-align: center;
+	color: #333;
+}
+
+.refund-table th,.refund-table td {
+	border: 1px solid #666;
+	font-size: 12px;
+	padding: 2px 0px;
+}
+
+.refund-table td {
+	padding: 2px 5px;
+	color: #666;
+}
+
+.refund-table .price {
+	width:80px;
+}
+
+.refund-table .create-date {
+	width:120px;
+}
+
+.refund-table .item-title {
+	width:220px;	
+}
+
+.refund-table .item-title a {
+	float: left ;
+	height: 20px ;
+	overflow: hidden;
+	text-overflow:ellipsis;
+}
+
+.refund-table .commission {
+	width:80px;
+}
+
+.refund-table .trade {
+	width:160px;
+}
+
+.my-settle {
+	font-size:14px;
+	font-family: Arial ;	
+}
+
+.my-refund {
+	font-size:12px;
+	font-family: Arial ;
+	color:#666;
+	margin-left:-5px;
+}
+
+.settle-amount {
+	color:#47a022;
+	font-weight: bold;
+}
+
+.settle-amount-disabled {
+	color:#666;
+}
+
+.refund-amount {
+	color:#f37800;
+	font-weight: bold;
+}
+
+.infotip {
+	position:relative ;
+	border: 1px solid #f0daa7;
+	margin-top: 5px;
+	margin-left:55px;
+	_margin-bottom: 5px;
+	font-size: 12px;
+	display: inline-block;
+	padding: 0 10px 0 10px;
+	line-height: 20px;
+	height: 20px;
+	background: #fefecc;
+	color: #666;
+}
+
+.infotip i{
+	background-position: 0 -98px;
+	width: 16px;
+	height: 20px;
+	margin: 0 5px;
+	vertical-align: middle;
+	float: left;
+}
+
+.jfb-icon12x12 ,.jfb-icon10x10 {
+	margin: 0 3px 0 5px;
+	line-height: 16px;
+	cursor: pointer;
 }

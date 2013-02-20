@@ -2,7 +2,7 @@ package com.doucome.corner.biz.dcome.enums;
 
 /**
  * ≥°æ∞…Ã∆∑ ≈≈–Ú
- * @author shenjia.caosj 2012-7-28
+ * @author langben 2012-7-28
  *
  */
 public enum DcSceneItemSortEnums {

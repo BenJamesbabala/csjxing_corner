@@ -1,0 +1,33 @@
+#macro(DDZ_REPORT_SETTLE $settleStatus)
+	#set($settleColor = "settle_" + $!settleStatus)
+	#if($settleStatus == "U")
+		<span class="$settleColor">未结算</span>
+	#elseif($settleStatus == "S")
+		<span class="$settleColor">成功</span>
+	#elseif($settleStatus == "P")
+		<span class="$settleColor">结算中</span>
+	#elseif($settleStatus == "F")
+		<span class="$settleColor">失败</span>
+	#elseif($settleStatus == "C")
+		<span class="$settleColor">取消</span>
+    #elseif($settleStatus == "D")
+		<span class="$settleColor">延迟结算</span>
+	#elseif($settleStatus == "R")
+		<span class="$settleColor">维权</span>
+	#elseif($settleStatus == "JP")
+		<span class="$settleColor">结算中</span>
+	#else
+		<span class="settle_f">异常（$settleStatus）</span>
+	#end
+#end
+
+#macro(DDZ_REPORT_OUTCODE_OPTIONS)
+	<option value="" #if($outcodeType == "") selected #end>全部</option>
+	<option value="A" #if($outcodeType == "A") selected #end>（A）点点折</option>
+	<option value="B" #if($outcodeType == "B") selected #end>（B）点点折手动提现</option>
+	<option value="J" #if($outcodeType == "J") selected #end>（J）点点折集分宝</option>
+	<option value="P" #if($outcodeType == "P") selected #end>（P）豆蔻PK</option>
+	<option value="U" #if($outcodeType == "U") selected #end>（U）豆蔻User</option>
+	<option value="S" #if($outcodeType == "S") selected #end>（S）系统</option>
+	<option value="UN" #if($outcodeType == "UN") selected #end>（UN）未识别</option>
+#end

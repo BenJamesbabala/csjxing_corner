@@ -1,99 +1,114 @@
+#set($page_nav = "exchange")
 #set($layout="dcome/frame.q/default.vm")
-#set($sceneDTO = $qindexFacade.dcSceneDTO)
-
-<input type="hidden" id="envRoot" value="${env.root}" />
-<input type="hidden" name="systemId" value="$!indexConfigDTO.systemId"/>
-<input type="hidden" name="sceneId" value="$!sceneDTO.id"/>
-<input type="hidden" name="sceneName" value="$!sceneDTO.name"/>
-<input type="hidden" name="sceneBanner" id="sceneBanner" value="$!sceneDTO.bannerPicUrl"/>
-
-<style>
-	.content-main {
-		#if($sceneDTO.bannerPicUrl && $sceneDTO.bannerPicUrl != '')
-			background: url($!sceneDTO.bannerPicUrl) no-repeat;
-		#else
-			background: url(http://style.diandianzhe.com/corner/dcome/q/bg.png) no-repeat;
-		#end
-	}
-</style>
-
-<div class="content-main" id="index-main">
-
-	<ul>
-		#foreach($catId in $sceneDTO.categoryIdList)
-		#set($index = $velocityCount - 1)
-		#set($catItemList =  $qindexFacade.catItemMappings[$catId])
-    		#if(!$collectionUtils.isEmpty($catItemList))
-				#set($bannerItem = $catItemList[0])
-				
-				#set($clickUrl = $!bannerItem.clickUrl)
-                #if(!$clickUrl)
-                	#set($clickUrl = $!bannerItem.srcUrl)
-                #end
-    		<li class="banner-scroll dd-clr" data-index="$index">
-    			<div style="float:left;width:318px;">
-					<a href="${env.root}/frame/q/detail.htm?id=$!bannerItem.id&sceneId=$!qindexFacade.dcSceneDTO.id&tracelog=banner_pic">
-						<img width="278" height="278" src='${env.itemUploadedRoot}$!bannerItem.getPicUrl(0,"278x278")'/>
-                    </a>
-    			</div>
-    			<div style="float:left;width:200px;">
-    				<div style="padding-left:40px;">
-                        <div class="title"><span class="src-logo-$!bannerItem.source"></span><a href="${env.root}/frame/q/detail.htm?id=$!bannerItem.id&sceneId=$!qindexFacade.dcSceneDTO.id&tracelog=banner_title">$!bannerItem.itemTitle</a></div>
-    					<div class="" style="margin-top:10px;">
-							<span href="javascript:;" title="我喜欢" class="like dc-op-ilike" data-item-id="$!bannerItem.id" data-loved="false" gtrack="virtual/frame/q/index/love?itemId=$!bannerItem.id">
-								<span class="loveCount">$!bannerItem.loves</span>
-							</span>
-							<span class="comment" href="javascript:;">$!bannerItem.comments</span>
-    					</div>
-    					<div class="price">&yen;$decimalUtils.format($!bannerItem.itemPrice , "0.00")</div>
-                        <a data-href='$!clickUrl' gtrack="virtual/frame/q/index/buy?itemId=$!bannerItem.id&userId=$!userId" data-target="_blank"><div class="go-target">立即购买</div></a>
-    				</div>
-    			</div>
-    		</li>
-    		#end
-		#end
-		
-    </ul>
-
-</div>
-<div class="content-list">
-	<div class="nav">
-		<dl id="cat-list">
-			<dt>今日热荐:</dt>
-			#foreach($catId in $sceneDTO.categoryIdList)
-			<dd #if($velocityCount == 1) class="on" #end data-cat-id="$catId"><a href="javascript:;"><span>$!qindexFacade.catMappings[$catId].name</span></a></dd>
-			#end
-		</dl>
-		<!--
-		<div class="more">
-			<a href="#" title="更多">更多</a>
+<div class="banner-config-init" data-banner-id="dc_index_top"></div>
+<div class="idx-cnt">
+	<div class="cnt-pgc">
+		<div class="">
+			<div class="waterfall">
+		    	<ul class="exchange-list" id="tiles">
+		    		<li class="auto-exchange main dd-l">
+		    			<div class="placehold"></div>
+						<div class="ws-ft"></div>
+						<div class="wrap dd-l">
+						    <div>我要自己提交商品兑换</div>
+							<div class="ex-search-container">
+								<input type="text" class="ex-url" placeholder="请输入你想兑换的淘宝商品的网址"/>
+								<a class="ex-search ex-search-btn" href="javascript:;" gtrack="/virtual/qq/ugc-ex1"></a>
+							</div>
+							<ul class="ex-s8">
+								<li>
+									<a href="http://s8.taobao.com/search?spm=a230z.1.6.1.xgUHR3&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50099260&from=category&navlog=allcat-1-c-50099260" style="font-size:14px" title="中长款羽绒服" target="_blank" gtrack="/virtual/qq/s8?cate=yurongfu">中长款羽绒服</a>
+									<a href="http://s8.taobao.com/search?spm=a230z.1.6.1.Dli22G&q=%C5%AE&cat=50102538&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&from=compass&ppath=" title="毛呢外套" target="_blanak" gtrack="/virtual/qq/s8?cate=maoni">毛呢外套</a>
+								</li>
+								<li>
+									<a href="http://s8.taobao.com/search?q=%C8%A1%C5%AF%C6%F7&pid=mm_30820461_0_0&unid=keyword&mode=63&from_bt=1&initiative_id=staobaoz_20130112&suggest_query=%C8%A1%C5%AF%C6%F7&sb_id=6&suggest=0_1&source=suggest&wq=%C8%A1%C5%AF&tab=mall" style="font-size:14px" title="取暖器" target="_blank" gtrack="/virtual/qq/s8?cate=qunuanqi">取暖器</a>
+									<a href="http://s8.taobao.com/search?q=%C4%D0%D0%AC&cat=&scat=&pid=mm_30820461_0_0&unid=keyword&mode=63&from_bt=1&initiative_id=staobaoz_20130112&tab=mall" style="font-size:18px" title="男鞋" target="_blank" gtrack="/virtual/qq/s8?cate=nanxie">男鞋</a>
+								</li>
+								<li>
+									<a href="http://s8.taobao.com/search?spm=a230z.1.6.4.kK3R9s&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C100%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50031712&from=category&navlog=allcat-4-c-50031712" title="雪地靴" target="_blank" gtrack="/virtual/qq/s8?cate=xuedixue">雪地靴</a>
+									<a href="http://s8.taobao.com/search?spm=a230z.1.6.19.wfGQyy&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C100%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50029747&from=category&navlog=allcat-19-c-50029747" style="font-size:18px" title="高筒靴" target="_blank" gtrack="/virtual/qq/s8?cate=gaotongxue">高筒靴</a>
+									<a href="http://s8.taobao.com/search?spm=a230z.1.6.23.1Ftc59&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50007068&from=category&navlog=allcat-23-c-50007068" style="font-size:14px" title="厚打底裤" target="_blank" gtrack="/virtual/qq/s8?cate=dadiku">厚打底裤</a>
+								</li>
+								<li>
+									<a href="http://s8.taobao.com/search?spm=a230z.1.0.145.snevGA&q=%B0%FC&cat=50006842&style=grid&filter=reserve_price%5B20%2C99%5D&cps=yes&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=coefp" style="font-size:18px" title="女包" target="_blank" gtrack="/virtual/qq/s8?cate=nvbao">女包</a>
+									<a href="http://s8.taobao.com/search?spm=a230z.1.6.18.Q4LR0k&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50096877&from=category&navlog=allcat-18-c-50096877" style="font-size:13px" title="特价皮草外套" target="_blank" gtrack="/virtual/qq/s8?cate=picao">特价皮草外套</a>
+									<a href="http://s8.taobao.com/search?spm=a230z.1.6.12.m3OjFW&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50016772&from=category&navlog=allcat-12-c-50016772" style="font-size:20px" title="保暖棉衣" target="_blank" gtrack="/virtual/qq/s8?cate=mianyi">保暖棉衣</a>
+								</li>
+								<li>
+									<a href="http://www.taobao.com/go/chn/tbk_channel/tejia/nianhuo.php?pid=mm_30820461_0_0&&unid=&clk1=a57b113c764fe6d80aa29e8c58472ad2" style="font-size:14px" title="年货" target="_blank" gtrack="/virtual/qq/s8?cate=nianhuo">年货</a>
+									<a href="http://s8.taobao.com/search?spm=a230z.1.6.3.Eu9UBj&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=162103&from=category&navlog=allcat-3-c-162103" style="font-size:20px" title="厚毛衣" target="_blank" gtrack="/virtual/qq/s8?cate=maoyi">厚毛衣</a>
+								</li>
+								<li>
+									<a href="http://s8.taobao.com/search?spm=a230z.1.6.16.AQGbaD&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50099705&from=category&navlog=allcat-16-c-50099705" title="大码女装" target="_blank" gtrack="/virtual/qq/s8?cate=damanvzhuang">大码女装</a>
+									<a href="http://s8.taobao.com/search?style=grid&q=%CE%A7%BD%ED&cat=&scat=&pid=mm_30820461_0_0&unid=keyword&mode=63&from_bt=1&initiative_id=staobaoz_20130112&tab=mall" style="font-size:18px" title="厚围巾" target="_blank" gtrack="/virtual/qq/s8?cate=weijing">厚围巾</a>
+									<a href="http://s8.taobao.com/search?style=grid&q=%CD%AF%C3%DE%B7%FE&cat=&scat=&pid=mm_30820461_0_0&unid=keyword&mode=63&from_bt=1&initiative_id=staobaoz_20130112&tab=mall" title="童棉服" target="_blank" gtrack="/virtual/qq/s8?cate=tongmianfu">童棉服</a>
+								</li>
+								<li>
+									<a href="http://s8.taobao.com/search?style=grid&q=%D3%F0%C8%DE%B7%FE+%C5%B7%D6%DE%D5%BE&cat=&scat=&pid=mm_30820461_0_0&unid=keyword&mode=63&from_bt=1&initiative_id=staobaoz_20130112&suggest_query=%D3%F0%C8%DE%B7%FE+%C5%B7%D6%DE%D5%BE&sb_id=6&suggest=0_1&source=suggest&wq=%D3%F0%C8%DE%B7%FE+%C5%B7%D6%DE&tab=mall" title="欧洲站羽绒服" target="_blank" gtrack="/virtual/qq/s8?cate=ouzhouyurongfu">欧洲站羽绒服</a>
+									<a href="http://s8.taobao.com/search?spm=a230z.1.6.103.srR5Jc&q=%C5%AE&cat=50101670&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&from=compass&ppath=10995144:146108112&navlog=compass-Dmore1-p-10995144:146108112" style="font-size:14px" title="加绒牛仔裤" target="_blank" gtrack="/virtual/qq/s8?cate=niuzaiku">加绒牛仔裤</a>              
+								</li>
+							</ul>
+						</div>
+					</li>
+		    	    #foreach($exchange in $exchangeItems)
+		    	    	<li class="main dd-l">
+							<div class="item-info dd-l">
+							    <a class="img-wrap" gtrack="/virtual/qq/item?tracelog=exchange-offer-title&amp;id=$!exchange.itemId" title="$!exchange.itemTitle" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!exchange.itemId">
+								    <img width="220" height="220" class="item-pic" src="$!exchange.getPicUrl(0, '220x220')" alt="$!exchange.itemTitle">
+								</a>
+								<div class="other dd-l">
+								    <h3 class="title text-hide dd-l">
+									    <a gtrack="/virtual/qq/item?tracelog=exchange-offer-title&amp;id=$!exchange.itemId" title="$!exchange.itemTitle" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!exchange.itemId">$!exchange.itemTitle</a>
+									</h3>
+								    <span class="price dd-r">&yen;$!exchange.itemPriceFmt</span>
+								</div>
+							</div>
+							<div class="exchange-info dd-l">
+								<div class="integral-info dd-l">
+								    <div class="integral-wrap dd-l">
+									    <span class="lbl">需要</span>
+										<span class="ex-integral" data-exintegral="$!exchange.exIntegral">$!exchange.userExIntegral</span>
+										<span class="lbl">积分</span>
+								    </div>
+									<div class="cd-wrap dd-r">
+										#if($!exchange.scheduleValue != 'EN')
+											<span>还有</span>
+											<span class="rest-num">$!exchange.exCount</span>
+											<span>件</span>
+										#else
+										    <span>$!exchange.exSuccCount商品已兑完</span>
+										#end
+									</div>
+								</div>
+								#if($!exchange.scheduleValue == 'EN')
+								    <div class="exchange-bar exchange-end">
+										<div class="dd-r">TM兑换了</div>
+								    </div>
+							    #else
+							      <div class="exchange-bar dd-l">
+									  <a class="exchange-btn btn #if($!exchange.scheduleValue == 'ON')enable-btn#else disable-btn#end" href="javascript:;" data-exchange-id="$!exchange.id" data-exintegral="$!exchange.exIntegral">#if($!exchange.scheduleValue == 'ON')立即兑换#else即将开始#end</a>
+							      </div>
+							    #end
+							</div>
+							<div class="ws-ft"></div>
+						</li>
+    	    		#end
+		    	</ul>
+		    </div>
 		</div>
-		-->
-	</div>
-	<div class="list dd-clr" id="content-list">
-		#foreach($catId in $sceneDTO.categoryIdList)
-		#set($catItemList =  $qindexFacade.catItemMappings[$catId])
-			<ul #if($velocityCount != 1) class="dd-hide" #end data-cat-id="$catId">
-    		#foreach($relItem in $catItemList)
-    			#if($velocityCount < 9)
-				<li class="dc-item">
-    				<div class="image">
-						<a href="${env.root}/frame/q/detail.htm?id=$!relItem.id&sceneId=$!qindexFacade.dcSceneDTO.id&tracelog=scene_$!qindexFacade.dcSceneDTO.id#header" title="$!relItem.itemTitle">
-    						<img alt="$!relItem.itemTitle" src="${env.itemUploadedRoot}$!relItem.getPicUrl(0,'154x154')" />
-    					</a>
-    					<a class="ilike dd-hide dc-op-ilike" href="javascript:;" title="我喜欢" data-item-id="$!relItem.id" data-loved="false" gtrack="virtual/frame/q/index/love?itemId=$!relItem.id&from=pic">我喜欢</a>
-    				</div>
-    				<div class="title"><a href="${env.root}/frame/q/detail.htm?id=$!relItem.id&sceneId=$!qindexFacade.dcSceneDTO.id&tracelog=scene_$!qindexFacade.dcSceneDTO.id#header" title="$!relItem.itemTitle">$!relItem.itemTitle</a></div>
-                    <div class="price">&yen;$decimalUtils.format($relItem.itemPrice,"0.00")</div>
-    				<div class="other">
-                        <span href="javascript:;" title="我喜欢" class="like dc-op-ilike" data-item-id="$!relItem.id" data-loved="false" gtrack="virtual/frame/q/index/love?itemId=$!relItem.id"><span class="loveCount">$relItem.loves</span></span>
-    					<span href="javascript:;" class="comment">$relItem.comments</span>
-    				</div>
-    			</li>
-				#end
-    		#end
-    		</ul>
-		#end
 	</div>
 </div>
-	
+
+<div class="ex-layer" style="display: none;">
+    <a class="close-btn" href="javascript:;"></a>
+    <dl class="content">
+	    <dt class="lbl"><span>兑换数量：</span></dt>
+		<dd class="ex-info">
+		    <span><input type="text" name="exNum" class="ex-num" value="1" title="请输入兑换数量"/></span>件
+			<span>(还有<span class="rest-num">2</span>件)</span>
+		</dd>
+	</dl>
+	<div class="info"></div>
+	<a class="confirm-btn btn" href="javascript:;" title="立即兑换" data-exchange-id="" data-exintegral="">立即兑换</a>
+	<div class="foot-shadow"></div>
+</div>

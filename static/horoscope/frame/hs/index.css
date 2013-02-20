@@ -1,0 +1,632 @@
+body {
+	color: #666;
+	text-align: center;
+	font-family: "Î¢ÈíÑÅºÚ", Tahoma, Arial, "ËÎÌåb8b\4f53", sans-serif;
+}
+
+.dc-body {
+    width: 760px;
+	margin: 0 auto;
+	text-align: left;
+	background: url(bg.png) repeat-x top #fe92b6;
+}
+
+#weibo {
+    position: absolute;
+	top: 20px;
+	left:180px;
+	width: 100px;
+	height: 60px;
+	border: 1px solid red;
+	border-radius: 3px 3px;
+	text-align: center;
+	background-color: #f392b6;
+}
+
+#qzone {
+    position: absolute;
+	top: 20px;
+	left:180px;
+	width: 100px;
+	height: 60px;
+	border: 1px solid red;
+	border-radius: 3px 3px;
+	text-align: center;
+	background-color: #f392b6;
+}
+
+.weibo-btn {
+    width:65px;
+	height:40px;
+	border:none;
+	overflow:hidden;
+	margin-top: 20px;
+}
+
+.qzone-btn {
+    width:65px;
+	height:40px;
+	border:none;
+	overflow:hidden;
+	margin-top: 20px;
+}
+/**
+.close-btn {
+	background: url("close-btn.png") no-repeat;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	float: right;
+	position: relative;
+	margin-right: -10px;
+	margin-top: -10px;
+	z-index: 999;
+}
+**/
+.dc-body .head {
+    width: 100%;
+	height: 101px;
+	position: relative;
+}
+
+
+.dc-body .foot {
+	margin-top: 10px;
+	width: 100%;
+	clear: both;
+	border-top: 1px solid #FEB0C4;
+    line-height: 25px;
+}
+
+.dc-body .head .logo {
+    background: url(logo.png) no-repeat scroll 0 0;
+	width: 100px;
+	height: 100px;
+	margin-left: 20px;
+}
+
+.dc-body .head .topic {
+    background: url(hs-img.png) no-repeat scroll -124px -636px;
+	width: 110px;
+	height: 39px;
+	display: inline-block;
+	margin: 35px 20px 0 0;
+}
+
+.dc-body .main-body {
+	width: 760px;
+	position: relative;
+	color: #000000;
+	float: left;
+}
+
+.main-body .header {
+    margin-left: 3px;
+}
+
+.main-body .header .hs-list {
+
+}
+
+.main-body .header .hs-list  li{
+    float: left;
+	margin-right: 2px;
+}
+
+.main-body .header .hs-list a, .main-body .header .hs-list a:hover, .main-body .header .hs-list .selected {
+	width: 61px;
+	height: 90px;
+	display: inline-block;
+}
+
+.main-body .header .hs-list .aries a {
+    background: url(hs-btn.png) no-repeat scroll -2px -218px;
+}
+
+.main-body .header .hs-list .aries a:hover, .main-body .header .hs-list .aries .selected {
+    background: url(hs-btn.png) no-repeat scroll -2px 0px;
+}
+
+.main-body .header .hs-list .taurus a {
+    background: url(hs-btn.png) no-repeat scroll -84px -218px;
+}
+
+.main-body .header .hs-list .taurus a:hover, .main-body .header .hs-list .taurus .selected {
+    background: url(hs-btn.png) no-repeat scroll -84px 0;
+}
+
+.main-body .header .hs-list .genimi a {
+    background: url(hs-btn.png) no-repeat scroll -166px -218px;
+}
+
+.main-body .header .hs-list .genimi a:hover, .main-body .header .hs-list .genimi .selected {
+    background: url(hs-btn.png) no-repeat scroll -166px 0;
+}
+
+.main-body .header .hs-list .cancer a {
+    background: url(hs-btn.png) no-repeat scroll -247px -218px;
+}
+
+.main-body .header .hs-list .cancer a:hover, .main-body .header .hs-list .cancer .selected {
+    background: url(hs-btn.png) no-repeat scroll -247px 0;
+}
+
+.main-body .header .hs-list .lion a {
+    background: url(hs-btn.png) no-repeat scroll -330px -218px;
+}
+
+.main-body .header .hs-list .lion a:hover, .main-body .header .hs-list .lion .selected {
+    background: url(hs-btn.png) no-repeat scroll -330px 0;
+}
+
+.main-body .header .hs-list .virgo a {
+    background: url(hs-btn.png) no-repeat scroll -412px -218px;
+}
+
+.main-body .header .hs-list .virgo a:hover, .main-body .header .hs-list .virgo .selected {
+    background: url(hs-btn.png) no-repeat scroll -412px 0;
+}
+
+.main-body .header .hs-list .libra a {
+    background: url(hs-btn.png) no-repeat scroll 0px -321px;
+}
+
+.main-body .header .hs-list .libra a:hover, .main-body .header .hs-list .libra .selected {
+    background: url(hs-btn.png) no-repeat scroll -0px -103px;
+}
+
+.main-body .header .hs-list .scorpio a {
+    background: url(hs-btn.png) no-repeat scroll -82px -321px;
+}
+
+.main-body .header .hs-list .scorpio a:hover, .main-body .header .hs-list .scorpio .selected {
+    background: url(hs-btn.png) no-repeat scroll -82px -103px;
+}
+
+.main-body .header .hs-list .sagittarius a {
+    background: url(hs-btn.png) no-repeat scroll -163px -321px;
+}
+
+.main-body .header .hs-list .sagittarius a:hover, .main-body .header .hs-list .sagittarius .selected {
+    background: url(hs-btn.png) no-repeat scroll -163px -103px;
+}
+
+.main-body .header .hs-list .capricorn a {
+    background: url(hs-btn.png) no-repeat scroll -246px -321px;
+}
+
+.main-body .header .hs-list .capricorn a:hover, .main-body .header .hs-list .capricorn .selected {
+    background: url(hs-btn.png) no-repeat scroll -246px -103px;
+}
+
+.main-body .header .hs-list .aquarius a {
+    background: url(hs-btn.png) no-repeat scroll -328px -321px;
+}
+
+.main-body .header .hs-list .aquarius a:hover, .main-body .header .hs-list .aquarius .selected {
+    background: url(hs-btn.png) no-repeat scroll -328px -102px;
+}
+
+.main-body .header .hs-list .pisces a {
+    background: url(hs-btn.png) no-repeat scroll -410px -321px;
+}
+
+.main-body .header .hs-list .pisces a:hover, .main-body .header .hs-list .pisces .selected {
+    background: url(hs-btn.png) no-repeat scroll -410px -102px;
+}
+
+.main-body .content {
+    margin-top: 15px;
+	margin-left: 26px;
+	width: 700px;
+}
+
+.main-body .content .topic {
+    position: relative;
+	margin-bottom: 20px;
+}
+
+.topic .lbl {
+    position: absolute;
+	top: -15px;
+	left: -20px;
+	width: 150px;
+	height: 100px;
+	background: url(hs-img.png) no-repeat scroll -240px -635px;
+}
+
+.topic .empty-placehold {
+    height: 40px;
+}
+
+.topic .title {
+    font-size: 20px;
+	font-weight: bold;
+	padding-left: 110px;
+}
+
+.topic .toolbar {
+    background: none;
+	filter: none;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.topic .detail {
+    background: #F3F3F3;
+	border: 1px solid #E3EFEA;
+	border-radius: 3px 3px;
+}
+
+.topic .detail .placehold {
+    width: 80px;
+	height: 20px;
+}
+
+.topic .detail .text {
+    font-size: 14px;
+	margin: 8px 10px;
+}
+
+.topic .detail .picture {
+    text-align: center;
+	padding: 5px 10px;
+}
+
+.main-body .content .top .img {
+    width: 140px;
+	height: 110px;
+}
+
+.main-body .content .top .aries-img {
+    background:url(hs-img.png) no-repeat scroll 0 0;
+}
+
+.main-body .content .top .taurus-img {
+    background:url(hs-img.png) no-repeat scroll -150px 0;
+}
+
+.main-body .content .top .genimi-img {
+    background:url(hs-img.png) no-repeat scroll -290px 0;
+}
+
+.main-body .content .top .cancer-img {
+    background:url(hs-img.png) no-repeat scroll -450px 0;
+}
+
+.main-body .content .top .lion-img {
+    background:url(hs-img.png) no-repeat scroll 0 -135px;
+}
+
+.main-body .content .top .virgo-img {
+    background:url(hs-img.png) no-repeat scroll -150px -135px;
+}
+
+.main-body .content .top .libra-img {
+    background:url(hs-img.png) no-repeat scroll -290px -135px;
+}
+
+.main-body .content .top .scorpio-img {
+    background:url(hs-img.png) no-repeat scroll -450px -135px;
+}
+
+.main-body .content .top .sagittarius-img {
+    background:url(hs-img.png) no-repeat scroll 0 -260px;
+}
+
+.main-body .content .top .capricorn-img {
+    background:url(hs-img.png) no-repeat scroll -150px -260px
+}
+
+.main-body .content .top .aquarius-img {
+    background:url(hs-img.png) no-repeat scroll -290px -260px
+}
+
+.main-body .content .top .pisces-img {
+    background:url(hs-img.png) no-repeat scroll -450px -260px
+}
+
+.main-body .content .top .period-nav {
+    margin-left: 10px;
+	margin-top: 30px;
+	width: 400px;
+}
+
+.main-body .content .top .period-nav .hs-title {
+	width: 80px;
+	line-height: 30px;
+	padding: 5px 0 0 80px;
+	width: 100%;
+}
+
+.main-body .content .top .period-nav .aries-title {
+    background: url(hs-btn.png) no-repeat scroll -570px 0;
+}
+
+.main-body .content .top .period-nav .aries-title span {
+    content: "1.20-2.22";
+}
+
+.main-body .content .top .period-nav .taurus-title {
+    background: url(hs-btn.png) no-repeat scroll -570px -34px;
+}
+
+.main-body .content .top .period-nav .genimi-title {
+    background: url(hs-btn.png) no-repeat scroll -570px -70px;
+}
+
+.main-body .content .top .period-nav .cancer-title {
+    background: url(hs-btn.png) no-repeat scroll -570px -108px;
+}
+
+.main-body .content .top .period-nav .lion-title {
+    background: url(hs-btn.png) no-repeat scroll -570px -145px;
+}
+
+.main-body .content .top .period-nav .virgo-title {
+    background: url(hs-btn.png) no-repeat scroll -570px -181px;
+}
+
+.main-body .content .top .period-nav .libra-title {
+    background: url(hs-btn.png) no-repeat scroll -570px -218px;
+}
+
+.main-body .content .top .period-nav .scorpio-title {
+    background: url(hs-btn.png) no-repeat scroll -570px -254px;
+}
+
+.main-body .content .top .period-nav .sagittarius-title {
+    background: url(hs-btn.png) no-repeat scroll -570px -287px;
+}
+
+.main-body .content .top .period-nav .capricorn-title {
+    background: url(hs-btn.png) no-repeat scroll -570px -324px;
+}
+
+.main-body .content .top .period-nav .aquarius-title {
+    background: url(hs-btn.png) no-repeat scroll -570px -362px;
+}
+
+.main-body .content .top .period-nav .pisces-title {
+    background: url(hs-btn.png) no-repeat scroll -570px -396px;
+}
+
+.main-body .content .top .period-nav .tab-list {
+    border-bottom: 2px solid #333333;
+}
+
+.main-body .content .top .period-nav .tab-list li {
+    margin-right: 4px;
+	height: 25px;
+}
+
+.main-body .content .top .period-nav .tab-list li a {
+	width: 90px;
+	height: 25px;
+	display: inline-block;
+}
+
+.main-body .content .top .period-nav .tab-list .today-tab {
+    background: url(hs-img.png) no-repeat scroll -27px -493px;
+}
+
+.main-body .content .top .period-nav .tab-list .selected .today-tab, .main-body .content .top .period-nav .tab-list .today-tab:hover {
+    background: url(hs-img.png) no-repeat scroll -27px -461px;
+}
+
+.main-body .content .top .period-nav .tab-list .tomorrow-tab {
+    background: url(hs-img.png) no-repeat scroll -120px -493px;
+}
+
+.main-body .content .top .period-nav .tab-list .selected .tomorrow-tab, .main-body .content .top .period-nav .tab-list .tomorrow-tab:hover {
+    background: url(hs-img.png) no-repeat scroll -120px -461px;
+}
+
+.main-body .content .top .period-nav .tab-list .week-tab {
+    background: url(hs-img.png) no-repeat scroll -213px -493px;
+}
+
+.main-body .content .top .period-nav .tab-list .selected .week-tab,.main-body .content .top .period-nav .tab-list .week-tab:hover {
+    background: url(hs-img.png) no-repeat scroll -213px -461px;
+}
+
+.main-body .content .top .period-nav .tab-list .month-tab {
+    background: url(hs-img.png) no-repeat scroll -306px -493px;
+}
+
+.main-body .content .top .period-nav .tab-list .selected .month-tab, .main-body .content .top .period-nav .tab-list .month-tab:hover {
+    background: url(hs-img.png) no-repeat scroll -306px -461px;
+}
+
+
+.main-body  .content .daily-fate {
+    margin: 20px 0 0 40px;
+}
+
+.main-body  .content .daily-fate .fate-list {
+    width: 100px;
+}
+
+.main-body  .content .daily-fate .fate-list li {
+    text-align: center;
+	font-size: 26px;
+	line-height: 26px;
+	font-weight: bold;
+	color: #eeeeee;
+	padding-top: 13px;
+	width: 92px;
+	height: 65px;
+}
+
+.main-body  .content .daily-fate .fate-list .composite-index span {
+    line-height: 60px;
+}
+
+.main-body  .content .daily-fate .fate-list .composite-index {
+    background: url(hs-img.png) no-repeat scroll -26px -640px;
+	color: #111111;
+	height: 105px;
+}
+
+.main-body  .content .daily-fate .fate-list .love-index {
+    background: url(hs-img.png) no-repeat scroll -28px -372px;
+}
+
+.main-body  .content .daily-fate .fate-list .work-index {
+    background: url(hs-img.png) no-repeat scroll -381px -372px;
+}
+
+.main-body  .content .daily-fate .fate-list .wealth-index {
+    background: url(hs-img.png) no-repeat scroll -145px -372px;
+	color: #111111;
+}
+
+.main-body  .content .daily-fate .fate-list .health-index {
+    background: url(hs-img.png) no-repeat scroll -263px -372px;
+	color: #111111;
+}
+
+.main-body  .content .daily-fate .summary {
+    width: 400px;
+	margin-left: 20px;
+	font-size: 14px;
+	line-height: 22px;
+	letter-spacing: 1px;
+}
+
+.main-body  .content .daily-fate .summary .effect-date {
+    font-size: 16px;
+	font-weight: bold;
+	line-height: 26px;
+}
+
+.main-body  .content .period-fate {
+    margin: 20px 0 0 40px;
+	position: relative;
+}
+
+.main-body  .content .period-fate .effect-date {
+    position: absolute;
+	top: -30px;
+	left: 110px;
+	font-size: 16px;
+	line-height: 26px;
+	font-weight: bold;
+}
+
+.main-body  .content .period-fate .fate-list .index {
+    float: left;
+	text-align: center;
+	font-size: 26px;
+	line-height: 26px;
+	font-weight: bold;
+	color: #eeeeee;
+	padding-top: 13px;
+	width: 92px;
+	height: 70px;
+}
+
+.main-body  .content .period-fate .fate-list li {
+    margin-bottom: 10px;
+}
+
+.main-body  .content .period-fate .fate-list .summary-fate .index {
+    font-size: 16px;
+	letter-spacing: 1px;
+	padding-top: 30px;
+	height: 90px;
+	color: #111111;
+	background: url(hs-img.png) no-repeat scroll -26px -640px
+}
+
+.main-body  .content .period-fate .fate-list .love-fate .index {
+	background: url(hs-img.png) no-repeat scroll -28px -372px;
+}
+
+.main-body  .content .period-fate .fate-list .work-fate .index {
+	background: url(hs-img.png) no-repeat scroll -381px -372px;
+}
+
+.main-body  .content .period-fate .fate-list .wealth-fate .index {
+	background: url(hs-img.png) no-repeat scroll -145px -372px;
+	color: #111111;
+}
+
+.main-body  .content .period-fate .fate-list .health-fate .index {
+	background: url(hs-img.png) no-repeat scroll -263px -372px;
+	color: #111111;
+}
+
+.main-body  .content .period-fate .fate-list .text {
+    margin-left: 20px;
+	width: 450px;
+	font-size: 14px;
+	line-height: 20px;
+	letter-spacing: 1px;
+	padding: 2px 5px;
+	border: 1px solid #666666;
+	border-radius: 6px 6px;
+	min-height: 70px;
+	position: relative;
+	height:auto!important;
+	height: 70px;
+}
+
+.main-body  .content .period-fate .fate-list .summary-fate .text {
+    min-height: 90px;
+	height:auto!important;
+	height: 90px;
+}
+
+.toolbar {
+    width: 100%;
+	height: 30px;
+	line-height: 30px;
+	border-radius: 0 0 6px 6px;
+	color: #666666;
+	background: rgba(255, 255, 255, 0.6);
+	background: transparent\9;
+	filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#bfefefef',endColorstr='#bfefefef');
+}
+
+.daily-fate .toolbar {
+    width: 150px;
+	background: none;
+	margin-top: 10px;
+	margin-left: 260px;
+	
+}
+
+.fate-list .toolbar {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+}
+
+.toolbar a.btn {
+	background-color: #FF4444;
+	background-image: -moz-linear-gradient(center top, #FF4444, #EF3434);
+	border-color: #FF4444 #FF4444 #D12222;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 3px 3px 3px 3px;
+	color: #FFFFFF;
+	font-size: 12px;
+	letter-spacing: 1px;
+	overflow: hidden;
+	padding: 0 7px;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+	line-height: 20px;
+	margin-top: 4px;
+    margin-right: 10px;
+	float: right;
+}
+
+.toolbar .qzone-btn {
+    float: right;
+	margin-top: 5px;
+	margin-right: 10px;
+	height: 30px;
+}
+

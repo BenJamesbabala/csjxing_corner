@@ -7,14 +7,16 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 
 import com.doucome.corner.biz.core.enums.SettleStatusEnums;
 import com.doucome.corner.biz.dal.DdzTaokeReportDAO;
 import com.doucome.corner.biz.dal.DdzTaokeReportSettleDAO;
+import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleSearchCondition;
+import com.doucome.corner.biz.dal.condition.DdzTaokeReportSettleUpdateCondition;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
+import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleStatisticsDO;
 import com.doucome.corner.biz.zhe.model.SettleResult;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportService;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportSettleService;
@@ -39,12 +41,7 @@ public class DdzTaokeReportSettleServiceImpl implements DdzTaokeReportSettleServ
 	
 	@Override
 	public Long insertSettleReport(DdzTaokeReportSettleDO settleDO) {
-		try {
-			return ddzTaokeReportSettleDAO.insertSettleReport(settleDO);
-		} catch (Exception e) {
-			log.error(e);
-			throw new RuntimeException(e);
-		}
+		return ddzTaokeReportSettleDAO.insertSettleReport(settleDO);
 	}
 	
 	@Override
@@ -118,6 +115,11 @@ public class DdzTaokeReportSettleServiceImpl implements DdzTaokeReportSettleServ
 			return -1;
 		}
 	}
+	
+	@Override
+	public int updateMemoById(Integer settleId, String memo) {
+		return ddzTaokeReportSettleDAO.updateMemoById(settleId, memo) ;
+	}
 
 	public boolean isProductionMode() {
 		return productionMode;
@@ -128,19 +130,23 @@ public class DdzTaokeReportSettleServiceImpl implements DdzTaokeReportSettleServ
 	}
 
     @Override
-    public int updateTaokeSettleStatus(List<Integer> settleIdList, SettleStatusEnums settleStatus) {
-        if (!CollectionUtils.isEmpty(settleIdList) && settleStatus != null) {
-        	settleResetLog.error(String.format("----reset setlle records %s to [%s]", settleIdList.toString(), settleStatus.getValue()));
-            int count = ddzTaokeReportSettleDAO.updateSettleStatus(settleIdList, settleStatus.getValue());
-            int count1 = ddzTaokeReportDAO.updateTaokeReportSettleStatus(settleIdList, settleStatus.getValue());
-            if (count1 < count) {
-            	settleResetLog.error(String.format("----there are some error with the settle data, can't find settle records %s related report records. status [%s]",
-            			     settleIdList.toString(), settleStatus.getValue()));
-            }
-            return count;
-        }
-        return 0;
+    public int updateTaokeSettleStatus(List<Long> settleIdList, SettleStatusEnums toSettleStatus) {
+        int count = ddzTaokeReportSettleDAO.updateSettleStatus(settleIdList, toSettleStatus.getValue());
+        int count1 = ddzTaokeReportDAO.updateTaokeReportSettleStatus(settleIdList, toSettleStatus.getValue());
+        return count;
     }
+    
+    @Override
+	public int updateTaokeSettleStatus(DdzTaokeReportSettleUpdateCondition condition,SettleStatusEnums toSettleStatus , String settleBatchno) {
+    	int count = ddzTaokeReportSettleDAO.updateSettleStatus(condition, toSettleStatus.getValue() , settleBatchno);
+    	int count1 = ddzTaokeReportDAO.updateTaokeReportSettleStatus(condition, toSettleStatus.getValue());
+        return count;
+	}
+    
+    @Override
+	public DdzTaokeReportSettleStatisticsDO statisticsWithPagination(DdzTaokeReportSettleSearchCondition searchCondition) {
+		return ddzTaokeReportSettleDAO.statisticsWithPagination(searchCondition) ;
+	}
 
     @Override
     public DdzTaokeReportSettleDO getById(Long id) {
@@ -159,4 +165,15 @@ public class DdzTaokeReportSettleServiceImpl implements DdzTaokeReportSettleServ
 	public int countTotalSettle(String settleAlipay, String[] settleStatus) {
 		return ddzTaokeReportSettleDAO.countTotalSettle(settleAlipay ,settleStatus) ;
 	}
+
+	@Override
+	public int countSettleReports(
+			DdzTaokeReportSettleSearchCondition searchCondition) {
+		return ddzTaokeReportSettleDAO.countSettlesWithPagination(searchCondition) ;
+	}
+
+	
+
+	
+	
 }

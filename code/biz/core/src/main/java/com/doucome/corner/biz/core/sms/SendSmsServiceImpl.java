@@ -14,6 +14,10 @@ import com.doucome.corner.biz.core.sms.model.BuildedSmsMtDO;
 import com.doucome.corner.biz.core.sms.model.SmsBusinessEnums;
 import com.doucome.corner.biz.core.sms.model.SmsMtDO;
 import com.doucome.corner.biz.core.sms.model.SmsMtResult;
+import com.doucome.corner.biz.core.utils.JacksonHelper;
+import com.doucome.corner.biz.core.utils.SmsUtils;
+import com.doucome.corner.biz.dal.SmsLogDAO;
+import com.doucome.corner.biz.dal.dataobject.SmsLogDO;
 
 public class SendSmsServiceImpl implements SendSmsService {
 	
@@ -25,11 +29,24 @@ public class SendSmsServiceImpl implements SendSmsService {
 	
 	@Autowired
 	private SmsBusinessConfig		smsBusinessConfig ;
+	
+	@Autowired
+	private SmsLogDAO smsLogDAO ;
 
 	@Override
 	public SmsMtResult sendMessage(SmsMtDO mtDO) {
 		BuildedSmsMtDO buildedSmsMtDO = this.buildSendMessage(mtDO) ;
-		return this.sendMessage(buildedSmsMtDO);
+		SmsMtResult result = this.sendMessage(buildedSmsMtDO);
+		
+		//记录发送日志
+		try {
+			SmsLogDO log = SmsUtils.buildLog(mtDO, result.getResultCode()) ;
+			smsLogDAO.insertSms(log) ;
+		}catch(Exception e){
+			log.error(e.getMessage() , e) ;
+		}
+		
+		return result ;
 	}
 	
 	private SmsMtResult sendMessage(BuildedSmsMtDO buildedSmsMtDO){
@@ -49,8 +66,9 @@ public class SendSmsServiceImpl implements SendSmsService {
         	sb.append("SMS result[").append(i).append("] ").append(buildedSmsMtDO) ;
         	smsLog.info(sb) ;
         }
-		
-		return null ;
+		SmsMtResult result = new SmsMtResult() ;
+		result.setResultCode(String.valueOf(i)) ;
+		return result ;
 	}
 	
 	
@@ -102,5 +120,12 @@ public class SendSmsServiceImpl implements SendSmsService {
             return in;
         }
     }
+	
+	public static void main(String[] args) {
+		
+		String s = JacksonHelper.toJSON(new String[]{"1,","2"}) ;
+		
+		System.out.println(s);
+	}
 
 }

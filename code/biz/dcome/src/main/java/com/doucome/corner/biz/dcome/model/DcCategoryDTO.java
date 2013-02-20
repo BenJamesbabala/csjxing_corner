@@ -4,11 +4,13 @@ import java.util.Date;
 
 import org.tuckey.web.filters.urlrewrite.utils.StringUtils;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
-import com.doucome.corner.biz.core.utils.ReflectUtils;
+import com.doucome.corner.biz.common.utils.ReflectUtils;
 import com.doucome.corner.biz.dal.dataobject.dcome.DcCategoryDO;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 public class DcCategoryDTO extends AbstractModel {
+
+	private static final long serialVersionUID = 2865756204786531636L;
 
 	public DcCategoryDTO(DcCategoryDO category){
 		if(category == null){

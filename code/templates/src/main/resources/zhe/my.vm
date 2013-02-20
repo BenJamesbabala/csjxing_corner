@@ -1,202 +1,211 @@
-#set($layout="zhe/default_list.vm") #set($title = "我的点点折")
-
-<link type="text/css" media="screen" charset="utf-8" rel="stylesheet"
-	href="https://a.alipayobjects.com/al/alice.style.account-1.1.css" />
-<link charset="utf-8" rel="stylesheet"
-	href="https://a.alipayobjects.com/personal/personal.i-1.3.css"
-	media="all" />
-
-#set($page = $itemList.pagination.pag) #set($totalPages =
-$itemList.pagination.totalPages) #set($size = $itemList.pagination.size)
-
-<style>
-	.no {
-        color: #AAAAAA;
-    }
-	.no a:active , .no a , .no a:hover {
-		color: #AAAAAA;
-	}
-	.module-myrecord .amount-pay-in {
-		 color: #45A022;
-		 font-weight: 700;
-		 padding-right: 1px;
-	}
-	.module-myrecord .amount-pay-out {
-		 color: #FB7823;
-		 font-weight: 700;
-		 padding-right: 1px;
-	}
-</style>
-###foreach($item in $itemList.items) ## $!item.itemTitle
-
-###end ###parse("/common/zhe/my_pagination.vm")
+#set($layout="zhe/default_my.vm")
+#set($title = "我的点点折")
 
 
-######################################################################
-<!--[if lt IE 7]><body class="ie6"><![endif]-->
-<!--[if IE 7]><body class="ie7"><![endif]-->
-<!--[if IE 8]><body class="ie8"><![endif]-->
-<!--[if !IE]><!-->
+#set($pagination = $itemList.pagination)
 
-	<!--<![endif]-->
-	<div id="container" class="ui-container">
-		<!-- 内容开始 -->
-		<div class="ui-content fn-clear">
-			<div class="ui-grid-25 ui-grid-right" coor="default" coor-rate="0.01">
-				<div class="ui-box module-top" id="J_module_top">
-					<div class="ui-box-container fn-clear">
+#set($searchUrl = ${env.ddzRoot}+"/zhe/my.htm?")
+#set($searchQuery = ["type:$!type"])
 
-						<div class="my-account">
-							<div class="my-account-info">
-								<h4 class="ui-tit-m">
-									<span title="$!user.loginId">$!user.loginId</span>&nbsp; <span class="ico-vip"></span> </span>
-								</h4>
-								
-								<p class="email">
-									<span title="csjxing@163.com">csjxing@163.com</span>
-								</p>
-							</div>
-							<!-- .my-account -->
-							<ul class="status">
-								<li class="">
-								</li>
-								<li>
-									<div class="ico ico-mobile">
-										<span class="pop-txt">您已绑定手机 137****0845 <a href='https://lab.alipay.com/user/mobile/bindChangeSelect.htm' seed='i-icon-mobile-g' class='status-act'>修改</a>
-										</span>
-									</div> <a href='https://lab.alipay.com/user/mobile/index.htm' seed='i-icon-mobile-y' class='status-txt'> 137****0845</a>
-								</li>
-							</ul>
-						</div>
-						<div class="my-assets">
-							<div class="ui-tit-m">
-								<h4 class="my-assets-can">共为你节省</h4>
-							</div>
-							<div class="balance ">
-								<span class="number">5337.19</span>元
-							</div>
-						</div>
-						<!-- .my-assets -->
+<div id="xbox-overlay" class="xbox-overlay-bg #if($alipayId) dd-hide #end"></div>
 
-						
-					</div>
-				</div>
-				<!-- .ui-module-top -->
-			</div>
-			<!-- .ui-grid-25 -->
-
-			<div class="ui-grid-5">
-
-				<div class="ui-grid-5 ui-grid-right" coor="i-myapp">
-					<div class="ui-box module-myapp" id="J_myapp">
-						<div class="ui-box-title">
-							<div class="ui-box-title-border sl-linear">
-								<h3><!--我的点点折--></h3>
-							</div>
-						</div>
-						<div class="ui-box-container">
-							<div id="J_myapp_sliders" class="fn-clear"></div>
-							<!-- #myapp-sliders -->
-							<li class="myapp-item" overtag="false">									
-								<a seed="myapp-item-1000000053" href="javascript:;">										
-									<span data-id="10053" class="myapp-icon icon-apps24-10053">我的点点折</span>										
-									<span class="myapp-item-name">我的点点折</span>
-									<span style="display: none;" class="ui-arrow ui-arrow-right">&gt;</span>	
-								</a>								
-							</li>
-							<!-- recommend-app -->
-						</div>
-						<!-- ui-box-container -->
-					</div>
-					<!-- .ui-box -->
-				</div>
-
-			</div>
-			<!-- .ui-grid-5 -->
-			
-			<div class="ui-grid-20 ui-grid-right" coor="i-content">
-				
-				<div class="ui-grid-20 ui-grid-right" coor="i-myrecord">
-					<div class="ui-box module-myrecord">
-						<div class="ui-box-title">
-							<div class="ui-box-title-border sl-linear">
-								<h3>最近返现记录</h3>
-								<a href="javascript:;" title="全部" class="ui-box-title-link" seed="i-record-shouzhi">全部</a><span class="global-separator-pd">|</span> 
-								<a href="javascript:;" class="ui-box-title-link mg10" title="等待返现" seed="i-record-chongzhi">等待返现</a> <span class="global-separator-pd">|</span> 
-								<a href="javascript:;" class="ui-box-title-link mg10" title="已返现" seed="i-record-tixian">已返现</a>
-							</div>
-						</div>
-						<div class="ui-box-container">
-							<table class="ui-table ui-table-inbox" summary="我的返现记录">
-								<thead>
-									<tr>
-                                        <td class="time">成交时间</td>
-										<td class="type">名称<em class="ft-bar">|</em>交易号</td>
-										<td class="other">数量</td>
-										<td class="status">成交价格</td>
-										<td class="status">隐藏折扣</td>
-										<td class="status">返现</td>
-										<td class="status">状态</td>
-										<td class="action">操作</td>
-                                    </tr>
-								</thead>
-								<tbody>
-									#if($collectionUtils.isEmpty($itemList.items))
-                                    <tr><td colspan="6"><div class="tip-angle-content">没有返现记录</div></td></tr>
-									#else
-    									#foreach($item in $itemList.items)
-    									<tr>
-    										<td class="time">$dateUtils.format($item.gmtCreate , "yyyy-MM-dd")</td>
-    										<td class="info">
-    											<ul>
-        											<li class="name">
-        												<a title="$!item.itemTitle" href="http://item.taobao.com/item.htm?id=$!item.numIid" target="_blank">$!item.itemTitle</a>
-        											</li>
-        											<li class="no J-bizNo">交易号： <a title="查看交易快照" href="http://trade.taobao.com/trade/detail/tradeSnap.htm?tradeID=$!item.tradeId" target="_blank">$!item.tradeId</a></li>
-        										</ul>
-    										</td>
-    										<td class="other">$!item.itemNum</td>
-											<td class="amount"><strong>&yen;$!item.payPrice</strong></td>
-											#if($item.settleStatus == "T")
-												#set($_pay_status_cls = "amount-pay-in")
-											#else
-												#set($_pay_status_cls = "amount-pay-out")
-											#end
-                                            <td class="amount"><span class="$_pay_status_cls">12.30%</span></td>
-    										#if($item.settleStatus == "T")
-    										<td class="amount">
-													<span class="amount-pay-in">&yen;$!item.userCommission</span>
-											</td>
-    										<td class="status" nowrap><ul><li>已返现</li></ul></td>
-    										#else
-    										<td class="amount"><span class="amount-pay-out">&yen;$!item.userCommission</span> </td>
-    										<td class="status" nowrap><ul><li>等待返现</li></ul></td>
-    										#end
-    										<td class="action"><a href="javascript:;" target="_blank" seed="i-record-item-detail">返现链接</a></td>
-    									</tr>
-										#end
-									#end
-								</tbody>
-								<tfoot>
-									<tr class="ui-table-footer">
-										<td colspan="8">
-											#set($page = $itemList.pagination.pag)
-                                            #set($totalPages = $itemList.pagination.totalPages)
-                                            #set($size = $itemList.pagination.size)
-											#set($totalRecords = $itemList.totalRecords)
-											#parse("/common/zhe/my_pagination.vm")
-										</td>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
-					</div>
-					<!-- .module-myrecord -->
-				</div>
-				<!-- .ui-grid-20 -->
-
-			
-			</div>
-			<!-- .ui-grid-20 -->
+<input type="hidden" id="ddzRoot" value="${env.ddzRoot}"/>
+<input type="hidden" id="verifyAlipayId" value="$!maskAlipayId" />
+<div id="xbox-mock" class="xbox-mock #if($alipayId) dd-hide #end" style="width: 650px; top: 150px; left: 378px;">
+	<div id="J-login-check" class="xbox">
+		<div class="title">
+			<h2>重要提醒</h2>
+			<a id="J_xbox_colse" href="#" class="xbox-close-link close" seed="title-J_xbox_colse" smartracker="on">关闭</a>
 		</div>
+		<div class="line line-title"></div>
+		<div class="notice-cnt">
+			<span class="notice-cnt-uparea fn-mt20 fn-ml20"> <label class="tip-content">请再次确认您的支付宝账号</label> </span>
+			<div class="notice-cnt-downarea">
+				<div class="text-tit">
+					<input type="text" name="" value="$!maskAlipayId" id="confirmAlipay" class="alipayIpt"/>
+					<a href="javascript:;" class="btn fn-ml20 btn-ok submit" seed="textTit-btn" smartracker="on" id="confirmAlipaySubmit"><span>确定</span></a>
+				</div>
+				<span class="notice-cnt-uparea-text"> <label class="text-gray"> </label> </span>
+			</div>
+			<div class="notice-cnt-downarea">
+				<span class="notice-cnt-uparea-text"> 
+					<label class="text-gray text-gray1 text-gray2">确认支付宝后，您将可以进行提现操作。 </label> 
+				</span>
+			</div>
+		</div>
+	</div>
 </div>
+
+<dt class="tip-rumour">
+	<i></i>点点折与支付宝联合升级淘宝返利提现，2013年1月1日起全面升级为支付宝集分宝即时到账 &nbsp;<a href="${env.ddzHelproot}/help/jfb.html" target="_blank">查看详情>></a>
+</dt>
+
+#if(!$collectionUtils.isEmpty($refundList))
+<div class="refund-list refund-table">
+	<dt class="rumour">
+		<i></i>您有以下交易发生了退款，提现时点点折会自动扣除相应的返利款共计
+		#if($settleResultModel.refundCashAmount > 0)&yen;$!settleResultModel.refundCashAmount #if($settleResultModel.refundJfbAmount > 0) + #end #end  
+		#if($settleResultModel.refundJfbAmount > 0) #JFB_ICON("10x10") $!settleResultModel.refundJfbAmount</span> #end 
+	</dt>
+	<div style="margin:10px 0;">
+	<table>
+        <tr>
+			<th class="create-date">确认收货时间</th><th class="item-title">商品名称</th><th class="price">数量</th><th class="price">成交价格</th><th class="commission">返利比例</th><th class="commission">返利</th><th class="trade">订单号</th>
+		</tr>
+		#foreach($item in $refundList)
+		<tr>
+            <td>$dateUtils.format($item.gmtCreate , "yyyy-MM-dd hh:mm")</td>
+			<td class="item-title"><a title="$!item.itemTitle" href="http://item.taobao.com/item.htm?id=$!item.numIid" target="_blank">$!item.itemTitle</a></td>
+            <td align="center">$!item.itemNum</td>
+			<td align="center">&yen;$!item.realPayFee</td>
+			<td align="center">$!decimalUtils.formatRatio($!item.userCommissionRate) </td>
+			<td align="center">
+				#if($item.outcodeType == "J")
+                #JFB_ICON("10x10")$!item.settleJfb
+				#else
+				&yen;$!decimalUtils.formatPrice($!item.settleFee)
+				#end
+			</td>
+			<td align="center">$!item.tradeId</td>
+		</tr>
+		#end
+    </table>
+    </div>
+</div>
+#end
+
+
+<div class="main-container">
+	
+	##parse("/common/zhe/myhome/menu.vm")
+	<div class="content myhome-table">
+		<div class="nav">
+			<ol>
+				<li #if(!$type) class="current" #end>
+					<a href="${env.ddzRoot}/zhe/my.htm" title="全部"> 
+						<s class="left"></s>
+    					<p>
+    						全部
+    					</p> <s class="right"></s> 
+					</a>
+				</li>
+				<li #if($type == "ktx") class="current" #end>
+					<a href="${env.ddzRoot}/zhe/my.htm?type=ktx" title="可提现"> 
+    					<s class="left"></s>
+    					<p>
+							可提现
+						</p>
+					<s class="right"></s>
+                    </a>
+				</li>
+				<li #if($type == "txz") class="current" #end>
+					<a href="${env.ddzRoot}/zhe/my.htm?type=txz" title="提现中"> 
+    					<s class="left"></s>
+    					<p>
+							提现中
+						</p>
+					<s class="right"></s>
+                    </a>
+				</li>
+				<li #if($type == "ytx") class="current" #end>
+					<a href="${env.ddzRoot}/zhe/my.htm?type=ytx" title="已提现"> 
+    					<s class="left"></s>
+    					<p>
+							已提现
+						</p>
+					<s class="right"></s>
+                    </a>
+				</li>
+			</ol>
+		</div>
+		<table cellpadding="0" cellspacing="0" border="0">
+			<tr align="center" class="title">
+				<th class="width-144">确认收货时间</th>
+				<th class="width-192">商品名称</th>
+				<th class="width-96">数量</th>
+				<th class="width-144">成交价格</th>
+				<th class="width-96">折扣</th>
+				<th class="width-96">返利</th>
+				<th>状态</th>
+			</tr>
+			#if(!$alipayId)
+				<tr><td colspan="7"><div class="tip-angle-content">您的帐号没有绑定支付宝帐号，不能查询返现记录</div></td></tr>
+			#elseif($collectionUtils.isEmpty($itemList.items))
+                <tr><td colspan="7"><div class="tip-angle-content">没有记录</div></td></tr>
+			#else
+				#foreach($item in $itemList.items)
+					<tr align="center">
+    					<td class="first">$dateUtils.format($item.gmtCreate , "yyyy-MM-dd hh:mm")</td>
+						<td class="color-blue">
+							<a title="$!item.itemTitle" href="http://item.taobao.com/item.htm?id=$!item.numIid" target="_blank">$!item.itemTitle</a>
+						</td>
+        				<td>$!item.itemNum</td>
+						#if($item.settleStatus == "S")
+    						#set($_td_color = "color-green")
+        				#else
+    						#set($_td_color = "color-oran")
+        				#end
+						<td class="color-gray"><strong>&yen;$!item.realPayFee</strong></td>
+						<td class="$_td_color"><strong>
+								#if($item.outcodeType == "J")
+								$!decimalUtils.formatRatio($!item.userJfbRate)
+								#else
+								$!decimalUtils.formatRatio($!item.userCommissionRate)
+								#end
+						</strong></td>
+						<td class="$_td_color">
+							<strong>
+								#if($item.outcodeType == "J")
+                                <a href="http://help.alipay.com/lab/help_detail.htm?help_id=211851" target="_blank" title="支付宝集分宝"><span class="jfb-icon10x10"></span></a>$!item.settleJfb
+								#else
+								&yen;$!decimalUtils.formatPrice($!item.settleFee)
+								#end
+							</strong>
+						</td>
+						<td class="last">
+            				#if($item.settleStatus == "S")
+        						已提现
+            				#elseif($item.settleStatus == "U")
+    							#if(!$item.settleId && ($item.outcodeType == "B" || $item.outcodeType == "J"))
+    								#if($item.delaySettle)
+    								待提现<span class="memo-icon" title="大额返利需在15个工作日后提现"></span>
+    								#else
+    								可提现
+    								#end
+    							#else
+    								提现中
+								#end
+							#elseif($item.settleStatus == "D")
+								返利确认中 
+								<a href="javascript:;" class=""><img src="${env.staticroot}/img/info.png" title="大额返利15工作日确认期"></a>
+    						#elseif($item.settleStatus == "C" && $item.settleId)
+                                <a href="javascript:;" style="text-decoration:underline;" class="resettle-btn" data-settle-id="$!item.settleId">重新打款</a>
+								<a href="javascript:;" class="">
+									<img src="${env.staticroot}/img/info.png" title="原因可能是您的支付宝1.未激活2.未实名认证或实名信息不完整，所以点点折无法向您打款，请确认这两项后点击【重新打款】">
+								</a>
+    						#elseif(($item.settleStatus == "R"))
+                                <span class="color-oran">维权退款</span>
+							#else
+								提现失败
+							#end
+    						#if($item.memo)
+                                <span class="memo-icon" title="$item.memo"></span>
+    						#end
+						</td>
+    				</tr>
+				#end
+			#end
+		</table>
+		##分页
+		#parse("/common/zhe/myPagination.vm")
+	</div>
+</div>
+
+
+<script type="text/javascript"> 
+    alimama_pid="mm_30820461_3255384_11014741"; 
+    alimama_width=200; 
+    alimama_height=200; 
+    alimama_displaytype= "c"; 
+</script> 
+<script src="http://a.alimama.cn/inf.js" type="text/javascript"></script>

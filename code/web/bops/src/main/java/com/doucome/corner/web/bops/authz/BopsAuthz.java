@@ -1,8 +1,6 @@
 package com.doucome.corner.web.bops.authz;
 
 import com.doucome.corner.biz.dal.dataobject.BopsAdminDO;
-import com.doucome.corner.biz.dal.dataobject.DdzAccountDO;
-import com.doucome.corner.biz.dal.dataobject.DdzUserDO;
 
 /**
  * 类Authz.java的实现描述：登录认证信息
@@ -26,6 +24,4 @@ public interface BopsAuthz {
      * @return
      */
     public BopsAdminDO getAdminDO();
-
-
 }

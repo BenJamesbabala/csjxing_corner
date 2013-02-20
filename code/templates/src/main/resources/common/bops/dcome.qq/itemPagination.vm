@@ -1,10 +1,17 @@
 <div class="pagination" id="pagination">
 	#parse("/common/bops/dcome.qq/_pagination.vm")
 	<form method="get" action="$searchUrl" id="form_page">
-		<input  type="hidden" name="itemId" value="$!condition.itemId" />
-		<input  type="hidden" name="keywords" value="$!condition.keywords" />
-		<input typr="hidden" name="categoryId" value="$!condition.categoryId" />
-		<input typr="hidden" name="itemStatus" value="$!condition.itemStatus"/>
+		<input  type="hidden" name="itemId" value="$!itemId" />
+		<input  type="hidden" name="nativeId" value="$!nativeId" />
+		<input  type="hidden" name="keywords" value="$!keywords" />
+		<input type="hidden" name="categoryId" value="$!categoryId" />
+		<input type="hidden" name="itemStatus" value="$!itemStatus"/>
+		<input type="hidden"  name="gmtCreateStart" value="$!gmtCreateStartFormat"/>
+		<input type="hidden" name="gmtCreateEnd" value="$!gmtCreateEndFormat"/>
+		<input type="hidden"  name="gmtModifiedStart" value="$!gmtModifiedStartFormat"/>
+		<input type="hidden" name="gmtModifiedEnd" value="$!gmtModifiedEndFormat"/>
+		<input type="hidden" name="genWay" value="$!genWayFormat"/>
+		
 		<div class="page-op">
     		<span class="total-page">共 $totalPages 页</span>到<input type="text" name="page" value="$!curPage">页
     		<input type="submit" value="确定">

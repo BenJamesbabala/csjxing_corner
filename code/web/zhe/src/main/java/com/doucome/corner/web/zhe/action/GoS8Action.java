@@ -14,7 +14,7 @@ import com.doucome.corner.web.zhe.authz.DdzSessionOperator;
 
 /**
  * ×ªµ½S8
- * @author shenjia.caosj 2012-6-1
+ * @author langben 2012-6-1
  *
  */
 @SuppressWarnings("serial")

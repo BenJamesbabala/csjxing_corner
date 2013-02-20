@@ -4,7 +4,7 @@ import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 统计场景下 每个类目多少 商品
- * @author shenjia.caosj 2012-7-28
+ * @author langben 2012-7-28
  *
  */
 public class DcCatCountDO extends AbstractModel {

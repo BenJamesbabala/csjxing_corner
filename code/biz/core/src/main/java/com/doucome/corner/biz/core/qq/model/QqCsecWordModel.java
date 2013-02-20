@@ -2,7 +2,7 @@ package com.doucome.corner.biz.core.qq.model;
 
 /**
  * √Ù∏–¥ 
- * @author shenjia.caosj 2012-8-2
+ * @author langben 2012-8-2
  *
  */
 public class QqCsecWordModel {

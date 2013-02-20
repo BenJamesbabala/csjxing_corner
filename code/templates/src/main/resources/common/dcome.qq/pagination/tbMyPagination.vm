@@ -1,0 +1,16 @@
+<div class="pagination" id="pagination">
+	<form method="get" action="$searchUrl" id="form_page">
+		#parse("/common/dcome.qq/pagination/_pagination.vm")
+		<input type="hidden" name="inOutType" value="$!inOutType"/>
+		<span class="page-op">
+    		<span class="total-page">共 $totalPages 页</span>
+			<span class="page-jump">
+				<span>到<input type="text" name="page" value="$!curPage" class="to-page">页</span>
+				<input type="submit" value="确定" class="submit">
+			</span>
+    		
+    	</span>
+
+    </form>
+	
+</div>	

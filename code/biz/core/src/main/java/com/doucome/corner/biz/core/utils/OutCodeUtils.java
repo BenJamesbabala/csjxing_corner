@@ -13,7 +13,7 @@ public class OutCodeUtils {
 	 */
 	public static String encodeOutCode(String outCodeData , OutCodeEnums type) {
 		if(StringUtils.length(outCodeData) > 11){
-			throw new IllegalArgumentException("outdata : " + outCodeData + " is too long ") ;
+			throw new IllegalArgumentException("outdata : " + outCodeData + " is too long .") ;
 		}
 		return type.getName() + outCodeData ;
 	}
@@ -25,7 +25,7 @@ public class OutCodeUtils {
 	 */
 	public static OutCode decodeOutCode(String outCode) {
 		if(StringUtils.isBlank(outCode)){
-			return null ;
+			return new OutCode(null , OutCodeEnums.UNKNOWN) ;
 		}
 		String typeString = StringUtils.substring(outCode, 0 , 1) ;
 		OutCodeEnums type = OutCodeEnums.toOutCodeEnums(typeString) ;

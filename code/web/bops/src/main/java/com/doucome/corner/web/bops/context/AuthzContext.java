@@ -3,8 +3,6 @@ package com.doucome.corner.web.bops.context;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.doucome.corner.biz.dal.dataobject.BopsAdminDO;
-
 /**
  * 类AuthzContext.java的实现描述：BOPS认证信息上下文
  * 

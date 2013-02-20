@@ -1,0 +1,154 @@
+#set($page_nav = "my_promotion")
+#set($layout="dcome/frame.q/default.vm")
+
+<input type="hidden" id="pageName" value="myPromotion" />
+<input type="hidden" id="envRoot" value="${env.root}" />
+
+<div class="idx-cnt-my dd-l">
+	<div class="cnt-ugc dd-l">
+		<div class="dd-l user-nav">
+			<div class="user-info dd-clear">
+				<img class="user-avatar" data-avatar-src="$avatarUtils.getAvatarUrl($!userId, '50x50')" data-avatar-size="50x50" />
+				<div class="other-info">
+					<div class="user-nick">$!pfNick</div>
+					<div class="user-source">#if($!loginSource=='qzone')QQ空间#elseif($!loginSource=='pengyou')朋友网#else互联网#end</div>
+				</div>
+			</div>
+			<div class="oper-div">
+				<ul class="oper-list">
+				    <li class="active"><a class="my-wish" href="javascript:;">我的愿望</a></li>
+				    <li><a class="my-rob-acts" href="javascript:;">支持的PK</a></li>
+				    <li><a class="message" href="javascript:;">消息中心</a></li>	
+				</ul>
+			</div>
+		</div>
+		<div class="dd-l ugc-main">
+			<div class="ugc-main-wrap">
+			    <div class="iwish-wrap-my">
+					#parse("/common/dcome.qq/my_promotion_item.vm")
+				</div>
+				<div class="dd-l other-ugc">
+				    <div class="content-all">
+				    	<div class="ugc-template dd-hide">
+				        	<li class="ugc" data-itemid="@itemId@" data-promid="@promotionId@">
+				        		<div class="ugc-wrap">
+					        		<div class="avator dd-l">
+					                	<img class="user-pic" data-avatar-src="@userAvator@" data-avatar-size="50x50" />
+					                </div>
+					                <div class="ugc-content">
+					                    <div class="ugc-desc">
+					                        <span class="user-nick color-blue">@userNick@</span>
+					                        <span class="$userActClass">@userActivity@</span>
+					                        <a class="ugc-url" href="${env.root}/frame/q/detail.htm?id=@itemId@" target="_blank">@itemTitle@</a>
+					                        <span class="color-gray">￥@itemPrice@</span>
+					                    </div>
+					                    <div class="ugc-pic">
+					                        <a href="javascript:;" class="item-pic-a" data-bigpic="@bigPicUrl@" data-sumpic="@sumPicUrl@">
+					                           <img class="item-pic-small" alt="" src="@sumPicUrl@" class="summary-pic"/>
+					                        </a>
+					                    </div>
+					                    <div class="ugc-statis">
+					                        <span class="ugc-date color-blue"">@ugcDate@</span>来自于
+					                        <span class="ugc-source color-blue"">
+					                        	<a href="" target="_blank">@ugcSource@</a>
+					                        </span>
+					                        <div class="dd-r ugc-behavior">
+					                             <span class="ugc-rank">排名(@ugcRank@)</span>
+					                             <span class="ugc-rate">愿望值(@ugcRateCount@)</span>
+					                             <a href="javascript:;" title="评论" class="ugc-comment color-blue">评论(@ugcCommentCount@)</a>
+					                        </div>
+					                    </div>
+					                </div>
+					            </div>
+		        			</li>
+		        		</div>
+		        		<div class="ugc-template-rob dd-hide">
+				        	<li class="ugc" data-frompromitemid="@fromPromItemId@" data-topromitemid="@toPromItemId@">
+				        		<div class="ugc-wrap">
+					        		<div class="avator dd-l">
+					                	<img class="user-pic" data-avatar-src="@toUserAvator@" data-avatar-size="50x50" />
+					                </div>
+					                <div class="ugc-content">
+					                    <div class="ugc-desc">
+					                        <span class="user-nick color-blue">@toUserNick@</span>
+					                        <span class="$userActClass">打劫了</span>
+					                        <span class="$userActClass">@fromUserNick@</span>
+					                        <a class="ugc-url" href="${env.root}/frame/q/detail.htm?id=@itemId@" target="_blank">@itemTitle@</a>
+					                        <span class="color-gray">￥@itemPrice@</span>
+					                    </div>
+					                    <div class="ugc-pic">
+					                        <a href="javascript:;" class="item-pic-a" data-bigpic="@bigPicUrl@" data-sumpic="@sumPicUrl@">
+					                           <img class="item-pic-small" alt="" src="@sumPicUrl@" class="summary-pic"/>
+					                        </a>
+					                    </div>
+					                    <div class="ugc-statis">
+					                        <span class="ugc-date color-blue"">@ugcDate@</span>来自于
+					                        <span class="ugc-source color-blue"">
+					                        	<a href="" target="_blank">@ugcSource@</a>
+					                        </span>
+					                        <div class="dd-r ugc-behavior">
+					                             <span class="ugc-rank">排名(@ugcRank@)</span>
+					                             <span class="ugc-rate">愿望值(@ugcRateCount@)</span>
+					                             <a href="javascript:;" title="评论" class="ugc-comment color-blue">评论(@ugcCommentCount@)</a>
+					                        </div>
+					                    </div>
+					                </div>
+					            </div>
+		        			</li>
+		        		</div>
+				        <ul class="ugc-list" data-type="$!type">
+				        	#if ($!type == "item")
+				        		#set($userActivity = "发起了商品PK：")
+				        		#set($userActClass = "color-gray")
+		        			#elseif ($!type == "awardItem")
+		        			    #set($userActivity = "获得了免单商品：")
+		        			    #set($userActClass = "color-red")
+		        			#end
+					        #foreach($promItem in $!promItems)
+					            <li class="ugc" data-itemid="$!promItem.itemId" data-promid="$!promItem.promotionId">
+					                <div class="avator dd-l">
+					                	<img class="user-pic" data-avatar-src="$avatarUtils.getAvatarUrl($!promItem.userId, '50x50')" data-avatar-size="50x50" />
+					                </div>
+					                <div class="ugc-content">
+					                    <div class="ugc-desc">
+					                        <span class="user-nick color-blue">$!promItem.userNick</span>
+					                        <span class="$userActClass">$userActivity</span>
+					                        <a class="ugc-url" href="${env.root}/frame/q/detail.htm?id=$!promItem.itemId" target="_blank">$!promItem.itemTitle</a>
+					                        <span class="color-gray">￥$!promItem.itemPrice</span>
+					                    </div>
+					                    <div class="ugc-pic">
+					                        <a href="javascript:;" class="item-pic-a" data-bigpic="$!promItem.getItemPicture(0, '278x278')" data-sumpic="$!promItem.getItemPicture(0, '60x60')">
+					                           <img class="item-pic-small" alt="" src="$!promItem.getItemPicture(0, '60x60')" class="summary-pic"/>
+					                        </a>
+					                    </div>
+					                    <div class="ugc-statis">
+					                        <span class="ugc-date color-blue"">${dateUtils.format($!promItem.gmtCreate,'yyyy-MM-dd')}</span>来自于
+					                        <span class="ugc-source color-blue"">
+					                        	<a href="$!promItem.itemClickUrl" target="_blank">
+					                        		#if($!promItem.itemSource == "TB")淘宝网#elseif($!promItem.itemSource == "TM")天猫#else豆蔻#end
+			                        			</a>
+					                        </span>
+					                        <div class="dd-r ugc-behavior">
+					                             <span class="ugc-rank">排名(100)</span>
+					                             <span class="ugc-rate">愿望值($!promItem.rateCount)</span>
+					                             <a href="javascript:;" title="评论" class="ugc-comment color-blue">评论($!promItem.itemCommentCount)</a>
+					                        </div>
+					                    </div>
+					                </div>
+					            </li>
+					        #end
+				        </ul>
+				    </div>
+				    <div class="load-error-info dd-hide"></div>
+				    <div class="ugc-loadding dd-hide">
+				    	<img class="dd-l" alt="加载中..." src="${env.staticroot}/dcome/q/pk/loadding32x32.gif" />
+				    	<div class="load-text-info">
+				    		<span>数据加载中...</span>
+				    	</div>
+				    </div>
+				    <a href="javascript:;" title="载入更多..." class="ugc-more" #if($!promItems.size() != 20)style="display: none;"#end data-pagenum="1" data-type="$!type">载入更多</a>
+				</div>
+		    </div>
+		</div>
+	</div>
+</div>

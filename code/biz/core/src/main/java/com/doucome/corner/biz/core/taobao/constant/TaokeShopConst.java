@@ -6,7 +6,7 @@ import com.doucome.corner.biz.core.taobao.dto.TaobaokeShopDTO;
  * 淘客店铺推广字段常量
  * 字段含义参考 
  * @see {@link TaobaokeShopDTO}
- * @author shenjia.caosj 2012-2-24
+ * @author langben 2012-2-24
  *
  */
 public class TaokeShopConst {

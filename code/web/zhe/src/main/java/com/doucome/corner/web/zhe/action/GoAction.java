@@ -6,7 +6,7 @@ import com.doucome.corner.biz.core.service.taobao.TaobaokeServiceDecorator;
 
 /**
  * 转向淘宝的商品URL
- * @author shenjia.caosj 2012-4-1
+ * @author langben 2012-4-1
  *
  */
 public class GoAction extends DdzBasicAction{

@@ -7,7 +7,7 @@ import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 点点折生成折扣URL
- * @author shenjia.caosj 2012-3-6
+ * @author langben 2012-3-6
  *
  */
 public class DdzTransferUrlDO extends AbstractModel {

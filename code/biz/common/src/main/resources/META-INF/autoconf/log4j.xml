@@ -35,7 +35,7 @@
     </appender>
     
     <appender name="taobao-log-appender" class="org.apache.log4j.RollingFileAppender">
-    	<param name="file" value="${loggingRoot}/sys/taobao.log"/>
+    	<param name="file" value="${loggingRoot}/sys/logs/taobao.log"/>
     	<param name="maxFileSize" value="10MB"/>
     	<layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
@@ -43,7 +43,7 @@
     </appender>
     
     <appender name="signin-log-appender" class="org.apache.log4j.RollingFileAppender">
-    	<param name="file" value="${loggingRoot}/sys/signin/signin.log"/>
+    	<param name="file" value="${loggingRoot}/sys/logs/signin.log"/>
     	<param name="maxFileSize" value="10MB"/>
     	<layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
@@ -51,7 +51,7 @@
     </appender>
     
     <appender name="dcome-signin-log-appender" class="org.apache.log4j.RollingFileAppender">
-    	<param name="file" value="${loggingRoot}/sys/dcome/signin/signin.log"/>
+    	<param name="file" value="${loggingRoot}/sys/logs/signin/signin.log"/>
     	<param name="maxFileSize" value="10MB"/>
     	<layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
@@ -59,7 +59,23 @@
     </appender>
     
     <appender name="reportMail-log-appender" class="org.apache.log4j.RollingFileAppender">
-    	<param name="file" value="${loggingRoot}/sys/mail/reportMail.log"/>
+    	<param name="file" value="${loggingRoot}/sys/logs/reportMail.log"/>
+    	<param name="maxFileSize" value="10MB"/>
+    	<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="spiderItem-log-appender" class="org.apache.log4j.RollingFileAppender">
+    	<param name="file" value="${loggingRoot}/sys/logs/spiderItem.log"/>
+    	<param name="maxFileSize" value="10MB"/>
+    	<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="calculate-rate-log-appender" class="org.apache.log4j.RollingFileAppender">
+    	<param name="file" value="${loggingRoot}/sys/logs/calculateRate.log"/>
     	<param name="maxFileSize" value="10MB"/>
     	<layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
@@ -67,7 +83,7 @@
     </appender>
     
     <appender name="click-log-appender" class="org.apache.log4j.DailyRollingFileAppender">
-    	<param name="file" value="${loggingRoot}/sys/click/click.log"/>
+    	<param name="file" value="${loggingRoot}/sys/logs/click.log"/>
     	#if($corner_production != "true") 
         <param name="append" value="false"/>
         #else 
@@ -81,7 +97,7 @@
     </appender>
     
     <appender name="task-syncReport-log-appender" class="org.apache.log4j.RollingFileAppender">
-    	<param name="file" value="${loggingRoot}/sys/task-syncReport.log"/>
+    	<param name="file" value="${loggingRoot}/sys/logs/task-syncReport.log"/>
     	<param name="maxFileSize" value="10MB"/>
     	<layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
@@ -89,7 +105,7 @@
     </appender>
     
     <appender name="report-settle-log-appender" class="org.apache.log4j.RollingFileAppender">
-        <param name="file" value="${loggingRoot}/sys/report-settle.log"/>
+        <param name="file" value="${loggingRoot}/sys/logs/report-settle.log"/>
         <param name="maxFileSize" value="10MB"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
@@ -97,7 +113,31 @@
     </appender>
     
     <appender name="task-syncRecommend-log-appender" class="org.apache.log4j.RollingFileAppender">
-        <param name="file" value="${loggingRoot}/sys/task-syncRecommend.log"/>
+        <param name="file" value="${loggingRoot}/sys/logs/task-syncRecommend.log"/>
+        <param name="maxFileSize" value="10MB"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="task-syncDcItem-log-appender" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="${loggingRoot}/sys/logs/task-syncDcItem.log"/>
+        <param name="maxFileSize" value="10MB"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+        
+    <appender name="performance-log-appender" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="${loggingRoot}/sys/logs/performance.log"/>
+        <param name="maxFileSize" value="10MB"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="sms-log-appender" class="org.apache.log4j.RollingFileAppender">
+    	<param name="file" value="${loggingRoot}/sys/logs/sms.log"/>
         <param name="maxFileSize" value="10MB"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d [%X{requestURIWithQueryString}] %-5p %c{2} - %m%n"/>
@@ -118,8 +158,17 @@
     	<level value="info"></level>
     </logger>
     
+    <logger name="calculate-rate-log" additivity="true">
+    	<appender-ref ref="calculate-rate-log-appender"/>
+    	<level value="info"></level>
+    </logger>
+    
     <logger name="reportMail-log" additivity="true">
     	<appender-ref ref="reportMail-log-appender"/>
+    	<level value="info"></level>
+    </logger>
+    <logger name="spiderItem-log" additivity="true">
+    	<appender-ref ref="spiderItem-log-appender"/>
     	<level value="info"></level>
     </logger>
     
@@ -138,10 +187,24 @@
     	<level value="info"></level>
     </logger>
     
+    <logger name="task-syncDcItem-log" additivity="true">
+    	<appender-ref ref="task-syncDcItem-log-appender"/>
+    	<level value="info"></level>
+    </logger>
     
     <logger name="report-settle-log" additivity="true">
         <appender-ref ref="report-settle-log-appender"/>
         <level value="info"></level>
+    </logger>
+    
+    <logger name="sms-log" additivity="true">
+        <appender-ref ref="sms-log-appender"/>
+        <level value="info"></level>
+    </logger>
+    
+    <logger name="com.doucome.corner.biz.common.monitor.PerformanceInterceptor" additivity="true">
+    	<appender-ref ref="performance-log-appender"/>
+    	<level value="warn"></level>
     </logger>
   
     <!-- ===================================================================== -->
@@ -150,7 +213,6 @@
     <root>
         <level value="$corner_loggingLevel"/>
         <appender-ref ref="PROJECT"/>
-        <appender-ref ref="ExceptionAppender" />
         #if($corner_production != "true")
            <appender-ref ref="CONSOLE" />
         #end

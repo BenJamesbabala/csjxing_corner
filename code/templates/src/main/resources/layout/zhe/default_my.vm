@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		#parse("/common/zhe/head.vm")
+		#DDZ_CSS(["home/screens/myhome/common.css","home/screens/myhome/table.css"])
+	</head>
+	<body>
+		<div class="ddz">
+			#parse("/common/zhe/top.vm")
+		</div>
+		<div class="myhome ddz clearfix">
+   			<div class="list-top w990">
+            	<div><a href="${env.ddzRoot}/zhe/index.htm"><div class="list-top-logo"></div></a></div>
+                <div class="userinfo">
+                    <div class="user-alipay">您绑定的支付宝账号：$!alipayId   
+						<a class="med-button-ggbd change-bind" href="javascript:;" id="J_withdraw" style="width:55px;"><span>更改绑定</span></a>
+					</div>
+					
+                    <div class="user-draw">
+						<div class="my-settle">
+                                <span class="">当前可提现 
+									<span class="settle-amount #if(!$settleResultModel.canSettle) settle-amount-disabled #end">
+										#if($settleResultModel.settleModel.cashAmount > 0)
+										&yen;$decimalUtils.format($!settleResultModel.settleModel.cashAmount,'0.00') + 
+										#end
+										#JFB_ICON("10x10") $!settleResultModel.settleModel.jfbAmount</span>
+								</span>
+								<a class=" #if(!$settleResultModel.canSettle) med-button-s-disabled #else med-button-s drawout #end " href="javascript:;" id="J_withdraw" style="margin-left:10px;"><span>提现到支付宝</span></a>
+						</div>
+						#if($settleResultModel.settleAmount > 0 || $settleResultModel.refundAmount > 0)
+						<div>
+                            <div class="my-refund">
+								<dt class="infotip">$!settleResultModel.settleSize笔返利共计&yen;$decimalUtils.format($!settleResultModel.settleAmount,'0.00')
+								#if($!settleResultModel.hasRefund > 0)，扣除退款对应返利款&yen;$decimalUtils.format($!settleResultModel.refundAmount,'0.00')#end
+									<div class="angle-top" style="top: -7px;left:40px;"></div>
+								</dt>
+								
+							</div>
+						</div>
+						#end
+					</div>
+					
+				</div>
+            </div>
+			$screen_content
+		</div>
+		#parse("/common/zhe/bottom.vm")
+		#DDZ_JS(["lib/jquery-min.js","lib/common.js","home/control/widget/index.js","home/control/widget/my.js"])
+		
+	</body>
+</html>

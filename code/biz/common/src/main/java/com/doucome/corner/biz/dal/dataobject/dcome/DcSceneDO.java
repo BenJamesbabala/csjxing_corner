@@ -6,7 +6,7 @@ import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * ³¡¾°
- * @author shenjia.caosj 2012-7-22
+ * @author langben 2012-7-22
  *
  */
 public class DcSceneDO extends AbstractModel {

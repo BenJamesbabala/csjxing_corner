@@ -33,6 +33,7 @@
 			GMT_MODIFIED = now()
 		WHERE
 			ID = #id#
+		LIMIT 1
 	</update>
 	
 	<select id="queryCategoryById" resultMap="RM-DcCategory">

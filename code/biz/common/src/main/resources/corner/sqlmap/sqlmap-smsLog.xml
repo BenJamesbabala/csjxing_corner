@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="SmsLog">
+	<typeAlias alias="TA-SmsLog"
+		type="com.doucome.corner.biz.dal.dataobject.SmsLogDO" />
+
+	<resultMap id="RM-SmsLog" class="TA-SmsLog">
+		<result property="id" column="ID" />
+		<result property="businessId" column="BUSINESS_ID" jdbcType="VARCHAR" />
+		<result property="messageKey" column="MESSAGE_KEY" jdbcType="VARCHAR" />
+		<result property="msgParameter" column="MSG_PARAMETER" jdbcType="VARCHAR" />
+		<result property="toMobile" column="TO_MOBILE" jdbcType="VARCHAR" />
+		<result property="batId" column="BAT_ID" jdbcType="VARCHAR" />
+		<result property="resultCode" column="RESULT_CODE" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertSms" >
+		INSERT INTO
+			SMS_LOG(ID,BUSINESS_ID,MESSAGE_KEY,MSG_PARAMETER,TO_MOBILE,BAT_ID,RESULT_CODE,GMT_CREATE)
+		VALUES
+			(#id#,#businessId#,#messageKey#,#msgParameter#,#toMobile#,#batId#,#resultCode#,now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+
+</sqlMap>

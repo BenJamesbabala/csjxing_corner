@@ -22,6 +22,7 @@ corner.database.driver.password = ${corner_database_driver_password}
 
 ##taobao api
 corner.api.taobao.url = ${corner_api_taobao_url}
+corner.api.taobao.widget.url = ${corner_api_taobao_widget_url}
 corner.api.taobao.nickname = ${corner_api_taobao_nickname}
 corner.api.taobao.appkey = ${corner_api_taobao_appkey}
 corner.api.taobao.secret = ${corner_api_taobao_secret}
@@ -47,6 +48,13 @@ corner.qq.appid = ${corner_qq_appid}
 corner.qq.appkey = ${corner_qq_appkey}
 corner.qq.servername = ${corner_qq_servername}
 
+##ctu
+corner.ctu.calculate.frequency = ${corner_ctu_calculate_frequency}
+corner.ctu.rateLimit.forIP = ${corner_ctu_rateLimit_forIP}
+corner.ctu.ipLimit.seconds = ${corner_ctu_ipLimit_seconds}
+corner.ctu.calculate.rateInMinutes = ${corner_ctu_calculate_rateInMinutes}
+corner.ctu.successTime.checkCode = ${corner_ctu_successTime_checkCode}
+
 ##bops
 corner.bops.domainName = ${corner_bops_domainName}
 
@@ -54,3 +62,26 @@ corner.bops.domainName = ${corner_bops_domainName}
 corner.task.ddz.syncReport.cronExpression = ${corner_task_ddz_syncReport_cronExpression}
 corner.task.ddz.syncBuyingRecommend.cronExpression = ${corner_task_ddz_syncBuyingRecommend_cronExpression}
 corner.alipay.count.limit = ${corner_alipay_count_limit}
+
+## alipay 
+corner.alipay.gateway=${corner_alipay_gateway}
+corner.alipay.charset=${corner_alipay_charset}
+corner.alipay.signType=${corner_alipay_signType}
+corner.alipay.partner.id=${corner_alipay_partner_id}
+corner.alipay.partner.key=${corner_alipay_partner_key}
+
+##star
+corner.horoscope.domainName = ${corner_horoscope_domainName}
+corner.horoscope.appid = ${corner_horoscope_appid}
+corner.horoscope.appkey = ${corner_horoscope_appkey}
+corner.horoscope.servername = ${corner_horoscope_servername}
+
+## wryneck
+corner.wryneck.domainName = ${corner_wryneck_domainName}
+corner.wryneck.appid = ${corner_wryneck_appid}
+corner.wryneck.appkey = ${corner_wryneck_appkey}
+
+## namefate
+corner.namefate.domainName = ${corner_namefate_domainName}
+corner.namefate.appid = ${corner_namefate_appid}
+corner.namefate.appkey = ${corner_namefate_appkey}

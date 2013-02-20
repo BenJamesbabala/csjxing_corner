@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<meta charset="GBK">
+        <title>#if($title && $title != "") $title - #end 姓名缘分 </title>
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+        <meta name="keywords" content="豆蔻,头像,女人,美丽" />
+        <meta name="description" content="是一款生活娱乐类应用。#if($title && $title != "")豆蔻-$title#end"/>
+        #RESOURCE(["dcome/common.css","dcome/namefate/index.css"])
+    </head>
+	
+    <body>
+		
+		<input type="hidden" id="envRoot" value="${env.namefateRoot}" />
+		<input type="hidden" id="picUploadedRoot" value="${env.picUploadedRoot}" />
+		<input type="hidden" id="userId" value="$!user.userId" />
+		
+    	<div class="dc-body bg-img">
+			<div class="head">
+				
+				<div class="logo">
+                    <div><a href="${env.namefateRoot}/frame/namefate/index.htm"><img src="${env.staticroot}/dcome/namefate/images/logo.png"></img></a></div>
+				</div>
+				
+                <div class="slogan">
+                    <div><img src="${env.staticroot}/dcome/namefate/images/slogan.png"></img></div>
+					<div class="sub-slogan"></div>
+				</div>
+				
+			</div>
+			<div class="main-body">
+				$screen_content
+            </div>
+		</div>
+        
+		<div class="blank-wrap">&nbsp;</div>
+		#** 
+        <div class="ad">
+    		<script type="text/javascript"> 
+            alimama_pid="mm_30820461_3408416_11202693"; 
+            alimama_width=728; 
+            alimama_height=90; 
+            </script> 
+            <script src="http://a.alimama.cn/inf.js" type="text/javascript"> </script>
+		</div>
+		**#
+		<div class="blank-wrap">&nbsp;</div>
+		
+		<div class="foot" style="text-align: center;">
+			#if($user.getExternalId())
+			<span>您的ID是$!user.getExternalId()，如有问题请联系客服：vip@doucome.com&nbsp;&nbsp;版权所有&nbsp;&copy;&nbsp;豆蔻</span>
+			#end
+		</div>
+	    <script type="text/javascript" charset="utf-8" src="http://fusion.qq.com/fusion_loader?appid=100679408&platform=qzone"></script>
+	    #DC_QRES(["jquery-1.7.2-min.js"])
+	    #RESOURCE(["dcome/namefate/qq.fusion2.adapter.js","dcome/common.js","dcome/namefate/index.js"])
+		
+		#parse("/common/dcome/google_analytics_qzonapps.vm")
+		
+		
+    </body>
+	
+</html>

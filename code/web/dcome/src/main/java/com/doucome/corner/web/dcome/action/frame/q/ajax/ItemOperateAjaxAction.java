@@ -5,14 +5,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.doucome.corner.biz.dcome.business.DcLoveBO;
-import com.doucome.corner.biz.dcome.exception.DuplicateLoveException;
+import com.doucome.corner.biz.dcome.business.DcItemBO;
+import com.doucome.corner.biz.dcome.exception.DuplicateOperateException;
 import com.doucome.corner.web.common.model.JsonModel;
 import com.doucome.corner.web.dcome.action.DComeBasicAction;
 
 /**
  * ²Ù×÷ITEM
- * @author shenjia.caosj 2012-7-28
+ * @author langben 2012-7-28
  *
  */
 @SuppressWarnings("serial")
@@ -25,7 +25,7 @@ public class ItemOperateAjaxAction extends DComeBasicAction{
 	private JsonModel<Boolean> json = new JsonModel<Boolean>() ;
 	
 	@Autowired
-	private DcLoveBO dcLoveBO ;
+	private DcItemBO dcItemBO ;
 	
 	public String addLove(){
 		
@@ -38,8 +38,8 @@ public class ItemOperateAjaxAction extends DComeBasicAction{
 			return SUCCESS ;
 		}
 		try {
-			dcLoveBO.addLove(userId, itemId) ;
-		}catch(DuplicateLoveException e){
+			dcItemBO.addLove(userId, itemId) ;
+		}catch(DuplicateOperateException e){
 			json.setCode(JsonModel.CODE_ILL_ARGS) ;
 			json.setDetail("dcome.addLove.itemId.duplicate") ;
 			return SUCCESS ;

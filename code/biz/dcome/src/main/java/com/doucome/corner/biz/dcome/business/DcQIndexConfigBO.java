@@ -3,7 +3,6 @@ package com.doucome.corner.biz.dcome.business;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.dal.dataobject.dcome.DcQIndexConfigDO;
-import com.doucome.corner.biz.dcome.cache.DcQIndexCache;
 import com.doucome.corner.biz.dcome.enums.DcQIndexPubStatusEnums;
 import com.doucome.corner.biz.dcome.model.DcSystemDTO;
 import com.doucome.corner.biz.dcome.service.DcQIndexConfigService;
@@ -11,7 +10,7 @@ import com.doucome.corner.biz.dcome.service.DcSystemService;
 
 /**
  * 
- * @author shenjia.caosj 2012-7-27
+ * @author langben 2012-7-27
  *
  */
 public class DcQIndexConfigBO {
@@ -21,9 +20,6 @@ public class DcQIndexConfigBO {
 	
 	@Autowired
 	private DcSystemService dcSystemService ;
-	
-	@Autowired
-	private DcQIndexCache dcQIndexCache ;
 	
 	/**
 	 * 预发布 - 发布
@@ -53,6 +49,5 @@ public class DcQIndexConfigBO {
 			Long newId = dcQIndexConfigService.createConfig(config) ;
 		}
 		
-		dcQIndexCache.removeSceneCache(sceneId) ;
 	}
 }

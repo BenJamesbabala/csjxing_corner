@@ -6,7 +6,7 @@ import com.doucome.corner.biz.dal.dataobject.dcome.DcSceneDetailDO;
 
 /**
  * 场景与商品关系
- * @author shenjia.caosj 2012-7-23
+ * @author langben 2012-7-23
  *
  */
 public interface DcSceneDetailDAO {

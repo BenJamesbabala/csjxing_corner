@@ -1,0 +1,7 @@
+<meta charset="GBK">
+<title>#if($title && $title != "") $title - #end 豆蔻 - 美丽帮你挑 </title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+<meta name="keywords" content="豆蔻,搭配,折扣,潮品,女人,淘宝,购物" />
+<meta name="description" content="美丽帮你挑是一款生活导购类应用，根据时尚热点结合生活场景，精选小巧别致的服装、配饰。做您的美丽顾问。#if($title && $title != "")豆蔻-$title#end"/>
+#DC_QRES(["index.css","dc.css"])

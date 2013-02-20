@@ -13,7 +13,7 @@ import com.doucome.corner.web.bops.model.JsonModel;
 
 /**
  * 
- * @author shenjia.caosj 2012-4-22
+ * @author langben 2012-4-22
  *
  */
 @SuppressWarnings("serial")
@@ -51,10 +51,10 @@ public class TaokeReportSettleAjaxAction extends BopsBasicAction{
 //			json.setDetail("input settleTo is not right .") ;
 //			return SUCCESS ;
 //		}
-		List<Integer> idList = new ArrayList<Integer>() ;
+		List<Long> idList = new ArrayList<Long>() ;
 		for(String id : idArray){
 			if(StringUtils.isNumeric(id)){
-				idList.add(Integer.valueOf(id)) ;
+				idList.add(Long.valueOf(id)) ;
 			}
 		}
 		int count = ddzTaokeReportSettleService.updateTaokeSettleStatus(idList, status) ;

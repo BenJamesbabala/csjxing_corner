@@ -1,0 +1,23 @@
+#set($layout="dcome/frame.namefate/default.vm")
+#if($extId)
+	<input type="hidden" id="suppressLogin" value="true"/>
+#end
+<div class="trick-main">
+	
+	<div class="yuanfen"><img src="${env.staticroot}/dcome/namefate/images/yuanfen.png"></img></div>
+	
+    <form id="trickForm">
+    	<input type="hidden" name="trickUserId" value="$!user.userId"/>
+    	<input type="hidden" name="extId" value="$!extId" id="extId"/>
+    	<div class="ipt-area">
+    		<span class="name-label">你的姓名：</span> <input type="text" name="trickInputName" value="" class="intel-ipt" maxlength="10"/>
+    		<span class="name-label">TA的姓名：</span><input type="text" name="trickInputTaName" value="" class="intel-ipt" maxlength="10"/>
+    	</div>
+        <div class="error-area dd-hide"><span class="error"></span></div>
+    	<div class="submit-area">
+    		<a href="javascript:;" class="submit">计算缘份指数</a>
+    	</div>
+    </form>
+    
+    <div class="test-person-count"><span class="num">1022</span></div>
+</div>

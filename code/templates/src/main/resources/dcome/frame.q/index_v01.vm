@@ -1,0 +1,101 @@
+#set($layout="dcome/frame.q/default.vm")
+
+<input type="hidden" id="envRoot" value="${env.root}" />
+<input type="hidden" name="systemId" value="$!indexConfigDTO.systemId"/>
+<input type="hidden" name="sceneId" value="$!sceneDTO.id"/>
+<input type="hidden" name="sceneName" value="$!sceneDTO.name"/>
+<input type="hidden" name="sceneBanner" id="sceneBanner" value="$!sceneDTO.bannerPicUrl"/>
+
+<style>
+	.content-main {
+		#if($sceneDTO.bannerPicUrl && $sceneDTO.bannerPicUrl != '')
+			background: url($!sceneDTO.bannerPicUrl) no-repeat;
+		#else
+			background: url(http://style.diandianzhe.com/corner/dcome/q/bg.png) no-repeat;
+		#end
+	}
+</style>
+
+<div class="content-main" id="index-main">
+
+	<ul>
+		#foreach($cat in $catList)
+		#set($catId = $cat.id)
+		#set($index = $velocityCount - 1)
+		#set($catItemList =  $sortItemByCat.getItemListByCat($catId))
+    		#if(!$collectionUtils.isEmpty($catItemList))
+				#set($bannerItem = $catItemList[0])
+				
+				#set($clickUrl = $!bannerItem.clickUrl)
+                #if(!$clickUrl)
+                	#set($clickUrl = $!bannerItem.srcUrl)
+                #end
+    		<li class="banner-scroll dd-clr" data-index="$index">
+    			<div style="float:left;width:318px;">
+					<a href="${env.root}/frame/q/detail.htm?id=$!bannerItem.id&sceneId=$!qindexFacade.dcSceneDTO.id&tracelog=banner_pic">
+						<img width="278" height="278" src='${env.itemUploadedRoot}$!bannerItem.getPicUrl(0,"278x278")'/>
+                    </a>
+    			</div>
+    			<div style="float:left;width:200px;">
+    				<div style="padding-left:40px;">
+                        <div class="title"><span class="src-logo-$!bannerItem.source"></span><a href="${env.root}/frame/q/detail.htm?id=$!bannerItem.id&sceneId=$!qindexFacade.dcSceneDTO.id&tracelog=banner_title">$!bannerItem.itemTitle</a></div>
+    					<div class="" style="margin-top:10px;">
+							<span href="javascript:;" title="我喜欢" class="like dc-op-ilike" data-item-id="$!bannerItem.id" data-loved="false" gtrack="virtual/frame/q/index/love?itemId=$!bannerItem.id">
+								<span class="loveCount">$!bannerItem.loves</span>
+							</span>
+							<span class="comment" href="javascript:;">$!bannerItem.comments</span>
+    					</div>
+    					<div class="price">&yen;$decimalUtils.format($!bannerItem.itemPrice , "0.00")</div>
+                        <a data-href='$!clickUrl' gtrack="virtual/frame/q/index/buy?itemId=$!bannerItem.id&userId=$!userId" data-target="_blank"><div class="go-target">立即购买</div></a>
+    				</div>
+    			</div>
+    		</li>
+    		#end
+		#end
+		
+    </ul>
+
+</div>
+<div class="content-list">
+	<div class="nav">
+		<dl id="cat-list">
+			<dt>今日热荐:</dt>
+			#foreach($cat in $catList)
+			#set($catId = $cat.id)
+			<dd #if($velocityCount == 1) class="on" #end data-cat-id="$catId"><a href="javascript:;"><span>$!cat.name</span></a></dd>
+			#end
+		</dl>
+		<!--
+		<div class="more">
+			<a href="#" title="更多">更多</a>
+		</div>
+		-->
+	</div>
+	<div class="list dd-clr" id="content-list">
+		#foreach($cat in $catList)
+		#set($catId = $cat.id)
+		#set($catItemList =  $sortItemByCat.getItemListByCat($catId))
+			<ul #if($velocityCount != 1) class="dd-hide" #end data-cat-id="$catId">
+    		#foreach($relItem in $catItemList)
+    			#if($velocityCount < 9)
+				<li class="dc-item">
+    				<div class="image">
+						<a href="${env.root}/frame/q/detail.htm?id=$!relItem.id&sceneId=$!qindexFacade.dcSceneDTO.id&tracelog=scene_$!qindexFacade.dcSceneDTO.id#header" title="$!relItem.itemTitle">
+    						<img alt="$!relItem.itemTitle" src="${env.itemUploadedRoot}$!relItem.getPicUrl(0,'154x154')" />
+    					</a>
+    					<a class="ilike dd-hide dc-op-ilike" href="javascript:;" title="我喜欢" data-item-id="$!relItem.id" data-loved="false" gtrack="virtual/frame/q/index/love?itemId=$!relItem.id&from=pic">我喜欢</a>
+    				</div>
+    				<div class="title"><a href="${env.root}/frame/q/detail.htm?id=$!relItem.id&sceneId=$!qindexFacade.dcSceneDTO.id&tracelog=scene_$!qindexFacade.dcSceneDTO.id#header" title="$!relItem.itemTitle">$!relItem.itemTitle</a></div>
+                    <div class="price">&yen;$decimalUtils.format($relItem.itemPrice,"0.00")</div>
+    				<div class="other">
+                        <span href="javascript:;" title="我喜欢" class="like dc-op-ilike" data-item-id="$!relItem.id" data-loved="false" gtrack="virtual/frame/q/index/love?itemId=$!relItem.id"><span class="loveCount">$relItem.loves</span></span>
+    					<span href="javascript:;" class="comment">$relItem.comments</span>
+    				</div>
+    			</li>
+				#end
+    		#end
+    		</ul>
+		#end
+	</div>
+</div>
+	

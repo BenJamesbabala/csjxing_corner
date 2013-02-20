@@ -7,7 +7,7 @@ import com.doucome.corner.biz.dal.dataobject.DdzSearchLogDO;
 
 /**
  * ËÑË÷ÈÕÖ¾
- * @author shenjia.caosj 2012-3-7
+ * @author langben 2012-3-7
  *
  */
 public interface DdzSearchLogDAO {

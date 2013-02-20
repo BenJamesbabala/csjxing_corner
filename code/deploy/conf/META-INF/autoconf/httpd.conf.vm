@@ -63,7 +63,9 @@ NameVirtualHost *
     ServerName ${corner_ddz_domainName}
 	DocumentRoot "${corner_htdocs_home}"
     RewriteEngine on
-    RewriteCond %{HTTP_HOST} ${corner_ddz_domainName} [NC] 
+	RewriteCond %{HTTP_HOST} (.*).${corner_ddz_domainName} [NC]
+	RewriteRule ^\/$ http://${corner_ddz_domainName}:${corner_port} [L,R]
+    RewriteCond %{HTTP_HOST} ^${corner_ddz_domainName} [NC] 
     RewriteRule ^\/$ /zhe/index.htm [L,P]
 </VirtualHost>
 
@@ -73,7 +75,7 @@ NameVirtualHost *
 	DocumentRoot "${corner_htdocs_home}"
     RewriteEngine on
     RewriteCond %{HTTP_HOST} ${corner_domainName} [NC] 
-    RewriteRule ^\/$ /frame/q/index.htm [L,P]
+    RewriteRule ^\/$ /company/index.html [L,R]
 </VirtualHost>
 
 

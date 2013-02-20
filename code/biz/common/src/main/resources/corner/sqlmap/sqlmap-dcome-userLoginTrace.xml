@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcUserLoginTrace">
+	<typeAlias alias="TA-DcUserLoginTrace"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcUserLoginTraceDO" />
+
+	<resultMap id="RM-DcUserLoginTrace" class="TA-DcUserLoginTrace">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID"  />
+		<result property="nick" column="NICK"  jdbcType="VARCHAR"/>
+		<result property="clientAgent" column="CLIENT_AGENT"  jdbcType="VARCHAR"/>
+		<result property="ubid" column="UBID"  jdbcType="VARCHAR"/>
+		<result property="loginIp" column="LOGIN_IP" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtRegister" column="GMT_REGISTER" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertLoginTrace">
+		INSERT INTO 
+			DC_USER_LOGIN_TRACE(ID,USER_ID,NICK,CLIENT_AGENT,LOGIN_IP,UBID,GMT_REGISTER,GMT_CREATE)
+		VALUES
+			(#id#,#userId#,#nick#,#clientAgent#,#loginIp#,#ubid#,#gmtRegister#,now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryTraceWithPagination" resultMap="RM-DcUserLoginTrace">
+		SELECT 
+			ID,USER_ID,NICK,CLIENT_AGENT,LOGIN_IP,UBID,GMT_REGISTER,GMT_CREATE
+		FROM 
+			DC_USER_LOGIN_TRACE
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="userId" prepend="AND">
+				    USER_ID = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="ubid" prepend="AND">
+				    UBID = #ubid#
+				</isNotEmpty>
+				<isNotEmpty property="loginIp" prepend="AND">
+				    LOGIN_IP = #loginIp#
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateStart" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE >= #gmtCreateStart#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateEnd" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE <= #gmtCreateEnd#
+				     ]]>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+		ORDER BY 
+			GMT_CREATE DESC
+		LIMIT 
+			#start# , #size#
+	</select>
+	
+	<select id="countTraceWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(ID)
+		FROM 
+			DC_USER_LOGIN_TRACE
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="userId" prepend="AND">
+				    USER_ID = #userId#
+				</isNotEmpty>
+				<isNotEmpty property="ubid" prepend="AND">
+				    UBID = #ubid#
+				</isNotEmpty>
+				<isNotEmpty property="loginIp" prepend="AND">
+				    LOGIN_IP = #loginIp#
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateStart" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE >= #gmtCreateStart#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateEnd" prepend="AND">
+					<![CDATA[
+				    GMT_CREATE <= #gmtCreateEnd#
+				     ]]>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+	</select>
+</sqlMap>

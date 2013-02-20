@@ -23,117 +23,112 @@ import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule;
 import com.doucome.corner.biz.zhe.service.DdzTaobaokeService;
 
 public class DdzTaobaokeServiceImpl implements DdzTaobaokeService {
-	
-	private static final int DEFAULT_RECOMMAND_SIZE = 20 ;
-	
-	private static final int MAX_RECOMMAND_SIZE     = 40;
+
+	private static final int DEFAULT_RECOMMAND_SIZE = 20;
+
+	private static final int MAX_RECOMMAND_SIZE = 40;
 
 	@Autowired
-	private TaobaokeServiceDecorator taobaokeServiceDecorator ;
-	
+	private TaobaokeServiceDecorator taobaokeServiceDecorator;
+
 	@Autowired
-	private DdzEatDiscountRule ddzEatDiscountRule ;
-	
+	private DdzEatDiscountRule ddzEatDiscountRule;
+
 	@Autowired
-    private TaobaoServiceDecorator    taobaoServiceDecorator;
-	
+	private TaobaoServiceDecorator taobaoServiceDecorator;
+
 	@Autowired
-    private TaobaoRecommandDecorator            taobaoRecommandDecorator;
-	
+	private TaobaoRecommandDecorator taobaoRecommandDecorator;
+
 	@Override
-	public List<TaobaokeShopFacade> conventShops(List<String> shopIdList, String outCode) {
-		
-		List<TaobaokeShopFacade> facadeList = new ArrayList<TaobaokeShopFacade>() ; 
-		
-		if(CollectionUtils.isEmpty(shopIdList)){
-			return facadeList ;
+	public List<TaobaokeShopFacade> conventShops(List<String> shopIdList,
+			String outCode) {
+
+		List<TaobaokeShopFacade> facadeList = new ArrayList<TaobaokeShopFacade>();
+
+		if (CollectionUtils.isEmpty(shopIdList)) {
+			return facadeList;
 		}
-		
-//		for(int i=0 ; i<shopIdList.size() ; i+=10){
-//			int fromIndex = i ;
-//			int toIndex = i + 10 ;
-//			if(toIndex > shopIdList.size()){
-//				toIndex = shopIdList.size() ;
-//			}
-//			List<String> subList = shopIdList.subList(fromIndex, toIndex) ;
-//			
-//			String[] subArray = subList.toArray(new String[subList.size()]) ;
-//			
-//			//每次最多10个
-//			List<TaobaokeShopDTO> shopDTOS = taobaokeServiceDecorator.conventShops(subArray, outCode, TaobaokeFields.taoke_shop_fields) ;
-//			if(!CollectionUtils.isEmpty(shopDTOS)){
-//				for(int z=0 ; z<shopDTOS.size() ;z++){
-//					TaobaokeShopDTO dto = shopDTOS.get(z);
-//					TaobaokeShopFacade fd = new TaobaokeShopFacade(dto, ddzEatDiscountRule) ;
-//					String sid = subArray[z] ;
-//					fd.setSid(sid) ;
-//					facadeList.add(fd) ;
-//				}
-//			}
-//
-//		}
-		
-		//批量查询
-		for(String shopId : shopIdList){
-			TaobaokeShopDTO dto =  taobaokeServiceDecorator.conventShop(shopId, outCode, TaobaokeFields.taoke_shop_fields) ;
-			TaobaokeShopFacade fd = new TaobaokeShopFacade(dto, ddzEatDiscountRule) ;
-			fd.setSid(shopId) ;
-			facadeList.add(fd) ;
+
+		// 批量查询
+		for (String shopId : shopIdList) {
+			TaobaokeShopDTO dto = taobaokeServiceDecorator.conventShop(shopId,
+					outCode, TaobaokeFields.taoke_shop_fields);
+			TaobaokeShopFacade fd = new TaobaokeShopFacade(dto,
+					ddzEatDiscountRule);
+			fd.setSid(shopId);
+			facadeList.add(fd);
 		}
-		return facadeList ;
+
+		return facadeList;
 	}
 
 	@Override
 	public TaobaokeShopFacade conventShop(String ShopId, String outCode) {
-		List<String> idList = new ArrayList<String>() ;
-		idList.add(ShopId) ;
-		List<TaobaokeShopFacade> list = conventShops(idList, outCode) ;
-		if(CollectionUtils.isEmpty(list)) {
-			return null ;
+		List<String> idList = new ArrayList<String>();
+		idList.add(ShopId);
+		List<TaobaokeShopFacade> list = conventShops(idList, outCode);
+		if (CollectionUtils.isEmpty(list)) {
+			return null;
 		}
-		TaobaokeShopFacade shop = list.get(0) ;
-		
-		return shop ;
+		TaobaokeShopFacade shop = list.get(0);
+
+		return shop;
 	}
 
 	@Override
 	public TaobaokeItemFacade conventItem(String itemId, String outCode) {
-		TaobaokeItemDTO itemDTO = taobaokeServiceDecorator.conventItem(itemId, outCode, TaobaokeFields.taoke_item_fields) ;
-		if(itemDTO == null){
-			return null ;
+		TaobaokeItemDTO itemDTO = taobaokeServiceDecorator.widgetConventItem(itemId,
+				outCode, TaobaokeFields.taoke_item_fields);
+		if (itemDTO == null) {
+			return null;
 		}
-		
-		TaobaokeItemFacade item = new TaobaokeItemFacade(itemDTO , ddzEatDiscountRule ) ;		
-		return item ;
+
+		TaobaokeItemFacade item = new TaobaokeItemFacade(itemDTO,ddzEatDiscountRule);
+		return item;
+	}
+	
+	@Override
+	public TaobaokeItemFacade conventItem(String itemId, String outCode,
+			boolean isTmall) {
+		TaobaokeItemDTO itemDTO = taobaokeServiceDecorator.widgetConventItem(itemId,
+				outCode, TaobaokeFields.taoke_item_fields);
+		if (itemDTO == null) {
+			return null;
+		}
+		TaobaokeItemFacade item = new TaobaokeItemFacade(itemDTO,ddzEatDiscountRule,isTmall);
+		return item;
 	}
 
 	@Override
 	public TaobaokeItemFacade getTaobaoItem(String itemId) {
-		TaobaoItemDTO taobaoItem = taobaoServiceDecorator.getItem(Long.valueOf(itemId), TaobaoFields.taobao_item_fields_short);
-		if(taobaoItem == null){
-			return null ;
+		TaobaoItemDTO taobaoItem = taobaoServiceDecorator.getItem(
+				Long.valueOf(itemId), TaobaoFields.taobao_item_fields_short);
+		if (taobaoItem == null) {
+			return null;
 		}
-		return new TaobaokeItemFacade(taobaoItem) ;
+		return new TaobaokeItemFacade(taobaoItem);
 	}
 
 	@Override
-	public List<TaobaokeItemFacade> getFavoriteItems(String itemId , int count) {
+	public List<TaobaokeItemFacade> getFavoriteItems(String itemId, int count) {
 		if (count < 0) {
 			count = DEFAULT_RECOMMAND_SIZE;
-        } else {
-        	count = count > MAX_RECOMMAND_SIZE ? MAX_RECOMMAND_SIZE : count;
-        }
-		
+		} else {
+			count = count > MAX_RECOMMAND_SIZE ? MAX_RECOMMAND_SIZE : count;
+		}
+
 		TaobaoRecommendItemCondition recommendCondition = new TaobaoRecommendItemCondition();
 		recommendCondition.setCount(Long.valueOf(count));
-        recommendCondition.setRecommendType(TaobaoRecommendTypeEnums.SAME_STYLE);            
-        List<TaobaoFavoriteItemDTO> recoList = taobaoRecommandDecorator.getRecommandItemsByItem(Long.valueOf(itemId) ,recommendCondition);
-		//FIXME 
+		recommendCondition
+				.setRecommendType(TaobaoRecommendTypeEnums.SAME_STYLE);
+		List<TaobaoFavoriteItemDTO> recoList = taobaoRecommandDecorator
+				.getRecommandItemsByItem(Long.valueOf(itemId),
+						recommendCondition);
+
 		return null;
 	}
-	
-	
-	
+
 	
 
 }

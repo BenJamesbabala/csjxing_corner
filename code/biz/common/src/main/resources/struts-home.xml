@@ -3,10 +3,16 @@
 "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-	<package name="common" namespace="/" extends="default">
+	<package name="home" namespace="/home" extends="default">
 		
 		
 		
 	</package>
 	
+	<package name="home-remote" namespace="/home/remote/rest" extends="struts-json">
+		<action name="query_banner_ajax" class="com.doucome.corner.web.common.action.ajax.QueryBannerAjaxAction">
+			<interceptor-ref name="cornerBasicStack" />
+			<result name="success" type="json" ></result>
+		</action>
+	</package>
 </struts>

@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
 import com.doucome.corner.biz.core.utils.JacksonHelper;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 同步任务运行结束后的结果
  * 
- * @author shenjia.caosj 2012-4-3
+ * @author langben 2012-4-3
  * 
  */
 public class SyncReportRunResult {

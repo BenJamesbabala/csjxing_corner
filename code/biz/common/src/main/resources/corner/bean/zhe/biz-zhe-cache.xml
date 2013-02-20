@@ -10,15 +10,14 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
 		default-autowire="byName">
-			
-	<bean id="buyingRecommendItemCache" class="com.doucome.corner.biz.zhe.cache.impl.BuyingRecommendItemCacheImpl">
-		<property name="cacheClient" ref="jvmCacheClient"/>
-		<property name="regionName" value="buying_recomm_item"/>
-	</bean>
 	
-	<bean id="brandsCache" class="com.doucome.corner.biz.zhe.cache.impl.BrandsCacheImpl">
-		<property name="cacheClient" ref="jvmCacheClient"/>
-		<property name="regionName" value="brands"/>
+	<bean id="brandsCache" parent="baseCacheProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.zhe.cache.impl.BrandsCacheImpl" >
+				<property name="cacheClient" ref="memcCacheClient"/>
+				<property name="regionName" value="ddz_brands"/>
+			</bean>
+		</property>
 	</bean>
-	
+		
 </beans>

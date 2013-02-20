@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="WryneckTest">
+    <typeAlias alias="TA-WryneckTest" type="com.doucome.corner.biz.dal.wryneck.dataobject.WryneckTestDO" />
+
+	<resultMap id="RM-WryneckTest" class="TA-WryneckTest">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="showText" column="SHOW_TEXT"  />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<select id="queryTests" resultMap="RM-WryneckTest">
+		SELECT 
+			ID,NAME,SHOW_TEXT,GMT_CREATE
+		FROM 
+			WRYNECK_TEST
+	</select>
+	
+</sqlMap>

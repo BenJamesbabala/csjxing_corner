@@ -1,0 +1,10 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "上传集分宝发放成功清单")
+
+<p>
+出错啦!!!!!!!!!!!!!!!
+</p>
+	
+#if($actionError)
+	错误码 : $actionError 
+#end

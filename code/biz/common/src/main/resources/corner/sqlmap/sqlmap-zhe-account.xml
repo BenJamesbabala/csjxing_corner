@@ -9,36 +9,40 @@
 		<result property="accountId" column="ACCOUNT_ID" jdbcType="VARCHAR" />
 		<result property="alipayId" column="ALIPAY_ID" jdbcType="VARCHAR" />
 		<result property="uid" column="UID" jdbcType="VARCHAR" />
+		<result property="refundCount" column="REFUND_COUNT"/>
+		<result property="notifyCount" column="NOTIFY_COUNT"/>
 		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
 		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtLastLogin" column="GMT_LAST_LOGIN" jdbcType="TIMESTAMP" />
+		<result property="gmtLastVisit" column="GMT_LAST_VISIT" jdbcType="TIMESTAMP" />
 	</resultMap>
 	
 	<select id="queryByAccountId" resultMap="RM-ZHE-ACCOUNT">
 		select
-		ID,ACCOUNT_ID,ALIPAY_ID,UID,GMT_CREATE,GMT_MODIFIED
+		ID,ACCOUNT_ID,ALIPAY_ID,UID,REFUND_COUNT,NOTIFY_COUNT,GMT_CREATE,GMT_MODIFIED,GMT_LAST_VISIT,GMT_LAST_LOGIN
 		from DDZ_ACCOUNT
 		where ACCOUNT_ID = #accountId#
 	</select>
 	
 	<select id="queryByAlipayId" resultMap="RM-ZHE-ACCOUNT">
 		select
-		ID,ACCOUNT_ID,ALIPAY_ID,UID,GMT_CREATE,GMT_MODIFIED
+		ID,ACCOUNT_ID,ALIPAY_ID,UID,REFUND_COUNT,NOTIFY_COUNT,GMT_CREATE,GMT_MODIFIED,GMT_LAST_VISIT,GMT_LAST_LOGIN
 		from DDZ_ACCOUNT
 		where ALIPAY_ID = #alipayId#
 	</select>
 	
 	<select id="queryByUid" resultMap="RM-ZHE-ACCOUNT">
 		select
-		ID,ACCOUNT_ID,ALIPAY_ID,UID,GMT_CREATE,GMT_MODIFIED
+		ID,ACCOUNT_ID,ALIPAY_ID,UID,REFUND_COUNT,NOTIFY_COUNT,GMT_CREATE,GMT_MODIFIED,GMT_LAST_VISIT,GMT_LAST_LOGIN
 		from DDZ_ACCOUNT
 		where UID = #uid#
 	</select>
 
 	<insert id="insertAccount">
 		insert into DDZ_ACCOUNT
-		(ID,ACCOUNT_ID,ALIPAY_ID,UID,GMT_CREATE,GMT_MODIFIED)
+		(ID,ACCOUNT_ID,ALIPAY_ID,UID,REFUND_COUNT,GMT_CREATE,GMT_MODIFIED)
 		values
-		(#id#,#accountId#,#alipayId#,#uid#,now(),now())
+		(#id#,#accountId#,#alipayId#,#uid#,#refundCount#,now(),now())
 		<selectKey resultClass="java.lang.Integer" keyProperty="id">
     		<![CDATA[
 				SELECT LAST_INSERT_ID() AS ID
@@ -54,7 +58,7 @@
 	
 	<select id="queryAccountsWithPagination" resultMap="RM-ZHE-ACCOUNT">
 		SELECT 	
-			ID,ACCOUNT_ID,ALIPAY_ID,UID,GMT_CREATE,GMT_MODIFIED
+			ID,ACCOUNT_ID,ALIPAY_ID,UID,REFUND_COUNT,NOTIFY_COUNT,GMT_CREATE,GMT_MODIFIED,GMT_LAST_VISIT,GMT_LAST_LOGIN
 		FROM 
 			DDZ_ACCOUNT
 		WHERE 
@@ -100,4 +104,44 @@
 			]]>
 		</isNotEmpty>
 	</select>
+	
+	<update id="decrNotifyCountByAlipayId">
+		UPDATE 
+			DDZ_ACCOUNT 
+		SET 
+			NOTIFY_COUNT = NOTIFY_COUNT - #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ALIPAY_ID = #alipayId#
+		AND
+			NOTIFY_COUNT >= #count#
+	</update>
+	
+	<update id="incrRefundCountByAlipayId">
+		UPDATE
+			DDZ_ACCOUNT
+		SET
+			REFUND_COUNT = REFUND_COUNT + #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ALIPAY_ID = #alipayId#
+	</update>
+	
+	<update id="updateLastLoginByAlipayId">
+		UPDATE
+			DDZ_ACCOUNT 
+		SET 
+			GMT_LAST_LOGIN = now()
+		WHERE
+			ALIPAY_ID = #alipayId#
+	</update>
+	
+	<update id="updateLastVisitByAlipayId">
+		UPDATE
+			DDZ_ACCOUNT 
+		SET 
+			GMT_LAST_VISIT = now()
+		WHERE
+			ALIPAY_ID = #alipayId#
+	</update>
 </sqlMap>

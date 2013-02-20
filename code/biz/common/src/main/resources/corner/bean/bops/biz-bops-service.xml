@@ -13,4 +13,6 @@
 	 
 	<bean id="bopsSessionOperator" class="com.doucome.corner.web.bops.authz.impl.DefaultBopsSessionOperator"/>
 	<bean id="bopsAuthz" class="com.doucome.corner.web.bops.authz.impl.DefaultAuthzImpl"/>
+	
+	<bean id="jfbSettleBO" class="com.doucome.corner.web.bops.bo.JfbSettleBO"></bean>
 </beans>

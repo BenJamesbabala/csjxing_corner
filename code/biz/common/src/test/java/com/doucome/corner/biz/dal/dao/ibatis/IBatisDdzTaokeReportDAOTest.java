@@ -30,14 +30,14 @@ public class IBatisDdzTaokeReportDAOTest extends AbstractBaseJUnit4Test  {
 	@SuppressWarnings("unused")
 	@Test
 	public void test_insert(){
-		for(int i = 0 ;i<30 ;i++){
+		for(int i = 0 ;i<1 ;i++){
 			DdzTaokeReportDO report = new DdzTaokeReportDO() ;
 			report.setCategoryId(32323L) ;
 			report.setCommission(new BigDecimal("323.22")) ;
 			report.setCommissionRate(new BigDecimal("323")) ;
 			report.setGmtPaid(new Date()) ;
 			report.setItemNum(32323L) ;
-			report.setItemTitle("特价NIKE跑步鞋 " + i ) ;
+			report.setItemTitle("特价NIKE跑步鞋111111111 " + i ) ;
 			report.setNumIid(3244l) ;
 			report.setOutCode("1324380") ;
 			report.setPayPrice(new BigDecimal("323.333")) ;
@@ -48,9 +48,11 @@ public class IBatisDdzTaokeReportDAOTest extends AbstractBaseJUnit4Test  {
 			report.setSettleFee(new BigDecimal("23.44")) ;
 			report.setUserCommission(new BigDecimal("23.44")) ;
 			report.setUserCommission(new BigDecimal("5.0")) ;
+			report.setDcItemId(10000l);
+			report.setDcUserId(123456L) ;
 			report.setSettleUid("13233") ;
-			report.setTradeId(12132324343L) ;
-			int l = ddzTaokeReportDAO.insertReport(report) ;
+			report.setTradeId(12324243545465L) ;
+			long l = ddzTaokeReportDAO.insertReport(report) ;
 		}
 		int c = 2 ;
 	}
@@ -78,9 +80,9 @@ public class IBatisDdzTaokeReportDAOTest extends AbstractBaseJUnit4Test  {
 	
 	@Test
 	public void testUpdateTaokeReportSettleStatus() {
-		List<Integer> settleIds = new ArrayList<Integer>();
-		settleIds.add(400);
-		settleIds.add(500);
+		List<Long> settleIds = new ArrayList<Long>();
+		settleIds.add(400L);
+		settleIds.add(500l);
 		int count = ddzTaokeReportDAO.updateTaokeReportSettleStatus(settleIds, "U");
 		Assert.assertEquals(2, count);
 	}

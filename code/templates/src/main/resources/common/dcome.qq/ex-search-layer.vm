@@ -1,0 +1,101 @@
+<div class="ex-search-layer" id="exSearchLayer" style="display: none;">
+	<div class="head">
+		<a class="close-btn" href="javascript:;"></a>
+		<div class="title dd-l">自主兑换</div>
+	</div>
+	<div class="wrap dd-l">
+		<div class="ugc-wrap dd-l">
+			<div class="top">
+				<div class="title dd-l">将商品网址粘贴到下面的框中</div>
+				<div class="source-list dd-l">
+					<span class="dd-l">(支持</span>
+					<a class="icon-ugc-src tb-s8 icon-tb" href="http://www.taobao.com" target="_blank">淘宝网</a>
+					<a class="icon-ugc-src tb-s8 icon-tm" href="http://www.tmall.com" target="_blank">天猫商城</a>
+					<span>)</span>
+				</div>
+			</div>
+			<div class="content dd-l">
+				<input class="item-url" placeholder="请粘贴你要购买的淘宝宝贝网址" />
+				<a class="btn query-btn" href="javascript:;">查询</a>
+			</div>
+			<div class="loadding18x18 query-load">获取商品信息中...</div>
+			<div class="query-info info">获取商品信息失败</div>
+			<div class="ugc-content" style="display: none;">
+				<div class="content-wrap dd-l">
+					<div class="item-info dd-l">
+						<div class="pic-wrap dd-l">
+							
+						</div>
+						<div class="text-info dd-l">
+							<div class="title"></div>
+							<div class="other">
+								<div class="orignal-price dd-l" >
+								    <span class="dd-l">价格:</span>
+									<span class="ori-price dd-l"></span>
+								</div>
+								<div class="integral-wrap dd-l">
+									<span>兑换需要约</span>
+									<span class="ex-integral"></span>
+									<span>积分</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ugc-oper dd-l">
+					<div class="loadding18x18 buy-load" style="display: none;">正在为你生成购物链接...</div>
+					<div class="buy-info info" style="display: none;"></div>
+					<a class="ugc-ex btn dd-l" href="javascript:;" gtrack="/virtual/qq/ugc-ex-sub">我要兑换</a>
+					<div class="other dd-l">
+					<a class="ugc-buy dd-l" href="javascript:;">去购买，拿积分</a>
+						<span>(购买获赠<span class="integral"></span>积分)<span>
+					</div>
+				</div>
+			</div>
+			<ul class="ex-info" style="display: none;">
+				<li class="caution">
+					<span>以下信息将作为系统审核的依据，请如实填写。</span>
+				</li>
+				<li>
+					<div class="wrap-l">
+						<span class="lbl">商品尺码</span>
+						<input type="text" class="item-size" name="size"/>
+					</div>
+					<div class="wrap-r">
+						<span class="lbl">商品颜色</span>
+						<input type="text" class="item-color" name="color"/>
+					</div>
+				</li>
+				<li>
+					<div class="wrap-l">
+						<span class="lbl">商品价格</span>
+						<input type="text" class="item-price" name="itemPrice"/>
+					</div>
+					<div class="wrap-r">
+						<span class="lbl">邮费</span>
+						<input type="text" class="postal-fee" name="postalFee"/>
+					</div>
+				</li>
+				<li>
+					<span class="lbl">其他信息</span>
+					<textarea name="memo" class="memo">如有额外信息，请在此处录入</textarea>
+				</li>
+				<li class="chk-info"></li>
+				<li>
+					<a class="ugc-ex-submit btn" href="javascript:;" data-yes="n" gtrack="/virtual/qq/ugc-ex-sub">提交审核</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="result-message" id="resultMessage" style="display: none;">
+    <div class="head">
+		<a class="close-btn" href="javascript:;"></a>
+		<div class="title dd-l">提交审核成功</div>
+	</div>
+	<ul class="content">
+	    <li>系统审核您提交的兑换后，会向您发送相应的消息。</li>
+		<li>系统审核通过后，您提交的商品将出现在"积分兑换"页中，按照正常的兑换流程兑换即可。</li>
+	</ul>
+</div>

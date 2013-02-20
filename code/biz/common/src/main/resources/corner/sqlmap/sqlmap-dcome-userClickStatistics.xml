@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcUserClickStatistics">
+	<typeAlias alias="TA-DcUserClickStatistics"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcUserClickStatisticsDO" />
+
+	<resultMap id="RM-DcUserClickStatistics" class="TA-DcUserClickStatistics">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="clickCount" column="CLICK_COUNT" />
+		<result property="clickType" column="CLICK_TYPE" jdbcType="VARCHAR"/>
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertClickStatistics" parameterClass="TA-DcUserClickStatistics">
+		INSERT INTO 
+			DC_USER_CLICK_STATISTICS(ID,USER_ID,CLICK_COUNT,CLICK_TYPE,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#userId#,#clickCount#,#clickType#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="userId">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS USER_ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryClickStatisticsByUser" resultMap="RM-DcUserClickStatistics">
+	    SELECT 
+	    	ID,USER_ID,CLICK_COUNT,CLICK_TYPE,GMT_CREATE,GMT_MODIFIED
+	    FROM
+			DC_USER_CLICK_STATISTICS
+		WHERE
+			USER_ID = #userId#
+		AND
+			CLICK_TYPE = #clickType#
+	</select>
+	
+	<update id="incrClickStatisticsByUser">
+	    UPDATE 
+			DC_USER_CLICK_STATISTICS
+		SET 
+			CLICK_COUNT = CLICK_COUNT + 1,
+			GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+		AND
+			CLICK_TYPE = #clickType#
+	</update>
+</sqlMap>

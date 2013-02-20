@@ -1,121 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="gbk">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<title>user info</title>
-		<meta name="description" content="" />
-		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
-		<link rel="stylesheet" type="text/css" href="css/lib/common/common.css">
-		<link rel="stylesheet" type="text/css" href="css/home/screens/myhome/common.css?v=20120329">
-		<link rel="stylesheet" type="text/css" href="css/home/screens/myhome/user-info.css">
-	</head>
-	<body>
-		<div class="myhome">
-			<div class="global-header-area" id="global-header-area">
-				<div class="global-logo">
-					<a title="我的点点折" href="http://www.diandianzhe.com"></a>
+<head>
+<meta charset="gbk">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>user info</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="css/lib/common/common.css">
+<link rel="stylesheet" type="text/css"
+	href="css/home/screens/myhome/common.css?v=20120329">
+<link rel="stylesheet" type="text/css"
+	href="css/home/screens/myhome/user-info.css">
+</head>
+<body>
+
+	<div id="xbox-mock" class="xbox-mock"
+		style="visibility: visible; width: 650px; top: 50px; left: 378px;">
+		<div id="J-login-check" class="xbox">
+			<div class="title">
+				<h2>重要提醒</h2>
+				<a id="J_xbox_colse" href="#" class="xbox-close-link"
+					seed="title-J_xbox_colse" smartracker="on">关闭</a>
+			</div>
+			<div class="line line-title"></div>
+			<div class="notice-cnt">
+				<span class="notice-cnt-uparea fn-mt20 fn-ml20"> <label
+					class="tip-content">您的产品已经通过审核。只有将支付宝集成或配置至您的网站，才可以收款!</label> </span>
+				<div class="notice-cnt-downarea">
+					<div class="text-tit">
+						使用网店系统或ERP软件:<a
+							href="http://help.alipay.com/support/help_detail.htm?help_id=251041&amp;keyword=pid"
+							class="btn fn-ml20 btn-ok" seed="textTit-btn" smartracker="on"><span>配置支付宝</span>
+						</a>
+					</div>
+					<span class="notice-cnt-uparea-text"> <label class="text-gray">使用ShopEx、360Shop等网店系统，或金蝶、用友等ERP软件接入支付宝。 </label> </span>
 				</div>
-				<div class="global-toplink">
-					<span>kelaocai</span>
-					<em class="global-separator">|</em>
-					<a href="#">退出</a>
-					<em class="global-separator">|</em>
-					<a target="_blank" href="#">帮助中心</a>
-					<em class="global-separator">|</em>
-					<a target="_blank" href="#">提建议</a>
+				<div class="notice-cnt-downarea">
+					<span class="notice-cnt-uparea-text"> <label
+						class="text-gray text-gray1 text-gray2">
+							订单审核通过后，若您已完成接口代码集成，则当您的网站成功发生一笔交易后，次日12点产品会生效。 </label> </span>
 				</div>
 			</div>
-			<div class="user-info-box">
-				<div class="user-head">
-					<img width="66" height="66" alt="头像" src="img/default-face.png">
-				</div>
-				<div class="user-info">
-					<p class="font-strong">
-						kelaocai
-					</p>
-					<p class="font-strong">
-						您好！
-					</p>
-					<div>
-						<span class="tips">您当前绑定的支付宝帐号为：</span>
-						<span class="account-id">ibsuccess@163.com</span>
-						<span class="mobile-notice"><s></s><a href="#">短信通知</a></span>
-						<span class="email-notice"><s></s><a href="#">邮件通知</a></span>
-					</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="myhome">
+		<div class="global-header-area" id="global-header-area">
+			<div class="global-logo">
+				<a title="我的点点折" href="http://www.diandianzhe.com"></a>
+			</div>
+			<div class="global-toplink">
+				<span>kelaocai</span> <em class="global-separator">|</em> <a
+					href="#">退出</a> <em class="global-separator">|</em> <a
+					target="_blank" href="#">帮助中心</a> <em class="global-separator">|</em>
+				<a target="_blank" href="#">提建议</a>
+			</div>
+		</div>
+		<div class="user-info-box">
+			<div class="user-head">
+				<img width="66" height="66" alt="头像" src="img/default-face.png">
+			</div>
+			<div class="user-info">
+				<p class="font-strong">kelaocai</p>
+				<p class="font-strong">您好！</p>
+				<div>
+					<span class="tips">您当前绑定的支付宝帐号为：</span> <span class="account-id">ibsuccess@163.com</span>
+					<span class="mobile-notice"><s></s><a href="#">短信通知</a> </span> <span
+						class="email-notice"><s></s><a href="#">邮件通知</a> </span>
 				</div>
 			</div>
-			<div class="main-container">
-				<div class="menu">
-					<div class="menu-title font-strong">
-						<h4>我的应用</h4>
-					</div>
-					<div class="memu-list">
-						<ul>
-							<li>
-								<a> <div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span> <div class=" dd-clear"></div> </a>
-							</li>
-							<li>
-								<a> <div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span> <div class=" dd-clear"></div> </a>
-							</li>
-							<li>
-								<a> <div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span> <div class=" dd-clear"></div> </a>
-							</li>
-							<li>
-								<a> <div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span> <div class=" dd-clear"></div> </a>
-							</li>
-							<li>
-								<a> <div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span> <div class=" dd-clear"></div> </a>
-							</li>
-							<li>
-								<a> <div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span> <div class=" dd-clear"></div> </a>
-							</li>
-						</ul>
-					</div>
+		</div>
+		<div class="main-container">
+			<div class="menu">
+				<div class="menu-title font-strong">
+					<h4>我的应用</h4>
 				</div>
-				<div class="content">
-					<div class="my-user-info">
-						<p class="title">
-							<strong>我的会员资料</strong>
-						</p>
-						<div class="info-detail">
-							<dl class="ui-dlist">
-								<dt class="ui-dlist-tit">
-									用户名：
-								</dt>
-								<dd class="ui-dlist-det">
-									kelaocai
-								</dd>
-								<dt class="ui-dlist-tit">
-									手机号码：
-								</dt>
-								<dd class="ui-dlist-det">
-									<span id="mobileNum" title="13234561234">13234561234</span>
-									<span><a class="amargin" title="修改号码" href="#">修改号码</a></span>
-								</dd>
-								<dt class="ui-dlist-tit">
-									Email 邮箱：
-								</dt>
-								<dd class="ui-dlist-det">
-									<span title="ibsuccess@163.com">kelaocai@163.com</span>
-								</dd>
-								<dt class="ui-dlist-tit">
-									支付宝绑定账户：
-								</dt>
-								<dd class="ui-dlist-det">
-									kelaocai@163.com <a class="amargin" target="_blank" href="#">管理</a>
-								</dd>
-								<dt class="ui-dlist-tit">
-									注册时间：
-								</dt>
-								<dd class="ui-dlist-det">
-									<span class="inlineBlock">2010-09-07</span>
-								</dd>
-							</dl>
-						</div>
+				<div class="memu-list">
+					<ul>
+						<li><a>
+								<div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span>
+								<div class=" dd-clear"></div> </a>
+						</li>
+						<li><a>
+								<div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span>
+								<div class=" dd-clear"></div> </a>
+						</li>
+						<li><a>
+								<div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span>
+								<div class=" dd-clear"></div> </a>
+						</li>
+						<li><a>
+								<div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span>
+								<div class=" dd-clear"></div> </a>
+						</li>
+						<li><a>
+								<div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span>
+								<div class=" dd-clear"></div> </a>
+						</li>
+						<li><a>
+								<div class="dakuan-icon dd-left"></div> <span class="dd-left">我要付款</span>
+								<div class=" dd-clear"></div> </a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="content">
+				<div class="my-user-info">
+					<p class="title">
+						<strong>我的会员资料</strong>
+					</p>
+					<div class="info-detail">
+						<dl class="ui-dlist">
+							<dt class="ui-dlist-tit">用户名：</dt>
+							<dd class="ui-dlist-det">kelaocai</dd>
+							<dt class="ui-dlist-tit">手机号码：</dt>
+							<dd class="ui-dlist-det">
+								<span id="mobileNum" title="13234561234">13234561234</span> <span><a
+									class="amargin" title="修改号码" href="#">修改号码</a> </span>
+							</dd>
+							<dt class="ui-dlist-tit">Email 邮箱：</dt>
+							<dd class="ui-dlist-det">
+								<span title="ibsuccess@163.com">kelaocai@163.com</span>
+							</dd>
+							<dt class="ui-dlist-tit">支付宝绑定账户：</dt>
+							<dd class="ui-dlist-det">
+								kelaocai@163.com <a class="amargin" target="_blank" href="#">管理</a>
+							</dd>
+							<dt class="ui-dlist-tit">注册时间：</dt>
+							<dd class="ui-dlist-det">
+								<span class="inlineBlock">2010-09-07</span>
+							</dd>
+						</dl>
 					</div>
 				</div>
 			</div>
 		</div>
-	</body>
+	</div>
+</body>
 </html>

@@ -2,7 +2,7 @@ package com.doucome.corner.biz.core.enums;
 
 /**
  * ÍÆ¼öÀàĞÍ
- * @author shenjia.caosj 2012-5-21
+ * @author langben 2012-5-21
  *
  */
 public enum RecommendTypeEnums {

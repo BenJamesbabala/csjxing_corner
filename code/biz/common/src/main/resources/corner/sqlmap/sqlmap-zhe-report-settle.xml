@@ -3,36 +3,42 @@
 <sqlMap namespace="ddzReportSettle">
 	<typeAlias alias="TA-DDZ-ALIPAY_ITEM" type="com.doucome.corner.biz.dal.dataobject.AlipayItemDO" />
 	<typeAlias alias="TA-DDZ-SETTLE-REPORT" type="com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO" />
+	<typeAlias alias="TA-ddzTaokeReportSettleStatistics" type="com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleStatisticsDO"/>
 	
 	<resultMap id="RM-DDZ-ALIPAY_ITEM" class="TA-DDZ-ALIPAY_ITEM">
 		<result property="ids" column="IDS"/>
 		<result property="amount" column="SETTLE_FEE" jdbcType="DECIMAL" />
 		<result property="account" column="SETTLE_ALIPAY" jdbcType="VARCHAR" />
 	</resultMap>
-
+	
+	<resultMap id="RM-ddzTaokeReportSettleStatistics" class="TA-ddzTaokeReportSettleStatistics">
+		<result property="alipayCount" column="ALIPAY_COUNT"/>
+		<result property="jfbCount" column="JFB_COUNT" />
+	</resultMap>
+	
 	<resultMap class="TA-DDZ-SETTLE-REPORT" id="RM-DDZ-SETTLE-REPORT">
 		<result property="id" column="ID"/>
 		<result property="settleId" column="SETTLE_ID" jdbcType="VARCHAR"/>
 		<result property="settleAlipay" column="SETTLE_ALIPAY" jdbcType="VARCHAR"/>
 		<result property="settleFee" column="SETTLE_FEE" jdbcType="VARCHAR"/>
+		<result property="settleJfb" column="SETTLE_JFB" />
 		<result property="settleStatus" column="SETTLE_STATUS" jdbcType="VARCHAR"/>
 		<result property="settleBatchno" column="SETTLE_BATCHNO" jdbcType="VARCHAR"/>
 		<result property="alipayBatchno" column="ALIPAY_BATCHNO" jdbcType="VARCHAR"/>
 		<result property="alipayStatus" column="ALIPAY_STATUS" jdbcType="VARCHAR"/>
 		<result property="emailStatus" column="EMAIL_STATUS" jdbcType="VARCHAR"/>
 		<result property="mobileStatus" column="MOBILE_STATUS" jdbcType="VARCHAR"/>
+		<result property="memo" column="MEMO" jdbcType="VARCHAR"/>
+		<result property="outcodeType" column="OUTCODE_TYPE" jdbcType="VARCHAR"/>
 		<result property="gmtCreate" column="GMT_CREATE" jdbcType="VARCHAR"/>
 		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP"/>
 		<result property="gmtSettled" column="GMT_SETTLED" jdbcType="TIMESTAMP"/>
 	</resultMap>
 	
 	<insert id="insertSettleReport" parameterClass="TA-DDZ-SETTLE-REPORT">
-	    INSERT INTO DDZ_TAOKE_REPORT_SETTLE 
-	       (ID, SETTLE_ID, SETTLE_ALIPAY, SETTLE_FEE, SETTLE_STATUS, SETTLE_BATCHNO, ALIPAY_BATCHNO,
-	        ALIPAY_STATUS, GMT_MODIFIED, GMT_CREATE)
-	      VALUES
-	       (#id#, #settleId#, #settleAlipay#, #settleFee#, #settleStatus#, #settleBatchno#, #alipayBatchno#,
-	        #alipayStatus#, now(), now())
+	    INSERT INTO 
+	    	DDZ_TAOKE_REPORT_SETTLE(ID, SETTLE_ID, SETTLE_ALIPAY, SETTLE_FEE, SETTLE_JFB,SETTLE_STATUS, SETTLE_BATCHNO, ALIPAY_BATCHNO,OUTCODE_TYPE,ALIPAY_STATUS, GMT_MODIFIED, GMT_CREATE)
+	    VALUES(#id#, #settleId#, #settleAlipay#, #settleFee#, #settleJfb#,#settleStatus#, #settleBatchno#,#alipayBatchno#,#outcodeType#,#alipayStatus#, now(), now())
 	      <selectKey resultClass="java.lang.Long" keyProperty="id">
     		<![CDATA[
 				SELECT LAST_INSERT_ID() AS ID
@@ -46,10 +52,17 @@
 	
 	<select id="getAlipayItemWithPagination" resultMap="RM-DDZ-ALIPAY_ITEM">
 		SELECT IDS,SETTLE_ALIPAY,SETTLE_FEE
-          FROM (SELECT GROUP_CONCAT(ID) IDS,SETTLE_ALIPAY,IFNULL(SUM(SETTLE_FEE),0) SETTLE_FEE
-                  FROM DDZ_TAOKE_REPORT_SETTLE
-                  WHERE SETTLE_STATUS='U' AND SETTLE_ALIPAY IS NOT NULL
-                  GROUP BY SETTLE_ALIPAY) A
+          FROM (
+          			SELECT 
+          				GROUP_CONCAT(ID) IDS,SETTLE_ALIPAY,IFNULL(SUM(SETTLE_FEE),0) SETTLE_FEE
+                  	FROM 
+                		DDZ_TAOKE_REPORT_SETTLE
+                  	WHERE 
+		                SETTLE_STATUS='U' AND 
+		                SETTLE_ALIPAY IS NOT NULL AND
+		                OUTCODE_TYPE = 'B'
+                	GROUP BY 
+                		SETTLE_ALIPAY) A
 		  <![CDATA[
 			ORDER BY SETTLE_ALIPAY LIMIT #start# , #size#
 	      ]]>
@@ -57,36 +70,69 @@
 	
 	<select id="countAlipayItem" resultClass="java.lang.Integer">
 		SELECT COUNT(*)
-          FROM (SELECT GROUP_CONCAT(ID) IDS,SETTLE_ALIPAY,SUM(SETTLE_FEE) SETTLE_FEE
-                  FROM DDZ_TAOKE_REPORT_SETTLE
-                  WHERE SETTLE_STATUS='U' AND SETTLE_ALIPAY IS NOT NULL
-                    AND SETTLE_FEE IS NOT NULL
+          FROM (
+          			SELECT 
+          				GROUP_CONCAT(ID) IDS,SETTLE_ALIPAY,SUM(SETTLE_FEE) SETTLE_FEE
+                  	FROM 
+                  		DDZ_TAOKE_REPORT_SETTLE
+                  	WHERE 
+                  		SETTLE_STATUS='U' 
+                  	AND 
+                  		SETTLE_ALIPAY IS NOT NULL
+                    AND 
+                    	SETTLE_FEE IS NOT NULL
+                    AND
+                    	OUTCODE_TYPE = 'B'
                   GROUP BY SETTLE_ALIPAY) A
 	</select>
 	
-	<update id="updateSettleStatus" parameterClass="TA-DDZ-SETTLE-REPORT">
-        UPDATE DDZ_TAOKE_REPORT_SETTLE 
-          SET SETTLE_STATUS = #settleStatus#, 
-          <isNotEmpty property="settleBatchno" prepend="">
-              SETTLE_BATCHNO = #settleBatchno#,
-          </isNotEmpty>
-          GMT_MODIFIED=NOW(),
-          GMT_SETTLED=NOW()
-        WHERE SETTLE_STATUS != 'S' AND ID = #id#
+	<update id="updateSettleStatus" >
+        UPDATE 
+        	DDZ_TAOKE_REPORT_SETTLE 
+        SET 
+        	SETTLE_STATUS = #settleStatus#, 
+			<isNotEmpty property="settleBatchno" prepend="">
+			    SETTLE_BATCHNO = #settleBatchno#,
+			</isNotEmpty>
+          	GMT_MODIFIED = now(),
+          	GMT_SETTLED = now()
+        WHERE 
+        	SETTLE_STATUS != 'S' 
+        <dynamic>
+        	<isPropertyAvailable property="equalSettleStatus">
+        		<isNotEmpty property="equalSettleStatus" prepend="AND">
+		        	SETTLE_STATUS = #equalSettleStatus#
+		        </isNotEmpty>
+        	</isPropertyAvailable>
+	        <isNotEmpty property="settleAlipay" prepend="AND">
+	        	SETTLE_ALIPAY = #settleAlipay#
+	        </isNotEmpty>
+        </dynamic>
+        AND 
+        	ID = #id#
     </update>
 	
-	<update id="updateSettleStatus_by_ids" parameterClass="java.util.Map">
-		UPDATE DDZ_TAOKE_REPORT_SETTLE 
-		  SET SETTLE_STATUS = #settleStatus#, 
-		  <isNotEmpty property="settleBatchno" prepend="">
-		  	  SETTLE_BATCHNO = #settleBatchno#,
-		  </isNotEmpty>
-		  GMT_MODIFIED=NOW(),
-		  GMT_SETTLED=NOW()
-		WHERE ID in 
-		<iterate prepend="" property="settleIds" open="("  close=")"  conjunction=",">
-		      #settleIds[]#
-		</iterate>
+	<update id="updateSettleStatus_by_ids">
+		UPDATE 
+			DDZ_TAOKE_REPORT_SETTLE 
+		SET 
+			SETTLE_STATUS = #settleStatus#, 
+			<isNotEmpty property="settleBatchno" prepend="">
+				  SETTLE_BATCHNO = #settleBatchno#,
+			</isNotEmpty>
+		  	GMT_MODIFIED = now(),
+		  	GMT_SETTLED = now()
+		WHERE 
+			ID in 
+			<iterate prepend="" property="settleIds" open="("  close=")"  conjunction=",">
+			      #settleIds[]#
+			</iterate>
+			<isNotEmpty property="equalSettleStatus" prepend="AND">
+	        	SETTLE_STATUS = #equalSettleStatus#
+	        </isNotEmpty>
+	        <isNotEmpty property="settleAlipay" prepend="AND">
+	        	SETTLE_ALIPAY = #settleAlipay#
+	        </isNotEmpty>
 	</update>
 	
 	<update id="updateEmailStatus" parameterClass="java.util.Map">
@@ -138,12 +184,97 @@
 		</dynamic>
 	</update>
 	
+	<update id="updateMemoById">
+		UPDATE 
+			DDZ_TAOKE_REPORT_SETTLE 
+		SET 
+			MEMO = #memo# ,
+		  	GMT_MODIFIED = now()
+		WHERE 
+			ID = #id#
+	</update>
+	
 	<select id="selectSettlesById" resultMap="RM-DDZ-SETTLE-REPORT">
 		SELECT 
-			ID, SETTLE_ID, SETTLE_ALIPAY, SETTLE_FEE, SETTLE_STATUS, EMAIL_STATUS,MOBILE_STATUS, SETTLE_BATCHNO, ALIPAY_BATCHNO,ALIPAY_STATUS, GMT_MODIFIED, GMT_CREATE ,GMT_SETTLED
+			ID, SETTLE_ID, SETTLE_ALIPAY, SETTLE_FEE, SETTLE_JFB,SETTLE_STATUS, EMAIL_STATUS,MOBILE_STATUS, SETTLE_BATCHNO, ALIPAY_BATCHNO,ALIPAY_STATUS,MEMO,OUTCODE_TYPE, GMT_MODIFIED, GMT_CREATE ,GMT_SETTLED
 		FROM 
 			DDZ_TAOKE_REPORT_SETTLE
 		where ID = #id#
+	</select>
+	
+	<select id="statisticsWithPagination" resultMap="RM-ddzTaokeReportSettleStatistics">
+		SELECT 
+			COUNT(ID) AS ALIPAY_COUNT , SUM(SETTLE_JFB) AS JFB_COUNT 
+		FROM 
+			DDZ_TAOKE_REPORT_SETTLE 
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="gmtCreateStart" prepend="AND">
+					<![CDATA[
+					GMT_CREATE >= #gmtCreateStart#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateEnd" prepend="AND">
+					<![CDATA[
+					GMT_CREATE <= #gmtCreateEnd#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtSettledStart" prepend="AND">
+					<![CDATA[
+					GMT_SETTLED >= #gmtSettledStart#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtSettledEnd" prepend="AND">
+					<![CDATA[
+					GMT_SETTLED <= #gmtSettledEnd#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="settleBatchno" prepend="AND">
+					<![CDATA[
+					SETTLE_BATCHNO = #settleBatchno#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="settleStatus" prepend="AND">
+					<![CDATA[
+					SETTLE_STATUS = #settleStatus#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="emailStatus" prepend="AND">
+					<![CDATA[
+					EMAIL_STATUS = #emailStatus#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="settleAlipay" prepend="AND">
+					<![CDATA[
+					SETTLE_ALIPAY = #settleAlipay#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="settleUid" prepend="AND">
+					<![CDATA[
+					SETTLE_UID = #settleUid#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="outcodeType" prepend="AND">
+					<![CDATA[
+				    OUTCODE_TYPE = #outcodeType#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="outcodeTypeList" prepend="AND">
+					OUTCODE_TYPE in 
+					<iterate property="outcodeTypeList" open="("  close=")"  conjunction=",">
+					<![CDATA[
+						#outcodeTypeList[]#
+					]]>
+					</iterate>
+				</isNotEmpty>
+				<isNotEmpty property="settleInDays" prepend="AND">
+					<![CDATA[
+					TO_DAYS(NOW()) - TO_DAYS(gmt_settled) < #settleInDays#
+					]]>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+	
 	</select>
 	
 	<select id="countSettlesWithPagination" resultClass="java.lang.Integer">
@@ -198,6 +329,19 @@
 					SETTLE_UID = #settleUid#
 					]]>
 				</isNotEmpty>
+				<isNotEmpty property="outcodeType" prepend="AND">
+					<![CDATA[
+				    OUTCODE_TYPE = #outcodeType#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="outcodeTypeList" prepend="AND">
+					OUTCODE_TYPE in 
+					<iterate property="outcodeTypeList" open="("  close=")"  conjunction=",">
+					<![CDATA[
+						#outcodeTypeList[]#
+					]]>
+					</iterate>
+				</isNotEmpty>
 				<isNotEmpty property="settleInDays" prepend="AND">
 					<![CDATA[
 					TO_DAYS(NOW()) - TO_DAYS(gmt_settled) < #settleInDays#
@@ -210,7 +354,7 @@
 		
 	<select id="selectSettlesWithPagination" resultMap="RM-DDZ-SETTLE-REPORT">
 		SELECT 
-			ID, SETTLE_ID, SETTLE_ALIPAY, SETTLE_FEE, SETTLE_STATUS, EMAIL_STATUS,MOBILE_STATUS, SETTLE_BATCHNO, ALIPAY_BATCHNO,ALIPAY_STATUS, GMT_MODIFIED, GMT_CREATE ,GMT_SETTLED
+			ID, SETTLE_ID, SETTLE_ALIPAY, SETTLE_FEE,SETTLE_JFB, SETTLE_STATUS, EMAIL_STATUS,MOBILE_STATUS, SETTLE_BATCHNO, ALIPAY_BATCHNO,ALIPAY_STATUS, MEMO,OUTCODE_TYPE,GMT_MODIFIED, GMT_CREATE ,GMT_SETTLED
 		FROM 
 			DDZ_TAOKE_REPORT_SETTLE
 		<dynamic>
@@ -259,6 +403,19 @@
 					<![CDATA[
 					SETTLE_UID = #settleUid#
 					]]>
+				</isNotEmpty>
+				<isNotEmpty property="outcodeType" prepend="AND">
+					<![CDATA[
+				    OUTCODE_TYPE = #outcodeType#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="outcodeTypeList" prepend="AND">
+					OUTCODE_TYPE in 
+					<iterate property="outcodeTypeList" open="("  close=")"  conjunction=",">
+					<![CDATA[
+						#outcodeTypeList[]#
+					]]>
+					</iterate>
 				</isNotEmpty>
 				<isNotEmpty property="settleInDays" prepend="AND">
 					<![CDATA[

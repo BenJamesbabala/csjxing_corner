@@ -68,7 +68,33 @@ public class IBatisDdzAccountDAO extends SqlMapClientDaoSupport implements DdzAc
 		condition.put("gmtCreateStart", searchCondition.getGmtCreateStart()) ;
 		condition.put("gmtCreateEnd", searchCondition.getGmtCreateEnd()) ;
 		condition.put("alipayId", searchCondition.getAlipayId()) ;
-		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("ZHE_ACCOUNT.countAccountsWithPagination" , condition)) ;
+		return NumberUtils.parseInt((Integer)getSqlMapClientTemplate().queryForObject("ZHE_ACCOUNT.countAccountsWithPagination" , condition)) ;
+	}
+
+	@Override
+	public int incrRefundCountByAlipayId(String alipayId, int count) {
+		Map<String,Object> condition = new HashMap<String,Object>() ;
+		condition.put("alipayId", alipayId) ;
+		condition.put("count", count) ;
+		return NumberUtils.parseInt((Integer)getSqlMapClientTemplate().update("ZHE_ACCOUNT.incrRefundCountByAlipayId" , condition)) ;
+	}
+
+	@Override
+	public int decrNotifyCountByAlipayId(String alipayId, int count) {
+		Map<String,Object> condition = new HashMap<String,Object>() ;
+		condition.put("alipayId", alipayId) ;
+		condition.put("count", count) ;
+		return NumberUtils.parseInt((Integer)getSqlMapClientTemplate().update("ZHE_ACCOUNT.decrNotifyCountByAlipayId" , condition)) ;
+	}
+
+	@Override
+	public int updateLastLoginByAlipayId(String alipayId) {
+		return getSqlMapClientTemplate().update("ZHE_ACCOUNT.updateLastLoginByAlipayId" , alipayId);
+	}
+
+	@Override
+	public int updateLastVisitByAlipayId(String alipayId) {
+		return getSqlMapClientTemplate().update("ZHE_ACCOUNT.updateLastVisitByAlipayId" , alipayId) ;
 	}
 
 }

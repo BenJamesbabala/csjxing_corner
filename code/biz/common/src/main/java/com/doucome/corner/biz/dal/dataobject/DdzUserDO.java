@@ -9,7 +9,7 @@ public class DdzUserDO extends AbstractModel {
     /**
      * PK
      */
-    private int    id;
+    private int id;
 
     /**
      * UserId
@@ -32,9 +32,9 @@ public class DdzUserDO extends AbstractModel {
     private String email;
 
     /**
-     * taobaoµÇÂ½ÕËºÅ
+     * Ö§¸¶±¦µÇÂ½·ÖÅäµÄµÇÂ½ÕËºÅ
      */
-    private String taobaoId;
+    private String nativeAlipayId;
 
     /**
      * ÐÔ±ð
@@ -50,6 +50,16 @@ public class DdzUserDO extends AbstractModel {
 	 * 
 	 */
     private String userActive;
+    
+    /**
+     * Ö§¸¶±¦ÐÞ¸Ä´ÎÊý
+     */
+    private Integer modificationCount ;
+    
+    /**
+     * Ö§¸¶±¦
+     */
+    private String alipayId ;
 
     private Date   gmtCreate;
 
@@ -113,14 +123,6 @@ public class DdzUserDO extends AbstractModel {
         this.email = email;
     }
 
-    public String getTaobaoId() {
-        return taobaoId;
-    }
-
-    public void setTaobaoId(String taobaoId) {
-        this.taobaoId = taobaoId;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -152,5 +154,29 @@ public class DdzUserDO extends AbstractModel {
     public void setGmtLastLogin(Date gmtLastLogin) {
         this.gmtLastLogin = gmtLastLogin;
     }
+
+	public String getNativeAlipayId() {
+		return nativeAlipayId;
+	}
+
+	public void setNativeAlipayId(String nativeAlipayId) {
+		this.nativeAlipayId = nativeAlipayId;
+	}
+
+	public Integer getModificationCount() {
+		return modificationCount;
+	}
+
+	public void setModificationCount(Integer modificationCount) {
+		this.modificationCount = modificationCount;
+	}
+
+	public String getAlipayId() {
+		return alipayId;
+	}
+
+	public void setAlipayId(String alipayId) {
+		this.alipayId = alipayId;
+	}
 
 }

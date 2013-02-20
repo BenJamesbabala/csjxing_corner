@@ -1,0 +1,122 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "集分宝结算记录")
+
+<style>
+	
+</style>
+
+#set($pagination = $queryResult.pagination)
+
+
+##分页
+#set($searchUrl = ${env.bopsRoot}+"/bops/zhe/jfb_settle_record_list.htm?")
+#set($searchQuery = ["settleBatchno:$!settleBatchno","tradeNo:$!tradeNo"])
+
+<input type="hidden"  id="bopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="bopsPage" value="jfbSettleRecordList"/>
+
+<div class="bops">
+	<form action="${env.bopsRoot}/bops/zhe/jfb_settle_record_list.htm" method="get">
+    	<div class="settleIpt">
+			结算批号：<input type="text" name="settleBatchno" value="$!settleBatchno"/> &nbsp;
+			交易号：<input type="text" name="tradeNo" value="$!tradeNo"/>
+			<input type="submit" value="查询" />
+    	</div>
+    </form>
+		
+	#if($queryResult.totalRecords > 0)
+	
+    	#parse("/common/bops/zhe/jfbSettleRecordPagination.vm")
+		
+        <table width="1080" style="font-size:14px;" id="tb-jfbSettleRecord">
+        	<tr>
+        		<th width="30">序号</th>
+				<th width="80">结算批次号</th>
+				<th width="50">计划支付宝</th>
+				<th width="50">成功支付宝</th>
+                <th width="50">计划集分宝</th>
+				<th width="50">成功集分宝</th>
+				<th width="60">交易编号</th>
+				<th width="40">结算</th>
+				<th width="100">创建时间</th>
+				<th width="200">操作</th>
+        	</tr>
+        	
+            #foreach($item in $queryResult.items)
+        		#set($idx = (($page-1)*$size) + $velocityCount )
+				  		
+        		<tr data-trIndex="$velocityCount" class="settleTableTr">
+            		<td align="center">$idx</td>
+					<td align="center">$!item.settleBatchno</td>
+					#if(!$item.successAlipayCount)
+						#set($settle_alipay_style = "dc-blue")
+					#elseif($item.successAlipayCount == $item.planAlipayCount)
+						#set($settle_alipay_style = "dc-green")
+					#else
+						#set($settle_alipay_style = "dc-red")
+					#end
+                    <td align="center"><span class="$settle_alipay_style B">$!item.planAlipayCount</span></td>
+					<td align="center"><span class="$settle_alipay_style B">$!item.successAlipayCount</span></td>
+					#if(!$item.successJfbCount)
+						#set($settle_jfb_style = "dc-blue")
+					#elseif($item.successJfbCount == $item.planJfbCount)
+						#set($settle_jfb_style = "dc-green")
+					#else
+						#set($settle_jfb_style = "dc-red")
+					#end
+					<td align="center"><span class="$settle_jfb_style B">$!item.planJfbCount</span></td>
+					<td align="center"><span class="$settle_jfb_style B">$!item.successJfbCount</span></td>
+					<td align="center">$!item.tradeNo</td>
+					<td align="center">#if($item.isSettled == "T") <span class="dc-green">是</span> #else <span class="dc-blue">否</span>  #end</td>
+					<td align="center">$dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+                    <td>
+						<a href="${env.bopsRoot}/bops/zhe/taoke_report_settle.htm?settleBatchno=$!item.settleBatchno" target="_blank">详情</a>
+						<span class="dc-seperator">|</span>
+                        <a href="${env.bopsRoot}/bops/zhe/re_export_jfb_settle_csv.htm?id=$!item.id" target="_blank">导出计划</a>
+						#if($item.isSettled != 'T')
+						<span class="dc-seperator">|</span>
+						<a href="javascript:;" class="display-upload-jfb-settle-click">上传成功名单</a>
+						<div style="position:relative;">
+    						<div class="jfb-settle-csv-upload dd-hide">
+								<a class="W_close_color layer_tips_close" href="javascript:;"></a>
+                                <div class="item-line">结算批次号： <span class="B"> $!item.settleBatchno</span></div>
+    							<form enctype= "multipart/form-data" method="post" target="_blank" action="${env.bopsRoot}/bops/zhe/jfb_upload_success_list.htm">
+    								<input type="hidden" name="id" value="$!item.id" />
+                                    <div class="item-line"><span class="trade-no">交易号：<input type="text" name="tradeNo" placeholder="请填写支付宝交易号" /></span></div>
+                                    <div class="upload-file item-line">
+    									<span>成功清单（CSV）：</span><span> <input type="file" class="file" name="successFile" ></span>
+    								</div>
+    								<div class="all-success item-line">[全部成功（无需上传发放清单）<input type="checkbox" name="allSuccessful" class="all-successful-click"/>]</div>
+									<div class="item-line"><input type="submit" value="确定"/></div>
+    							</form>
+                        	</div>
+						</div>
+						
+						#end
+                        
+					</td>
+            	</tr>
+				
+        	#end
+           
+        </table>
+        
+        #parse("/common/bops/zhe/jfbSettleRecordPagination.vm")
+	#else
+		没有查询到记录
+	#end
+</div>
+
+<div class="layer_tips layer_tips_version layer_tips_intro alipay_detail_tips dd-hide" id="outCode_detail_tips" >
+	
+	<div class="layer_tips_bg">
+		<a class="W_close_color layer_tips_close" href="javascript:;" data-id="alipay_detail_tips"></a>
+		<span class="arrow_left" node-type="arrow" style=""></span>
+	</div>
+</div>
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

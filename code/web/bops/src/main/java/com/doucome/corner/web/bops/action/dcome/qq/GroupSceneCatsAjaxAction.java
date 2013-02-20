@@ -14,7 +14,7 @@ import com.doucome.corner.web.bops.model.JsonModel;
 
 /**
  * 统计一个场景
- * @author shenjia.caosj 2012-7-28
+ * @author langben 2012-7-28
  *
  */
 @SuppressWarnings("serial")

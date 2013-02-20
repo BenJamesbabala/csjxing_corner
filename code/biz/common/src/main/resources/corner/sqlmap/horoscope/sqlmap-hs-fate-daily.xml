@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="HsDailyFate">
+    <typeAlias alias="TA-Daily-Fate" type="com.doucome.corner.biz.dal.horoscope.dataobject.HsDailyFateDO" />
+
+	<resultMap id="RM-Daily-Fate" class="TA-Daily-Fate">
+		<result property="id" column="ID" />
+		<result property="hsId" column="HS_ID"/>
+		<result property="summary" column="SUMMARY"  />
+		<result property="compositeIndex" column="COMPOSITE_INDEX" />
+		<result property="loveIndex" column="LOVE_INDEX" />
+		<result property="workIndex" column="WORK_INDEX" />
+		<result property="wealthIndex" column="WEALTH_INDEX" />
+		<result property="healthIndex" column="HEALTH_INDEX" />
+		<result property="luckyColor" column="LUCKY_COLOR" />
+		<result property="luckyNumber" column="LUCKY_NUMBER" />
+		<result property="matchHs" column="MATCH_HS" />
+		<result property="turnToLucky" column="TURN_TO_LUCKY" />
+		<result property="gmtDay" column="GMT_DAY" jdbcType="TIMESTAMP"/>
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertHsDailyFate" parameterClass="TA-Daily-Fate">
+		INSERT INTO HS_FATE_DAILY
+			(ID,HS_ID,SUMMARY,COMPOSITE_INDEX,LOVE_INDEX,WORK_INDEX,WEALTH_INDEX,HEALTH_INDEX,LUCKY_COLOR,
+			 LUCKY_NUMBER,MATCH_HS,TURN_TO_LUCKY,GMT_DAY,GMT_MODIFIED,GMT_CREATE)
+		VALUES
+			(#id#,#hsId#,#summary#,#compositeIndex#,#loveIndex#,#workIndex#,#wealthIndex#,#healthIndex#,#luckyColor#,
+			 #luckyNumber#,#matchHs#,#turnToLucky#,#gmtDay#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryHsDailyFate" resultMap="RM-Daily-Fate">
+		SELECT ID,HS_ID,SUMMARY,COMPOSITE_INDEX,LOVE_INDEX,WORK_INDEX,WEALTH_INDEX,HEALTH_INDEX,LUCKY_COLOR,
+			 LUCKY_NUMBER,MATCH_HS,TURN_TO_LUCKY,GMT_DAY,GMT_MODIFIED,GMT_CREATE
+		  FROM HS_FATE_DAILY
+		  WHERE ID = #id#
+		LIMIT 1
+	</select>
+	
+	<select id="queryHsDailyFateByDate" resultMap="RM-Daily-Fate">
+		SELECT ID,HS_ID,SUMMARY,COMPOSITE_INDEX,LOVE_INDEX,WORK_INDEX,WEALTH_INDEX,HEALTH_INDEX,LUCKY_COLOR,
+			 LUCKY_NUMBER,MATCH_HS,TURN_TO_LUCKY,GMT_DAY,GMT_MODIFIED,GMT_CREATE
+		  FROM HS_FATE_DAILY
+		  WHERE HS_ID=#hsId# AND GMT_DAY <![CDATA[>=]]> #dayStart# AND GMT_DAY <![CDATA[<]]> #dayEnd#
+		LIMIT 1
+	</select>
+	
+	<select id="queryHsDailyFates" resultMap="RM-Daily-Fate">
+		SELECT ID,HS_ID,SUMMARY,COMPOSITE_INDEX,LOVE_INDEX,WORK_INDEX,WEALTH_INDEX,HEALTH_INDEX,LUCKY_COLOR,
+			 LUCKY_NUMBER,MATCH_HS,TURN_TO_LUCKY,GMT_DAY,GMT_MODIFIED,GMT_CREATE
+		  FROM HS_FATE_DAILY
+		  <dynamic>
+              <isParameterPresent open="WHERE" removeFirstPrepend="true">
+                  <isNotNull property="hsId" prepend="AND">
+                      HS_ID=#hsId#
+                  </isNotNull>
+                  <isNotNull property="dayStart" prepend="AND">
+                      GMT_DAY <![CDATA[>=]]> #dayStart#
+                  </isNotNull>
+                  <isNotNull property="dayEnd" prepend="AND">
+                      GMT_DAY <![CDATA[<]]> #dayEnd#
+                  </isNotNull>
+              </isParameterPresent>
+          </dynamic>
+        ORDER BY GMT_DAY DESC
+		LIMIT #start#, #size#
+	</select>
+	
+	<select id="countHsDailyFates" resultClass="java.lang.Integer">
+		SELECT COUNT(ID)
+		  FROM HS_FATE_DAILY
+		  <dynamic>
+              <isParameterPresent open="WHERE" removeFirstPrepend="true">
+                  <isNotNull property="hsId" prepend="AND">
+                      HS_ID=#hsId#
+                  </isNotNull>
+                  <isNotNull property="dayStart" prepend="AND">
+                      GMT_DAY <![CDATA[>=]]> #dayStart#
+                  </isNotNull>
+                  <isNotNull property="dayEnd" prepend="AND">
+                      GMT_DAY <![CDATA[<]]> #dayEnd#
+                  </isNotNull>
+              </isParameterPresent>
+          </dynamic>
+	</select>
+	
+	<update id="updateHsDailyFate">
+	    UPDATE HS_FATE_DAILY
+	      SET GMT_DAY = #gmtDay#, SUMMARY = #summary#, COMPOSITE_INDEX = #compositeIndex#,
+	          LOVE_INDEX = #loveIndex#, WORK_INDEX = #workIndex#, WEALTH_INDEX = #wealthIndex#,
+              HEALTH_INDEX = #healthIndex#, LUCKY_COLOR = #luckyColor#, LUCKY_NUMBER = #luckyNumber#,
+              TURN_TO_LUCKY = #turnToLucky#, GMT_MODIFIED = now()
+	      WHERE ID= #id#
+	</update>
+</sqlMap>

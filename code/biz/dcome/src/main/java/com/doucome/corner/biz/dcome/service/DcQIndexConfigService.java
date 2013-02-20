@@ -8,7 +8,7 @@ import com.doucome.corner.biz.dcome.model.DcQIndexConfigDTO;
 
 /**
  * QQ ◊“≥≈‰÷√
- * @author shenjia.caosj 2012-7-26
+ * @author langben 2012-7-26
  *
  */
 public interface DcQIndexConfigService {

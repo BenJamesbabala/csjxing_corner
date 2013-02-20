@@ -2,16 +2,17 @@ package com.doucome.corner.biz.core.taobao.dto;
 
 import java.math.BigDecimal;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
-import com.doucome.corner.biz.core.utils.ReflectUtils;
+import com.doucome.corner.biz.common.utils.ReflectUtils;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 import com.taobao.api.domain.TaobaokeItem;
 
 /**
  * ÌÔ±¦¿ÍItem Data Transfer DO
  * 
- * @author shenjia.caosj 2012-2-24
+ * @author langben 2012-2-24
  * 
  */
+@SuppressWarnings("serial")
 public class TaobaokeItemDTO extends AbstractModel {
 	
 	public TaobaokeItemDTO(TaobaokeItem item){

@@ -1,10 +1,10 @@
 package com.doucome.corner.web.zhe.model;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * 淘宝登陆后返回的top参数
- * @author shenjia.caosj 2012-3-30
+ * @author langben 2012-3-30
  *
  */
 public class TopCallbackParameter extends AbstractModel {

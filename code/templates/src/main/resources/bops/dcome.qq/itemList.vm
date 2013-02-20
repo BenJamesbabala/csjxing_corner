@@ -5,97 +5,314 @@
 <input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
 <input type="hidden"  id="ddzBopsPage" value="dcItemList"/>
 
+<style>
+	th a {
+		text-decoration:none;
+		color:#000 ;
+	}
+	
+	.item-id-search {
+		width:100px;
+	}
+	
+	.onoff-sale-area {
+		width:1000px;
+		clear:both;
+		font-size:12px;
+	}
+	
+	.settle-memo-dialog {
+		text-align: center;
+		width: 120px;
+		height:25px;
+		line-height:25px;
+		position:relative;
+	}
+</style>
+
+#set($gmtModifiedStartFormat = $dateUtils.format($!gmtModifiedStart,'yyyy-MM-dd'))
+#set($gmtModifiedEndFormat = $dateUtils.format($!gmtModifiedEnd,'yyyy-MM-dd'))
+#set($gmtCreateStartFormat = $dateUtils.format($!gmtCreateStart,'yyyy-MM-dd'))
+#set($gmtCreateEndFormat = $dateUtils.format($!gmtCreateEnd,'yyyy-MM-dd'))
 
 #set($pagination = $itemQuery.pagination)
 
 #set($searchUrl = ${env.bopsRoot}+"/bops/dcome/qq/item_list.htm?")
 #set($searchQuery = ["categoryId:$!categoryId","keywords:$!keywords","itemStatus:$!itemStatus",
-	"gmtCreateStart:$!gmtCreateStartFormat","gmtCreateEnd:$!gmtCreateEndFormat","itemId:$!itemId"])
+	"gmtCreateStart:$!gmtCreateStartFormat","gmtCreateEnd:$!gmtCreateEndFormat",
+	"gmtModifiedStart:$!gmtModifiedStartFormat","gmtModifiedEnd:$!gmtModifiedEndFormat",
+	"genWay:$!genWay","itemId:$!itemId","nativeId:$!nativeId","order:$!order"])
 
 <div class="bops">
     <div style="MT20 MB20">&nbsp;</div>
 		
 	<form action="${env.bopsRoot}/bops/dcome/qq/item_list.htm" method="GET">
-		<div class="MB10 MT10">
-			商品ID： <input  type="text" name="itemId" value="$!condition.itemId" />
-			关键字：<input  type="text" name="keywords" value="$!condition.keywords" />
+		<div class="settleipt MB10 MT10">
+			商品ID： <input  type="text" class="item-id-search" name="itemId" value="$!itemId" /> &nbsp;
+			淘宝ID： <input  type="text" class="item-id-search" name="nativeId" value="$!nativeId" /> &nbsp;
+			关键字：<input  type="text" name="keywords" value="$!keywords" />
 			&nbsp;&nbsp;
-			商品类目：<select name="categoryId" data-selCatId="$!condition.categoryId"  data-init-dcCategorySelect="select" include-all="true"></select>
-			&nbsp;&nbsp;
+			
 			商品状态：
 			<select name="itemStatus">
 	            <option value="">全部</option>
-				<option value="N" #if($!condition.itemStatus == "N") selected #end>销售中</option>
-				<option value="D" #if($!condition.itemStatus == "D") selected #end>已下架</option>
+				<option value="N" #if($!itemStatus == "N") selected #end>销售中</option>
+				<option value="D" #if($!itemStatus == "D") selected #end>已下架</option>
 	        </select>
 			&nbsp;&nbsp;
 			
-			<input type="submit" value="查询" />
+			<input type="submit" value="查询" />[<a href="javascript:;"id="settleIptMoreBtn" style="font-size:12px;">更多查询条件</a>]
+			
+			<div id="settleIptMore" class="settleIptMore #if(!$gmtModifiedStart && !$gmtModifiedStart && !$gmtCreateStart && !$gmtCreateEnd && !$categoryId && !$genWay) dd-hide #end">
+				<span>
+				记录创建时间： 
+					<input type="text" id="gmtCreateStart" name="gmtCreateStart" class="dateIpt" value="$!gmtCreateStartFormat"/> - 
+					<input type="text" id="gmtCreateEnd" name="gmtCreateEnd"class="dateIpt" value="$!gmtCreateEndFormat"/>
+                </span>
+                <span style="margin-left:10px;">
+				记录修改时间： 
+					<input type="text" id="gmtModifiedStart" name="gmtModifiedStart" class="dateIpt" value="$!gmtModifiedStartFormat"/> - 
+					<input type="text" id="gmtModifiedEnd" name="gmtModifiedEnd" class="dateIpt" value="$!gmtModifiedEndFormat"/>
+				</span>
+				&nbsp;&nbsp;
+				商品类目：<select name="categoryId" data-selCatId="$!categoryId"  data-init-dcCategorySelect="select" include-all="true"></select>
+				&nbsp;&nbsp;
+				UGC ：
+				<select name="genWay">
+    	            <option value="">全部</option>
+    				<option value="P" #if($!genWay == "P") selected #end>小编生成</option>
+					<option value="U" #if($!genWay == "U") selected #end>用户产生</option>
+    	        </select>
+				
+			</div>
 		</div>
 	</form>
 	
 	<div class="MB20 MT20"><a href="${env.bopsRoot}/bops/dcome/qq/item_operate.htm" target="_blank">新增商品</a></div>
+	
 		
 	#parse("/common/bops/dcome.qq/itemPagination.vm")
 	
-	 <table width="960" style="font-size:14px;" id="itemTable">
+	
+	
+     <div class="onoff-sale-area">
+		
+		<div class="R MT5 MB5"><a href="javascript:;" class="batch-onoff-sale-click dc-blue">批量上下架</a></div>
+		<div class="R MT5 MB10 batch-onoff-sale-display dd-hide">
+    		<div id="add-settle-memo-dialog" class="settle-memo-dialog" >
+        		<a href="javascript:;" class="dc-blue batch-onoff-sale-operate-click" data-to-status="N" >上架</a>
+            	<a href="javascript:;" class="dc-blue batch-onoff-sale-operate-click" data-to-status="D" >下架</a>
+    			<span class="dc-gray">|&nbsp;</span>
+				<a href="javascript:;" class="dc-blue batch-onoff-sale-cancel" >取消</a>
+            	<div class="angle-down" style="top:25px;left:100px;"></div>
+            </div>
+		</div>
+	 </div>
+	 <table width="1100" style="font-size:14px;" id="itemTable">
 		<tr>
-    		<th width="30">序号</th>
-			<th width="40">商品ID</th>
-			<th width="180">名称</th>
-			<th width="30">类目ID</th>
-			<th width="30">喜欢</th>
-			<th width="40">评论</th>
-			<th width="100">描述</th>
-			<th width="40">状态</th>
-			<th width="80">创建时间</th>
-			<th width="30">操作</th>
+    		<th width="25">序号</th>
+			<th width="25">ID</th>
+			<th width="25">TBID</th>
+    		<th width="45">图片</th>
+			<th width="80">名称</th>
+			<th width="40">
+				#if($order == "item_price--desc")
+        			#set($sortStyle = "dbsort_desc")
+        		#elseif($order == "item_price--asc")
+        			#set($sortStyle = "dbsort_asc")
+        		#else
+        			#set($sortStyle = "dbsort_none")
+        		#end
+				<a href="#if($order == 'item_price--desc') #SEARCH_URL(['order:item_price--asc']) #else #SEARCH_URL(['order:item_price--desc']) #end ">原价<span class="$sortStyle sortBtn"></span></a>
+			</th>
+			<th width="70">
+				#if($order == "item_prom_price--desc")
+        			#set($sortStyle = "dbsort_desc")
+        		#elseif($order == "item_prom_price--asc")
+        			#set($sortStyle = "dbsort_asc")
+        		#else
+        			#set($sortStyle = "dbsort_none")
+        		#end
+				<a href="#if($order == 'item_prom_price--desc') #SEARCH_URL(['order:item_prom_price--asc']) #else #SEARCH_URL(['order:item_prom_price--desc']) #end ">特价<span class="$sortStyle sortBtn"></span></a>
+			</th>
+			<th width="40">
+				#if($order == "commission_rate--desc")
+        			#set($sortStyle = "dbsort_desc")
+        		#elseif($order == "commission_rate--asc")
+        			#set($sortStyle = "dbsort_asc")
+        		#else
+        			#set($sortStyle = "dbsort_none")
+        		#end
+				<a href="#if($order == 'commission_rate--desc') #SEARCH_URL(['order:commission_rate--asc']) #else #SEARCH_URL(['order:commission_rate--desc']) #end ">返利<span class="$sortStyle sortBtn"></span></a>
+			</th>
+			<th width="40">
+				#if($order == "taoke_sell_count--desc")
+        			#set($sortStyle = "dbsort_desc")
+        		#elseif($order == "taoke_sell_count--asc")
+        			#set($sortStyle = "dbsort_asc")
+        		#else
+        			#set($sortStyle = "dbsort_none")
+        		#end
+				<a href="#if($order == 'taoke_sell_count--desc') #SEARCH_URL(['order:taoke_sell_count--asc']) #else #SEARCH_URL(['order:taoke_sell_count--desc']) #end ">销量<span class="$sortStyle sortBtn"></span></a>
+			</th>
+			<th width="120" style="font-weight:normal;">
+				#if($order == "recomm_type--desc")
+					#set($sortStyle = "dbsort_desc")
+        		#elseif($order == "recomm_type--asc")
+        			#set($sortStyle = "dbsort_asc")
+        		#else
+        			#set($sortStyle = "")
+        		#end
+				<a href="#if($order == 'recomm_type--desc') #SEARCH_URL(['order:recomm_type--asc']) #else #SEARCH_URL(['order:recomm_type--desc']) #end ">限<span class="$sortStyle sortBtn"></span></a>
+                |
+				#if($order == "postal_enable--desc")
+					#set($sortStyle = "dbsort_desc")
+        		#elseif($order == "postal_enable--asc")
+        			#set($sortStyle = "dbsort_asc")
+        		#else
+        			#set($sortStyle = "")
+        		#end
+        		<a href="#if($order == 'recomm_type--desc') #SEARCH_URL(['order:recomm_type--asc']) #else #SEARCH_URL(['order:recomm_type--desc']) #end ">活<span class="$sortStyle sortBtn"></span></a>
+                |
+				#if($order == "postal_enable--desc")
+					#set($sortStyle = "dbsort_desc")
+        		#elseif($order == "postal_enable--asc")
+        			#set($sortStyle = "dbsort_asc")
+        		#else
+        			#set($sortStyle = "")
+        		#end
+				<a href="#if($order == 'postal_enable--desc') #SEARCH_URL(['order:postal_enable--asc']) #else #SEARCH_URL(['order:postal_enable--desc']) #end ">邮<span class="$sortStyle sortBtn"></span></a>
+				|
+				#if($order == "gen_way--desc")
+					#set($sortStyle = "dbsort_desc")
+        		#elseif($order == "gen_way--asc")
+        			#set($sortStyle = "dbsort_asc")
+        		#else
+        			#set($sortStyle = "")
+        		#end
+				<a href="#if($order == 'gen_way--desc') #SEARCH_URL(['order:gen_way--asc']) #else #SEARCH_URL(['order:gen_way--desc']) #end ">用<span class="$sortStyle sortBtn"></span></a>
+			</th>
+			<th width="45">
+				#if($order == "status--desc")
+					#set($sortStyle = "dbsort_desc")
+        		#elseif($order == "status--asc")
+        			#set($sortStyle = "dbsort_asc")
+        		#else
+        			#set($sortStyle = "dbsort_none")
+        		#end
+				<a href="#if($order == 'status--desc') #SEARCH_URL(['order:status--asc']) #else #SEARCH_URL(['order:status--desc']) #end ">上架<span class="$sortStyle sortBtn"></span></a></th>
+			</th>
+			<th width="60">类目</th>
+			<th width="90">
+				#if($order == "gmt_modified--desc")
+					#set($sortStyle = "dbsort_desc")
+        		#elseif($order == "gmt_modified--asc")
+        			#set($sortStyle = "dbsort_asc")
+        		#else
+        			#set($sortStyle = "dbsort_none")
+        		#end
+				<a href="#if($order == 'gmt_modified--desc') #SEARCH_URL(['order:gmt_modified--asc']) #else #SEARCH_URL(['order:gmt_modified--desc']) #end ">修改<span class="$sortStyle sortBtn"></span></a>
+			</th>
+			<th width="90">
+				#if($order == "gmt_create--desc")
+					#set($sortStyle = "dbsort_desc")
+        		#elseif($order == "gmt_create--asc")
+        			#set($sortStyle = "dbsort_asc")
+        		#else
+        			#set($sortStyle = "dbsort_none")
+        		#end
+				<a href="#if($order == 'gmt_create--desc') #SEARCH_URL(['order:gmt_create--asc']) #else #SEARCH_URL(['order:gmt_create--desc']) #end ">创建<span class="$sortStyle sortBtn"></span></a>
+			</th>
+			<th width="40">操作</th>
+            <th width="20" class="batch-onoff-sale-display dd-hide">
+                <input type="checkbox" class="batch-onoff-sale-check-all"/>
+			</th>
     	</tr>
 		#if($itemQuery.totalRecords > 0)
     		#foreach($item in $itemQuery.items)
 				#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
             	<tr data-index="$!item.id">
-            		<td>$idx</td>
-                    <td>$!item.id</td>
-                    <td>$!item.itemTitle</td>
-					<td align="center">$!item.categoryId</td>
-					<td align="center">$!item.loves</td>
-                    <td align="center">$!item.comments 
-						#if($item.comments > 0)[<a href="${env.bopsRoot}/bops/dcome/qq/comment_list.htm?itemId=$!item.id" class="dc-blue" target="_blank">查看</a>] #end
-					</td>
-					<td title="$!item.itemDesc">
-						<div class="dc-item-desc">$!item.itemDesc</div></td>
-					<td class="dc-item-status">#if($item.status=='D')已下架 #else 销售中 #end</td>
-                    <td>$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+            		<td align="center">$idx</td>
+					<td>$!item.id</td>
+					<td>$!item.nativeId</td>
+            		<td class="item-pic" align="center">#if(!$collectionUtils.isEmpty($!item.picUrlList))<img src="$!item.getPicUrl(0,'60x60')"/>#else 没有图片#end</td>
                     <td>
-                    	<div class="current-item" data-trIndex="$velocityCount">
-                    		<a href="javascript:;">操作</a>
-                    		<span class="icon-pull-down">&nbsp;</span>
-							<div class="ui-customize-select-list dd-hide" style="margin:-18px 0 0 -4px;">
-                            	<ul class="normal-list">
-                            		<li class="first" dead="true" >
-                            			<span>操作</span>
-                            		</li>
-                            		<li class="split" tips="所有操作都记录在案，请谨慎操作">
-										<span><a href="${env.root}/frame/q/detail.htm?id=$!item.id" title="预览" target="_blank">预览</a></span>
-									</li>
-									<li class="split" tips="所有操作都记录在案，请谨慎操作">
-										<span><a href="${env.bopsRoot}/bops/dcome/qq/item_operate.htm?wd=$!item.id" title="修改" target="_blank">修改</a></span>
-									</li>
-									<li class="split" tips="所有操作都记录在案，请谨慎操作">
-										<span><a href="${env.bopsRoot}/bops/dcome/qq/bops_detail.htm?id=$!item.id" title="灌水" target="_blank">灌水</a></span>
-									</li>
-									#if($$!item.status!="D")
-									<li id="diableItem" class="split" tips="所有操作都记录在案，请谨慎操作" data-itemId="$!item.id" data-status='D'>
-                            			<span><a href="javascript:;" title="下架">下架</a></span>
-                            		</li>
-                            		#end
-									<li class="last" dead="true">
-										<span></span>
-									</li>
-                            	</ul>
-                            </div>
+						<div class="dc-item-title">
+						<a href="${env.bopsRoot}/bops/dcome/prom/redirect_item.htm?itemId=$!item.id" target="_blank">$!item.itemTitle</a>
+						#if($item.itemDesc && $item.itemDesc != '')
+                            <span class="info-icon" title="$!item.itemDesc"></span>
+						#end
+						#if($item.creatorUserId != 1)
+							<a class="userid" href="javascript:;" title="创建者信息">$item.creatorUserId</a>
+						#end
+                        </div>
+					</td>
+                    #set($rate = $!item.commissionRate * 100)
+                    <td align="center">
+						$!item.itemPrice
+					</td>
+					<td align="center">
+						$!item.itemPromPrice
+					</td>
+					<td align="center">
+						$decimalUtils.format($rate,'0.0') % 
+					</td>
+					<td align="center">
+						$!item.taokeSellCount
+					</td>
+					<td align="center">
+						<a href="javascript:;" title="#if($item.recommType=='LB')已参加限时抢购#else未参加限时抢购  #end" class="limit-buy-click" data-recomm-type="#if($item.recommType=='LB')LB#end" data-item-id="$!item.id"><span class="clock-icon #if($item.recommType=='LB') clock-icon-active #end"></span></a>
+						|
+						<a href="javascript:;" title="#if($item.recommType=='HD')已加入巨便宜#else 未加入巨便宜#end" class="huodong-buy-click" data-recomm-type="#if($item.recommType=='HD')HD#end" data-item-id="$!item.id"><span class="wangwang-icon #if($item.recommType=='HD') wangwang-icon-active #end"></span></a>
+						|
+						<a href="javascript:;" title="#if($item.postalEnable=='Y')包邮 #else 邮费自理  #end" class="postal-click" data-item-id="$!item.id" data-postal-enable="$!item.postalEnable"><span class="money-icon #if($item.postalEnable=='Y') money-icon-active #end"></span></a>
+						|
+						<a href="javascript:;" title="#if($item.genWayStr!='U' && $item.genWayStr!='S')小编生成 #else 用户生成  #end" class="gen-way-click" data-item-id="$!item.id" data-gen-way="$!item.genWayStr"><span class="person-icon #if($item.genWayStr=='U' || $item.genWayStr=='S') person-icon-active #end"></span></a>
+					</td>
+					<td align="center">
+						#if($item.status=='N')在售 #else <span class="dc-red">下架</span> #end
+						<a href="javascript:;" title="" class="sell-status-click" data-item-id="$!item.id" data-item-status="$!item.status"><span class="clock-icon #if($item.status!='N') clock-icon-active #end"></span></a>
+					</td>
+					<td>
+					    <select class="category" name="categoryId" data-selCatId="$!item.categoryId" data-init-dcCategorySelect="select" include-all="true"></select>	
+					</td>
+                    <td align="center">$!dateUtils.format($!item.gmtModified , 'yyyy-MM-dd HH:mm')</td>
+					<td align="center">$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+                    <td align="center">
+						<div class="ui-customize-select updown-select-btn">
+                        	<div class="current-item" data-trIndex="$velocityCount">
+                        		<a href="javascript:;" style="margin-right:-5px;">操作</a>
+    							
+                        		<span class="icon-pull-down">&nbsp;</span>
+    							<div class="ui-customize-select-list dd-hide" style="margin:-18px 0 0 -4px;">
+                                	<ul class="normal-list">
+                                		<li class="first" dead="true" >
+                                			<span>操作</span>
+                                		</li>
+    									<li class="split" tips="所有操作都记录在案，请谨慎操作">
+    										<a href="${env.bopsRoot}/bops/dcome/qq/item_operate.htm?wd=$!item.id" title="修改" target="_blank"><span>修改</span></a>
+    									</li>
+    									<li class="split add-exchange-click" tips="所有操作都记录在案，请谨慎操作" data-item-id="$!item.id">
+                                			<span>积分兑换</span>
+                                		</li>
+										<li class="split update-display-order-click" tips="所有操作都记录在案，请谨慎操作" data-item-id="$!item.id">
+                                			<span>排序靠前</span>
+                                		</li>
+                                		#if ($!item.genWayStr == 'U' || $!item.genWayStr == 'S')
+                                		<li class="split accept-pgc-click" tips="所有操作都记录在案，请谨慎操作" data-item-id="$!item.id">
+                                			<span>采纳为pgc</span>
+                                		</li>
+                                		#end
+    									<li class="last" dead="true">
+    										<span></span>
+    									</li>
+                                	</ul>
+                                </div>
+    						</div>
 						</div>
+                    </td>
+					<td align="center" class="batch-onoff-sale-display batch-onoff-sale-check-list dd-hide">
+						<input type="checkbox" data-item-id="$!item.id" class="batch-onoff-sale"/>
                     </td>
             	</tr>
     		#end

@@ -8,18 +8,27 @@ import org.apache.commons.lang.StringUtils;
  *
  */
 public enum SettleStatusEnums {
+	
 	/**
 	 * 未结算
 	 */
 	UNSETTLE("U"),
+	
 	/**
 	 * 结算中
 	 */
 	SETTLE_PENDING("P"),
+	
+	/**
+	 * 集分宝结算中
+	 */
+	SETTLE_JFB_PENDING("JP") ,
+	
 	/**
 	 *  取消，
 	 */
 	SETTLE_CANCEL("C"),
+	
 	/**
 	 * 结算失败
 	 */
@@ -29,10 +38,16 @@ public enum SettleStatusEnums {
 	 * 结算成功
 	 */
 	SETTLE_SUCCESS("S") ,
+	
 	/**
 	 * 延迟结算
 	 */
 	DELAY_SETTLE("D") ,
+	
+	/**
+	 * 退款维权充正
+	 */
+	SETTLE_REFUND_CHARGE("R") ,
 	
 	UNKNOWN("") ,
 	;

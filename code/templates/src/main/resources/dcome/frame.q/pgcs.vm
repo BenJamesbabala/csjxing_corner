@@ -1,0 +1,31 @@
+#set($page_nav = "pgcs")
+#set($layout="dcome/frame.q/default.vm")
+
+<div class="idx-cnt">
+	<input type="hidden" name="firstPage" id="firstPageInput" value="$!firstPage"/>
+	<input type="hidden" name="totalPage" id="totalPageInput" value="$!totalPage"/>
+	#parse("/common/dcome.qq/cnt_top.vm")
+	<div class="banner-config-init" data-banner-id="dc_pgc_top"></div>
+	<div class="cnt-pgc">
+		<div class="item-head">
+			<ul class="item-tab dd-l">
+				<li class="">
+					<a class="pgc-tab" href="javascript:;" gtrack="/virtual/qq/index?tracelog=pgc-tab">小编精选</a>
+				</li>
+				<li class="">
+					<a class="ugc-tab" href="javascript:;" gtrack="/virtual/qq/index?tracelog=ugc-tab">用户推荐</a>
+				</li>
+			</ul>
+			#if (!$collectionUtils.isEmpty($!categories))
+			<div class="cate-list dd-l">
+				#foreach($category in $!categories)
+					<a class="category" href="javascript:;" data-category-id="$!category.id" title="$!category.name" gtrack="/virtual/qq/item?tracelog=category&amp;id=$!category.id">$!category.name</a>
+				#end
+			</div>
+			#end
+		</div>
+		#set($ugcShow=true)
+		#parse("/common/dcome.qq/pgc_recommend.vm")
+	</div>
+</div>
+	

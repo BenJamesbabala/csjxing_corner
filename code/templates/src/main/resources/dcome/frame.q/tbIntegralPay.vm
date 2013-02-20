@@ -1,0 +1,181 @@
+#set($page_nav = "tb_index")
+#set($layout="dcome/frame.q/default.vm")
+
+<div class="tb-content tb-content-integral-pay">
+	<div class="text-magnifier dd-hide" id="intIptMagnifier">
+    	 <div class="mag-text">1233 3435 5454</div>
+    	 <div class="mag-explain">宝令序列号是12位数字</div>
+     </div>
+	
+	<div class="integral-pay">
+		
+		<div class="exchange-dialog dd-hide" id="jfbExchangeDialog">
+			<form method="get">
+				<input type="hidden" name="exItemId" value=""/>
+                <div class="title">
+    				<span class="head-pic"><img src="${env.staticroot}/images/jfb_logo_1.gif" /></span><span>积分兑换</span>
+                    <a href="javascript:;" class="w_close_color"></a>
+    			</div>
+    			<div class="content">
+                    <div><span class="label">兑&nbsp;&nbsp;换：</span><span class="item-title">支付宝集分宝</span> <span class="reg-alipay"><a href="https://www.alipay.com/" target="_blank">没有支付宝？>></a></span></div>
+                    <div><span class="label">兑换需要：</span><span class="integral">1</span><span>积分 = 1集分宝</span></div>
+    				<div><span class="label">兑换个数：</span><span><input type="text" name="exItemNum" value="$!user.integralCount" data-label="兑换个数" class="intelligent-ipt jfb-input" data-inte-label="请输入兑换个数"/>&nbsp;个</span><span class="max-exchange-integral">（最多可兑换$!user.integralCount个）</span></div>
+    				<div><span class="label">支付宝：</span><span><input type="text" name="delAlipay"  data-label="支付宝" class="intelligent-ipt" data-inte-label="请输入充值支付宝" data-remeber-alipay="$!user.alipayAccount" value="$!user.alipayAccount"/></span> <span><a href="javascript:;" class="change-alipay dd-hide">更改</a></span></div>
+    				<div class="repeat-container"><span class="label">再次输入：</span><span><input type="text" name="" data-repeat-to="delAlipay" data-label="再次输入支付宝" class="intelligent-ipt" data-inte-label="请再次输入充值支付宝" value="$!user.alipayAccount"/></span></div>
+    			</div>
+				<div>
+    				<dt class="tip-rumour"><i></i>请认真填写所需要的信息！</dt>
+    			</div>
+                <div class="submit-container"><a href="javascript:;" class="submit">确定兑换</a></div>
+            </form>
+		</div>
+		
+		<div class="exchange-dialog dd-hide" id="qqExchangeDialog">
+			<form method="get">
+				<input type="hidden" name="exItemId" value=""/>
+                <div class="title">
+    				<span class="head-pic"><img src="${env.staticroot}/images/jfb_logo_1.gif" /></span><span>积分兑换</span>
+    				<a href="javascript:;" class="w_close_color"></a>
+    			</div>
+    			<div class="content">
+                    <div><span class="label">兑&nbsp;&nbsp;换：</span><span class="item-title">10个Q币</span></div>
+                    <div><span class="label">兑换需要：</span><span class="integral">1000</span><span>积分</span></div>
+    				<div><span class="label name-label">QQ号：</span><span><input type="text" name="delQq" data-label="QQ号码" class="intelligent-ipt" data-inte-label="请输入充值QQ号"/></span></div>
+    				<div class="repeat-container"><span class="label">再次输入：</span><span><input type="text" name="" data-repeat-to="delQq" data-label="再次输入QQ号码" class="intelligent-ipt" data-inte-label="请再次输入充值QQ号"/></span></div>
+    			</div>
+				<div>
+    				<dt class="tip-rumour"><i></i>请认真填写所需要的信息！</dt>
+    			</div>
+                <div class="submit-container"><a href="javascript:;" class="submit">确定兑换</a></div>
+            </form>
+		</div>
+		
+		<div class="exchange-dialog dd-hide" id="hfExchangeDialog">
+			<form method="get">
+				<input type="hidden" name="exItemId" value=""/>
+                <div class="title">
+    				<span class="head-pic"><img src="${env.staticroot}/images/jfb_logo_1.gif" /></span><span>积分兑换</span>
+    				<a href="javascript:;" class="w_close_color"></a>
+    			</div>
+    			<div class="content">
+                    <div><span class="label">兑&nbsp;&nbsp;换：</span><span class="item-title">10个Q币</span></div>
+                    <div><span class="label">兑换需要：</span><span class="integral">1000</span><span>积分</span></div>
+    				<div><span class="label name-label">手机号：</span><span><input type="text" name="delMobile" data-label="手机号" class="intelligent-ipt" data-inte-label="请输入充值手机号"/></span></div>
+    				<div class="repeat-container"><span class="label">再次输入：</span><span><input type="text" name="" data-repeat-to="delMobile" data-label="再次输入手机号" class="intelligent-ipt" data-inte-label="请再次输入充值手机号"/></span></div>
+    			</div>
+				<div>
+    				<dt class="tip-rumour"><i></i>请认真填写所需要的信息！</dt>
+    			</div>
+                <div class="submit-container"><a href="javascript:;" class="submit">确定兑换</a></div>
+            </form>
+		</div>
+			
+        <div class="pay-content-list">
+            <div class="title">
+				<span>支付宝集分宝</span>
+				<div>
+    				<dt class="tip-rumour">
+                    	<i></i>小积分，大用处，1积分也能花。100个集分宝=1元现金。 &nbsp;<a href="https://jf.alipay.com/prod/pout.htm" target="_blank">集分宝有什么用>></a> &nbsp;<a href="javascript:;" class="jfb-study-video">什么是集分宝>></a>
+                    </dt>
+                </div>
+			</div>
+            <div>
+				<ul class="jfb-ex-list">
+    				<li data-integral="1" data-type="jfb" data-exchange-item-id="100000">
+        				<div class="jfb-item-pic"><img src="${env.staticroot}/images/jfb_logo_1.gif"/></div>
+						<div class="jfb-text-area">
+    						<div class="item-title">支付宝集分宝</div>
+    						<div class="jfb-usage">
+                                <span>这些地方可用集分宝抵现：</span><img src="${env.staticroot}/images/jfb_usage.png"></img>
+                			</div>
+                            <div class="operate">
+            					<a href="javascript:;" class="pay-btn">
+									<span><strong class="save">1</strong>积分 = 1集分宝</span>
+                                    <b class="go">立即兑换</b>
+                                </a>
+            				</div>
+						</div>
+                    </li>
+                </ul>
+			</div>
+            
+    	</div>
+    	
+    	<div class="pay-content-list">
+            <div class="title">手机话费</div>
+            <div>
+                <ul>
+    				<li data-integral="1000" data-type="hf" data-exchange-item-id="100100">
+        				<div class="item-pic"><img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1e_MoXXReXXcovwk4_053038.jpg_sum.jpg"/></div>
+                        <div class="item-title">10元手机话费</div>
+                        <div class="operate">
+        					<a href="javascript:;" class="pay-btn">
+                                <span><strong class="save">1000</strong>积分</span>
+                                <b class="go">兑换</b>
+                            </a>
+        				</div>
+    				</li>
+    				<li data-integral="3000" data-type="hf" data-exchange-item-id="100101">
+        				<div class="item-pic"><img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1e_MoXXReXXcovwk4_053038.jpg_sum.jpg"/></div>
+                        <div class="item-title">30元手机话费</div>
+                        <div class="operate">
+        					<a href="javascript:;" class="pay-btn">
+                                <span><strong class="save">3000</strong>积分</span>
+                                <b class="go">兑换</b>
+                            </a>
+        				</div>
+    				</li>
+					<li data-integral="5000" data-type="hf" data-exchange-item-id="100102">
+        				<div class="item-pic"><img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1e_MoXXReXXcovwk4_053038.jpg_sum.jpg"/></div>
+                        <div class="item-title">50元手机话费</div>
+                        <div class="operate">
+        					<a href="javascript:;" class="pay-btn">
+                                <span><strong class="save">5000</strong>积分</span>
+                                <b class="go">兑换</b>
+                            </a>
+        				</div>
+    				</li>
+    			</ul>
+    		</div>
+    	</div>
+    	
+    	<div class="pay-content-list">
+            <div class="title">Q币</div>
+            <div>
+                <ul>
+    				<li data-integral="1000" data-type="qq" data-exchange-item-id="100200">
+        				<div class="item-pic"><img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1aiVpXoBHXXb1upjX.jpg_sum.jpg"/></div>
+                        <div class="item-title">10个Q币</div>
+                        <div class="operate">
+        					<a href="javascript:;" class="pay-btn">
+                                <span><strong class="save">1000</strong>积分</span>
+                                <b class="go">兑换</b>
+                            </a>
+        				</div>
+    				</li>
+    				<li data-integral="3000" data-type="qq" data-exchange-item-id="100201">
+        				<div class="item-pic"><img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1aiVpXoBHXXb1upjX.jpg_sum.jpg"/></div>
+                        <div class="item-title">30个Q币</div>
+                        <div class="operate">
+        					<a href="javascript:;" class="pay-btn">
+                                <span><strong class="save">3000</strong>积分</span>
+                                <b class="go">兑换</b>
+                            </a>
+        				</div>
+    				</li>
+					<li data-integral="5000" data-type="qq" data-exchange-item-id="100202">
+        				<div class="item-pic"><img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1aiVpXoBHXXb1upjX.jpg_sum.jpg"/></div>
+                        <div class="item-title">50个Q币</div>
+                        <div class="operate">
+        					<a href="javascript:;" class="pay-btn">
+                                <span><strong class="save">5000</strong>积分</span>
+                                <b class="go">兑换</b>
+                            </a>
+        				</div>
+    				</li>
+    			</ul>
+    		</div>
+            
+    	</div>
+	</div>
+</div>

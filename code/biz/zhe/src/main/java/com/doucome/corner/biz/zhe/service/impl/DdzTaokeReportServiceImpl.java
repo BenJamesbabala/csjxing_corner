@@ -1,5 +1,6 @@
 package com.doucome.corner.biz.zhe.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.doucome.corner.biz.common.enums.SumTaokeReportTypeEnums;
+import com.doucome.corner.biz.core.enums.SettleStatusEnums;
 import com.doucome.corner.biz.core.model.page.Pagination;
 import com.doucome.corner.biz.core.model.page.QueryResult;
 import com.doucome.corner.biz.dal.DdzTaokeReportDAO;
@@ -16,6 +19,7 @@ import com.doucome.corner.biz.dal.condition.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
+import com.doucome.corner.biz.zhe.enums.DdzRefundStatusEnums;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportService;
 
 public class DdzTaokeReportServiceImpl implements DdzTaokeReportService {
@@ -28,7 +32,7 @@ public class DdzTaokeReportServiceImpl implements DdzTaokeReportService {
 	private static final Log log = LogFactory.getLog(DdzTaokeReportServiceImpl.class);
 	
 	@Override
-	public int createReport(DdzTaokeReportDO report) {
+	public Long createReport(DdzTaokeReportDO report) {
 		return ddzTaokeReportDAO.insertReport(report) ;
 	}
 
@@ -88,16 +92,8 @@ public class DdzTaokeReportServiceImpl implements DdzTaokeReportService {
 	}
 	
 	@Override
-	public int updateTaokeReportSettleId(List<Long> reportIds, Long settleId) throws Exception {
-		if(reportIds == null || reportIds.size() == 0) {
-			return 0;
-		}
-		try {
-			return ddzTaokeReportDAO.updateTaokeReportSettleId(reportIds, settleId);
-		} catch (Exception e) {
-			log.error(e);
-			return -1;
-		}
+	public int updateTaokeReportSettleId(List<Long> reportIds, Long settleId) {
+		return ddzTaokeReportDAO.updateTaokeReportSettleId(reportIds, settleId);
 	}
 
 	@Override
@@ -117,10 +113,37 @@ public class DdzTaokeReportServiceImpl implements DdzTaokeReportService {
                                                                                      Integer.MAX_VALUE);
         return items;
     }
-
+	
 	@Override
 	public List<DdzTaokeReportDO> getReportsBySettleId(Integer settleId) {
 		return ddzTaokeReportDAO.selectReportsBySettleId(settleId) ;
-	}	
+	}
+
+	@Override
+	public int updateRefundById(Long reportId, DdzRefundStatusEnums refundStats) {
+		return ddzTaokeReportDAO.updateRefundById(reportId, refundStats.getValue()) ;
+	}
+
+	@Override
+	public BigDecimal calcTaokeReportTotalSettleFee(TaokeReportSearchCondition searchCondition , SumTaokeReportTypeEnums sumType) {
+		return ddzTaokeReportDAO.sumTaokeReportTotalSettleFee(searchCondition , sumType) ;
+	}
+
+	@Override
+	public int updateSettleStatusByIds(List<Long> ids, SettleStatusEnums status) {
+		return ddzTaokeReportDAO.updateSettleStatusByIds(ids, status.getValue()) ;
+	}
+
+	@Override
+	public int updateRefundByIds(List<Long> ids, DdzRefundStatusEnums refundStats) {
+		return ddzTaokeReportDAO.updateRefundByIds(ids, refundStats.getValue()) ;
+	}
+
+	@Override
+	public int updateSettleFeeById(Long id, BigDecimal settleFee) {
+		return ddzTaokeReportDAO.updateSettleFeeById(id, settleFee) ;
+	}
+
+	
 	
 }

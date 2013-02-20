@@ -2,13 +2,13 @@ package com.doucome.corner.biz.core.taobao.dto;
 
 import java.math.BigDecimal;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
-import com.doucome.corner.biz.core.utils.ReflectUtils;
+import com.doucome.corner.biz.common.utils.ReflectUtils;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 import com.taobao.api.domain.FavoriteItem;
 
 /**
  * 推荐的关联商品 
- * @author shenjia.caosj 2012-3-22
+ * @author langben 2012-3-22
  *
  */
 public class TaobaoFavoriteItemDTO extends AbstractModel {

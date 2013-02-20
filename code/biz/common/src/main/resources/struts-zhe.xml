@@ -9,11 +9,11 @@
 		<interceptors>
 			 <!-- Basic stack -->
             <interceptor-stack name="ddzBasicStack">
-                <interceptor-ref name="basicStack" />
+                <interceptor-ref name="cornerBasicStack" />
 				 <interceptor-ref name="setDdzContextInterceptor" />
             </interceptor-stack>
             <interceptor-stack name="ddzDefaultStack">
-				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="cornerDefaultStack" />
 				 <interceptor-ref name="setDdzContextInterceptor" />
 			 </interceptor-stack>
 		</interceptors>
@@ -45,8 +45,8 @@
 		
 		<action name="search" class="com.doucome.corner.web.zhe.action.SearchAction">
 			<interceptor-ref name="ddzDefaultStack" />
-			<result name="item" type="redirect">/zhe/item/${id}</result>
-			<result name="itemGuide" type="redirect">/zhe/item/${id}?userGuide=true</result>
+			<result name="item" type="redirect">/zhe/item/${id}?domain=${domain}</result>
+			<result name="itemGuide" type="redirect">/zhe/item/${id}?userGuide=true&amp;domain=${domain}</result>
 		</action>
 		
 		<action name="item" class="com.doucome.corner.web.zhe.action.ItemSearchAction">
@@ -74,7 +74,7 @@
 		
 		<action name="my" class="com.doucome.corner.web.zhe.action.MyAction">
 			<interceptor-ref name="ddzDefaultStack" />
-			<result name="success" type="velocity">/zhe/myhome/reportList.vm</result>
+			<result name="success" type="velocity">/zhe/my.vm</result>
 		</action>
 				
 		<action name="login" class="com.doucome.corner.web.zhe.action.LoginAction">
@@ -90,11 +90,22 @@
 			<interceptor-ref name="ddzDefaultStack" />
 		</action>
 		
+		<action name="alipaylogin" class="com.doucome.corner.web.zhe.action.LoginAction" method="alipayLogin">
+			<interceptor-ref name="ddzDefaultStack" />
+		</action>
+		
 		<action name="tblogin_pass" class="com.doucome.corner.web.zhe.action.TBLoginPassAction">
 			<interceptor-ref name="ddzDefaultStack" />
 			<result name="success" type="redirect">my.htm</result>
 		</action>
 		
+		<action name="alipaylogin_pass" class="com.doucome.corner.web.zhe.action.AlipayLoginPassAction">
+			<interceptor-ref name="ddzDefaultStack" />
+			<result name="success" type="redirect">/zhe/my.htm</result>
+			<result name="confirmAlipay" type="redirect">/zhe/confirm_login_alipay.htm?nativeAlipayId=${nativeAlipayId}</result>
+			<result name="input" type="redirect">/zhe/index.htm</result>
+		</action>
+	
 		<action name="tbklogin_pass" class="com.doucome.corner.web.zhe.action.TBLoginPassAction" method="tbkLogin">
 			<interceptor-ref name="ddzDefaultStack" />
 			<result name="success" type="velocity">/zhe/tblogin.vm</result>
@@ -110,11 +121,11 @@
 		<interceptors>
 			 <!-- Basic stack -->
             <interceptor-stack name="ddzBasicStack">
-                <interceptor-ref name="basicStack" />
-				 <interceptor-ref name="setDdzContextInterceptor" />
+                <interceptor-ref name="cornerBasicStack" />
+				<interceptor-ref name="setDdzContextInterceptor" />
             </interceptor-stack>
             <interceptor-stack name="ddzDefaultStack">
-				 <interceptor-ref name="defaultStack" />
+				 <interceptor-ref name="cornerDefaultStack" />
 				 <interceptor-ref name="setDdzContextInterceptor" />
 			 </interceptor-stack>
 		</interceptors>
@@ -162,5 +173,34 @@
 			<result name="success" type="json"></result>
 		</action>
 		
+		<action name="confirm_login_alipay_ajax" class="com.doucome.corner.web.zhe.action.ajax.ConfirmLoginAlipayAction">
+			<interceptor-ref name="ddzDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="confirm_login_alipay_ajax" class="com.doucome.corner.web.zhe.action.ajax.ConfirmLoginAlipayAction">
+			<interceptor-ref name="ddzDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="draw_out_ajax" class="com.doucome.corner.web.zhe.action.ajax.DrawOutAction">
+			<interceptor-ref name="ddzDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="query_manual_settle_ajax" class="com.doucome.corner.web.zhe.action.ajax.QueryManualSettleAction">
+			<interceptor-ref name="ddzDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="decr_account_notify_ajax" class="com.doucome.corner.web.zhe.action.ajax.AccountOperateAction" method="decrNotify">
+			<interceptor-ref name="ddzDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="resettle_ajax" class="com.doucome.corner.web.zhe.action.ajax.ReSettleAjaxAction">
+			<interceptor-ref name="ddzDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
 	</package>
 </struts>

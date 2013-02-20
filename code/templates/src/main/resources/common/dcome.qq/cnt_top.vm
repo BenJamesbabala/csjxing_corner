@@ -1,0 +1,40 @@
+#if($promotion && !$myPromotionItem)
+	<div class="cnt-top">
+		<div class="award-wrap dd-l">
+			<div class="dynamic-rolling dd-l">
+				<div class="dynamic">
+					<ul class="award-list">
+						<li class="loadding">
+						    <div class="loadding32x32">加载中...</div>
+						</li>
+					</ul>
+					<div class="awardTemplate" style="display: none;">
+						<li>
+							<img class="user-pic dd-l" data-avatar-src="@user-avatar@" data-avatar-size="50x50"></img>
+							<div class="dd-l right">
+								<div class="user">
+									<div class="user-name dd-l">@user-nick@</div>
+									<div class="want-label dd-l">免费拿到了</div>
+								</div>
+								<div class="desc">
+									<div class="item-title dd-l">
+										<a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item-id@" title="@item-title@" gtrack='/virtual/qq/item?tracelog=dynamic&src=index'>@item-title@</a>
+									</div>
+									<div class="item-price dd-r">价值 &yen;@item-price@</div>
+								</div>
+							</div>
+						</li>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="iwish-start">
+			<div class="wrap dd-l">
+				<div class="prom-desc"></div>
+				<a href="javascript:;" class="unwish-btn"></a>
+			</div>
+		</div>
+	</div>
+#else
+    
+#end

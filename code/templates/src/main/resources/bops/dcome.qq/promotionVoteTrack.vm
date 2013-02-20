@@ -1,0 +1,181 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "商品列表")
+
+<input type="hidden"  id="bopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcPromotionVoteTrack"/>
+
+<style>
+	
+.track-user {
+	width:300px;
+}
+
+.track-user a ,.input-box a {
+	background-color: #F4F4F4;
+	display: inline-block;
+	margin-bottom: 5px;
+	padding: 3px 6px;
+	vertical-align: middle;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	zoom: 1;
+	margin-right:5px;
+	text-decoration:none;
+	color:#444;
+}
+
+.track-user a:hover ,  .track-user .active{
+	background-color: #DD295C;
+	color: #fff;
+}
+
+.title-nav {
+	color:#DD295C;
+	width:300px;
+	line-height:25px;
+	border-bottom:2px solid #bbb;
+	margin:10px 0 ;
+}
+
+.input-box {
+	width:150px;
+	height:25px;
+	background-color:#FEFECC;
+	text-align:center;
+	padding-top:0px;
+	border:1px solid #EE9;
+}
+
+.input-box .input {
+	width:80px;
+}
+
+.change-user-nick .input-box {
+	position:absolute ;
+	left:160px;
+	top:-8px;
+}
+
+.change-rate-count .input-box {
+	position:absolute ;
+	left:200px;
+	top:-8px;
+}
+
+.change-rate-count {
+	position:relative;
+}
+
+.change-user-nick {
+	position:relative ;
+}
+
+.free-wish {
+	position:relative;
+}
+
+.user-message .user-id {
+    width: 60px;
+}
+
+.user-message .message {
+    width: 200px;
+}
+
+</style>
+
+
+<div class="bops">
+	<div style="MT20 MB20">&nbsp;</div>
+	
+    <div class="F12">
+        <div class="title-nav">账号列表</div>
+        <div class="track-user">
+			#foreach($userId in $trackUserList)
+				<a href="${env.bopsRoot}/bops/dcome/qq/promotion_vote_track.htm?userId=$userId" #if($userId == $user.userId) class="active" #end>$!userId</a>
+			#end
+		</div>
+	</div>
+	
+	#if($user.userId)
+    <div class="F12">
+		<div class="title-nav">内部账号</div>
+        <div class="MB10 change-user-nick">
+			$!user.nick  [$user.userId] 
+			#if($userPromotionItem)
+			<a href="javascript:;" class="change-user-nick-click" data-user-id="$user.userId">修改昵称</a>
+            <div class="input-box dd-hide">
+				<input type="text" class="input" value="$!user.nick"/>
+                <a href="javascript:;" class="submit" data-user-id="$!user.userId" data-prom-item-id="$!userPromotionItem.id">确定</a>
+			</div>
+			#end
+		</div>
+		#if($userPromotionItem)
+        <div class="MB10 change-rate-count">
+			$!userPromotionItem.userNick 许愿  >> <span class="dc-blue">[$!userPromotionItem.rateCount]</span>票 <a href="javascript:;" class="change-rate-count-click">修改票数</a>
+			<div class="input-box dd-hide">
+				<input type="text" class="input" value="$!userPromotionItem.rateCount"/>
+                <a href="javascript:;" class="submit" data-user-id="$!userPromotionItem.userId" data-prom-item-id="$!userPromotionItem.id">确定</a>
+			</div>
+		</div>
+		#else
+        <div class="free-wish">
+			<a href="javascript:;" class="free-wish-click">免费领取</a>
+			<div id="wish-item-box" class="vote-track-wish-item-box dd-hide">
+        		<a href="javascript:;" class="W_close_color layer_tips_close R"></a>
+                <table class="wish-item-table">
+                    <tr><th>商品</th><th>价格</th><th>愿望数</th><th>领取</th></tr>
+            	</table>
+                <div class="more-box"><a href="javascript:;" class="more" data-next-page="1" data-promotion-id="$!curPromotion.id" data-user-id="$!user.userId">加载更多...</a></div>
+            </div>
+		</div>
+		#end
+	</div>
+	#end
+    <div class="title-nav F12">排行榜</div>
+	<table width="260" style="font-size:14px;">
+		<tr>
+    		<th width="30">排名</th>
+			<th width="40">userId</th>
+			<th width="80">昵称</th>
+			<th width="40">愿望星</th>
+			<th width="60">积分</th>
+    	</tr>
+		#foreach($item in $topRankList)
+        	<tr>
+        		<td align="center">$velocityCount</td>
+                <td>$!item.userId</td>
+				<td>$!item.userNick</td>
+				<td>$!item.rateCount</td>
+				<td>$!item.userIntegral</td>
+        	</tr>
+		#end
+    </table>
+	
+	<div class="F12">
+        <div class="title-nav">开奖</div>
+        <div>
+            <a href="javascript:;" class="calculate-rate-click">立即开奖</a>
+		</div>
+	</div>
+	
+	<div class="F12 user-message">
+        <div class="title-nav">发送消息</div>
+        <span>用户ID</span>
+        <input type="text" class="user-id" name="userId" value="" text="用户ID" />
+        <span>消息内容</span>
+        <input type="text" class="message" name="message" value="" text="消息内容" />
+        <a href="javascript:;" class="send-message-btn">发送</a>
+	</div>
+	 
+</div>
+
+
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

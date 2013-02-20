@@ -1,0 +1,287 @@
+]body {
+	color: #666;
+	text-align: center;
+}
+
+.dd-clear: after {
+	clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.dc-body {
+	width: 760px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+button, input, select, textarea {
+	font-size: 100%;
+}
+
+.dd-hide {
+    display: none;	
+}
+
+.idx-cnt-my .cnt-ugc {
+	background-color: #FEE4DB;
+}
+
+.idx-cnt-my .cnt-ugc .user-nav {
+	width: 190px;
+}
+
+.idx-cnt-my .cnt-ugc .user-nav .user-info {
+    margin: 10px 15px;	
+}
+
+.user-nav .user-info .user-avatar {
+	width: 60px;
+	height: 60px;
+	float: left;
+}
+
+.user-nav .user-info .other-info {
+	margin-left: 70px;
+	height: 60px;
+}
+
+.user-nav .user-info .other-info .user-nick {
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+.idx-cnt-my .cnt-ugc .ugc-main {
+	width: 570px;
+	margin: 0;
+	background-color: #f5f5f5;
+}
+
+.cnt-ugc .user-nav .oper-div {
+	padding-top: 20px;
+}
+
+.user-nav .oper-div .oper-list li {
+	margin-left: 30px;
+	margin-bottom: 10px;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.user-nav .oper-div .oper-list li a {
+	color: #666;
+	font-size: 14px;
+}
+
+.user-nav .oper-div .oper-list li a:hover {
+	text-decoration: none;
+}
+
+.user-nav .oper-div .oper-list li:hover {
+	text-decoration: none;
+	background-color: #f5f5f5;
+}
+
+.user-nav .oper-div .oper-list .active {
+	background-color: #f5f5f5;
+}
+
+
+.idx-cnt-my .cnt-ugc .ugc-main .head {
+    height: 50px;
+}
+
+.ugc-main .head .user-nick {
+	font-size: 16px;
+	font-weight: bold;
+	color: black;
+	margin: 15px 0 0 15px;
+}
+
+.idx-cnt-my .cnt-ugc .ugc-main .my-ugc {
+    margin: 0px 10px;
+    width: 550px;
+    background-color: #ffffff;
+}
+
+.idx-cnt-my .cnt-ugc .ugc-main .other-ugc {
+	margin: 0px 10px;
+	padding: 10px 20px;
+	font-size: 14px;
+}
+
+.ugc-main .my-ugc .slogan, .ugc-main .my-ugc .baobei .ljfq {
+	background: url("btn.png") no-repeat;
+	display: inline-block;
+}	
+
+.ugc-main .my-ugc .slogan {
+	background-position: 0 -135px;
+	width: 210px;
+	height: 35px;
+	margin: 15px 0 0 150px;
+}
+
+.ugc-main .my-ugc .baobei {
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+.ugc-main .my-ugc .baobei .baobei-lbl {
+     font-family: Microsoft YaHei;
+     font-size: 18px;
+     font-weight: 18pt;
+     color: #333;
+}
+
+.ugc-main .my-ugc .baobei .ipt{
+	width: 280px;
+	height: 33px;
+	border: 1px solid #D4D4D4;
+	border-radius: 3px 3px 3px 3px;
+	padding-left: 10px;
+}
+
+.ugc-main .my-ugc .baobei .ljfq {
+	background-position: 0 -40px;
+	width: 95px;
+	height: 33px;
+	margin-right: 20px;
+	text-indent: -999px;
+}
+
+.ugc-main .my-ugc .baobei .url-info {
+	color: red;
+	position: absolute;
+	margin: 5px 0 0 95px;
+}
+
+.ugc-main .my-ugc .baobei .separator {
+	border-bottom: 1px solid #DDD;
+	margin-top: 6px;
+	margin-right: 25px;
+	padding-bottom: 19px;
+}
+
+.ugc-main .my-ugc .baobei .support {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.ugc-main .my-ugc .baobei .support .source a {
+	margin-right: 10px;
+	color: #C7223D;
+}
+
+.ugc-list .ugc {
+	margin-top: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #DDD;
+}
+
+.ugc-list {
+    width: 510px;	
+}
+
+.ugc-list .ugc a {
+	color: #5181B4;
+}
+
+.ugc-list .ugc .ugc-url {
+    margin-left: 5px;	
+}
+
+.ugc-list .ugc .avator .user-pic {
+    height: 50px;
+    width: 50px;	
+}
+
+.ugc-list .ugc .ugc-content {
+    margin-left: 60px;
+    position: relative;
+}
+
+.ugc-list .ugc .ugc-content .ugc-desc {
+    margin-bottom: 10px;
+}
+
+.ugc-list .ugc .ugc-content .ugc-pic {
+     margin-bottom: 10px;
+}
+
+.ugc-list .ugc .ugc-content .item-pic-small {
+	width: 100px;
+	height: 100px;
+}
+
+.ugc-list .ugc .ugc-content .item-pic-big {
+	width: 278px;
+	height: 278px;
+}
+
+.ugc-list .ugc .ugc-content .ugc-statis {
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.ugc .ugc-content .ugc-desc .user-nick {
+	font-weight: bold;
+	margin-right: 5px;
+	color: #5181b4;
+}
+
+.ugc .ugc-content .ugc-statis .ugc-behavior {
+	display: inline-block;
+	margin-right: 0;
+}
+
+.ugc .ugc-content .ugc-statis .ugc-behavior span {
+	margin-right: 15px;
+	color: #008dc0;
+}
+
+.color-gray {
+	color: #999999;
+}
+
+.color-blue {
+	color: #008dc0;
+}
+
+.color-red {
+	color: #C7223D;
+}
+
+.ugc-list .ugc .ugc-content .ugc-statis .ugc-date {
+    margin-right: 10px;
+}
+
+.ugc-main .other-ugc .ugc-more {
+	background: url("btn.png") no-repeat;
+	display: inline-block;
+}
+
+.ugc-main .other-ugc .ugc-more {
+	background-position: 0 -40px;
+	width: 95px;
+	height: 33px;
+	margin: 20px 0 0 210px;
+	text-indent: -999px;
+}
+
+.other-ugc .load-error-info {
+    margin-top: 10px;	
+}
+
+.other-ugc .ugc-loadding {
+    margin-top: 10px;
+    margin-left: 200px;
+    height: 42px;
+}
+
+.other-ugc .ugc-loadding .load-text-info {
+	line-height: 30px;
+	margin-left: 42px;
+}

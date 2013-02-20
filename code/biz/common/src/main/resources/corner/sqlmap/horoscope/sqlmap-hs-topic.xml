@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="HsTopic">
+    <typeAlias alias="TA-HS-TOPIC" type="com.doucome.corner.biz.dal.horoscope.dataobject.HsTopicDO" />
+
+	<resultMap id="RM-HS-TOPIC" class="TA-HS-TOPIC">
+		<result property="id" column="ID" />
+		<result property="title" column="TITLE"  />
+		<result property="content" column="CONTENT" />
+		<result property="picture" column="PICTURE" />
+		<result property="gmtDay" column="GMT_DAY" jdbcType="TIMESTAMP"/>
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertHsTopic" parameterClass="TA-HS-TOPIC">
+		INSERT INTO HS_TOPIC (ID,TITLE,CONTENT,PICTURE,GMT_DAY,GMT_CREATE)
+		VALUES (#id#, #title#, #content#, #picture#, #gmtDay#, now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryHsTopic" resultMap="RM-HS-TOPIC">
+		SELECT ID,TITLE,CONTENT,PICTURE,GMT_DAY,GMT_CREATE
+		  FROM HS_TOPIC
+		  WHERE ID = #id#
+		LIMIT 1
+	</select>
+	
+	<select id="queryHsTopicByDate" resultMap="RM-HS-TOPIC">
+		SELECT ID,TITLE,CONTENT,PICTURE,GMT_DAY,GMT_CREATE
+		  FROM HS_TOPIC
+		  WHERE GMT_DAY <![CDATA[>=]]> #dayStart# AND GMT_DAY <![CDATA[<]]> #dayEnd#
+		  ORDER BY GMT_DAY DESC, GMT_CREATE DESC
+	</select>
+	
+	<select id="queryHsTopics" resultMap="RM-HS-TOPIC">
+		SELECT ID,TITLE,CONTENT,PICTURE,GMT_DAY,GMT_CREATE
+		  FROM HS_TOPIC
+		  <dynamic>
+              <isParameterPresent open="WHERE" removeFirstPrepend="true">
+                  <isNotNull property="id" prepend="AND">
+                      ID=#id#
+                  </isNotNull>
+                  <isNotNull property="gmtDay" prepend="AND">
+                      GMT_DAY <![CDATA[<=]]> #gmtDay#
+                  </isNotNull>
+              </isParameterPresent>
+          </dynamic>
+        ORDER BY GMT_DAY DESC, GMT_CREATE DESC
+		LIMIT #start#, #size#
+	</select>
+	
+	<select id="countHsTopics" resultClass="java.lang.Integer">
+		SELECT COUNT(ID)
+		  FROM HS_TOPIC
+		  <dynamic>
+              <isParameterPresent open="WHERE" removeFirstPrepend="true">
+                  <isNotNull property="id" prepend="AND">
+                      ID=#id#
+                  </isNotNull>
+                  <isNotNull property="gmtDay" prepend="AND">
+                      GMT_DAY <![CDATA[<=]]> #gmtDay#
+                  </isNotNull>
+              </isParameterPresent>
+          </dynamic>
+	</select>
+	
+	<update id="updateHsTopic">
+	    UPDATE HS_TOPIC
+	      SET 
+	          <isNotEmpty property="title" prepend="">
+	              TITLE = #title#,
+	          </isNotEmpty>
+	          <isNotEmpty property="content" prepend="">
+                  CONTENT = #content#,
+              </isNotEmpty>
+              <isNotEmpty property="picture" prepend="">
+                  PICTURE = #picture#,
+              </isNotEmpty>
+              <isNotEmpty property="gmtDay" prepend="">
+                  GMT_DAY = #gmtDay#,
+              </isNotEmpty>
+	          GMT_CREATE = now()
+	      WHERE ID= #id#
+	</update>
+	
+	<delete id="deleteHsTopic">
+	    DELETE FROM HS_TOPIC
+	      WHERE ID= #topicId#
+	</delete>
+</sqlMap>

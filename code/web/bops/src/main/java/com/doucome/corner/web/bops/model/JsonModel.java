@@ -45,5 +45,14 @@ public class JsonModel<T> {
 		this.detail = detail;
 	}
 	
+	public void setSuccess(String code, T data) {
+		setCode(code);
+		setData(data);
+	}
+	
+	public void setFail(String code, String detail) {
+		setCode(code);
+		setDetail(detail);
+	}
 
 }

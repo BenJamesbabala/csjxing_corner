@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Future;
 
+import com.doucome.corner.biz.core.exception.CacheFailedException;
+
 /**
  * 
- * @author shenjia.caosj 2012-2-11
+ * @author langben 2012-2-11
  *
  */
 public interface CacheClient {
@@ -82,7 +84,7 @@ public interface CacheClient {
 	 * @param value
 	 * @return 是否保存成功
 	 */
-	<T> boolean putIfAbsent(final String key , final T value) ;
+	<T> boolean putIfAbsent(final String key , final T value) throws CacheFailedException;
 	
 	/**
 	 * 缓存数据, 如果已有数据, 当前新的值将不能生效
@@ -92,7 +94,7 @@ public interface CacheClient {
 	 * @param expireTime 过期时间,单位 milliseconds
 	 * @return 是否保存成功
 	 */
-	<T> boolean putIfAbsent(final String key , final T value , final long expireTime) ;
+	<T> boolean putIfAbsent(final String key , final T value , final long expireTime) throws CacheFailedException;
 	
 	/**
 	 * 以下为异步接口

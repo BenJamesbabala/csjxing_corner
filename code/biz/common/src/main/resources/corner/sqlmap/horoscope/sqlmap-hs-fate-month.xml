@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="HsMonthFate">
+    <typeAlias alias="TA-Month-Fate" type="com.doucome.corner.biz.dal.horoscope.dataobject.HsMonthFateDO" />
+
+	<resultMap id="RM-Month-Fate" class="TA-Month-Fate">
+		<result property="id" column="ID" />
+		<result property="hsId" column="HS_ID"/>
+		<result property="summary" column="SUMMARY"  />
+		<result property="loveIndex" column="LOVE_INDEX" />
+		<result property="loveDesc" column="LOVE_DESC" />
+		<result property="workIndex" column="WORK_INDEX" />
+		<result property="workDesc" column="WORK_DESC" />
+		<result property="wealthIndex" column="WEALTH_INDEX" />
+		<result property="wealthDesc" column="WEALTH_DESC" />
+		<result property="healthIndex" column="HEALTH_INDEX" />
+		<result property="healthDesc" column="HEALTH_DESC" />
+		<result property="turnToLucky" column="TURN_TO_LUCKY" />
+		<result property="gmtMonth" column="GMT_MONTH" jdbcType="TIMESTAMP"/>
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertHsMonthFate" parameterClass="TA-Month-Fate">
+		INSERT INTO HS_FATE_MONTH
+			(ID,HS_ID,SUMMARY,LOVE_INDEX,LOVE_DESC,WORK_INDEX,WORK_DESC,WEALTH_INDEX,WEALTH_DESC,
+			 HEALTH_INDEX,HEALTH_DESC,TURN_TO_LUCKY,GMT_MONTH,GMT_MODIFIED,GMT_CREATE)
+		VALUES
+			(#id#,#hsId#,#summary#,#loveIndex#,#loveDesc#,#workIndex#,#workDesc#,#wealthIndex#,#wealthDesc#,
+			 #healthIndex#,#healthDesc#,#turnToLucky#,#gmtMonth#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="queryHsMonthFate" resultMap="RM-Month-Fate">
+		SELECT ID,HS_ID,SUMMARY,LOVE_INDEX,LOVE_DESC,WORK_INDEX,WORK_DESC,WEALTH_INDEX,WEALTH_DESC,
+			 HEALTH_INDEX,HEALTH_DESC,TURN_TO_LUCKY,GMT_MONTH,GMT_MODIFIED,GMT_CREATE
+		  FROM HS_FATE_MONTH
+		  WHERE ID = #id#
+		LIMIT 1
+	</select>
+	
+	<select id="queryHsMonthFateByDate" resultMap="RM-Month-Fate">
+		SELECT ID,HS_ID,SUMMARY,LOVE_INDEX,LOVE_DESC,WORK_INDEX,WORK_DESC,WEALTH_INDEX,WEALTH_DESC,
+			 HEALTH_INDEX,HEALTH_DESC,TURN_TO_LUCKY,GMT_MONTH,GMT_MODIFIED,GMT_CREATE
+		  FROM HS_FATE_MONTH
+		  WHERE HS_ID=#hsId# AND  GMT_MONTH <![CDATA[>=]]> #monthStart# AND GMT_MONTH <![CDATA[<]]> #monthEnd#
+		LIMIT 1
+	</select>
+	
+	<select id="queryHsMonthFates" resultMap="RM-Month-Fate">
+		SELECT ID,HS_ID,SUMMARY,LOVE_INDEX,LOVE_DESC,WORK_INDEX,WORK_DESC,WEALTH_INDEX,WEALTH_DESC,
+			 HEALTH_INDEX,HEALTH_DESC,TURN_TO_LUCKY,GMT_MONTH,GMT_MODIFIED,GMT_CREATE
+		  FROM HS_FATE_MONTH
+		  <dynamic>
+              <isParameterPresent open="WHERE" removeFirstPrepend="true">
+                  <isNotNull property="hsId" prepend="AND">
+                      HS_ID=#hsId#
+                  </isNotNull>
+                  <isNotNull property="monthStart" prepend="AND">
+                      GMT_MONTH <![CDATA[>=]]> #monthStart#
+                  </isNotNull>
+                  <isNotNull property="monthEnd" prepend="AND">
+                      GMT_MONTH <![CDATA[<]]> #monthEnd#
+                  </isNotNull>
+              </isParameterPresent>
+          </dynamic>
+        ORDER BY GMT_MONTH DESC
+		LIMIT #start#, #size#
+	</select>
+	
+	<select id="countHsMonthFates" resultClass="java.lang.Integer">
+		SELECT COUNT(ID)
+		  FROM HS_FATE_MONTH
+		  <dynamic>
+              <isParameterPresent open="WHERE" removeFirstPrepend="true">
+                  <isNotNull property="hsId" prepend="AND">
+                      HS_ID=#hsId#
+                  </isNotNull>
+                  <isNotNull property="monthStart" prepend="AND">
+                      GMT_MONTH <![CDATA[>=]]> #monthStart#
+                  </isNotNull>
+                  <isNotNull property="monthEnd" prepend="AND">
+                      GMT_MONTH <![CDATA[<]]> #monthEnd#
+                  </isNotNull>
+              </isParameterPresent>
+          </dynamic>
+	</select>
+	
+	<update id="updateHsMonthFate">
+	    UPDATE HS_FATE_MONTH
+	      SET GMT_MONTH = #gmtMonth#, SUMMARY = #summary#, LOVE_INDEX = #loveIndex#, LOVE_DESC = #loveDesc#,
+              WORK_INDEX = #workIndex#, WORK_DESC = #workDesc#, WEALTH_INDEX = #wealthIndex#, WEALTH_DESC = #wealthDesc#,
+              HEALTH_INDEX = #healthIndex#, HEALTH_DESC = #healthDesc#, TURN_TO_LUCKY = #turnToLucky#, GMT_MODIFIED = now()
+	      WHERE ID= #id#
+	</update>
+</sqlMap>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcPromotionSnapInfo">
+	<typeAlias alias="TA-DcPromotionSnapInfo"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcPromotionSnapInfoDO" />
+
+	<resultMap id="RM-DcPromotionSnapInfo" class="TA-DcPromotionSnapInfo">
+		<result property="id" column="ID" />
+		<result property="promotionId" column="PROMOTION_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="wishCount" column="WISH_COUNT" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertPromotionSnap">
+		INSERT INTO 
+			DC_PROMOTION_SNAP_INFO(ID,PROMOTION_ID,ITEM_ID,WISH_COUNT,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#promotionId#,#itemId#,#wishCount#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="queryPromotionSnapWithPagination" resultMap="RM-DcPromotionSnapInfo">
+		SELECT 
+			ID,PROMOTION_ID,ITEM_ID,WISH_COUNT,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_PROMOTION_SNAP_INFO
+		WHERE
+			PROMOTION_ID = #promotionId#
+		ORDER BY 
+			WISH_COUNT DESC
+		LIMIT 
+			#start# , #size#
+	</select>
+	
+	<update id="incrWishCountByPromotionAndItem">
+		UPDATE
+			DC_PROMOTION_SNAP_INFO
+		SET
+			WISH_COUNT = WISH_COUNT + #count# ,
+			GMT_MODIFIED = now()
+		WHERE
+			PROMOTION_ID = #promotionId# 
+		AND
+			ITEM_ID = #itemId#
+	</update>
+</sqlMap>

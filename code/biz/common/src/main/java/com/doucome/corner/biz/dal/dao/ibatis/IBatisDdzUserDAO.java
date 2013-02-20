@@ -13,7 +13,7 @@ public class IBatisDdzUserDAO extends SqlMapClientDaoSupport implements DdzUserD
 
     @Override
     public int insertUser(DdzUserDO user) {
-        return NumberUtils.integerToInt((Integer) getSqlMapClientTemplate().insert("ddzUser.insertUser", user));
+        return NumberUtils.parseInt((Integer) getSqlMapClientTemplate().insert("ddzUser.insertUser", user));
     }
 
     @Override
@@ -44,5 +44,18 @@ public class IBatisDdzUserDAO extends SqlMapClientDaoSupport implements DdzUserD
     public void updateLastLoginTime(String uid) {
         getSqlMapClientTemplate().update("ddzUser.updateLastLoginTime", uid);
     }
+
+	@Override
+	public int updateAlipayIdByLoginId(String loginId, String alipayId) {
+		Map<String,Object> condition = new HashMap<String,Object>() ;
+		condition.put("loginId", loginId) ;
+		condition.put("alipayId", alipayId) ;
+		return getSqlMapClientTemplate().update("ddzUser.updateAlipayIdByLoginId" , condition) ;
+	}
+
+	@Override
+	public int incrModificationCount(String loginId) {
+		return getSqlMapClientTemplate().update("ddzUser.incrModificationCount" , loginId) ;
+	}
 
 }

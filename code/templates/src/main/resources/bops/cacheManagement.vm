@@ -1,0 +1,40 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "»º´æ¹ÜÀí")
+
+<input type="hidden"  id="bopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="bopsPage" value="cacheManagement"/>
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+	
+    <div>
+		<form action="${env.bopsRoot}/bops/cache_management.htm" method="get">
+            <select id="regionName" name="regionName">
+    			#foreach($item in $cacheClientList)
+                <option value="$!item.regionName" #if($regionName == $item.regionName) selected #end)>$!item.regionName</option>
+    			#end
+    		</select>
+		
+			<input id="keyParam" name="keyParam" type="text" value="$!keyParam"/>
+			<div >
+    			<div class="MT10 MB10">»º´ækey£º <input type="text" id="cacheKey" name="cacheKey" value="$!cacheKey" size="50"/></div>
+    			<input type="submit" value="²éÑ¯"/>
+			</div>
+        </form>
+        
+		#if($cacheObject)
+			
+            »º´æÄÚÈÝ   <a href="javascript:;" data-delete="$!cacheKey" id="deleteCache">É¾³ý»º´æ</a>
+            <div>---------------------------------------------------------------------------------------------------</div>
+			$!cacheObject
+		#end
+	</div>
+</div>
+	
+<script>
+
+!(function($){
+		
+})(jQuery);
+</script>

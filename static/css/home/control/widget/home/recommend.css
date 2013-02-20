@@ -20,10 +20,10 @@
 
 .dd-recommend {
 	left: 165px;
-    margin: 10px 0 400px 0;
-    position: absolute;
-    width: 750px;
-    /*z-index:8;*/
+	margin: 10px 0 400px 0;
+	position: absolute;
+	width: 750px;
+	/*z-index:8;*/
 }
 
 .dd-brands {
@@ -48,7 +48,7 @@
 
 .dd-brands-tip .darkgray {
 	color: #a1a1a1;
-	font-weight:bold;
+	font-weight: bold;
 }
 
 .dd-brands-tip .gray {
@@ -125,7 +125,7 @@
 }
 
 .dd-brands-list li a {
-	text-decoration:none ;
+	text-decoration: none;
 	cursor: pointer;
 }
 
@@ -151,7 +151,7 @@
 	height: 100%;
 	width: 48px;
 	color: #ff9c04;
-	line-height:20px;
+	line-height: 20px;
 }
 
 .dd-buyings {
@@ -217,7 +217,7 @@
 	height: 100%;
 	width: 35px;
 	color: #ff9b00;
-	margin-left:3px;
+	margin-left: 3px;
 }
 
 .dd-buyings-scroll {
@@ -233,7 +233,7 @@
 }
 
 .dd-recommend-bot {
-	height:430px;
+	height: 330px;
 }
 
 /* dialog */
@@ -245,7 +245,7 @@
 	position: absolute;
 	z-index: 999;
 	left: 115px;
-    top: 50px;
+	top: 50px;
 }
 
 .dd-dialog-head {
@@ -256,7 +256,7 @@
 }
 
 .dd-dialog-head a {
-	cursor: pointer;	
+	cursor: pointer;
 }
 
 .dd-dialog-content {
@@ -264,7 +264,7 @@
 	text-align: center;
 	margin: 0 auto;
 	padding: 0 auto;
-	margin-top:-5px;
+	margin-top: -5px;
 }
 
 .dd-dialog-slogan {
@@ -297,7 +297,7 @@
 .dd-dialog-submit {
 	background-position: -200px -50px;
 	width: 168px;
-	height: 54px;	
+	height: 54px;
 }
 
 .dd-dialog-bottom {
@@ -316,4 +316,90 @@
 	font-size: 16px;
 	color: #ff9c04;
 	margin-right: 20px;
+}
+
+.idx-brands {
+	float: left;
+	width: 800px;
+}
+
+.idx-brands .title {
+	text-align: left;
+	color: #AA3A37;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.idx-brands .separator {
+	border-top: 1px solid #9e9e9e;
+}
+
+.idx-brands .list {
+	
+}
+
+.idx-brands .list li {
+	margin-left: 10px;
+	float: left;
+	background-color: #FFFFFF;
+	box-shadow: 0 1px 3px rgba(34, 25, 25, 0.2);
+	display: inline;
+	padding: 0;
+	height: 204px;
+	width: 148px;
+}
+
+.idx-brands .list li img {
+	height: 200px;
+	width: 144px;
+	margin-top: 2px;
+}
+
+.idx-brands .list a {
+	margin: 2px;
+	text-decoration: none;
+}
+
+.dd-recommend {
+	left: 140px;
+}
+
+.idx-brands .list li .fanli {
+	position: absolute;
+	height: 48px;
+	width: 144px;
+	/*margin:-52px 0 0 2px;*/
+	top: 214px;
+	margin-left: 2px;
+	margin-left:-220px\9;	
+}
+
+.idx-brands .list li .fanli .bg {
+	position: absolute;
+	display: block;
+	opacity: 0.8;
+	filter: alpha(opacity = 80) top : 0;
+	background: none repeat scroll 0 0 #313131;
+	height: 40px;
+	width: 144px;
+	margin: 9px 0 0 0;
+}
+
+.idx-brands .list li .rate {
+	position: absolute;
+	width: 100%;
+	color: #ffffff;
+	font-size: 30px;
+	font-weight: bold;
+	font-family: Arial, Verdana;
+	z-index: 9;
+	top: 5px;
+	text-align: left;
+}
+
+.idx-brands .list li .label {
+	font-size: 12px;
+	font-weight: normal;
+	float: left;
+	margin: 14px 10px 0 13px;
 }

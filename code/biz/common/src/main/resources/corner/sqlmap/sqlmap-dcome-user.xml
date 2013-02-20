@@ -14,16 +14,30 @@
 		<result property="email" column="EMAIL" jdbcType="VARCHAR" />
 		<result property="md5Password" column="MD5_PASSWORD" jdbcType="VARCHAR" />
 		<result property="source" column="SOURCE" jdbcType="VARCHAR" />
+		<result property="integralCount" column="INTEGRAL_COUNT" />
+		<result property="frozenIntegralCount" column="FROZEN_INTEGRAL_COUNT" />
+		<result property="checkInCount" column="CHECK_IN_COUNT"/>
+		<result property="goldEggCount" column="GOLD_EGG_COUNT" />
+		<result property="unreadMsg" column="UNREAD_MSG" />
+		<result property="newGuide" column="NEW_GUIDE" />
+		<result property="level" column="LEVEL" />
+		<result property="winnerScore" column="WINNER_SCORE" />
+		<result property="alipayAccount" column="ALIPAY_ACCOUNT" />
+		<result property="lastLoginTrace" column="LAST_LOGIN_TRACE" jdbcType="VARCHAR"/>
+		<result property="extendDesc" column="EXTEND_DESC" jdbcType="VARCHAR"/>
 		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
 		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
 		<result property="gmtLastLogin" column="GMT_LAST_LOGIN" jdbcType="TIMESTAMP" />
+		<result property="gmtLastCheckin" column="GMT_LAST_CHECKIN" jdbcType="TIMESTAMP" />
+		<result property="gmtLastShare" column="GMT_LAST_SHARE" jdbcType="TIMESTAMP" />
+		<result property="gmtFollowQzone" column="GMT_FOLLOW_QZONE" jdbcType="TIMESTAMP" />
 	</resultMap>
 	
 	<insert id="insertUser" parameterClass="TA-DcUser">
 		INSERT INTO DC_USER
-			(USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN)
+			(USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,INTEGRAL_COUNT,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN)
 		VALUES
-			(#userId#,#externalId#,#externalPf#,#nick#,#gender#,#mobile#,#email#,#md5Password#,#source#,now(),now(),now())
+			(#userId#,#externalId#,#externalPf#,#nick#,#gender#,#mobile#,#email#,#md5Password#,#source#,#integralCount#,now(),now(),now())
 		<selectKey resultClass="java.lang.Long" keyProperty="userId">
     		<![CDATA[
 				SELECT LAST_INSERT_ID() AS USER_ID
@@ -31,18 +45,25 @@
 		  </selectKey>
 	</insert>
 	
+	<delete id="deleteUser">
+	    DELETE FROM DC_USER WHERE USER_ID=#userId#
+	</delete>
+	
 	<select id="queryUser" resultMap="RM-DcUser">
-		SELECT 
-			USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
+		SELECT USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,INTEGRAL_COUNT,FROZEN_INTEGRAL_COUNT,CHECK_IN_COUNT,GOLD_EGG_COUNT,
+		       UNREAD_MSG,NEW_GUIDE,LEVEL,WINNER_SCORE,LAST_LOGIN_TRACE,ALIPAY_ACCOUNT ,EXTEND_DESC,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN,GMT_LAST_CHECKIN,
+			   GMT_LAST_SHARE,GMT_FOLLOW_QZONE
 		FROM 
 			DC_USER
 		WHERE 
 			USER_ID = #userId#
+		LIMIT 1
 	</select>
 	
 	<select id="queryUsers" parameterClass="java.util.ArrayList" resultMap="RM-DcUser">
 		SELECT 
-			USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
+			USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,INTEGRAL_COUNT,FROZEN_INTEGRAL_COUNT,CHECK_IN_COUNT,GOLD_EGG_COUNT,
+			UNREAD_MSG,NEW_GUIDE,LEVEL,WINNER_SCORE,LAST_LOGIN_TRACE,ALIPAY_ACCOUNT,EXTEND_DESC,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN,GMT_LAST_CHECKIN,GMT_LAST_SHARE,GMT_FOLLOW_QZONE
 		FROM 
 			DC_USER
 		WHERE 
@@ -54,7 +75,8 @@
 	
 	<select id="queryUserByExternalId" resultMap="RM-DcUser">
 		SELECT 
-			USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN
+			USER_ID,EXTERNAL_ID,EXTERNAL_PF,NICK,GENDER,MOBILE,EMAIL,MD5_PASSWORD,SOURCE,INTEGRAL_COUNT,FROZEN_INTEGRAL_COUNT,CHECK_IN_COUNT,GOLD_EGG_COUNT,UNREAD_MSG,
+			NEW_GUIDE,LEVEL,WINNER_SCORE,LAST_LOGIN_TRACE,ALIPAY_ACCOUNT,EXTEND_DESC,GMT_CREATE,GMT_MODIFIED,GMT_LAST_LOGIN,GMT_LAST_CHECKIN,GMT_LAST_SHARE,GMT_FOLLOW_QZONE
 		FROM 
 			DC_USER
 		WHERE 
@@ -86,5 +108,221 @@
 		update DC_USER
 		set GMT_MODIFIED = now(),GMT_LAST_LOGIN = now()
 		where USER_ID = #userId#
+	</update>
+	
+	<update id="updateLastLoginTimeAndTrace" >
+		UPDATE 
+			DC_USER
+		SET 
+			GMT_MODIFIED = now(),
+			GMT_LAST_LOGIN = now(),
+			LAST_LOGIN_TRACE = #lastLoginTrace#
+		WHERE 
+			USER_ID = #userId#
+	</update>
+	
+	<update id="updateLastCheckinTime">
+		UPDATE 
+			DC_USER
+		SET 
+			CHECK_IN_COUNT = #checkInCount#,
+			GMT_MODIFIED = now(),
+			GMT_LAST_CHECKIN = now()
+		WHERE 
+			USER_ID = #userId#
+	</update>
+	
+	<update id="decrIntegralByUser">
+		UPDATE 
+			DC_USER
+		SET 
+			INTEGRAL_COUNT = INTEGRAL_COUNT - #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="incrIntegralByUser">
+		UPDATE 
+			DC_USER
+		SET 
+			INTEGRAL_COUNT = INTEGRAL_COUNT + #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="incrGoldEggByUser">
+		UPDATE 
+			DC_USER
+		SET 
+			GOLD_EGG_COUNT = GOLD_EGG_COUNT + #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="decrGoldEggByUser">
+		UPDATE 
+			DC_USER
+		SET 
+			GOLD_EGG_COUNT = GOLD_EGG_COUNT - #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+		AND 
+			GOLD_EGG_COUNT >= #count#
+	</update>
+	
+	<update id="incrUnreadMsgCountByUser">
+		UPDATE 
+			DC_USER
+		SET 
+			UNREAD_MSG = UNREAD_MSG + #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="clearUnreadMsgCountByUser">
+		UPDATE 
+			DC_USER
+		SET 
+			UNREAD_MSG = 0 , 
+			GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="updateNewGuide">
+		UPDATE 
+			DC_USER
+		SET 
+			NEW_GUIDE = #newGuide# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="updateDailyShare">
+	    UPDATE 
+			DC_USER
+		SET 
+			GMT_LAST_SHARE = now(),
+			GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="frozenIntegralByUser">
+		UPDATE
+			DC_USER
+		SET
+			INTEGRAL_COUNT = INTEGRAL_COUNT - #integralCount# ,
+			FROZEN_INTEGRAL_COUNT = FROZEN_INTEGRAL_COUNT + #integralCount# ,
+			GMT_MODIFIED = now()
+		WHERE
+			USER_ID = #userId#
+		AND
+			INTEGRAL_COUNT >= #integralCount#		
+	</update>
+	
+	<update id="unfrozenIntegralByUser">
+		UPDATE
+			DC_USER
+		SET
+		<isNull property="integralCount">
+			INTEGRAL_COUNT = INTEGRAL_COUNT + FROZEN_INTEGRAL_COUNT ,
+			FROZEN_INTEGRAL_COUNT = 0 ,
+		</isNull>
+		<isNotNull property="integralCount">
+			INTEGRAL_COUNT = INTEGRAL_COUNT + #integralCount# ,
+			FROZEN_INTEGRAL_COUNT = FROZEN_INTEGRAL_COUNT - #integralCount# ,
+		</isNotNull>
+			GMT_MODIFIED = now()
+		WHERE
+			USER_ID = #userId#
+		<isNotNull property="integralCount">
+			AND
+			FROZEN_INTEGRAL_COUNT >= #integralCount#		
+		</isNotNull>
+	</update>
+	
+	<update id="descFrozenIntegralByUser">
+		UPDATE 
+			DC_USER
+		SET
+			FROZEN_INTEGRAL_COUNT = FROZEN_INTEGRAL_COUNT - #integralCount# ,
+			GMT_MODIFIED = now()
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="incrWinnerScoreByUser">
+		UPDATE 
+			DC_USER
+		SET 
+			WINNER_SCORE = WINNER_SCORE + #score# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="updateWinnerScoreToIntegralByUser">
+		UPDATE
+			DC_USER
+		SET
+			INTEGRAL_COUNT = INTEGRAL_COUNT + WINNER_SCORE ,
+			WINNER_SCORE = 0 ,
+		GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="updateFollowQzone">
+	    UPDATE 
+			DC_USER
+		SET 
+			GMT_FOLLOW_QZONE = now(),
+			GMT_MODIFIED = now() 
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="updateNick">
+		UPDATE
+			DC_USER
+		SET
+			NICK = #nick# ,
+			GMT_MODIFIED = now()
+		WHERE
+			USER_ID = #userId#
+	</update>
+
+	<update id="updateAlipayAccountByUser" parameterClass="java.util.Map">
+		UPDATE
+			DC_USER
+		SET
+			ALIPAY_ACCOUNT = #alipayAccount# , 
+			GMT_MODIFIED = now()
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="updateExtendDescByUser">
+		UPDATE
+			DC_USER
+		SET
+			EXTEND_DESC = #extendDesc# , 
+			GMT_MODIFIED = now()
+		WHERE
+			USER_ID = #userId#
+	</update>
+	
+	<update id="updateUserLevel">
+		UPDATE DC_USER
+		SET
+		    LEVEL = #level#
+		WHERE USER_ID = #userId#
 	</update>
 </sqlMap>

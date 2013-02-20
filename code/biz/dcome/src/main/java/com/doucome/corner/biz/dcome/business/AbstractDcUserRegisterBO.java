@@ -42,6 +42,8 @@ public abstract class AbstractDcUserRegisterBO<T extends AbstractUserInfoModel> 
             try {
                 if (StringUtils.isNotBlank(nickname)) {
                     userDO.setNick(nickname);
+                    //新用户注册奖励积分放到DcUserIntegralBO.doUserRegister里
+                    userDO.setIntegralCount(0);
                     Long userId = dcUserService.insertUser(userDO);
                     return userId;
                 }
@@ -51,7 +53,18 @@ public abstract class AbstractDcUserRegisterBO<T extends AbstractUserInfoModel> 
         }
         return null;
     }
-
+    
+    protected String convertUserNick(String userNick, int index) {
+    	if (index > 6 || index < 1) {
+    		return userNick;
+    	}
+    	StringBuilder tempNick = new StringBuilder(userNick);
+    	for(int i = 0; i < index; i++) {
+    		tempNick.append(i);
+    	}
+    	return tempNick.toString();
+    }
+    
     protected boolean uploadUserAvatar(long userId, String imgUrl) {
         if (imgUrl == null || userId <= 0) {
             return false;

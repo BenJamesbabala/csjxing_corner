@@ -1,0 +1,69 @@
+<div class="ugc-layer" id="ugcLayer" data-ugc-done="#if($user.isGuideDone('ugc'))y#end" data-example="y" style="display: none;">
+    <div class="head">
+	    <div class="title dd-l">我有好东西要推荐</div>
+        <a class="close-btn" href="javascript:;"></a>
+	</div>
+    <div class="wrap dd-l">
+    	<div class="ugc-wrap dd-l">
+		    <div class="top">
+				<div class="title dd-l">将宝贝网址粘贴到下面的框中</div>
+				<div class="source-list dd-l">
+				    <span class="dd-l">(支持</span>
+				    <a class="icon-ugc-src tb-s8 icon-tb" href="http://s8.taobao.com/search?q=%C5%AE&cat=16&tab=mall&pid=mm_30820461_0_0&commend=all&unid=keyword&&mode=23&commend=1%2C2&other_filter=tk_rate[2400%2C]%3Bratesum[11%2C]&filter=reserve_price[20%2C99]&fs=1" target="_blank" gtrack="/virtual/qq/tbs8?tracelog=ugc">淘宝网</a>
+					<a class="icon-ugc-src tb-s8 icon-tm" href="http://s.click.taobao.com/t_9?p=mm_30820461_0_0&l=http%3A%2F%2Fwww.tmall.com%2F" target="_blank" gtrack="/virtual/qq/tmall?tracelog=ugc">天猫商城</a>
+					<span>)</span>
+				</div>
+			</div>
+			<div class="content dd-l">
+			    <input class="item-url" placeholder="请粘贴你要购买的淘宝宝贝网址" />
+				<a class="btn query-btn" href="javascript:;">查询积分</a>
+			</div>
+			<div class="loadding18x18 query-load dd-hide">获取宝贝信息中...</div>
+			<div class="query-info info dd-hide">获取宝贝信息失败</div>
+			<div class="ugc-content" style="display: none;">
+			    <div class="content-wrap dd-l">
+				    <div class="item-info dd-l">
+						<div class="pic-wrap dd-l">
+							
+						</div>
+						<div class="text-info dd-l">
+							<div class="title"></div>
+							<div class="other">
+								<div class="orignal-price dd-l">价格：&yen;<span class="ori-price"></span></div>
+								<div class="integral-wrap dd-l">
+									<span>购买获赠：</span>
+									<span class="integral"></span>
+									<span>积分</span>
+									<span>(价值<span class="discount">&yen;0.00</span>)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="ugc-oper dd-l">
+						<div class="loadding18x18 buy-load" style="display: none;">正在为你生成购物链接...</div>
+						<div class="buy-info info" style="display: none;"></div>
+					    <a class="ugc-buy btn dd-l" data-ugc-url="" data-ugc-done="#if($user.isGuideDone('ugc'))y#end#if(!$user.isGuideDone('ugc'))n#end" href="javascript:;">#if(!$user.isGuideDone('ugc'))去购买,拿积分#else推荐#end</a>
+						<div class="share dd-l">
+							<input type="checkbox" id="shareToApp" class="share-to-app" />
+							<label>分享给别人</label>
+							<label class="share-info info"></label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tips dd-l">
+			    <div class="cart-icon"></div>
+				<a class="tb-s8 dd-l" href="http://s8.taobao.com/search?q=%C5%AE&cat=16&tab=mall&pid=mm_30820461_0_0&commend=all&unid=keyword&&mode=23&commend=1%2C2&other_filter=tk_rate[2400%2C]%3Bratesum[11%2C]&filter=reserve_price[20%2C99]&fs=1" target="_blank" gtrack="/virtual/qq/tbs8?tracelog=ugc">去淘宝找找</a>
+			</div>
+		</div>
+		
+		<div class="flow-wrap">
+			<div class="title dd-l">自助购买商品积分攻略</div>
+			<ul class="award-list">
+			 	<li class="loadding">
+					<div class="loadding32x32"></div>
+			    </li>	
+			</ul>
+		</div>
+	</div>
+</div>

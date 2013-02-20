@@ -12,6 +12,7 @@ import com.doucome.corner.biz.core.service.taobao.TaobaoRecommandDecorator;
 import com.doucome.corner.biz.core.taobao.dto.TaobaoPromotionDisplayDTO;
 import com.doucome.corner.biz.core.taobao.dto.TaobaoPromotionInItemDTO;
 import com.doucome.corner.biz.core.utils.DecimalUtils;
+import com.doucome.corner.biz.zhe.utils.DdzJfbConvertUtils;
 import com.doucome.corner.web.common.action.BasicAction;
 import com.doucome.corner.web.common.model.JsonModel;
 import com.doucome.corner.web.zhe.model.PromotionPriceModel;
@@ -35,7 +36,7 @@ public class QueryPromotionAction extends BasicAction {
 		
 		if(!StringUtils.isNumeric(id) || userCommissionRate == null){
 			json.setCode(JsonModel.CODE_ILL_ARGS) ;
-			json.setDetail("id and commissionRate must set .") ;
+			json.setDetail("dcome.promotion.query.commissionRate.require") ;
 			return SUCCESS ;
 		}
 		
@@ -62,7 +63,10 @@ public class QueryPromotionAction extends BasicAction {
 					model.setHasPromotion(true) ;
 					model.setPromotionPrice(promotionPrice);
 					model.setUserCommissionRate(userCommissionRate);
+					model.setUserJfbRate(userCommissionRate) ;
 					model.setUserCommission(userCommission) ;
+					model.setUserJfb(DdzJfbConvertUtils.calcJfbAmount(promotionPrice, userCommissionRate.divide(DecimalConstant.HUNDRED, 4, BigDecimal.ROUND_HALF_EVEN))) ;
+					
 				}
 			}
 			

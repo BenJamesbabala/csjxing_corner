@@ -1,9 +1,12 @@
 package com.doucome.corner.biz.dcome.service.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.biz.core.model.page.Pagination;
@@ -31,34 +34,64 @@ public class DcCategoryServiceImpl implements DcCategoryService {
 	
 	@Override
 	public int updateCategoryById(DcCategoryDO cat) {
-		dcCategoryCache.remove(cat.getId()) ;
-		return dcCategoryDAO.updateCategoryById(cat) ;
+		if(cat == null || cat.getId() == null){
+			throw new IllegalArgumentException("catId cant be null.") ;
+		}
+		
+		int effectCount = dcCategoryDAO.updateCategoryById(cat) ;
+		
+		triggerCacheModified(cat.getId()) ;
+		
+		return effectCount ;
 	}
 
 	@Override
 	public DcCategoryDTO getCategoryById(long categoryId) {
-		DcCategoryDO cat = dcCategoryCache.get(categoryId) ;
-		if(cat == null){
-			cat = dcCategoryDAO.queryCategoryById(categoryId) ;
-			if(cat == null){
+		DcCategoryDTO dto = dcCategoryCache.get(categoryId) ;
+		if(dto == null){
+			DcCategoryDO catDO = dcCategoryDAO.queryCategoryById(categoryId) ;
+			if(catDO == null){
 				return null ;
 			}
-			dcCategoryCache.set(cat);
+			dto = new DcCategoryDTO(catDO) ; 
+			dcCategoryCache.set(dto);
 		}
 				
-		return new DcCategoryDTO(cat) ;
+		return dto ;
 	}
 	
 	@Override
-	public List<DcCategoryDTO> getCategoriesByIds(List<Long> ids){
-		List<DcCategoryDO> catList = dcCategoryDAO.queryCategoriesByIds(ids) ;
+	public List<DcCategoryDTO> getCategoriesByIds(List<Long> idList){
+		
+		Map<Long,DcCategoryDTO> catMap = dcCategoryCache.getCacheMap(idList) ;
+		
 		List<DcCategoryDTO> dtoList = new ArrayList<DcCategoryDTO>() ;
-		if(CollectionUtils.isNotEmpty(catList)){
-			for(DcCategoryDO cat : catList){
-				dtoList.add(new DcCategoryDTO(cat)) ;
+		//Step 1 :从缓存中取
+		if(MapUtils.isNotEmpty(catMap)) {
+			for(Iterator<Long> i = idList.iterator() ;i.hasNext() ;){
+				Long id = i.next() ;
+				DcCategoryDTO dto = catMap.get(id) ;
+				if(dto != null){ //缓存中存在
+					dtoList.add(catMap.get(id)) ;
+					i.remove() ;
+				}
 			}
 		}
-		return dtoList ;
+		//Step 2 : 缓存中不存在的继续从数据库中取
+		if(CollectionUtils.isNotEmpty(idList)) { 
+			List<DcCategoryDO> catList = dcCategoryDAO.queryCategoriesByIds(idList) ;
+			if(CollectionUtils.isNotEmpty(catList)){
+		        for(DcCategoryDO item : catList){
+		        	DcCategoryDTO dto = new DcCategoryDTO(item) ; 
+		        	dtoList.add(dto) ; 
+		        	dcCategoryCache.set(dto) ; //加到缓存
+		        }
+	        }
+		}
+        
+        return dtoList ;
+		
+		
 	}
 	
 	@Override
@@ -106,10 +139,11 @@ public class DcCategoryServiceImpl implements DcCategoryService {
 
 	@Override
 	public int removeCategoryById(long categoryId) {
-		dcCategoryCache.remove(categoryId) ;
-		return dcCategoryDAO.deleteCategoryById(categoryId) ;
+		int effectCount = dcCategoryDAO.deleteCategoryById(categoryId) ;
+		triggerCacheModified(categoryId) ;
+		return effectCount ;
 	}
-
+	
 	@Override
 	public List<DcCategoryDTO> getCategories(DcCategorySearchCondition searchCondition) {
 		
@@ -125,7 +159,9 @@ public class DcCategoryServiceImpl implements DcCategoryService {
 	}
 
 	
-
+	private void triggerCacheModified(Long catId) {
+		dcCategoryCache.remove(catId) ;
+	}
 	
 
 	

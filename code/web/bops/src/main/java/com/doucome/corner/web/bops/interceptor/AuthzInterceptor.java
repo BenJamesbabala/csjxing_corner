@@ -1,12 +1,6 @@
 package com.doucome.corner.web.bops.interceptor;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.doucome.corner.biz.core.constant.URIConstant;
-import com.doucome.corner.biz.core.service.impl.DefaultUriService;
 import com.doucome.corner.web.bops.authz.BopsAuthz;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;

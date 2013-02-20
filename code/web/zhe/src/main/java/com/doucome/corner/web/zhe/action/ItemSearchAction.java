@@ -11,11 +11,13 @@ import com.doucome.corner.biz.core.service.ShortUrlService;
 import com.doucome.corner.biz.core.utils.OutCodeUtils;
 import com.doucome.corner.biz.core.utils.ValidateUtil;
 import com.doucome.corner.biz.dal.dataobject.DdzSearchLogDO;
+import com.doucome.corner.biz.dal.dataobject.DdzUserDO;
 import com.doucome.corner.biz.zhe.enums.SearchWayEnums;
 import com.doucome.corner.biz.zhe.model.TaobaokeItemFacade;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
 import com.doucome.corner.biz.zhe.service.DdzSearchLogService;
 import com.doucome.corner.biz.zhe.service.DdzTaobaokeService;
+import com.doucome.corner.biz.zhe.utils.DangerousWordsUtils;
 import com.doucome.corner.web.common.constant.CookieConstants;
 import com.doucome.corner.web.common.cookie.CookieHelper;
 import com.doucome.corner.web.zhe.authz.DdzSessionOperator;
@@ -25,7 +27,7 @@ import com.opensymphony.xwork2.ModelDriven;
 /**
  * 单商品查询
  * 
- * @author shenjia.caosj 2012-3-17
+ * @author langben 2012-3-17
  */
 @SuppressWarnings("serial")
 public class ItemSearchAction extends DdzBasicAction implements ModelDriven<TaobaokeItemFacade> {
@@ -59,7 +61,11 @@ public class ItemSearchAction extends DdzBasicAction implements ModelDriven<Taob
 
     private boolean                   userGuide;
     
-    private boolean 				 isRecommend = false ;
+    private boolean 				  isRecommend = false ;
+    
+    private String domain ;
+    
+    private String errorCode ;
     
     @Override
     public String execute() throws Exception {
@@ -72,22 +78,22 @@ public class ItemSearchAction extends DdzBasicAction implements ModelDriven<Taob
             accountId = generateAccountId();
             
             //兼容以前商品推荐代码
-            
             if ("vip@diandianzhe.com".equals(alipayId)) {
             	CookieHelper.writeCookie(getResponse(), CookieConstants.DDZ_DEFAULT_DOMAIN, "__ddz_y_id", null,
                         CookieConstants.EXPIRY_TIME_YEAR);
             	alipayId = null;
             }
             
+            
             //推荐过来，但是有支付宝
             if(isRecommend && StringUtils.isNotBlank(accountId)){
             	return "redirectItem" ;
             }
 
-            String outCode = OutCodeUtils.encodeOutCode(accountId, OutCodeEnums.DDZ_ACCOUNT_ID);
+            String outCode = OutCodeUtils.encodeOutCode(accountId, OutCodeEnums.DDZ_ACCOUNT_ID_JFB);
 
-            
-            item = ddzTaobaokeService.conventItem(id, outCode) ;
+            boolean isMall = StringUtils.containsIgnoreCase(domain ,"tmall.com") ? true : false;
+            item = ddzTaobaokeService.conventItem(id, outCode ,isMall ) ;
             
             if(item == null){ //木有折扣或者item不存在
             	//查询商品信息
@@ -97,13 +103,20 @@ public class ItemSearchAction extends DdzBasicAction implements ModelDriven<Taob
             		if(StringUtils.equals(e.getErrCode(),TaobaoRemoteException.ERR_ITEM_NOT_FOUND)){
             			//item不存在
             			id = null ;
+            			errorCode = "ddz.item.notFound" ;
             			return SUCCESS ;
             		}
             	}
             }
             
             if (item != null) {
-            	
+            	String itemTitle = item.getTitle() ;
+            	if(DangerousWordsUtils.isForbbiden(itemTitle)){
+            		item = null ;
+            		id = null ;
+            		errorCode = "ddz.item.dangerKeyword" ;
+            		return SUCCESS ;
+            	}
             	if(item.getCommission() != null){// 生成短链
             		String clickUrlShorten = shortUrlService.insertUrl(item.getClickUrl());
                     item.setClickUrlShorten(clickUrlShorten);
@@ -115,7 +128,20 @@ public class ItemSearchAction extends DdzBasicAction implements ModelDriven<Taob
 
         }
         
+        if(StringUtils.isNotBlank(alipayId)){
+        	doSomethingAfterSearch(alipayId) ;
+        }
+        
         return SUCCESS;
+    }
+    
+    /**
+     * 登陆之后的后置事务
+     * 
+     * @param user
+     */
+    public void doSomethingAfterSearch(String alipay) {
+    	ddzAccountService.updateLastVisitByAlipayId(alipay) ;
     }
     
     private void dblog(){
@@ -209,6 +235,18 @@ public class ItemSearchAction extends DdzBasicAction implements ModelDriven<Taob
 	public void setIsRecommend(boolean isRecommend) {
 		this.isRecommend = isRecommend;
 	}
- 
+
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+
+	public String getDomain() {
+		return domain;
+	}
+
     
 }

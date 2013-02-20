@@ -1,12 +1,26 @@
 .my-user-info .title {
-	background: url("../../../../img/myhome-rep.png") no-repeat scroll 999px 999px transparent;
+	background: url("../../../../img/myhome-rep.png") no-repeat scroll 999px
+		999px transparent;
 }
+
 .my-user-info {
 	border: 1px solid #CCCCCC;
 	height: 500px;
 	width: 790px;
 	line-height: 28px;
 	background-color: #FFF;
+}
+
+.title {
+	margin-bottom: -2px;
+}
+
+.title {
+	display: block;
+	overflow: hidden;
+	position: relative;
+	margin-top: 20px;
+	margin-bottom: 6px;
 }
 
 .my-user-info .title {
@@ -18,23 +32,218 @@
 	line-height: 32px;
 	color: #666666;
 }
+
 .info-detail {
 	padding-top: 15px;
 	padding-left: 25px;
 }
+
 .ui-dlist {
-    color: #808080;
-    display: inline-block;
+	color: #808080;
+	display: inline-block;
 }
 
 .ui-dlist-tit {
-    float: left;
-    text-align: left;
-    width: 100px;
+	float: left;
+	text-align: left;
+	width: 100px;
 }
 
 .ui-dlist-det {
-    float: left;
-    text-align: left;
-    width: 600px;
+	float: left;
+	text-align: left;
+	width: 600px;
+}
+
+#xbox-mock {
+	position: absolute;
+	background: white;
+	z-index: 1002;
+	color: black;
+	text-align: left;
+	top: 16%;
+	left: 30%;
+	overflow: hidden;
+}
+
+.xbox-mock {
+	border: 6px solid #767576;
+	-moz-box-shadow: 3px 2px 6px #333;
+	-webkit-box-shadow: #333 2px 2px 6px;
+}
+
+#J-morderNotice .content,#J-login-check {
+	padding: 10px;
+}
+
+#J-morderNotice .title,#J-login-check .title {
+	margin-top: 5px;
+}
+
+.title h2 {
+	font: 500 18px "ºÚÌå";
+	float: left;
+}
+
+.xbox-close-link,.ico-xbox-close {
+	padding-left: 14px;
+	background-position: -2px -73px;
+}
+
+.xbox-close-link,.pop-close-link {
+	display: block;
+	height: 19px;
+	right: 0;
+	top: 0;
+	font: 500 12px/19px Arial;
+	position: absolute;
+}
+
+.ico-expand-arrow,.ico-plus,.ico-xbox-close,.xbox-close-link {
+	background-image: url(https://img.alipay.com/pa/frame/v2/ico-text.png);
+	background-repeat: no-repeat;
+	font-family: Tahoma;
+}
+
+.line {
+	height: 1px;
+	margin: 3px 0;
+	overflow: hidden;
+	background: #E1E1E1;
+}
+
+.line-title {
+	margin: 4px 0 -5px;
+	_margin: 2px 0 -8px;
+}
+
+.notice-cnt .notice-cnt-uparea {
+	display: block;
+}
+
+.customize-notice,.notice-cnt-uparea {
+	background: url("https://img.alipay.com/pa/frame/v2/ico-pa.png") -743px
+		-655px no-repeat;
+	color: #333;
+	padding: 12px 0 12px 45px;
+}
+
+.fn-ml20 {
+	margin-left: 20px;
+}
+
+.fn-mt20 {
+	margin-top: 20px;
+}
+
+#J-noticeDesc,#J-login-check .tip-content {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 130%;
+}
+
+.notice-cnt .notice-cnt-downarea {
+	display: block;
+	margin-top: 5px;
+	line-height: 20px;
+}
+
+.notice-cnt-downarea .text-tit {
+	margin-left: 59px;
+}
+
+.btn-ok {
+	border: 1px #D74C00 solid;
+	background-position: 0 0;
+}
+
+.btn-ok,.btn-ok-hover,.btn-cancel,.btn-ok-disabled,.btn button {
+	font-size: 14px;
+	padding: 1px;
+}
+
+a.xbox-close-link:hover,a.ico-xbox-close:hover,a.pop-close-link:hover,a.ico-expand-arrow:hover
+	{
+	text-decoration: none;
+}
+
+.btn,.btn-icon {
+	display: -moz-inline-box;
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 100%;
+	text-align: left;
+	font-size: 12px;
+	text-decoration: none;
+	cursor: pointer;
+	zoom: 1;
+}
+
+.btn,.btn input,.btn button,.btn span {
+	background-image: url(https://img.alipay.com/pa/frame/v2/bg-btn.png);
+	background-repeat: repeat-x;
+	font-family: Tahoma;
+	cursor: pointer;
+	outline: none;
+}
+
+.btn-ok-hover button,.btn-ok-hover input,.btn-ok-hover span,.btn-ok:hover span
+	{
+	background-position: 0 -36px;
+}
+
+.btn-ok span,.btn-ok-hover span,.btn-ok-hover:hover span {
+	padding-bottom: 3px;
+	_padding-bottom: 1px;
+	_line-height: 28px;
+	height: 26px;
+}
+
+.notice-cnt .notice-cnt-downarea {
+	line-height: 20px;
+}
+
+.notice-cnt-downarea .text-gray {
+	line-height: 42px;
+	margin-left: 210px;
+}
+
+.notice-cnt-uparea-text .text-gray {
+	display: block;
+	color: #A6A6A6;
+}
+
+.notice-cnt-downarea .text-gray2 {
+	color: #B7774B;
+}
+
+.notice-cnt-downarea .text-gray1 {
+	margin-left: 56px;
+}
+
+.btn-ok button,.btn-ok input,.btn-ok span {
+	background-position: 0 -70px;
+}
+
+.btn-ok button,.btn-ok input,.btn-ok span,.btn-ok-hover button,.btn-ok-hover input,.btn-ok-hover span,.btn-cancel button,.btn-cancel input,.btn-cancel span,.btn-ok-disabled input,.btn-ok-disabled span
+	{
+	padding: 0 16px;
+	padding-bottom: 3px;
+	height: 28px;
+	line-height: 28px;
+	font-weight: bold;
+	color: white;
+}
+
+.btn span,.btn:hover span {
+	display: block;
+	float: left;
+	text-decoration: none;
+}
+
+.btn-ok span,.btn-ok-hover span,.btn-ok-hover:hover span {
+	padding-bottom: 3px;
+	_padding-bottom: 1px;
+	_line-height: 28px;
+	height: 26px;
 }

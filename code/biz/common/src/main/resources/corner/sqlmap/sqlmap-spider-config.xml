@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="spiderConfig">
+	<typeAlias alias="TA-SPIDER-CONFIG"
+		type="com.doucome.corner.biz.dal.dataobject.SpiderConfigDO" />
+
+	<resultMap id="RM-SPIDER-CONFIG" class="TA-SPIDER-CONFIG">
+		<result property="id" column="ID" />
+		<result property="category" column="CATEGORY" jdbcType="VARCHAR" />
+		<result property="site" column="SITE" jdbcType="VARCHAR" />
+		<result property="url" column="URL"/>
+		<result property="keyName" column="KEY_NAME"/>
+		<result property="status" column="STATUS" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertConfig">
+		INSERT INTO SPIDER_CONFIG
+			(ID,CATEGORY,SITE,URL,KEY_NAME,STATUS,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#category#,#site#,#url#,#keyName#,#status#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="queryConfigs" resultMap="RM-SPIDER-CONFIG">
+	 	select ID,CATEGORY,SITE,URL,KEY_NAME,STATUS,GMT_CREATE,GMT_MODIFIED
+	 	from SPIDER_CONFIG
+		where STATUS = 'enable'
+		order by ID desc
+	</select>
+</sqlMap>

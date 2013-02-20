@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcPromotionAward">
+	<typeAlias alias="TA-DcPromotionAward"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcPromotionAwardDO" />
+		
+	<typeAlias alias="TA-DcPromItem" type="com.doucome.corner.biz.dal.dataobject.dcome.DcPromotionItemDO"/>
+
+	<resultMap id="RM-DcPromotionAward" class="TA-DcPromotionAward">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userNick" column="USER_NICK" jdbcType="VARCHAR" />
+		<result property="promotionId" column="PROMOTION_ID" />
+		<result property="promotionItemId" column="PROMOTION_ITEM_ID" />
+		<result property="itemId" column="ITEM_ID" />
+		<result property="itemSize" column="ITEM_SIZE" />
+		<result property="itemColor" column="ITEM_COLOR" />
+		<result property="itemType" column="ITEM_TYPE" />
+		<result property="delName" column="DEL_NAME" jdbcType="VARCHAR" />
+		<result property="delMobile" column="DEL_MOBILE" jdbcType="VARCHAR" />
+		<result property="delProvince" column="DEL_PROVINCE" jdbcType="VARCHAR" />
+		<result property="delCity" column="DEL_CITY" jdbcType="VARCHAR" />
+		<result property="delArea" column="DEL_AREA" jdbcType="VARCHAR" />
+		<result property="delAddr" column="DEL_ADDR" jdbcType="VARCHAR" />
+		<result property="delOther" column="DEL_OTHER" jdbcType="VARCHAR" />
+		<result property="delZipcode" column="DEL_ZIPCODE" jdbcType="VARCHAR" />
+		<result property="sendStatus" column="SEND_STATUS" jdbcType="VARCHAR" />
+		<result property="rateCount" column="RATE_COUNT"  />
+		<result property="itemNum" column="ITEM_NUM"  />
+		<result property="promotionType" column="PROMOTION_TYPE"  />
+		<result property="reviewStatus" column="REVIEW_STATUS"  />
+		<result property="checkCode" column="CHECK_CODE"  />
+		<result property="shareStatus" column="SHARE_STATUS" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertAward">
+		INSERT INTO 
+			DC_PROMOTION_AWARD(ID,USER_ID,USER_NICK,PROMOTION_TYPE,REVIEW_STATUS,CHECK_CODE,PROMOTION_ID,PROMOTION_ITEM_ID,ITEM_ID,ITEM_TYPE,
+			DEL_NAME,DEL_MOBILE,DEL_PROVINCE,DEL_CITY,DEL_AREA,DEL_ADDR,DEL_ZIPCODE,SEND_STATUS,RATE_COUNT,ITEM_NUM,SHARE_STATUS,GMT_CREATE,GMT_MODIFIED)
+		VALUES
+			(#id#,#userId#,#userNick#,#promotionType#,#reviewStatus#,#checkCode#,#promotionId#,#promotionItemId#,#itemId#,#itemType#,#delName#,
+			#delMobile#,#delProvince#,#delCity#,#delArea#,#delAddr#,#delZipcode#,#sendStatus#,#rateCount#,#itemNum#,#shareStatus#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="queryAwardByUserId" resultMap="RM-DcPromotionAward">
+		SELECT 
+			ID,USER_ID,USER_NICK,PROMOTION_TYPE,REVIEW_STATUS,CHECK_CODE,PROMOTION_ID,PROMOTION_ITEM_ID,ITEM_ID,ITEM_SIZE,ITEM_COLOR,ITEM_TYPE,DEL_NAME,
+			DEL_MOBILE,DEL_PROVINCE,DEL_CITY,DEL_AREA,DEL_ADDR,DEL_OTHER,DEL_ZIPCODE,SEND_STATUS,RATE_COUNT,ITEM_NUM,SHARE_STATUS,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_PROMOTION_AWARD
+		WHERE
+			USER_ID = #userId# AND REVIEW_STATUS='S'
+	</select>
+	
+	<select id="getAwardsByPromId" resultMap="RM-DcPromotionAward">
+		SELECT 
+			ID,USER_ID,USER_NICK,PROMOTION_TYPE,REVIEW_STATUS,CHECK_CODE,PROMOTION_ID,PROMOTION_ITEM_ID,ITEM_ID,ITEM_SIZE,ITEM_COLOR,ITEM_TYPE,DEL_NAME,
+			DEL_MOBILE,DEL_PROVINCE,DEL_CITY,DEL_AREA,DEL_ADDR,DEL_OTHER,DEL_ZIPCODE,SEND_STATUS,RATE_COUNT,ITEM_NUM,SHARE_STATUS,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_PROMOTION_AWARD
+		WHERE
+			PROMOTION_ID = #promtionId#
+	</select>
+	
+	<select id="queryAwardsNoPage" resultMap="RM-DcPromotionAward">
+		SELECT 
+			ID,USER_ID,USER_NICK,PROMOTION_TYPE,REVIEW_STATUS,CHECK_CODE,PROMOTION_ID,PROMOTION_ITEM_ID,ITEM_ID,ITEM_SIZE,ITEM_COLOR,ITEM_TYPE,DEL_NAME,
+			DEL_MOBILE,DEL_PROVINCE,DEL_CITY,DEL_AREA,DEL_ADDR,DEL_OTHER,DEL_ZIPCODE,SEND_STATUS,RATE_COUNT,ITEM_NUM,SHARE_STATUS,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_PROMOTION_AWARD
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="promotionId" prepend="AND">
+					<![CDATA[
+					PROMOTION_ID = #promotionId# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="promotionType" prepend="AND">
+					<![CDATA[
+					PROMOTION_TYPE = #promotionType# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="userId" prepend="AND">
+					<![CDATA[
+					USER_ID = #userId# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="reviewStatus" prepend="AND">
+					<![CDATA[
+					REVIEW_STATUS = #reviewStatus# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="checkCode" prepend="AND">
+					<![CDATA[
+					CHECK_CODE = #checkCode# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="sendStatus" prepend="AND">
+					<![CDATA[
+					SEND_STATUS = #sendStatus# 
+					]]>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+		<isEqual property="order" compareValue="RATE_COUNT">
+		    ORDER BY 
+		    	PROMOTION_TYPE DESC ,
+		    	PROMOTION_ID DESC , 
+		    	RATE_COUNT DESC
+		</isEqual>
+		<isEmpty property="order" prepend="">
+			ORDER BY GMT_CREATE DESC
+		</isEmpty>
+	</select>
+	
+	<select id="queryAwardsWithPagination" resultMap="RM-DcPromotionAward">
+		SELECT 
+			ID,USER_ID,USER_NICK,PROMOTION_TYPE,REVIEW_STATUS,CHECK_CODE,PROMOTION_ID,PROMOTION_ITEM_ID,ITEM_ID,ITEM_SIZE,ITEM_COLOR,ITEM_TYPE,DEL_NAME,
+			DEL_MOBILE,DEL_PROVINCE,DEL_CITY,DEL_AREA,DEL_ADDR,DEL_OTHER,DEL_ZIPCODE,SEND_STATUS,RATE_COUNT,ITEM_NUM,SHARE_STATUS,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_PROMOTION_AWARD
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="promotionId" prepend="AND">
+					<![CDATA[
+					PROMOTION_ID = #promotionId# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="promotionType" prepend="AND">
+					<![CDATA[
+					PROMOTION_TYPE = #promotionType# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="userId" prepend="AND">
+					<![CDATA[
+					USER_ID = #userId# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="reviewStatus" prepend="AND">
+					<![CDATA[
+					REVIEW_STATUS = #reviewStatus# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="checkCode" prepend="AND">
+					<![CDATA[
+					CHECK_CODE = #checkCode# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="sendStatus" prepend="AND">
+					<![CDATA[
+					SEND_STATUS = #sendStatus# 
+					]]>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+		<isEqual property="order" compareValue="RATE_COUNT">
+		    ORDER BY 
+		    	PROMOTION_TYPE DESC ,
+		    	PROMOTION_ID DESC , 
+		    	RATE_COUNT DESC
+		</isEqual>
+		<isEmpty property="order" prepend="">
+		    <isEqual property="sendStatus" compareValue="U">
+			    ORDER BY DEL_MOBILE desc,GMT_CREATE DESC
+			</isEqual>
+			<isNotEqual property="sendStatus" compareValue="U">
+			    ORDER BY GMT_CREATE DESC
+			</isNotEqual>
+		</isEmpty>
+		LIMIT 
+			#start# , #size#
+	</select>
+	
+	<select id="countAwardsWithPagination" resultClass="java.lang.Integer">
+		SELECT 
+			COUNT(ID) 
+		FROM
+			DC_PROMOTION_AWARD
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="promotionId" prepend="AND">
+					<![CDATA[
+					PROMOTION_ID = #promotionId# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="promotionType" prepend="AND">
+					<![CDATA[
+					PROMOTION_TYPE = #promotionType# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="userId" prepend="AND">
+					<![CDATA[
+					USER_ID = #userId# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="reviewStatus" prepend="AND">
+					<![CDATA[
+					REVIEW_STATUS = #reviewStatus# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="checkCode" prepend="AND">
+					<![CDATA[
+					CHECK_CODE = #checkCode# 
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="sendStatus" prepend="AND">
+					<![CDATA[
+					SEND_STATUS = #sendStatus# 
+					]]>
+				</isNotEmpty>
+			</isParameterPresent>
+		</dynamic>
+	</select>
+	
+	<update id="updateReviewStatusById">
+		UPDATE
+			DC_PROMOTION_AWARD
+		SET
+			REVIEW_STATUS = #reviewStatus# , 
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
+	</update>
+	
+	<update id="updateSendStatusById">
+		UPDATE
+			DC_PROMOTION_AWARD
+		SET
+			SEND_STATUS = #sendStatus# , 
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
+	</update>
+	
+	<select id="queryAwardsById" resultMap="RM-DcPromotionAward">
+		SELECT 
+			ID,USER_ID,USER_NICK,PROMOTION_TYPE,REVIEW_STATUS,CHECK_CODE,PROMOTION_ID,PROMOTION_ITEM_ID,ITEM_ID,ITEM_SIZE,ITEM_COLOR,ITEM_TYPE,DEL_NAME,
+			DEL_MOBILE,DEL_PROVINCE,DEL_CITY,DEL_AREA,DEL_ADDR,DEL_OTHER,DEL_ZIPCODE,SEND_STATUS,RATE_COUNT,ITEM_NUM,SHARE_STATUS,GMT_CREATE,GMT_MODIFIED
+		FROM 
+			DC_PROMOTION_AWARD
+		WHERE
+			ID = #id#
+	</select>
+	
+	<update id="updateShareStatus">
+		UPDATE DC_PROMOTION_AWARD
+		SET SHARE_STATUS = #shareStatus# , 
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #awardId# and USER_ID = #userId#
+	</update>
+	
+	<update id="updateAwardAddrInfo">
+		UPDATE DC_PROMOTION_AWARD
+		SET ITEM_SIZE = #itemSize#,
+		    ITEM_COLOR = #itemColor#,
+		    DEL_NAME = #delName#,
+		    DEL_MOBILE = #delMobile#,
+		    DEL_ADDR = #delAddr#,
+		    DEL_OTHER = #delOther#,
+		    DEL_ZIPCODE = #delZipcode#,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id# and USER_ID = #userId# AND SEND_STATUS='U'
+	</update>
+</sqlMap>

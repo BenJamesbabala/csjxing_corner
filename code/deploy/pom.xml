@@ -51,12 +51,6 @@
 	</dependencies>
 
 	<build>
-		<resources>
-			<resource>
-				<directory>bin</directory>
-			</resource>
-		</resources>
-
 
 		<plugins>
 			<plugin>

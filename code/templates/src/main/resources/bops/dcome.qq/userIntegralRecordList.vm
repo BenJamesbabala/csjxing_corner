@@ -1,0 +1,121 @@
+#set($layout="bops/default_bops.vm")
+#set($navigation = "积分兑换 - 积分记录")
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="dcIntegralRecordList"/>
+
+<style>
+	th a {
+		text-decoration:none;
+		color:#000 ;
+	}
+	
+	.item-id-search {
+		width:100px;
+	}
+	
+	.onoff-sale-area {
+		width:1000px;
+		clear:both;
+		font-size:12px;
+	}
+	
+	.settle-memo-dialog {
+		text-align: center;
+		width: 120px;
+		height:25px;
+		line-height:25px;
+		position:relative;
+	}
+</style>
+
+#set($pagination = $queryResult.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/qq/user_integral_record_list.htm?")
+#set($searchQuery = ["userId:$!userId"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+		
+	<form action="${env.bopsRoot}/bops/dcome/qq/exchange_approve_list.htm" method="GET">
+		<div class="settleipt MB10 MT10">
+			用户ID: <input type="text" name="userId" value="$!userId"/>
+			
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+
+	#parse("/common/bops/dcome.qq/userIntegralRecordPagination.vm")
+	 
+	 <table width="1100" style="font-size:14px;" id="itemTable" class="exchange-approve">
+		<tr>
+    		<th width="25">序号</th>
+			<th width="30">UserId</th>
+			<th width="100">title</th>
+			<th width="40">积分</th>
+			<th width="100">积分余额</th>
+			<th width="40">类别</th>
+			<th width="70">兑换ID | 报表ID</th>
+			<th width="40">状态</th>
+			<th width="40">创建时间</th>
+			<th width="40"></th>
+    	</tr>
+		#if($queryResult.totalRecords > 0)
+    		#foreach($item in $queryResult.items)
+				#set($idx = (($pagination.page - 1) * $pagination.size) + $velocityCount )
+            	<tr data-id="$!item.id">
+            		<td align="center">$idx</td>
+					<td>$!item.userId</td>
+                    <td>[#if($item.inOutType == "O")<span class="dc-red">支出</span>#else<span class="dc-green">收入</span class="dc-gray">#end - #DC_USER_INTEGRAL_SOURCE($item.source)]
+							<span class="dc-gray">
+							#if($item.integralDescMap['NUM_IID'])
+							<a class="dc-gray" href="${env.bopsRoot}/bops/redirect_taobao_item.htm?numIid=$!item.integralDescMap['NUM_IID']&outCode=INT_RCD" target="_blank">$!item.descModel.title</a>
+							#elseif($item.integralDescMap['DC_ITEM_ID'])
+							<a class="dc-gray" href="${env.bopsRoot}/bops/dcome/prom/redirect_item.htm?itemId=$!item.integralDescMap['DC_ITEM_ID']&outCode=INT_RCD" target="_blank">$!item.descModel.title</a>
+							#else
+								$!item.descModel.title
+							#end
+							</span>
+					</td>
+                    <td><span class='#if($item.inOutType == "O") dc-red #else dc-green #end'>$!item.integralCount</span></td>
+					<td>$!item.integralBalance</td>
+					<td>$!item.source</td>
+					<td align="center">
+						<div>#if($item.exchangeApproveId) [EA] $!item.exchangeApproveId #end</div>
+						<div>#if($item.taokeReportId) [TKRP] $!item.taokeReportId #end</div>
+					</td>
+					<td align="center">
+						<span class="settle_$!item.status">
+							#if($item.status == "S")
+								成功
+							#elseif($item.status == "C")
+								取消
+							#elseif($item.status == "D")
+								审核不过
+							#elseif($item.status == "P")
+								待发放
+							#else
+								#if($item.status)
+								未知（$!item.status）
+								#end
+							#end
+						</span>
+					</td>
+					<td align="center">$!dateUtils.format($!item.gmtCreate , 'yyyy-MM-dd HH:mm')</td>
+					<td align="center"></td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="10" align="center">没有查询到记录</td></tr>
+		#end
+     </table>
+	 
+	 #parse("/common/bops/dcome.qq/userIntegralRecordPagination.vm")
+	 
+</div>
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

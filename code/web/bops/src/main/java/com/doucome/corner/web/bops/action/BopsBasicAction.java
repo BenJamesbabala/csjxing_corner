@@ -8,15 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.doucome.corner.web.bops.action.utils.FiledErrorHelper;
 import com.doucome.corner.web.bops.authz.BopsAuthz;
-import com.opensymphony.xwork2.ActionSupport;
+import com.doucome.corner.web.common.action.BasicAction;
 
 @SuppressWarnings("serial")
-public abstract class BopsBasicAction extends ActionSupport {
+public abstract class BopsBasicAction extends BasicAction {
 	
 	protected static final String BOPS_ERROR = "bopsError" ;
 
     @Autowired
-    private BopsAuthz bopsAuthz;
+    protected BopsAuthz bopsAuthz;
     
     private FiledErrorHelper fieldErrorHelper = new FiledErrorHelper(){
     	@Override

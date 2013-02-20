@@ -2,7 +2,7 @@
 <!--
 	- 自动配置描述文件
 	-
-	- @author Michael Zhou
+	- @author 
 -->
 <config description="自动配置">
 	<group name="common config">
@@ -43,11 +43,20 @@
 		<property name="corner.api.taobao.login.url" defaultValue="http://container.api.taobao.com/container" description="taobao登陆"/>
 		<property name="corner.api.taobao.nickname" defaultValue="doucome2012" description="taobao账号"></property>
 		<property name="corner.api.taobao.url" defaultValue="http://gw.api.taobao.com/router/rest" description="api接口url"></property>
+		<property name="corner.api.taobao.widget.url" defaultValue="http://gw.api.taobao.com/widget/rest" description="api widget 接口 url"></property>
 		<property name="corner.api.taobao.appkey" defaultValue="12560092" description="taobao app key"></property>
 		<property name="corner.api.taobao.secret" defaultValue="a6ff439175e1fbf47fc881af2ed8c07b" description="app Secret"></property>
 		<property name="corner.api.taobaoke.appkeys" defaultValue="12625755,12625759,12625761,12625762,12625763" description="taobao app key"></property>
 		<property name="corner.api.taobaoke.secrets" defaultValue="d879c3f2f42db9311e735f6a94f96eee,20d1948b04620af5585ee73b17e639cd,b779110214f9416e8a9656f6252d8ef8,4d0468a570dd867b529005eca1f52d8a,a1af4a29017ac117509ccab0e13a0b0d" description="app Secret"></property>
 		<property name="corner.api.taobaoke.topSessions" defaultValue="61014291f0c03166c4ef66621c52fb7925b831668de14e0855844858,N/A,N/A,N/A,N/A" description="topSession"/>
+	</group>
+	
+	<group name="alipay">
+		<property name="corner.alipay.gateway" defaultValue="https://mapi.alipay.com/gateway.do" description="支付宝接口地址" />
+		<property name="corner.alipay.charset" defaultValue="utf8" description="编码" />
+		<property name="corner.alipay.signType" defaultValue="MD5" description="加密方式" />
+		<property name="corner.alipay.partner.id" defaultValue="2088801315657031" description="ID" />
+		<property name="corner.alipay.partner.key" defaultValue="ve3lzjnc4kdxn0wkekgl82yfrrmaxkv4" description="key" />
 	</group>
 	
 	<group name="upload img">
@@ -64,6 +73,14 @@
 		<property name="corner.cookie.entrypt.secretKey" defaultValue="IHsd*0sz." description="cookie加密密钥"></property>
 	</group>
 	
+	<group name="ctu">
+		<property name="corner.ctu.calculate.frequency" defaultValue="10" description="每增加多少投票计算一次"></property>
+		<property name="corner.ctu.rateLimit.forIP" defaultValue="10" description="一个IP的投票次数限制"></property>
+		<property name="corner.ctu.ipLimit.seconds" defaultValue="3600" description="IP限制时间跨度（秒）"></property>
+		<property name="corner.ctu.calculate.rateInMinutes" defaultValue="1440" description="根据多少分钟以内的数据进行行为分析"></property>
+		<property name="corner.ctu.successTime.checkCode" defaultValue="100" description="成功投票多少次，必须验证码"></property>
+	</group>
+	
 	<group name="bops">
 		<property name="corner.bops.domainName" defaultValue="bops.doucome.com" description="bops域名"></property>
 	</group>
@@ -78,6 +95,25 @@
 		<property name="corner.taskhome" defaultValue="/home/${corner_unix_user}/task" description="任务的home目录"></property>
 		<property name="corner.task.ddz.syncReport.cronExpression" defaultValue="0 5 9 * * ?" description="点点折从同步淘宝客报表"></property>
 		<property name="corner.task.ddz.syncBuyingRecommend.cronExpression" defaultValue="0 5 4 * * ?" description="点点折从同步第二天的推荐数据"></property>
+	</group>
+	
+	<group name="horoscope">
+	    <property name="corner.horoscope.domainName" defaultValue="hs.doucome.com" description="我的星座domain"></property>
+		<property name="corner.horoscope.appid" defaultValue="100677380" description="我的星座appid"></property>
+		<property name="corner.horoscope.appkey" defaultValue="bbfd481b021f7571610007d4100fc3cf" description="我的星座appkey"></property>
+		<property name="corner.horoscope.servername" defaultValue="119.147.19.43" description="qq开放平台 servername"></property>
+	</group>
+	
+	<group name="wryneck">
+	    <property name="corner.wryneck.domainName" defaultValue="wryneck.doucome.com" description="domain"></property>
+		<property name="corner.wryneck.appid" defaultValue="100680474" description="歪脖子appid"></property>
+		<property name="corner.wryneck.appkey" defaultValue="e102da1acd4e39f4ed4504f0d8b6d605" description="appkey"></property>
+	</group>
+	
+	<group name="namefate">
+	    <property name="corner.namefate.domainName" defaultValue="namefate.doucome.com" description="domain"></property>
+		<property name="corner.namefate.appid" defaultValue="100679408" description="appid"></property>
+		<property name="corner.namefate.appkey" defaultValue="e5b16f29813451d8459b81ca70b3e5bf" description="appkey"></property>
 	</group>
 	
 	<script>

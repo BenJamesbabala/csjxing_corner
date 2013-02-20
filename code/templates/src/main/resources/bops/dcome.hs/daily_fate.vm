@@ -1,0 +1,129 @@
+#set($layout="bops/default_bops.vm")
+
+#set($navigation = "星座日运势")
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="topic"/>
+
+<style>
+    .dd-l {
+	    float: left;
+	}
+	.content-box {
+	    width: 500px;
+	}
+	.content-box li {
+	    margin-bottom: 10px;
+	}
+	.content-box .entry {
+	
+	}
+	.content-box .entry-r {
+	    margin-left: 20px;
+	}
+	.content-box .entry .lbl, .content-box .entry-r .lbl {
+	    width: 90px;
+	}
+	.content-box .entry input {
+	    width: 100px;
+	}
+	.content-box .entry .hs-id {
+	    width: 100px;
+	}
+	.content-box .entry textarea, .content-box .entry-r textarea{
+	    width: 365px;
+		height: 100px;
+		float: left;
+		padding: 5px 5px;
+	}
+</style>
+
+<div class="main-box">
+	<form id="monthFateForm" method="post" action="${env.bopsRoot}/bops/dcome/hs/new_daily_fate.htm">
+		<input type="hidden" name="id" value="$!hsFate.id" />
+	    <ul class="content-box dd-l">
+		    <li class="dd-l">
+			    <div class="entry dd-l">
+					<span class="lbl dd-l">星&nbsp;&nbsp;&nbsp;&nbsp;座：</span>
+					<select class="hs-id dd-l" name="hsId">
+						<option value="1" selected>白羊座</option>
+						<option value="2" #if($!hsFate.hsId == 2) selected #end>金牛座</option>
+						<option value="3" #if($!hsFate.hsId == 3) selected #end>双子座</option>
+						<option value="4" #if($!hsFate.hsId == 4) selected #end>巨蟹座</option>
+						<option value="5" #if($!hsFate.hsId == 5) selected #end>狮子座</option>
+						<option value="6" #if($!hsFate.hsId == 6) selected #end>处女座</option>
+						<option value="7" #if($!hsFate.hsId == 7) selected #end>天秤座</option>
+						<option value="8" #if($!hsFate.hsId == 8) selected #end>天蝎座</option>
+						<option value="9" #if($!hsFate.hsId == 9) selected #end>射手座</option>
+						<option value="10" #if($!hsFate.hsId == 10) selected #end>摩羯座</option>
+						<option value="11" #if($!hsFate.hsId == 11) selected #end>水瓶座</option>
+						<option value="12" #if($!hsFate.hsId == 12) selected #end>双鱼座</option>
+					</select>
+				</div>
+				<div class="entry-r dd-l">
+				    <span class="lbl dd-l">有效时间：</span>
+					<input name="gmtDay" value="$!dateUtils.format($!gmtDay, 'yyyy-MM-dd')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate"/>
+				</div>
+			</li>
+			<li class="dd-l">
+			    <div class="entry dd-l">
+				    <span class="lbl dd-l">今日概述：</span>
+					<textarea class="summary" name="summary">$!hsFate.summary</textarea>
+				</div>
+			</li>
+			<li class="dd-l">
+			    <div class="entry dd-l">
+					<span class="lbl dd-l">综合指数：</span>
+					<input class="hs-id" name="compositeIndex" value="$!hsFate.compositeIndex" />
+				</div>
+				<div class="entry-r dd-l">
+				    <span class="lbl dd-l">恋爱指数：</span>
+					<input class="love-index" name="loveIndex" value="$!hsFate.loveIndex" />
+				</div>
+			</li>
+			<li class="dd-l">
+			    <div class="entry dd-l">
+					<span class="lbl dd-l">工作指数：</span>
+					<input class="hs-id" name="workIndex" value="$!hsFate.workIndex"/>
+				</div>
+				<div class="entry-r dd-l">
+				    <span class="lbl dd-l">财富指数：</span>
+					<input class="love-index" name="wealthIndex" value="$!hsFate.wealthIndex" />
+				</div>
+			</li>
+			<li class="dd-l">
+			    <div class="entry dd-l">
+					<span class="lbl dd-l">健康指数：</span>
+					<input class="hs-id" name="healthIndex" value="$!hsFate.healthIndex"/>
+				</div>
+				<div class="entry-r dd-l">
+				    <span class="lbl dd-l">幸&nbsp;运&nbsp;色：</span>
+					<input class="love-index" name="luckyColor" value="$!hsFate.luckyColor" />
+				</div>
+			</li>
+			<li class="dd-l">
+			    <div class="entry dd-l">
+					<span class="lbl dd-l">幸运数字：</span>
+					<input class="hs-id" name="luckyNumber" value="$!hsFate.luckyNumber" />
+				</div>
+			</li>
+			<li class="dd-l">
+			    <div class="entry dd-l">
+				    <span class="lbl dd-l">转运方式：</span>
+					<textarea class="turnToLucky" name="turnToLucky">$!hsFate.turnToLucky</textarea>
+				</div>
+			</li>
+			<li class="dd-l">
+			    <div class="entry dd-l">
+				    <input type="submit" text="提交" />
+				</div>
+			</li>
+		</ul>
+	</form>
+</div>
+
+<script>
+	!(function($){
+		
+	})(jQuery);
+</script>

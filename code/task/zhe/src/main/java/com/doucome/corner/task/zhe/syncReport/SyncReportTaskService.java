@@ -1,6 +1,7 @@
 package com.doucome.corner.task.zhe.syncReport;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,22 +32,27 @@ import com.doucome.corner.biz.core.taobao.model.TaobaokeDate;
 import com.doucome.corner.biz.core.utils.DecimalUtils;
 import com.doucome.corner.biz.core.utils.OutCodeUtils;
 import com.doucome.corner.biz.core.utils.OutCodeUtils.OutCode;
+import com.doucome.corner.biz.dal.condition.TaokeReportSearchCondition;
 import com.doucome.corner.biz.dal.dataobject.AlipayItemDO;
 import com.doucome.corner.biz.dal.dataobject.DdzAccountDO;
 import com.doucome.corner.biz.dal.dataobject.DdzSyncReportTaskDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportDO;
 import com.doucome.corner.biz.dal.dataobject.DdzTaokeReportSettleDO;
+import com.doucome.corner.biz.dcome.utils.DcPromotionOutCodeUtils;
+import com.doucome.corner.biz.dcome.utils.DcPromotionOutCodeUtils.OutCodeData;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.InternalCommission;
 import com.doucome.corner.biz.zhe.service.DdzAccountService;
 import com.doucome.corner.biz.zhe.service.DdzSyncReportTaskService;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportService;
 import com.doucome.corner.biz.zhe.service.DdzTaokeReportSettleService;
+import com.doucome.corner.biz.zhe.utils.DdzJfbConvertUtils;
 import com.doucome.corner.task.zhe.TaskService;
 import com.doucome.corner.task.zhe.model.SyncReportCodeEnums;
 import com.doucome.corner.task.zhe.model.SyncReportRunResult;
 import com.doucome.corner.task.zhe.model.SyncReportRunResult.Page;
 import com.doucome.corner.task.zhe.model.SyncReportRunResult.SettleReportResult;
+import com.doucome.corner.task.zhe.syncReport.handler.Handler;
 import com.doucome.corner.task.zhe.utils.TaskUtils;
 
 /**
@@ -58,6 +64,8 @@ public class SyncReportTaskService implements TaskService {
 	private static final Log syncReportLog = LogFactory.getLog(LogConstant.task_syncReport_log) ;
 	
 	private static final Log log = LogFactory.getLog(SyncReportTaskService.class) ;
+	
+	private List<Handler> handlerList = new ArrayList<Handler>() ;
 	
 	@Autowired
 	private DdzTaokeReportService ddzTaokeReportService ;
@@ -131,12 +139,32 @@ public class SyncReportTaskService implements TaskService {
 		//从淘宝API获取报表
 		List<TaobaokeReportMemberDTO> taobaoReportList = getAllReport(date, returnObject) ;
 		if(!CollectionUtils.isEmpty(taobaoReportList)){
+			
+			String batchformat = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) ;
 			//同步报表到数据库
-			int successCount = syncEveryReport(taobaoReportList) ;
+			int successCount = syncEveryReport(taobaoReportList , batchformat) ;
 			returnObject.setSuccessCount(successCount) ;
+			
+			///一次从数据库取出所有的刚生成的数据，交给不同的handler处理
+			TaokeReportSearchCondition searchCondition = new TaokeReportSearchCondition() ;
+			searchCondition.setInsertBatch(batchformat) ;
+			List<DdzTaokeReportDO> handleReportList = ddzTaokeReportService.getReports(searchCondition) ;
+			
+			//处理点点折报表结算
+			//处理豆蔻活动增积分
+			if(!CollectionUtils.isEmpty(handlerList)){
+				for(Handler handler : handlerList){
+					try {
+						handler.handleReport(handleReportList) ;
+					}catch(Exception e){
+						log.error(e.getMessage() , e) ;
+					}
+				}
+			}
+			
 			//生成结算
-			SettleReportResult settleReportResult = createSettleReport();
-			returnObject.setSettleReportResult(settleReportResult);
+			//SettleReportResult settleReportResult = createSettleReport();
+			//returnObject.setSettleReportResult(settleReportResult);
 		}
 		
 		if(!CollectionUtils.isEmpty(returnObject.getFailPages())){
@@ -158,9 +186,14 @@ public class SyncReportTaskService implements TaskService {
 		return returnObject.toString() ;
 	}
 		
+	/**
+	 * 从阿里妈妈获取当天所有的报表
+	 * @param date
+	 * @param runout
+	 * @return
+	 */
 	private List<TaobaokeReportMemberDTO> getAllReport(TaobaokeDate date , SyncReportRunResult runout){
-		
-		
+				
 		List<TaobaokeReportMemberDTO> reportList = new ArrayList<TaobaokeReportMemberDTO>() ;
 		List<Page> failPageList = new ArrayList<Page>() ;
 		QueryResult<TaobaokeReportMemberDTO> result = null ;
@@ -183,7 +216,7 @@ public class SyncReportTaskService implements TaskService {
 					}catch(Exception e){
 						log.error(e.getMessage() , e) ;
 					}
-					matchPicUrl(itemList , subReportList) ;
+					//matchPicUrl(itemList , subReportList) ;
 					reportList.addAll(subReportList) ;
 				}
 				
@@ -233,44 +266,45 @@ public class SyncReportTaskService implements TaskService {
 		return numIids ;
 	}
 	
-	private void matchPicUrl(List<TaobaoItemDTO> itemList , List<TaobaokeReportMemberDTO> toReportList){
-		if(CollectionUtils.isEmpty(itemList) || CollectionUtils.isEmpty(toReportList)){
-			return ;
-		}
-		if(itemList.size() != toReportList.size()){
-			//挨个比对
-			for(TaobaoItemDTO item : itemList){
-				Long numIid = item.getNumIid() ;
-				for(TaobaokeReportMemberDTO report : toReportList){
-					if(numIid.equals(report.getNumIid())){
-						report.setPicUrl(item.getPicUrl()) ;
-						break ;
-					}
-				}
-			}
-			return ;
-		}
-		for(int i=0;i<toReportList.size() ;i++){
-			TaobaokeReportMemberDTO report = toReportList.get(i) ;
-			TaobaoItemDTO item = itemList.get(i) ;
-			
-			if(report.getNumIid().equals(item.getNumIid())){
-				report.setPicUrl(item.getPicUrl()) ;
-			}
- 		}
-	}
+//	private void matchPicUrl(List<TaobaoItemDTO> itemList , List<TaobaokeReportMemberDTO> toReportList){
+//		if(CollectionUtils.isEmpty(itemList) || CollectionUtils.isEmpty(toReportList)){
+//			return ;
+//		}
+//		if(itemList.size() != toReportList.size()){
+//			//挨个比对
+//			for(TaobaoItemDTO item : itemList){
+//				Long numIid = item.getNumIid() ;
+//				for(TaobaokeReportMemberDTO report : toReportList){
+//					if(numIid.equals(report.getNumIid())){
+//						report.setPicUrl(item.getPicUrl()) ;
+//						break ;
+//					}
+//				}
+//			}
+//			return ;
+//		}
+//		for(int i=0;i<toReportList.size() ;i++){
+//			TaobaokeReportMemberDTO report = toReportList.get(i) ;
+//			TaobaoItemDTO item = itemList.get(i) ;
+//			
+//			if(report.getNumIid().equals(item.getNumIid())){
+//				report.setPicUrl(item.getPicUrl()) ;
+//			}
+// 		}
+//	}
 	
 	/**
 	 * 同步每一个报表
 	 * @param itemList
 	 * @return successCount 
 	 */
-	private int syncEveryReport(List<TaobaokeReportMemberDTO> itemList){
+	private int syncEveryReport(List<TaobaokeReportMemberDTO> itemList  , String insertBatch){
 		if(CollectionUtils.isEmpty(itemList)) {
 			return 0 ;
 		}
 		int successCount = 0 ;
 		for(TaobaokeReportMemberDTO item : itemList){
+			
 			if(item == null){
 				continue ;
 			}
@@ -288,29 +322,66 @@ public class SyncReportTaskService implements TaskService {
 			report.setRealPayFee(item.getRealPayFee()) ;
 			report.setSellerNick(item.getSellerNick()) ;
 			report.setTradeId(item.getTradeId()) ;
-			report.setPicUrl(item.getPicUrl()) ;
+			//report.setPicUrl(item.getPicUrl()) ;
 			String outCode = report.getOutCode() ;
-			//
-			if(StringUtils.isNotBlank(report.getOutCode())){
-				OutCode o = OutCodeUtils.decodeOutCode(outCode) ;
-				if(o.getType() == OutCodeEnums.DDZ_ACCOUNT_ID || o.getType() == OutCodeEnums.UNKNOWN){
+			OutCode o = OutCodeUtils.decodeOutCode(outCode) ;
+			String outcodeType = o.getType().getName() ;
+			report.setOutcodeType(outcodeType) ;
+			report.setInsertBatch(insertBatch) ;
+			
+			try {
+				
+				BigDecimal newCommissionRate = DecimalUtils.multiply(item.getCommissionRate(),DecimalConstant.HUNDRED) ;
+				InternalCommission userCommission = DdzEatDiscountRule.calcUserCommissions(ddzEatDiscountRule, item.getCommission() , newCommissionRate , item.getRealPayFee()) ;
+				report.setUserCommission(userCommission.getCommission()) ;
+				report.setUserCommissionRate(DecimalUtils.divide(userCommission.getCommissionRate(),DecimalConstant.HUNDRED)) ;
+				//计算结算金额
+				report.setSettleFee(report.getUserCommission());
+				//计算集分宝
+				report.setSettleJfb(DdzJfbConvertUtils.convertMoney2Jfb(report.getSettleFee())) ; 
+				report.setUserJfbRate(DdzJfbConvertUtils.convertJfbCommissionRate(report.getSettleJfb() , report.getRealPayFee())) ;
+				
+				if(o.getType() == OutCodeEnums.DDZ_ACCOUNT_ID || o.getType() == OutCodeEnums.DDZ_ACCOUNT_ID_MANUAL || o.getType() == OutCodeEnums.DDZ_ACCOUNT_ID_JFB){
 					String accountId = o.getOutCode() ;
 					DdzAccountDO acc = ddzAccountService.queryAccountByAccountId(accountId) ;
 					if(acc != null){ //账号存在
 						report.setSettleAlipay(acc.getAlipayId()) ;
-						BigDecimal newCommissionRate = DecimalUtils.multiply(item.getCommissionRate(),DecimalConstant.HUNDRED) ;
-						InternalCommission userCommission = DdzEatDiscountRule.calcUserCommissions(ddzEatDiscountRule, item.getCommission() , newCommissionRate , item.getRealPayFee()) ;
-						report.setUserCommission(userCommission.getCommission()) ;
-						report.setUserCommissionRate(DecimalUtils.divide(userCommission.getCommissionRate(),DecimalConstant.HUNDRED)) ;
-						report.setSettleFee(report.getUserCommission());
 					} else {
 						syncReportLog.error("cant find account from outCode : " + outCode) ;
 					}
+				} else if(o.getType() == OutCodeEnums.DOUCOME_PROMOTION){
+					try {
+						OutCodeData data = DcPromotionOutCodeUtils.decodeOutCode(o.getOutCode()) ;
+						if(data != null){
+							report.setDcItemId(data.getItemId()) ;
+							report.setDcUserId(data.getUserId()) ;
+						}
+					} catch (Exception e){
+						log.error(e.getMessage() , e) ;
+					}
+				} else if(o.getType() == OutCodeEnums.DOUCOME_USER_ID) {
+					try {
+						String userId = o.getOutCode() ;
+						if(StringUtils.isNotBlank(userId) && StringUtils.isNumeric(userId)) {
+							report.setDcUserId(Long.valueOf(userId)) ;
+						}
+					} catch (Exception e){
+						log.error(e.getMessage() , e) ;
+					}
 				}
+				
+			} catch(Exception e){
+				log.error(e.getMessage() , e) ;
+				
 			}
-			
-			ddzTaokeReportService.createReport(report) ;
+			try {
+				ddzTaokeReportService.createReport(report) ;
+			} catch(Exception e){
+				log.error(e.getMessage() , e) ;
+				syncReportLog.error(e.getMessage() , e) ;
+			}
 			successCount ++ ;
+			
 		}
 		return successCount ;
 	}
@@ -324,7 +395,7 @@ public class SyncReportTaskService implements TaskService {
 		result.setTotalCount(0);
 		result.setSuccCount(0);
 //		while(true) {
-		Pagination pagination = new Pagination(1, 1000);
+		Pagination pagination = new Pagination(1, 10000);
 		List<AlipayItemDO> payItemDOs = ddzTaokeReportService.getUnMergedReportSettleInfo(pagination);
 		if (payItemDOs == null) {
 			syncReportLog.error("----fetch the taoke report failed.");
@@ -409,4 +480,10 @@ public class SyncReportTaskService implements TaskService {
 		}
 		return result;
 	}
+
+	public void setHandlerList(List<Handler> handlerList) {
+		this.handlerList = handlerList;
+	}
+	
+	
 }

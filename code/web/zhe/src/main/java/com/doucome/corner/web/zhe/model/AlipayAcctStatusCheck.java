@@ -2,7 +2,7 @@ package com.doucome.corner.web.zhe.model;
 
 /**
  * 支付宝验证接口
- * @author shenjia.caosj 2012-4-27
+ * @author langben 2012-4-27
  *
  */
 public class AlipayAcctStatusCheck {

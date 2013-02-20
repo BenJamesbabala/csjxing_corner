@@ -8,7 +8,7 @@ import com.doucome.corner.biz.dcome.model.DcSceneDTO;
 public class DcSceneCacheImpl extends AbstractCacheSupport implements DcSceneCache{
 
 	@Override
-	public DcSceneDTO getCache(Long sceneId) {
+	public DcSceneDTO get(Long sceneId) {
 		String key = buildCachekeyWithArgs(sceneId) ;
 		CacheClient cc = getCacheClient() ;
 		InternalStoreItem<DcSceneDTO> store = cc.get(key);
@@ -19,13 +19,14 @@ public class DcSceneCacheImpl extends AbstractCacheSupport implements DcSceneCac
 	}
 
 	@Override
-	public void setCache(DcSceneDTO scene) {
+	public void set(DcSceneDTO scene) {
 		if(scene == null || scene.getId() == null){
 			throw new IllegalArgumentException("scene cant be null.") ;
 		}
+		
 		String key = buildCachekeyWithArgs(scene.getId()) ;
 		CacheClient cc = getCacheClient();
-		cc.put(key, new InternalStoreItem<DcSceneDTO>(scene) , ONE_MINUTES_MILLISECONDS ) ; //1∑÷÷”ª∫¥Ê
+		cc.put(key, new InternalStoreItem<DcSceneDTO>(scene) , ONE_DAY_MILLISECONDS ) ; //1∑÷÷”ª∫¥Ê
 	}
 
 	@Override

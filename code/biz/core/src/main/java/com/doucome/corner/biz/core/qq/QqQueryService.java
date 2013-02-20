@@ -13,6 +13,20 @@ public interface QqQueryService {
     QqUserInfoModel queryUserInfo(String pf, String openId, String openKey);
     
     QqCsecWordModel csecWordFilter(String content , String pf, String openId, String openKey);
+    /**
+     * 是否是认证空间fans.
+     * @param pf
+     * @param openId
+     * @param openKey
+     * @return
+     */
+    boolean isQzoneFans(String pf, String openId, String openKey);
     
-    
+    /**
+     * 判断是否微薄听众
+     * @param openId
+     * @param openKey
+     * @return
+     */
+    boolean isWeiboFans(String pf,String openId , String openKey) ;
 }

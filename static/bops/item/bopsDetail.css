@@ -1,0 +1,47 @@
+.dialog-comment .comment-category-title {
+	font-size: 12px;
+	font-weight:700;
+	padding: 5px 10px;
+}
+
+.like-dialog .dialog-comment-content {
+     padding: 5px 10px;
+}
+
+.taobao-comment table {
+	display: table;
+	border-collapse: collapse;
+	border-spacing: 0;
+	table-layout: fixed;
+	border-top: 1px solid #E9E9E9;
+}
+
+.taobao-comment table tbody {
+	display: table-row-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+
+.taobao-comment table tr {
+	display: table-row;
+	vertical-align: inherit;
+	border-color: inherit;
+}
+
+.taobao-comment table tr td {
+	padding: 5px 5px;
+	vertical-align: top;
+	border-bottom: 1px solid #E9E9E9;
+}
+
+.taobao-comment table tr .content {
+	width: 90%;
+}
+
+.taobao-comment table tr .del-opt {
+	width: 10%;
+}
+
+.taobao-comment a:hover {
+    cursor: pointer;	
+}

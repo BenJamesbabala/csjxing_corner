@@ -1,0 +1,120 @@
+<div class="dd-hide" id="goingAuctionTemplate">
+	<li class="main-box">
+		<div class="box-body">
+			<h2><a class="title" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item-id@" title="@item-title@" data-item-id="@item-id@" @gtrack@='/virtual/qq/item?tracelog=auction-offer-buy&id=@item-id@'>@item-title@</a></h2>
+			<div class="info-box dd-clr">
+				<div class="picbox">
+					<div class="pic">
+						<a class="title" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item-id@" title="@item-title@" data-item-id="@item-id@" @gtrack@='/virtual/qq/item?tracelog=auction-offer-buy&id=@item-id@'>
+							<img src="@item-pic-url@">
+						</a>
+					</div>
+				</div>
+				<div class="bid-meta">
+					<div class="item-bid-bg">
+						<div class="bid-info dd-l">
+							<img class="user-avator dd-l" data-avatar-size="50x50" data-avatar-src="@bid-avatar-url@">
+							<div class="other-info dd-l">
+								<div class="dd-l">
+									<div class="bid-nick">@bid-user-nick@</div>
+									<span style="" class="bid-lbl">出价：</span>
+								</div>
+								<div class="integral-info">
+									<span class="bid-integral">@bid-integral@</span>
+									<span>积分</span>
+								</div>
+					            <a href="javascript:;" class="refresh-btn" data-auction-id="@auction-id@">刷新</a>
+							</div>
+						</div></div>
+					<dl class="bid-list">
+					</dl>
+					<div class="btn-wrap">
+					    <div class="auction-countdown" style="">
+							<span class="label">离活动结束还有</span>
+							<div class="countdown-time" data-remain-time='@remain-time@'></div>
+						</div>
+						<a class="bid-btn btn1" title="@bid-title@" href="javascript:;" data-auction-id="@auction-id@" data-cur-integral="@bid-integral@" data-integral-per="@integral-per@">出价</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="bidHistoryList" class="dd-hide">
+			<dd class="bid-history">
+				<img class="user-avator dd-l" data-avatar-size="30x30" data-avatar-src="@avatar-url@">
+				<div class="info dd-l">
+					<span class="time dd-r">@time@</span>
+					<div class="user-nick dd-l">@user-nick@</div>
+					<span>出价</span>
+					<span class="integral">@integral@</span>
+					<span>积分</span>
+				</div>
+			</dd>
+		</div>
+	</li>
+</div>
+<div class="dd-hide" id="futureAuctionTemplate">
+	<li class="main-box">
+		<div class="box-body">
+			<h2><a class="title" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item-id@" title="@item-title@" data-item-id="@item-id@" @gtrack@='/virtual/qq/item?tracelog=auction-offer-buy&id=@item-id@'>@item-title@</a></h2>
+			<div class="info-box dd-clr">
+				<div class="picbox">
+					<div class="pic">
+						<a class="title" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item-id@" title="@item-title@" data-item-id="@item-id@" @gtrack@='/virtual/qq/item?tracelog=auction-offer-buy&id=@item-id@'>
+							<img src="@item-pic-url@">
+						</a>
+					</div>
+				</div>
+				<div class="bid-meta">
+					<div class="item-bid-bg">
+						<div class="qipai-info">
+						    <div>起拍积分：@base-integral@积分</div>
+							<div>最低加价：@integral-per@积分</div>
+						</div>
+					</div>
+					<dl class="bid-list"></dl>
+					<div class="btn-wrap">
+					    <div class="auction-countdown">
+							<span class="label">离活动开始还有</span>
+							<div class="countdown-time" data-remain-time='@remain-time@'></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</li>
+</div>
+<div class="dd-hide" id="endedAuctionTemplate">
+	<li class="main-box">
+		<div class="box-body">
+			<h2><a class="title" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item-id@" title="@item-title@" data-item-id="@item-id@" @gtrack@='/virtual/qq/item?tracelog=auction-offer-buy&id=@item-id@'>@item-title@</a></h2>
+			<div class="info-box dd-clr">
+				<div class="picbox">
+					<div class="pic">
+						<a class="title" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item-id@" title="@item-title@" data-item-id="@item-id@" @gtrack@='/virtual/qq/item?tracelog=auction-offer-buy&id=@item-id@'>
+							<img src="@item-pic-url@">
+						</a>
+					</div>
+				</div>
+				<div class="bid-meta">
+					<div class="item-bid-bg">
+						<div class="qipai-info">
+						    <div class="bid-result">
+							    <div class="result-lbl dd-l">恭喜：</div>
+								<img class="user-avator dd-l" data-avatar-size="30x30" data-avatar-src="@bid-avatar-url@">
+								<div class="user-nick dd-l">@bid-user-nick@</div>
+							</div>
+							<div>以@bid-integral@积分拍得商品</div>
+						</div>
+					</div>
+					<dl class="bid-list"></dl>
+					<div class="btn-wrap">
+					    <div class="auction-end">
+							<span class="label">竞拍结束时间</span>
+							<div class="end-time">@end-time@</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</li>
+</div>

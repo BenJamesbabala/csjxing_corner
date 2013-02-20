@@ -4,15 +4,18 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
-import com.doucome.corner.biz.core.utils.ReflectUtils;
+import com.doucome.corner.biz.common.utils.ReflectUtils;
+import com.doucome.corner.biz.core.enums.TaobaoPicEnums;
+import com.doucome.corner.biz.core.taobao.utils.TaobaoItemUtils;
+import com.doucome.corner.biz.core.utils.TaobaoPicUtils;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 import com.taobao.api.domain.Item;
 import com.taobao.api.domain.ItemImg;
 import com.taobao.api.domain.Location;
 
 /**
  * 淘宝宝贝
- * @author shenjia.caosj 2012-4-9
+ * @author langben 2012-4-9
  *
  */
 public class TaobaoItemDTO extends AbstractModel {
@@ -310,6 +313,35 @@ public class TaobaoItemDTO extends AbstractModel {
 	 * 商品图片列表(包括主图)。fields中只设置item_img可以返回ItemImg结构体中所有字段，如果设置为item_img.id、item_img.url、item_img.position等形式就只会返回相应的字段
 	 */
 	private List<ItemImg> itemImgs ; 
+	
+	/**
+	 * 促销价格
+	 */
+	private BigDecimal promPrice ;
+	
+	public String getPic(String type){
+    	return TaobaoPicUtils.findPic(this.picUrl, TaobaoPicEnums.toTaobaoPicEnums(type)) ;
+    }
+	
+	public String getSumPicUrl() {
+        return TaobaoPicUtils.findPic(picUrl, TaobaoPicEnums.SUM) ;
+    }
+	
+	public BigDecimal getDisplayPrice(){
+		if(promPrice != null){
+			return promPrice ;
+		} else {
+			return price ;
+		}
+	}
+	
+	public boolean isFreePostage(){
+		return TaobaoItemUtils.isFreePostage(this) ;
+	}
+	
+	/**
+	 * ---------------------------------------------------------------------------------
+	 */
 
 	public List<ItemImg> getItemImgs() {
 		return itemImgs;
@@ -773,6 +805,14 @@ public class TaobaoItemDTO extends AbstractModel {
 
 	public void setSellPromise(Boolean sellPromise) {
 		this.sellPromise = sellPromise;
+	}
+
+	public BigDecimal getPromPrice() {
+		return promPrice;
+	}
+
+	public void setPromPrice(BigDecimal promPrice) {
+		this.promPrice = promPrice;
 	}
 
 	

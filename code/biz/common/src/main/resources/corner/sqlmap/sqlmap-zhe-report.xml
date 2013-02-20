@@ -12,7 +12,6 @@
 		<result property="gmtPaid" column="GMT_PAID" jdbcType="TIMESTAMP" />
 		<result property="payPrice" column="PAY_PRICE" jdbcType="DECIMAL" />
 		<result property="numIid" column="NUM_IID"  />
-		<result property="picUrl" column="PIC_URL" jdbcType="VARCHAR" />
 		<result property="itemTitle" column="ITEM_TITLE" jdbcType="VARCHAR" />
 		<result property="itemNum" column="ITEM_NUM"  />
 		<result property="categoryId" column="CATEGORY_ID"  />
@@ -20,12 +19,21 @@
 		<result property="commissionRate" column="COMMISSION_RATE" jdbcType="DECIMAL" />
 		<result property="userCommission" column="USER_COMMISSION" jdbcType="DECIMAL" />
 		<result property="userCommissionRate" column="USER_COMMISSION_RATE" jdbcType="DECIMAL" />
+		<result property="userJfbRate" column="USER_JFB_RATE" jdbcType="DECIMAL" />
 		<result property="sellerNick" column="SELLER_NICK" jdbcType="VARCHAR" />
 		<result property="settleAlipay" column="SETTLE_ALIPAY" jdbcType="VARCHAR" />
 		<result property="settleUid" column="SETTLE_UID" jdbcType="VARCHAR" />
 		<result property="settleTaobaoNick" column="SETTLE_TAOBAO_NICK" jdbcType="VARCHAR" />
 		<result property="settleFee" column="SETTLE_FEE" jdbcType="DECIMAL" />
+		<result property="settleJfb" column="SETTLE_JFB" />
+		<result property="settleWay" column="SETTLE_WAY" />
 		<result property="settleStatus" column="SETTLE_STATUS" jdbcType="VARCHAR" />
+		<result property="outcodeType" column="OUTCODE_TYPE" jdbcType="VARCHAR"/>
+		<result property="insertBatch" column="INSERT_BATCH" jdbcType="VARCHAR"/>
+		<result property="settleId" column="SETTLE_ID" />
+		<result property="refundStatus" column="REFUND_STATUS" jdbcType="VARCHAR"/>
+		<result property="dcUserId" column="DC_USER_ID" />
+		<result property="dcItemId" column="DC_ITEM_ID" />
 		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
 		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
 	</resultMap>
@@ -36,12 +44,17 @@
 		<result property="account" column="SETTLE_ALIPAY" jdbcType="VARCHAR" />
 	</resultMap>
 	
+	<resultMap id="RM-DC-USER-COMMISSION" class="TA-DDZ-REPORT">
+	    <result property="dcUserId" column="DC_USER_ID" />
+	    <result property="commission" column="TOTAL_COMMISSION" jdbcType="DECIMAL"/>
+	</resultMap>
+	
 	<insert id="insertReport">
 		INSERT INTO DDZ_TAOKE_REPORT
-			(ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,PIC_URL,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_FEE,SETTLE_UID,SETTLE_TAOBAO_NICK,GMT_CREATE,GMT_MODIFIED)
+			(ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,USER_JFB_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_FEE,SETTLE_JFB,SETTLE_WAY,SETTLE_UID,SETTLE_TAOBAO_NICK,OUTCODE_TYPE,INSERT_BATCH,DC_USER_ID,DC_ITEM_ID,GMT_CREATE,GMT_MODIFIED)
 		VALUES
-			(#id#,#realPayFee#,#outCode#,#tradeId#,#gmtPaid#,#payPrice#,#numIid#,#picUrl#,#itemTitle#,#itemNum#,#categoryId#,#commission#,#commissionRate#,#userCommission#,#userCommissionRate#,#sellerNick#,#settleAlipay#,#settleFee#,#settleUid#,#settleTaobaoNick#,now(),now())
-		<selectKey resultClass="java.lang.Integer" keyProperty="id">
+			(#id#,#realPayFee#,#outCode#,#tradeId#,#gmtPaid#,#payPrice#,#numIid#,#itemTitle#,#itemNum#,#categoryId#,#commission#,#commissionRate#,#userCommission#,#userCommissionRate#,#userJfbRate#,#sellerNick#,#settleAlipay#,#settleFee#,#settleJfb#,#settleWay#,#settleUid#,#settleTaobaoNick#,#outcodeType#,#insertBatch#,#dcUserId#,#dcItemId#,now(),now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
     		<![CDATA[
 				SELECT LAST_INSERT_ID() AS ID
 			]]>
@@ -59,19 +72,20 @@
 	
 	<select id="getReportById" resultMap="RM-DDZ-REPORT">
 		SELECT 
-			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,PIC_URL,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
-			COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_UID,
-			SETTLE_TAOBAO_NICK,SETTLE_STATUS,SETTLE_FEE,GMT_CREATE,GMT_MODIFIED
+			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
+			COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,USER_JFB_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_UID,
+			SETTLE_TAOBAO_NICK,SETTLE_STATUS,SETTLE_FEE,SETTLE_JFB,SETTLE_WAY,OUTCODE_TYPE,INSERT_BATCH,SETTLE_ID,REFUND_STATUS,DC_USER_ID,DC_ITEM_ID,GMT_CREATE,GMT_MODIFIED
 		FROM 
 			DDZ_TAOKE_REPORT
-	    WHERE ID = #id#
+	    WHERE 
+	    	ID = #id#
 	</select>
 	
 	<select id="selectReportsBySettleId" resultMap="RM-DDZ-REPORT">
 		SELECT 
-			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,PIC_URL,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
-			COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_UID,
-			SETTLE_TAOBAO_NICK,SETTLE_STATUS,SETTLE_FEE,GMT_CREATE,GMT_MODIFIED
+			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
+			COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,USER_JFB_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_UID,
+			SETTLE_TAOBAO_NICK,SETTLE_STATUS,SETTLE_FEE,SETTLE_JFB,SETTLE_WAY,OUTCODE_TYPE,INSERT_BATCH,SETTLE_ID,REFUND_STATUS,DC_USER_ID,DC_ITEM_ID,GMT_CREATE,GMT_MODIFIED
 		FROM 
 			DDZ_TAOKE_REPORT
 		WHERE
@@ -80,9 +94,9 @@
 	
 	<select id="selectReportsWithPagination" resultMap="RM-DDZ-REPORT">
 		SELECT 
-			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,PIC_URL,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
-			COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_UID,
-			SETTLE_TAOBAO_NICK,SETTLE_STATUS,SETTLE_FEE,GMT_CREATE,GMT_MODIFIED
+			ID,REAL_PAY_FEE,OUT_CODE,TRADE_ID,GMT_PAID,PAY_PRICE,NUM_IID,ITEM_TITLE,ITEM_NUM,CATEGORY_ID,
+			COMMISSION,COMMISSION_RATE,USER_COMMISSION,USER_COMMISSION_RATE,USER_JFB_RATE,SELLER_NICK,SETTLE_ALIPAY,SETTLE_UID,
+			SETTLE_TAOBAO_NICK,SETTLE_STATUS,SETTLE_FEE,SETTLE_JFB,SETTLE_WAY,OUTCODE_TYPE,INSERT_BATCH,SETTLE_ID,REFUND_STATUS,DC_USER_ID,DC_ITEM_ID,GMT_CREATE,GMT_MODIFIED
 		FROM 
 			DDZ_TAOKE_REPORT
 		<dynamic>
@@ -146,10 +160,78 @@
 					]]>
 				</isNotEmpty>
 				<isNotEmpty property="settleId" prepend="AND">
+					<isEqual property="settleId" compareValue="-1">
+						SETTLE_ID IS NULL 
+					</isEqual>
+					<isNotEqual property="settleId" compareValue="-1">
+						SETTLE_ID = #settleId#
+					</isNotEqual>
+				</isNotEmpty>
+				<isNotEmpty property="tradeId" prepend="AND">
 					<![CDATA[
-					SETTLE_ID = #settleId#
+					TRADE_ID = #tradeId#
 					]]>
 				</isNotEmpty>
+				<isNotEmpty property="sellerNick" prepend="AND">
+					<![CDATA[
+					SELLER_NICK = #sellerNick#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="keywords" prepend="AND">
+					<![CDATA[
+				    ITEM_TITLE like CONCAT('%', #keywords#, '%')
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="outcodeType" prepend="AND">
+					<![CDATA[
+				    OUTCODE_TYPE = #outcodeType#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="outcodeTypeList" prepend="AND">
+					OUTCODE_TYPE in 
+					<iterate property="outcodeTypeList" open="("  close=")"  conjunction=",">
+					<![CDATA[
+						#outcodeTypeList[]#
+					]]>
+					</iterate>
+				</isNotEmpty>
+				<isNotEmpty property="insertBatch" prepend="AND">
+					<![CDATA[
+				    INSERT_BATCH = #insertBatch#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="dcItemId" prepend="AND">
+					<![CDATA[
+				    DC_ITEM_ID = #dcItemId#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="dcUserId" prepend="AND">
+					<![CDATA[
+				    DC_USER_ID = #dcUserId#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="numIid" prepend="AND">
+					<![CDATA[
+				    NUM_IID = #numIid#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="refundStatus" prepend="AND">
+					<![CDATA[
+				    REFUND_STATUS = #refundStatus#
+				    ]]>
+				</isNotEmpty>
+				<isNotNull property="requireSettleId" prepend="AND">
+					<isEqual property="requireSettleId" compareValue="true">
+						<![CDATA[
+					    SETTLE_ID IS NOT NULL
+					    ]]>
+					</isEqual>
+					<isEqual property="requireSettleId" compareValue="false">
+						<![CDATA[
+					    SETTLE_ID IS NULL
+					    ]]>
+					</isEqual>
+				</isNotNull>
 				
 			</isParameterPresent>
 		</dynamic>
@@ -229,34 +311,302 @@
 					]]>
 				</isNotEmpty>
 				<isNotEmpty property="settleId" prepend="AND">
+					<isEqual property="settleId" compareValue="-1">
+						SETTLE_ID IS NULL 
+					</isEqual>
+					<isNotEqual property="settleId" compareValue="-1">
+						SETTLE_ID = #settleId#
+					</isNotEqual>
+				</isNotEmpty>
+				<isNotEmpty property="tradeId" prepend="AND">
 					<![CDATA[
-					SETTLE_ID = #settleId#
+					TRADE_ID = #tradeId#
 					]]>
 				</isNotEmpty>
+				<isNotEmpty property="sellerNick" prepend="AND">
+					<![CDATA[
+					SELLER_NICK = #sellerNick#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="keywords" prepend="AND">
+					<![CDATA[
+				    ITEM_TITLE like CONCAT('%', #keywords#, '%')
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="outcodeType" prepend="AND">
+					<![CDATA[
+				    OUTCODE_TYPE = #outcodeType#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="outcodeTypeList" prepend="AND">
+					OUTCODE_TYPE in 
+					<iterate property="outcodeTypeList" open="("  close=")"  conjunction=",">
+					<![CDATA[
+						#outcodeTypeList[]#
+					]]>
+					</iterate>
+				</isNotEmpty>
+				<isNotEmpty property="insertBatch" prepend="AND">
+					<![CDATA[
+				    INSERT_BATCH = #insertBatch#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="dcItemId" prepend="AND">
+					<![CDATA[
+				    DC_ITEM_ID = #dcItemId#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="dcUserId" prepend="AND">
+					<![CDATA[
+				    DC_USER_ID = #dcUserId#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="numIid" prepend="AND">
+					<![CDATA[
+				    NUM_IID = #numIid#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="refundStatus" prepend="AND">
+					<![CDATA[
+				    REFUND_STATUS = #refundStatus#
+				    ]]>
+				</isNotEmpty>
+				<isNotNull property="requireSettleId" prepend="AND">
+					<isEqual property="requireSettleId" compareValue="true">
+						<![CDATA[
+					    SETTLE_ID IS NOT NULL
+					    ]]>
+					</isEqual>
+					<isEqual property="requireSettleId" compareValue="false">
+						<![CDATA[
+					    SETTLE_ID IS NULL
+					    ]]>
+					</isEqual>
+				</isNotNull>
 			</isParameterPresent>
 		</dynamic>
 	</select>
 	
-	<update id="updateTaokeSettleStatusBySettleIds" parameterClass="java.util.Map">
-		UPDATE DDZ_TAOKE_REPORT SET 
+	<select id="sumTaokeReportTotalSettleFee" resultClass="java.math.BigDecimal">
+		SELECT 
+		<isEqual property="sumType" compareValue="SETTLE_FEE">
+			SUM(SETTLE_FEE) AS TOTAL_AMOUNT
+		</isEqual>
+		<isEqual property="sumType" compareValue="COMMISSION">
+			SUM(COMMISSION) AS TOTAL_AMOUNT
+		</isEqual>
+		FROM
+			DDZ_TAOKE_REPORT
+		<dynamic>
+			<isParameterPresent open="WHERE" removeFirstPrepend="true">
+				<isNotEmpty property="gmtPaidStart" prepend="AND">
+					<![CDATA[
+					GMT_PAID >= #gmtPaidStart#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtPaidEnd" prepend="AND">
+					<![CDATA[
+					GMT_PAID <= #gmtPaidEnd#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtSettledStart" prepend="AND">
+					<![CDATA[
+					GMT_SETTLED >= #gmtSettledStart#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtSettledEnd" prepend="AND">
+					<![CDATA[
+					GMT_SETTLED <= #gmtSettledEnd#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateStart" prepend="AND">
+					<![CDATA[
+					GMT_CREATE >= #gmtCreateStart#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtCreateEnd" prepend="AND">
+					<![CDATA[
+					GMT_CREATE <= #gmtCreateEnd#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="settleStatus" prepend="AND">
+					<![CDATA[
+					SETTLE_STATUS = #settleStatus#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="settleStatusList" prepend="AND">
+					SETTLE_STATUS in 
+					<iterate property="settleStatusList" open="("  close=")"  conjunction=",">
+					<![CDATA[
+						#settleStatusList[]#
+					]]>
+					</iterate>
+				</isNotEmpty>
+				<isNotEmpty property="settleTaobaoNick" prepend="AND">
+					<![CDATA[
+					SETTLE_TAOBAO_NICK = #settleTaobaoNick#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="settleAlipay" prepend="AND">
+					<![CDATA[
+					SETTLE_ALIPAY = #settleAlipay#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="settleUid" prepend="AND">
+					<![CDATA[
+					SETTLE_UID = #settleUid#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="payBatchno" prepend="AND">
+					<![CDATA[
+					PAY_BATCHNO = #payBatchno#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="settleId" prepend="AND">
+					<isEqual property="settleId" compareValue="-1">
+						SETTLE_ID IS NULL 
+					</isEqual>
+					<isNotEqual property="settleId" compareValue="-1">
+						SETTLE_ID = #settleId#
+					</isNotEqual>
+				</isNotEmpty>
+				<isNotEmpty property="tradeId" prepend="AND">
+					<![CDATA[
+					TRADE_ID = #tradeId#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="sellerNick" prepend="AND">
+					<![CDATA[
+					SELLER_NICK = #sellerNick#
+					]]>
+				</isNotEmpty>
+				<isNotEmpty property="keywords" prepend="AND">
+					<![CDATA[
+				    ITEM_TITLE like CONCAT('%', #keywords#, '%')
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="outcodeType" prepend="AND">
+					<![CDATA[
+				    OUTCODE_TYPE = #outcodeType#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="outcodeTypeList" prepend="AND">
+					OUTCODE_TYPE in 
+					<iterate property="outcodeTypeList" open="("  close=")"  conjunction=",">
+					<![CDATA[
+						#outcodeTypeList[]#
+					]]>
+					</iterate>
+				</isNotEmpty>
+				<isNotEmpty property="insertBatch" prepend="AND">
+					<![CDATA[
+				    INSERT_BATCH = #insertBatch#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="dcItemId" prepend="AND">
+					<![CDATA[
+				    DC_ITEM_ID = #dcItemId#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="dcUserId" prepend="AND">
+					<![CDATA[
+				    DC_USER_ID = #dcUserId#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="numIid" prepend="AND">
+					<![CDATA[
+				    NUM_IID = #numIid#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="refundStatus" prepend="AND">
+					<![CDATA[
+				    REFUND_STATUS = #refundStatus#
+				    ]]>
+				</isNotEmpty>
+				<isNotNull property="requireSettleId" prepend="AND">
+					<isEqual property="requireSettleId" compareValue="true">
+						<![CDATA[
+					    SETTLE_ID IS NOT NULL
+					    ]]>
+					</isEqual>
+					<isEqual property="requireSettleId" compareValue="false">
+						<![CDATA[
+					    SETTLE_ID IS NULL
+					    ]]>
+					</isEqual>
+				</isNotNull>
+			</isParameterPresent>
+		</dynamic>
+			
+	</select>
+	
+	<update id="updateTaokeSettleStatusBySettleIds" >
+		UPDATE 
+			DDZ_TAOKE_REPORT 
+		SET 
 			SETTLE_STATUS = #settleStatus#,
 			GMT_MODIFIED = now()
 		WHERE 
 			SETTLE_ID IN 
-		  <iterate prepend="" property="settleIds" open="("  close=")"  conjunction=",">
-		      #settleIds[]#
-		  </iterate>
+			<iterate prepend="" property="settleIds" open="("  close=")"  conjunction=",">
+			      #settleIds[]#
+			</iterate>
+		AND
+			SETTLE_STATUS != 'R'
+			<dynamic>
+	        	<isPropertyAvailable property="equalSettleStatus">
+	        		<isNotEmpty property="equalSettleStatus" prepend="AND">
+			        	SETTLE_STATUS = #equalSettleStatus#
+			        </isNotEmpty>
+	        	</isPropertyAvailable>
+				<isNotEmpty property="settleAlipay" prepend="AND">
+					SETTLE_ALIPAY = #settleAlipay#
+				</isNotEmpty>
+			</dynamic>
 	</update>
 	
-	<update id="updateSettleStatusBySettleReport" parameterClass="TA-DDZ-REPORT">
+	<update id="updateSettleStatusBySettleReport">
 		UPDATE DDZ_TAOKE_REPORT 
 		SET 
 			SETTLE_STATUS = #settleStatus# , GMT_MODIFIED = now()
 		WHERE 
-			SETTLE_STATUS != 'S' AND SETTLE_ID = #settleId#
+			SETTLE_STATUS != 'S'
+		AND
+			SETTLE_STATUS != 'R'
+		AND
+			SETTLE_STATUS != 'F'
+		AND 
+			SETTLE_ID = #settleId#
 	</update>
 	
-	<select id="getUnMergedReportSettleInfo" parameterClass="java.util.Map" resultMap="RM-DDZ-ALIPAY_ITEM">
+	<update id="updateSettleStatusByIds">
+		UPDATE DDZ_TAOKE_REPORT 
+		SET 
+			SETTLE_STATUS = #settleStatus# , GMT_MODIFIED = now()
+		WHERE 
+			SETTLE_STATUS != 'S'
+		AND
+			SETTLE_STATUS != 'R'
+		AND
+			SETTLE_STATUS != 'F'
+		AND 
+			ID IN 
+		<iterate prepend="" property="ids" open="("  close=")"  conjunction=",">
+		      #ids[]#
+		</iterate>
+	</update>
+	
+	<update id="updateSettleFeeById">
+		UPDATE
+			DDZ_TAOKE_REPORT
+		SET
+			SETTLE_FEE = #settleFee#,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
+	</update>
+	
+	<select id="getUnMergedReportSettleInfo"  resultMap="RM-DDZ-ALIPAY_ITEM">
 		SELECT IDS,SETTLE_ALIPAY,SETTLE_FEE
           FROM (SELECT GROUP_CONCAT(ID) IDS,SETTLE_ALIPAY,IFNULL(SUM(SETTLE_FEE),0) SETTLE_FEE
                   FROM DDZ_TAOKE_REPORT
@@ -267,13 +617,55 @@
 	      ]]>
 	</select>
 	
-	<update id="updateTaokeReportSettleId" parameterClass="java.util.Map">
-		UPDATE DDZ_TAOKE_REPORT 
-		  SET SETTLE_ID = #settleId#,
+	<update id="updateTaokeReportSettleId">
+		UPDATE 
+			DDZ_TAOKE_REPORT 
+		SET 
+			SETTLE_ID = #settleId#,
 			GMT_MODIFIED = now()
-		WHERE SETTLE_ID IS NULL AND ID IN 
+		WHERE 
+			SETTLE_ID IS NULL AND ID IN 
 		  <iterate prepend="" property="reportIds" open="("  close=")"  conjunction=",">
 		      #reportIds[]#
 		  </iterate>
 	</update>
+	
+	<update id="updateRefundById">
+		UPDATE
+			DDZ_TAOKE_REPORT
+		SET 
+			REFUND_STATUS = #refundStatus#,
+			GMT_MODIFIED = now()
+		WHERE 
+		<isNotEmpty property="id">
+			ID = #id#
+		</isNotEmpty>
+		<isNotEmpty property="ids">
+			ID IN 
+			<iterate prepend="" property="ids" open="("  close=")"  conjunction=",">
+		      #ids[]#
+		  	</iterate>
+		</isNotEmpty>
+	</update>
+	
+	<update id="updateDcUserAndItemById">
+		UPDATE
+			DDZ_TAOKE_REPORT 
+		SET
+			DC_USER_ID = #dcUserId# ,
+			DC_ITEM_ID = #dcItemId# ,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
+	</update>
+	
+	<!-- NO DC_USER_ID IS NOT NULL IS FOR OPTIMIZITION -->
+	<select id="countDcUserCommission" resultMap="RM-DC-USER-COMMISSION">
+	    SELECT DC_USER_ID,TOTAL_COMMISSION
+		  FROM (SELECT DC_USER_ID,SUM(COMMISSION) TOTAL_COMMISSION
+		         FROM DDZ_TAOKE_REPORT
+		         WHERE OUTCODE_TYPE='P'
+		         GROUP BY DC_USER_ID) A
+		  WHERE TOTAL_COMMISSION <![CDATA[>]]> 30
+	</select>
 </sqlMap>

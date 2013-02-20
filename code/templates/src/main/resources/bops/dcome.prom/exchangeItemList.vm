@@ -1,0 +1,117 @@
+#set($layout="bops/default_bops.vm")
+#DDZ_JS(["../bops/exchange.js"])
+#set($navigation = "积分兑换商品列表")
+
+<style>
+	#exchangeItemTable .user-id {
+	    width: 100px;
+	}
+	#exchangeItemTable .user-info {
+	    width: 100px;
+	    overflow: hidden;
+	}
+</style>
+
+<input type="hidden"  id="ddzBopsRoot" value="${env.bopsRoot}"/>
+<input type="hidden"  id="ddzBopsPage" value="exchangeItemList"/>
+
+#set($pagination = $exchangeItems.pagination)
+
+#set($searchUrl = ${env.bopsRoot}+"/bops/dcome/prom/exchange_item_list.htm?")
+#set($searchQuery = ["id:$!id","exUserType:$!exUserType","userId:$!userId","gmtStart:$dateUtils.format($!gmtStart, 'yyyy-MM-dd HH:mm')","gmtEnd:$dateUtils.format($!gmtEnd,'yyyy-MM-dd HH-mm')"])
+
+<div class="bops">
+    <div style="MT20 MB20">&nbsp;</div>
+	<div class="award-oper">
+		<a href="${env.bopsRoot}/bops/dcome/prom/prom_award_list.htm?reviewStatus=U&promotionType=EX" target="_blank">审核</a>
+		<a href="${env.bopsRoot}/bops/dcome/prom/prom_award_list.htm?reviewStatus=S&sendStatus=U&promotionType=EX" target="_blank">发奖</a>
+	</div>
+	<form action="${env.bopsRoot}/bops/dcome/prom/exchange_item_list.htm" method="GET">
+		<div class="MB10 MT10">
+			兑换类型：
+			<select name="exUserType">
+			    <option value="">全部</option>
+			    <option value="A" #if($!exUserType=='A')selected#end>公用兑换</option>
+			    <option value="P" #if($!exUserType=='P')selected#end>私用兑换</option>	
+     		</select>
+			UserId：<input  type="text" name="userId" value="$!userId" />
+			&nbsp;&nbsp;
+			开始时间：<input name="gmtDay" value="$!dateUtils.format($!gmtDay , 'yyyy-MM-dd')" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="Wdate"/>
+			&nbsp;&nbsp;
+			<input type="submit" value="查询" />
+		</div>
+	</form>
+	
+	#parse("/common/bops/dcome.prom/auctionItemListPagination.vm")
+	
+	 <table width="980" style="font-size:14px;" id="exchangeItemTable">
+		<tr>
+			<th>ID</th>
+			<th wiedth="60">用户id</th>
+			<th wiedth="60">商品图片</th>
+			<th width="40">商品ID</th>
+			<th width="130">商品名称</th>
+			<th width="40">价格</th>
+			<th width="40">兑换积分</th>
+			<th width="40">数量</th>
+			<th width="40">商品类型</th>
+			<th width="60">成功/未审核/送出</th>
+			<th width="80">状态</th>
+			<th width="120">操作</th>
+			<th width="80">修改时间</th>
+    	</tr>
+		#if($exchangeItems.totalRecords > 0)
+    		#foreach($exchange in $exchangeItems.items)
+            	<tr data-exchange-id="$!exchange.id">
+                    <td align="center">$!exchange.id</td>
+                    <td class="center"><div class="user-id" data-userid="$!exchange.userId">$!exchange.userId</div></td>
+                    <td align="center"><img src="$!exchange.getPicUrl(0, '60x60')" width="60" height="60"/></td>
+                    <td align="center">$!exchange.itemId</td>
+					<td><div class="dc-item-title text-ellipsis"><a href="${env.bopsRoot}/bops/dcome/prom/redirect_item.htm?itemId=$!exchange.itemId" target="_blank">$!exchange.itemTitle</a></div></td>
+					<td><div style="width: 90px;">原价：$decimalUtils.format($!exchange.itemPrice,'0.00')<br />活动价：$!exchange.itemPromPriceFmt<br />返利： $!exchange.itemCommissionFmt</div></td>
+					<td><input name="exIntegral" id="exIntegral" type="text" value="$!exchange.exIntegral" style="width:50px;"/></td>
+					<td><input name="exCount" id="exCount" type="text" value="$!exchange.exCount" style="width:50px;"/></td>
+					<td>
+						<select name="itemType">
+						    <option value="N">普通商品</option>
+						    <option value="V" #if($!exchange.itemType == 'V')selected#end>充值卡</option>
+						    <option value="O" #if($!exchange.itemType == 'O')selected#end>其他</option>
+    					</select>
+    				</td>
+                    <td class="detail">$!exchange.exSuccCount</td>
+					<td>
+						#if ($!exchange.schedule == 'ENDED')
+							<div style="width: 40px;">已结束</div>
+						#elseif ($!exchange.schedule == 'ONGOING')
+						    <div style="width: 40px;">进行中</div>
+						#else
+						    <div style="width: 40px;">未开始</div>
+						#end
+					</td>
+					<td>
+						<input type="button" value="保存" class="exchange-update-button"/>
+						#if($!exchange.exSuccCount == 0)
+							<input type="button" value="删除" class="exchange-del-button"/>
+						#else
+						    <a href="${env.bopsRoot}/bops/dcome/prom/prom_award_list.htm?promotionId=$!exchange.id&promotionType=EX" target="_blank">兑换记录</a>
+						#end
+					</td>
+					<td align="center"><div style="width: 80px;">$!dateUtils.format($!exchange.gmtModified, 'yyyy-MM-dd HH:mm')</div></td>
+            	</tr>
+    		#end
+		#else
+            <tr><td colspan="8">
+                    
+			</td></tr>
+		#end
+     </table>
+	 	 
+	 #parse("/common/bops/dcome.prom/auctionItemListPagination.vm")
+	
+</div>
+
+<script>
+!(function($){
+	
+})(jQuery);
+</script>

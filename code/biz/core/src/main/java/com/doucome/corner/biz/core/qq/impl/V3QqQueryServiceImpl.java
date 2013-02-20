@@ -22,7 +22,7 @@ import com.qq.open.OpensnsException;
  * 
  * @author ib 2012-7-28 ÏÂÎç05:04:49
  */
-public class V3QqQueryServiceImpl implements QqQueryService {
+public class V3QqQueryServiceImpl implements QqQueryService { 
 
     private static final Log logger = LogFactory.getLog(V3QqQueryServiceImpl.class);
 
@@ -71,7 +71,7 @@ public class V3QqQueryServiceImpl implements QqQueryService {
         String gender = map.get(QqUserInfoConstant.GENDER);
         if (StringUtils.endsWithIgnoreCase(gender, "ÄÐ")) {
             userInfo.setGender(QqGenderEnums.Male);
-        } else if (StringUtils.endsWithIgnoreCase(gender, "ÄÐ")) {
+        } else if (StringUtils.endsWithIgnoreCase(gender, "Å®")) {
             userInfo.setGender(QqGenderEnums.Female);
         } else {
             userInfo.setGender(QqGenderEnums.UnKnow);
@@ -102,11 +102,41 @@ public class V3QqQueryServiceImpl implements QqQueryService {
         model.setMsg(String.valueOf(map.get(QqCsecWordModel.MSG))) ;
         return model ;
 	}
+	
+	@Override
+	public boolean isQzoneFans(String pf, String openId, String openKey) {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("openid", openId);
+	    params.put("openkey", openKey);
+	    params.put("pf", pf);
+	    //¿Õ¼äqqºÅ
+	    params.put("page_id", "10507600");
+	    
+	    HashMap<String, Object> result = callQqApi(QqApiConstant.SCRIPT_QZONE_FANS, params);
+	    if (result == null) {
+	    	return false;
+	    }
+	    String isFan = String.valueOf(result.get("is_fans"));
+	    return "1".equals(isFan);
+	}
+	
+	@Override
+	public boolean isWeiboFans(String pf , String openId, String openKey) {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("openid", openId);
+		params.put("openkey", openKey);
+	    params.put("flag", "0");
+	    params.put("fopenids", openId) ;
+	    params.put("pf", pf);
+	    HashMap<String, Object> result = callQqApi(QqApiConstant.SCRIPT_IS_WEIBO_FANS_OR_IDOL, params);
+	    if (result == null) {
+	    	return false;
+	    }
+	    String isFan = String.valueOf(result.get("is_fans"));
+	    return "1".equals(isFan);
+	}
     
     public void setOpenApiV3(OpenApiV3 openApiV3) {
         this.openApiV3 = openApiV3;
     }
-
-
-
 }

@@ -1,0 +1,38 @@
+#if($promotion)
+<div class="wish-dialog wish-show" id="wishDialog" style="display: none;">
+    <div class="wish-wrap">
+		<div class="wish-header">
+			<div class="wish-title">免费领取</div>
+			<a id="wish-hide" class="wish-hide" href="javascript:;"></a>
+		</div>
+		<div class="wish-main">
+			<div class="wish-item">
+				<div class="item-pic">
+					<a href="#">
+						<img class="item-img" src="#" />
+					</a>
+					<div class="text-ellipsis">
+						<a class="item-name" href="#"></a>
+					</div>
+				</div>
+				#if(!$!myPromotionItem)
+				<div class="item-info">
+					<div class="info">市场价：<span class="item-price">&yen;29</span></div>
+					<div class="faq-rule-title wish-faq-pic"></div>
+					<div class="faq-rule wish-faq-pic"></div>
+					<a href="javascript:;" class="wish-confirm btn" id="wishConfirm" data-item-id="" data-submit="0">确&nbsp;&nbsp;&nbsp;认</a>
+					<a href="javascript:;" class="shutdown-btn btn dd-hide">关&nbsp;&nbsp;&nbsp;闭</a>
+				</div>
+				#end
+				<div class="collect-star #if(!$!myPromotionItem)dd-hide#end">
+					<div class="faq-star-guide-title wish-faq-pic"></div>
+				    <div class="faq-star-guide wish-faq-pic"></div>
+					<a href="${env.root}/frame/q/promotion.htm" id="wishCollect" class="wish-collect-btn btn" data-item-id="">收集愿望星</a>
+				</div>
+			</div>
+			<div class="wish-info dd-hide"></div>
+			<div class="loadding32x32" style="display: none;"></div>
+		</div>
+	</div>
+</div>
+#end

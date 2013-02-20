@@ -1,6 +1,6 @@
 <meta charset="GBK">
-<title>#if($title && $title != "") $title - #end 点点折-不用还价,不用刀,最高返利50%</title>
+<title>#if($title && $title != "") $title - #end 点点折_省钱不止一点点</title>
 
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
-<meta name="keywords" content="点点折,折扣网,返利网,返利网站,点点折返利,淘宝返利网,淘宝返现,电子商务,商品折扣,店铺折扣,放心购物,省到底" />
-<meta name="description" content="点点折返利网是国内独具特色的折扣导购网站.无需注册直接用淘宝帐号登录,不仅帮你发现淘宝折扣并且直接返现,还帮你挖掘隐藏的折扣,让你在快乐安全购物的同时获得最高额现金返利！#if($title && $title != "")点点折网-$title#end"/>
+<meta name="keywords" content="点点折,点点折网,点点折返利网,返利网,返利网站,商品折扣,店铺折扣,放心购物" />
+<meta name="description" content="点点折返利网是国内独具特色的折扣导购网站.无需注册,帮你发现折扣,让你在快乐安全购物的同时获得最高额现金返利！#if($title && $title != "")点点折网-$title#end"/>

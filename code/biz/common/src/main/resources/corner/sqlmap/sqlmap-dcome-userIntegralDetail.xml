@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcUserIntegralDetail">
+	<typeAlias alias="TA-DcUserIntegralDetail"
+		type="com.doucome.corner.biz.dal.dataobject.dcome.DcUserIntegralDetailDO" />
+
+	<resultMap id="RM-DcUserIntegralDetail" class="TA-DcUserIntegralDetail">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="integralCount" column="INTEGRAL_COUNT"  />
+		<result property="source" column="SOURCE" jdbcType="VARCHAR" />
+		<result property="integralDesc" column="INTEGRAL_DESC" jdbcType="VARCHAR" />
+		<result property="readStatus" column="READ_STATUS" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertDetail" parameterClass="TA-DcUserIntegralDetail">
+		INSERT 
+			INTO
+		DC_USER_INTEGRAL_DETAIL(ID,USER_ID,INTEGRAL_COUNT,SOURCE,INTEGRAL_DESC,GMT_CREATE)
+			VALUES
+		(#id#,#userId#,#integralCount#,#source#,#integralDesc#,now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="getUserIntegralDetails" resultMap="RM-DcUserIntegralDetail">
+	    SELECT ID,USER_ID,INTEGRAL_COUNT,SOURCE,INTEGRAL_DESC,READ_STATUS,GMT_CREATE
+	      FROM DC_USER_INTEGRAL_DETAIL
+	      <dynamic>
+	          <isParameterPresent open="WHERE" removeFirstPrepend="true">
+                  <isNotNull property="userId" prepend="AND">
+	                  USER_ID = #userId#
+	              </isNotNull>
+              </isParameterPresent>            
+        </dynamic>
+	    ORDER BY GMT_CREATE DESC
+	    LIMIT #start#, #size#
+	</select>
+	
+	<select id="getIntegralDetails" resultMap="RM-DcUserIntegralDetail">
+	    SELECT ID,USER_ID,INTEGRAL_COUNT,SOURCE,INTEGRAL_DESC,READ_STATUS,GMT_CREATE
+	      FROM DC_USER_INTEGRAL_DETAIL
+	      <dynamic>
+	          <isParameterPresent open="WHERE" removeFirstPrepend="true">
+                  <isNotEmpty property="userId" prepend="AND">
+	                  USER_ID = #userId#
+	              </isNotEmpty>
+	              <isNotEmpty property="source" prepend="AND">
+	                  SOURCE = #source#
+	              </isNotEmpty>
+	              <isNotNull property="sources" prepend="AND">
+	                  SOURCE IN
+	                  <iterate property="sources" prepend="" open="(" close=")" conjunction=",">
+	                      #sources[]#
+	                  </iterate>
+	              </isNotNull>
+	              <isNotEmpty property="readStatus" prepend="AND">
+	                  READ_STATUS = #readStatus#
+	              </isNotEmpty>
+	              <isNotNull property="gmtCreateStart" prepend="AND">
+	                  GMT_CREATE <![CDATA[>=]]> #gmtCreateStart#
+	              </isNotNull>
+	              <isNotNull property="gmtCreateEnd" prepend="AND">
+	                  GMT_CREATE <![CDATA[<]]> #gmtCreateEnd#
+	              </isNotNull>
+              </isParameterPresent>            
+        </dynamic>
+	    ORDER BY GMT_CREATE DESC
+	    LIMIT #start#, #size#
+	</select>
+	
+	<select id="countIntegralDetails" resultClass="java.lang.Integer">
+	    SELECT COUNT(ID)
+	      FROM DC_USER_INTEGRAL_DETAIL
+	      <dynamic>
+	          <isParameterPresent open="WHERE" removeFirstPrepend="true">
+                  <isNotEmpty property="userId" prepend="AND">
+	                  USER_ID = #userId#
+	              </isNotEmpty>
+	              <isNotEmpty property="source" prepend="AND">
+	                  SOURCE = #source#
+	              </isNotEmpty>
+	              <isNotNull property="gmtCreateStart" prepend="AND">
+	                  GMT_CREATE <![CDATA[>=]]> #gmtCreateStart#
+	              </isNotNull>
+	              <isNotNull property="gmtCreateEnd" prepend="AND">
+	                  GMT_CREATE <![CDATA[<]]> #gmtCreateEnd#
+	              </isNotNull>
+              </isParameterPresent>            
+        </dynamic>
+	</select>
+	
+	<select id="getLatestIntegralDetails" resultMap="RM-DcUserIntegralDetail">
+	    SELECT ID,USER_ID,INTEGRAL_COUNT,SOURCE,INTEGRAL_DESC,READ_STATUS,GMT_CREATE
+	      FROM DC_USER_INTEGRAL_DETAIL
+	      <dynamic>
+	          <isParameterPresent open="WHERE" removeFirstPrepend="true">
+                <isNotEmpty property="source" prepend="AND">
+                    SOURCE=#source#
+                </isNotEmpty>
+              </isParameterPresent>            
+        </dynamic>
+	    ORDER BY GMT_CREATE DESC
+	    LIMIT #start#, #size#
+	</select>
+	
+	<select id="getAuctionList" resultMap="RM-DcUserIntegralDetail">
+	    SELECT ID,USER_ID,INTEGRAL_COUNT,SOURCE,INTEGRAL_DESC,READ_STATUS,GMT_CREATE
+	      FROM DC_USER_INTEGRAL_DETAIL
+	      WHERE SOURCE = 'BID' AND INTEGRAL_DESC LIKE #auctionId#
+	    ORDER BY INTEGRAL_COUNT DESC
+	    LIMIT 0, #size#
+	</select>
+	
+	<update id="updateReadStatus">
+	    UPDATE DC_USER_INTEGRAL_DETAIL
+	      SET READ_STATUS=#readStatus#, GMT_CREATE = NOW()
+	      WHERE ID=#id#
+	</update>
+</sqlMap>

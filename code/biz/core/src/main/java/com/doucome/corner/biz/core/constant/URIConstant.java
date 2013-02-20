@@ -11,7 +11,25 @@ public class URIConstant {
 	 * µãµãÕÛ web
 	 */
 	public static final String DDZ_SERVER = "ddzServer" ;
+	/**
+	 * ÐÇ×ùweb
+	 */
+	public static final String HS_SERVER = "hsServer";
 	
+	/**
+	 * Íá²±×Óweb
+	 */
+	public static final String WRYNECK_SERVER = "wryneckServer" ;
+	
+	/**
+	 * ÐÕÃûÔµ·Ö
+	 */
+	public static final String NAMEFATE_SERVER = "namefateServer" ;
+	
+	/**
+	 * ÐÇ×ùstatic
+	 */
+	public static final String HS_STATIC_SERVER = "hsStaticServer";
 	/**
 	 * ¶¹Þ¢static
 	 */
@@ -45,6 +63,11 @@ public class URIConstant {
 	 * ÌÔ±¦µÇÂ½
 	 */
 	public static final String TAOBAO_LOGIN_LINK = "taobaoLoginLink" ;
+	
+	/**
+	 * Ö§¸¶±¦µÇÂ½
+	 */
+	public static final String ALIPAY_LOGIN_SERVER = "alipayLoginServer" ;
 	
 	/**
 	 * BOPS

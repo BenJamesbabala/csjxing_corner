@@ -2,7 +2,7 @@ package com.doucome.corner.web.zhe.action;
 
 /**
  * Íê³É×¢²á
- * @author shenjia.caosj 2012-3-30
+ * @author langben 2012-3-30
  *
  */
 @SuppressWarnings("serial")

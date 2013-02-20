@@ -27,7 +27,7 @@ public class IBatisDdzUserDAOTest extends AbstractBaseJUnit4Test {
 		user.setLoginId("bluecol") ;
 		user.setUid("uid032323") ;
 		user.setMd5Password("dwwefewfefe") ;
-		user.setTaobaoId("bluecol");
+		//user.setTaobaoId("bluecol");
 		user.setUserActive("T") ;
 		
 		

@@ -13,15 +13,26 @@
 		<result property="itemTitle" column="ITEM_TITLE" jdbcType="VARCHAR" />
 		<result property="itemDesc" column="ITEM_DESC" jdbcType="VARCHAR" />
 		<result property="itemPrice" column="ITEM_PRICE" jdbcType="DECIMAL" />
+		<result property="itemPromPrice" column="ITEM_PROM_PRICE" jdbcType="DECIMAL" />
+		<result property="recommReason" column="RECOMM_REASON" jdbcType="VARCHAR" />
+		<result property="recommType" column="RECOMM_TYPE" jdbcType="VARCHAR" />
 		<result property="source" column="SOURCE" jdbcType="VARCHAR" />
 		<result property="srcUrl" column="SRC_URL" jdbcType="VARCHAR" />
 		<result property="picUrls" column="PIC_URLS" jdbcType="VARCHAR" />
 		<result property="clickUrl" column="CLICK_URL" jdbcType="VARCHAR" />
 		<result property="loves" column="LOVES"  />
 		<result property="sells" column="SELLS"  />
+		<result property="rates" column="RATES"  />
 		<result property="comments" column="COMMENTS" />
 		<result property="categoryId" column="CATEGORY_ID"   />
 		<result property="status" column="STATUS"  />
+		<result property="genWay" column="GEN_WAY" jdbcType="VARCHAR" />
+		<result property="postalEnable" column="POSTAL_ENABLE" jdbcType="VARCHAR" />
+		<result property="creatorUserId" column="CREATOR_USER_ID" jdbcType="VARCHAR" />
+		<result property="creatorNick" column="CREATOR_NICK" jdbcType="VARCHAR" />
+		<result property="commissionRate" column="COMMISSION_RATE" jdbcType="DECIMAL" />
+		<result property="taokeSellCount" column="TAOKE_SELL_COUNT" />
+		<result property="displayOrder" column="DISPLAY_ORDER" />
 		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
 		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
 		<result property="gmtItemUpdate" column="GMT_ITEM_UPDATE" jdbcType="TIMESTAMP" />
@@ -34,11 +45,11 @@
 	
 	<insert id="insertItem">
 		INSERT INTO DC_ITEM
-			(ID, NATIVE_ID, NATIVE_CATEGORY_ID, ITEM_TITLE, ITEM_DESC, ITEM_PRICE, SOURCE, SRC_URL, PIC_URLS, CLICK_URL,
-				LOVES, SELLS, COMMENTS, CATEGORY_ID, STATUS, GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE)
+			(ID, NATIVE_ID, NATIVE_CATEGORY_ID, ITEM_TITLE, ITEM_DESC, ITEM_PRICE,ITEM_PROM_PRICE, RECOMM_REASON,SOURCE, SRC_URL, PIC_URLS, CLICK_URL,
+				LOVES, SELLS,RATES, COMMENTS, CATEGORY_ID, STATUS,GEN_WAY,POSTAL_ENABLE,CREATOR_USER_ID,CREATOR_NICK,COMMISSION_RATE,DISPLAY_ORDER,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE)
 		VALUES
-			(#id#, #nativeId#, #nativeCategoryId#, #itemTitle#, #itemDesc#, #itemPrice#, #source#, #srcUrl#, #picUrls#, #clickUrl#,
-				#loves#, #sells#, #comments#, #categoryId#, #status#, now(), now(), now())
+			(#id#, #nativeId#, #nativeCategoryId#, #itemTitle#, #itemDesc#, #itemPrice#,#itemPromPrice#,#recommReason#, #source#, #srcUrl#, #picUrls#,#clickUrl#,
+				#loves#, #sells#,#rates#, #comments#, #categoryId#, #status#,#genWay#,#postalEnable#,#creatorUserId#,#creatorNick#,#commissionRate#,UNIX_TIMESTAMP(now()),now(), now(), now())
 		<selectKey resultClass="java.lang.Long" keyProperty="id">
     		<![CDATA[
 				SELECT LAST_INSERT_ID() AS ID
@@ -48,50 +59,192 @@
 	
 	<update id="updateItem">
 	    UPDATE DC_ITEM
-	      SET ITEM_TITLE = #itemTitle#,
-	        CATEGORY_ID = #categoryId#,
-	        ITEM_PRICE = #itemPrice#,
-	        CLICK_URL = #clickUrl#,
-	        PIC_URLS = #picUrls#,
-	        ITEM_DESC = #itemDesc#,
+	      SET
+	        <isNotEmpty property="itemTitle">
+	        	ITEM_TITLE = #itemTitle#,
+	        </isNotEmpty>
+	        <isNotEmpty property="categoryId">
+	        	CATEGORY_ID = #categoryId#,
+	        </isNotEmpty>
+	        <isNotEmpty property="itemPrice">
+	        	ITEM_PRICE = #itemPrice#,
+	        </isNotEmpty>
+	        <isNotEmpty property="commissionRate">
+	        	COMMISSION_RATE = #commissionRate#,
+	        </isNotEmpty>
+	        <isNotEmpty property="clickUrl">
+	        	CLICK_URL = #clickUrl#,
+	        </isNotEmpty>
+	        <isNotEmpty property="picUrls">
+	        	PIC_URLS = #picUrls#,
+	        </isNotEmpty>
+	        <isNotEmpty property="itemDesc">
+	        	ITEM_DESC = #itemDesc#,
+	        </isNotEmpty>
+	        <isNotEmpty property="recommReason">
+	        	RECOMM_REASON = #recommReason#,
+	        </isNotEmpty>
+	        ITEM_PROM_PRICE = #itemPromPrice#,
 	        GMT_MODIFIED = now()
 	      WHERE ID=#id#
 	</update>
 	
+	<update id="updateRecommTypeById">
+		UPDATE 
+			DC_ITEM
+		SET
+			RECOMM_TYPE = #recommType# ,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #itemId#
+	</update>	
+	
 	<select id="queryItemById" resultMap="RM-DcItem">
 		SELECT 
-			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
-			LOVES,SELLS,COMMENTS,CATEGORY_ID,STATUS,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
+			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,ITEM_PROM_PRICE,RECOMM_REASON,RECOMM_TYPE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
+					LOVES,SELLS,RATES,COMMENTS,CATEGORY_ID,STATUS,GEN_WAY,POSTAL_ENABLE,CREATOR_USER_ID,CREATOR_NICK,COMMISSION_RATE,TAOKE_SELL_COUNT,DISPLAY_ORDER,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
 		FROM 
 			DC_ITEM
 		WHERE 
 			ID = #id#
+		LIMIT 1
+	</select>
+	
+	<select id="getItemsByExtId" resultMap="RM-DcItem">
+		SELECT 
+			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,ITEM_PROM_PRICE,RECOMM_REASON,RECOMM_TYPE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
+					LOVES,SELLS,RATES,COMMENTS,CATEGORY_ID,STATUS,GEN_WAY,POSTAL_ENABLE,CREATOR_USER_ID,CREATOR_NICK,COMMISSION_RATE,TAOKE_SELL_COUNT,DISPLAY_ORDER,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
+		FROM  DC_ITEM
+		WHERE NATIVE_ID = #extItemId#
+	</select>
+	
+	<select id="getItemByCreatorAndExtItemId" resultMap="RM-DcItem">
+		SELECT 
+			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,ITEM_PROM_PRICE,RECOMM_REASON,RECOMM_TYPE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
+					LOVES,SELLS,RATES,COMMENTS,CATEGORY_ID,STATUS,GEN_WAY,POSTAL_ENABLE,CREATOR_USER_ID,CREATOR_NICK,COMMISSION_RATE,TAOKE_SELL_COUNT,DISPLAY_ORDER,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
+		FROM 
+			DC_ITEM
+		WHERE 
+			CREATOR_USER_ID = #creatorId# and NATIVE_ID = #extItemId#
+		LIMIT 1
 	</select>
 	
 	<select id="queryItemsByIds" resultMap="RM-DcItem">
 		SELECT 
-			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
-			LOVES,SELLS,COMMENTS,CATEGORY_ID,STATUS,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
+			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,ITEM_PROM_PRICE,RECOMM_REASON,RECOMM_TYPE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
+					LOVES,SELLS,RATES,COMMENTS,CATEGORY_ID,STATUS,GEN_WAY,POSTAL_ENABLE,CREATOR_USER_ID,CREATOR_NICK,COMMISSION_RATE,TAOKE_SELL_COUNT,DISPLAY_ORDER,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
 		FROM 
 			DC_ITEM
 		WHERE
-		ID IN 
+			ID IN 
 		<iterate prepend="" property="ids" open="("  close=")"  conjunction=",">
 		      #ids[]#
+		</iterate>
+	    ORDER BY DISPLAY_ORDER DESC
+	</select>
+	
+	<select id="queryItemsByNativeIds" resultMap="RM-DcItem">
+		SELECT 
+			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,ITEM_PROM_PRICE,RECOMM_REASON,RECOMM_TYPE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
+					LOVES,SELLS,RATES,COMMENTS,CATEGORY_ID,STATUS,GEN_WAY,POSTAL_ENABLE,CREATOR_USER_ID,CREATOR_NICK,COMMISSION_RATE,TAOKE_SELL_COUNT,DISPLAY_ORDER,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
+		FROM 
+			DC_ITEM
+		WHERE
+			NATIVE_ID IN 
+		<iterate prepend="" property="nativeIds" open="("  close=")"  conjunction="," >
+		      #nativeIds[]#
 		</iterate>
 				
 	</select>
 	
+	<select id="queryItemIdsWithPagination" resultClass="java.lang.Long">
+		SELECT 
+			ID 
+		FROM 
+			DC_ITEM 
+		<dynamic>
+            <isParameterPresent open="WHERE" removeFirstPrepend="true">
+           	 	<isNotEmpty property="genWay" prepend="AND">
+				    GEN_WAY = #genWay#
+				</isNotEmpty>
+				<isNotEmpty property="recommType" prepend="AND">
+					<isEqual property="recommType" compareValue="NULL">
+						RECOMM_TYPE IS NULL
+					</isEqual>
+				    <isNotEqual property="recommType" compareValue="NULL">
+						RECOMM_TYPE = #recommType#
+					</isNotEqual>
+				</isNotEmpty>
+				<isNotEmpty property="categoryId" prepend="AND">
+				    CATEGORY_ID = #categoryId#
+				</isNotEmpty>
+				<isNotEmpty property="itemStatus" prepend="AND">
+				    STATUS = #itemStatus#
+				</isNotEmpty>
+				<isNotNull property="gmtCreateEnd" prepend="AND">
+				    <![CDATA[
+				    GMT_CREATE <= #gmtCreateEnd#
+				    ]]>
+				</isNotNull>
+           	</isParameterPresent>
+        </dynamic>
+		ORDER BY 
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="item_price">
+				    ITEM_PRICE 
+				</isEqual>
+				<isEqual property="order" compareValue="item_prom_price">
+				    ITEM_PROM_PRICE 
+				</isEqual>
+				<isEqual property="order" compareValue="recomm_type">
+				    RECOMM_TYPE 
+				</isEqual>
+				<isEqual property="order" compareValue="postal_enable">
+				    POSTAL_ENABLE 
+				</isEqual>
+				<isEqual property="order" compareValue="commission_rate">
+				    COMMISSION_RATE 
+				</isEqual>
+				<isEqual property="order" compareValue="taoke_sell_count">
+				    TAOKE_SELL_COUNT 
+				</isEqual>
+				<isEqual property="order" compareValue="gmt_modified">
+				    GMT_MODIFIED 
+				</isEqual>
+				<isEqual property="order" compareValue="gmt_create">
+				    GMT_CREATE 
+				</isEqual>
+				<isEqual property="order" compareValue="status">
+				    STATUS 
+				</isEqual>
+				<isEqual property="order" compareValue="gen_way">
+				    GEN_WAY 
+				</isEqual>
+				<isEqual property="order" compareValue="display_order">
+				    GEN_WAY 
+				</isEqual>
+				<isEqual property="sort" compareValue="asc">ASC</isEqual>
+				<isNotEqual property="sort" compareValue="asc">DESC</isNotEqual>
+				,
+			</isNotEmpty>
+			DISPLAY_ORDER DESC
+		LIMIT 
+			#start# , #size#
+	</select>
+	
 	<select id="queryItemsWithPagination" resultMap="RM-DcItem">
 		SELECT 
-			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
-			LOVES,SELLS,COMMENTS,CATEGORY_ID,STATUS,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
+			ID,NATIVE_ID,NATIVE_CATEGORY_ID,ITEM_TITLE,ITEM_DESC,ITEM_PRICE,ITEM_PROM_PRICE,RECOMM_REASON,RECOMM_TYPE,SOURCE,SRC_URL,PIC_URLS,CLICK_URL,
+			LOVES,SELLS,RATES,COMMENTS,CATEGORY_ID,STATUS,GEN_WAY,POSTAL_ENABLE,CREATOR_USER_ID,CREATOR_NICK,COMMISSION_RATE,TAOKE_SELL_COUNT,DISPLAY_ORDER,GMT_CREATE,GMT_MODIFIED,GMT_ITEM_UPDATE
 		FROM 
 			DC_ITEM
 		<dynamic>
             <isParameterPresent open="WHERE" removeFirstPrepend="true">
 				<isNotEmpty property="itemId" prepend="AND">
 				    ID = #itemId#
+				</isNotEmpty>
+				<isNotEmpty property="nativeId" prepend="AND">
+				    NATIVE_ID = #nativeId#
 				</isNotEmpty>
 				<isNotEmpty property="categoryId" prepend="AND">
 				    CATEGORY_ID = #categoryId#
@@ -112,23 +265,93 @@
 				    GMT_CREATE <= #gmtCreateEnd#
 				     ]]>
 				</isNotEmpty>
+				<isNotEmpty property="gmtModifiedStart" prepend="AND">
+					<![CDATA[
+				    GMT_MODIFIED >= #gmtModifiedStart#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtModifiedEnd" prepend="AND">
+					<![CDATA[
+				    GMT_MODIFIED <= #gmtModifiedEnd#
+				     ]]>
+				</isNotEmpty>
 				<isNotEmpty property="keywords" prepend="AND">
 				    ITEM_TITLE like CONCAT('%', #keywords#, '%')
 				</isNotEmpty>
 				<isNotEmpty property="itemStatus" prepend="AND">
 				    STATUS = #itemStatus#
 				</isNotEmpty>
-				<isNotEmpty property="exclusionIds" prepend="AND">
-				    ID NOT IN
-				    <iterate prepend="" property="exclusionIds" open="("  close=")"  conjunction=",">
-					      #exclusionIds[]#
-					</iterate>
+				<isNotEmpty property="genWay" prepend="AND">
+				    GEN_WAY = #genWay#
+				</isNotEmpty>
+				<isNotEmpty property="creatorUserId" prepend="AND">
+				    CREATOR_USER_ID = #creatorUserId#
+				</isNotEmpty>
+				<isNotEmpty property="status" prepend="AND">
+				    STATUS = #status#
+				</isNotEmpty>
+				<isNotNull property="gmtItemUpdateStart" prepend="AND">
+					<![CDATA[
+				    GMT_ITEM_UPDATE >= #gmtItemUpdateStart#
+				    ]]>
+				</isNotNull>
+				<isNotNull property="gmtItemUpdateEnd" prepend="AND">
+					<![CDATA[
+				    GMT_ITEM_UPDATE < #gmtItemUpdateEnd#
+				    ]]>
+				</isNotNull>
+				<isNotEmpty property="recommType" prepend="AND">
+					<isEqual property="recommType" compareValue="NULL">
+						RECOMM_TYPE IS NULL
+					</isEqual>
+				    <isNotEqual property="recommType" compareValue="NULL">
+						RECOMM_TYPE = #recommType#
+					</isNotEqual>
 				</isNotEmpty>
 			</isParameterPresent>
 		</dynamic>
-		ORDER BY GMT_CREATE DESC, GMT_MODIFIED DESC
+		ORDER BY 
+			<isNotEmpty property="order">
+				<isEqual property="order" compareValue="item_price">
+				    ITEM_PRICE 
+				</isEqual>
+				<isEqual property="order" compareValue="item_prom_price">
+				    ITEM_PROM_PRICE 
+				</isEqual>
+				<isEqual property="order" compareValue="recomm_type">
+				    RECOMM_TYPE 
+				</isEqual>
+				<isEqual property="order" compareValue="postal_enable">
+				    POSTAL_ENABLE 
+				</isEqual>
+				<isEqual property="order" compareValue="commission_rate">
+				    COMMISSION_RATE 
+				</isEqual>
+				<isEqual property="order" compareValue="taoke_sell_count">
+				    TAOKE_SELL_COUNT 
+				</isEqual>
+				<isEqual property="order" compareValue="gmt_modified">
+				    GMT_MODIFIED 
+				</isEqual>
+				<isEqual property="order" compareValue="gmt_create">
+				    GMT_CREATE 
+				</isEqual>
+				<isEqual property="order" compareValue="status">
+				    STATUS 
+				</isEqual>
+				<isEqual property="order" compareValue="gen_way">
+				    GEN_WAY 
+				</isEqual>
+				<isEqual property="order" compareValue="display_order">
+				    GEN_WAY 
+				</isEqual>
+				<isEqual property="sort" compareValue="asc">ASC</isEqual>
+				<isNotEqual property="sort" compareValue="asc">DESC</isNotEqual>
+				,
+			</isNotEmpty>
+			DISPLAY_ORDER DESC
 		LIMIT 
-			#start# , #size#
+			#start#, #size#
 	</select>
 	
 	<select id="countItemsWithPagination" resultClass="java.lang.Integer">
@@ -142,6 +365,9 @@
 				<isNotEmpty property="itemId" prepend="AND">
 				    ID = #itemId#
 				</isNotEmpty>
+				<isNotEmpty property="nativeId" prepend="AND">
+				    NATIVE_ID = #nativeId#
+				</isNotEmpty>
 				<isNotEmpty property="categoryId" prepend="AND">
 				    CATEGORY_ID = #categoryId#
 				</isNotEmpty>
@@ -161,17 +387,48 @@
 				    GMT_CREATE <= #gmtCreateEnd#
 				     ]]>
 				</isNotEmpty>
+				<isNotEmpty property="gmtModifiedStart" prepend="AND">
+					<![CDATA[
+				    GMT_MODIFIED >= #gmtModifiedStart#
+				    ]]>
+				</isNotEmpty>
+				<isNotEmpty property="gmtModifiedEnd" prepend="AND">
+					<![CDATA[
+				    GMT_MODIFIED <= #gmtModifiedEnd#
+				     ]]>
+				</isNotEmpty>
 				<isNotEmpty property="keywords" prepend="AND">
 				    ITEM_TITLE like CONCAT('%', #keywords#, '%')
 				</isNotEmpty>
 				<isNotEmpty property="itemStatus" prepend="AND">
 				    STATUS = #itemStatus#
 				</isNotEmpty>
-				<isNotEmpty property="exclusionIds" prepend="AND">
-				    ID NOT IN
-				    <iterate prepend="" property="exclusionIds" open="("  close=")"  conjunction=",">
-					      #exclusionIds[]#
-					</iterate>
+				<isNotEmpty property="genWay" prepend="AND">
+				    GEN_WAY = #genWay#
+				</isNotEmpty>
+				<isNotEmpty property="creatorUserId" prepend="AND">
+				    CREATOR_USER_ID = #creatorUserId#
+				</isNotEmpty>
+				<isNotEmpty property="status" prepend="AND">
+				    STATUS = #status#
+				</isNotEmpty>
+				<isNotNull property="gmtItemUpdateStart" prepend="AND">
+					<![CDATA[
+				    GMT_ITEM_UPDATE >= #gmtItemUpdateStart#
+				    ]]>
+				</isNotNull>
+				<isNotNull property="gmtItemUpdateEnd" prepend="AND">
+					<![CDATA[
+				    GMT_ITEM_UPDATE < #gmtItemUpdateEnd#
+				    ]]>
+				</isNotNull>
+				<isNotEmpty property="recommType" prepend="AND">
+					<isEqual property="recommType" compareValue="NULL">
+						RECOMM_TYPE IS NULL
+					</isEqual>
+				    <isNotEqual property="recommType" compareValue="NULL">
+						RECOMM_TYPE = #recommType#
+					</isNotEqual>
 				</isNotEmpty>
 			</isParameterPresent>
 		</dynamic>
@@ -181,13 +438,13 @@
 		UPDATE 
 			DC_ITEM
 		SET 
-			LOVES = LOVES + 1 , 
+			LOVES = LOVES + #count# , 
 			GMT_MODIFIED = now() 
 		WHERE
 			ID = #itemId#
 	</update>
 	
-	<update id="incrCommentCount" parameterClass="map">
+	<update id="incrCommentCount">
 		UPDATE 
 			DC_ITEM
 		SET 
@@ -197,7 +454,47 @@
 			ID = #itemId#
 	</update>
 	
-	<update id="updateItemStatus" parameterClass="map">
+	<update id="descCommentCount">
+		UPDATE 
+			DC_ITEM
+		SET 
+			COMMENTS = COMMENTS - #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #itemId#
+	</update>
+	
+	<update id="incrRateCount">
+		UPDATE 
+			DC_ITEM
+		SET 
+			RATES = RATES + #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #itemId#
+	</update>
+	
+	<update id="descRateCount">
+		UPDATE 
+			DC_ITEM
+		SET 
+			RATES = RATES - #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #itemId#
+	</update>
+	
+	<update id="incrTaokeSellCount">
+		UPDATE 
+			DC_ITEM
+		SET 
+			TAOKE_SELL_COUNT = TAOKE_SELL_COUNT + #count# , 
+			GMT_MODIFIED = now() 
+		WHERE
+			ID = #itemId#
+	</update>
+	
+	<update id="updateItemStatus">
 		UPDATE 
 			DC_ITEM
 		SET 
@@ -207,14 +504,24 @@
 			ID = #itemId#
 	</update>
 	
-	<update id="descCommentCount">
+	<update id="updatePostalEnable">
 		UPDATE 
 			DC_ITEM
 		SET 
-			COMMENTS = COMMENTS - 1 , 
+			POSTAL_ENABLE = #postalEnable#, 
 			GMT_MODIFIED = now() 
 		WHERE
 			ID = #itemId#
+	</update>
+	
+	<update id="updateDisplayOrderById">
+		UPDATE
+			DC_ITEM
+		SET
+			DISPLAY_ORDER = UNIX_TIMESTAMP(now()) ,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
 	</update>
 	
 	<select id="groupCategoryCountByIds" resultMap="RM-DcCatCount">
@@ -230,4 +537,79 @@
 		GROUP BY 
 			CATEGORY_ID
 	</select>
+	
+	<update id="batchUpdateSyncItemInfo">
+		UPDATE DC_ITEM
+		SET 
+		    <isNotNull property="itemPrice">
+		    	ITEM_PRICE = #itemPrice#,
+		    </isNotNull>
+		    <isNotNull property="itemPromPrice">
+		    	ITEM_PROM_PRICE = #itemPromPrice#,
+		    </isNotNull>
+		    <isNotNull property="commissionRate">
+		    	COMMISSION_RATE = #commissionRate#,
+		    </isNotNull>
+		    <isNotEmpty property="status">
+		    	STATUS = #status#,
+		    </isNotEmpty>
+		    <isNotEmpty property="clickUrl">
+		    	CLICK_URL = #clickUrl#,
+		    </isNotEmpty>
+		    <isNotEmpty property="postalEnable">
+		    	POSTAL_ENABLE = #postalEnable#,
+		    </isNotEmpty>
+			GMT_ITEM_UPDATE = now(),
+			GMT_MODIFIED = now()
+		WHERE ID = #id#
+	</update>
+	
+	<update id="updateItemStatusByIds">
+		UPDATE
+			DC_ITEM
+		SET
+			STATUS = #status# ,
+			GMT_MODIFIED = now()
+		WHERE
+			ID IN 
+			<iterate prepend="" property="idList" open="("  close=")"  conjunction=",">
+			      #idList[]#
+			</iterate>
+	</update>
+	
+	<update id="updatePicUrlsById">
+		UPDATE
+			DC_ITEM
+		SET
+			PIC_URLS = #picUrls# ,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #id#
+	</update>
+	
+	<update id="updateGenWay">
+		UPDATE
+			DC_ITEM
+		SET
+			GEN_WAY = #genWay# ,
+			PIC_URLS = #picUrl# ,
+			GMT_MODIFIED = now()
+		WHERE
+			ID = #itemId#
+	</update>
+	
+	<update id="updateCategoryId">
+		UPDATE DC_ITEM
+		  SET CATEGORY_ID = #categoryId#, GMT_MODIFIED = now()
+		  WHERE ID = #itemId#
+	</update>
+	
+	<update id="batchUpdateCategoryId">
+		UPDATE DC_ITEM
+		  SET CATEGORY_ID = #categoryId#
+		  WHERE ID IN 
+			<iterate prepend="" property="itemIds" open="("  close=")"  conjunction=",">
+			      #itemIds[]#
+			</iterate>
+	</update>
 </sqlMap>

@@ -1,47 +1,44 @@
 package com.doucome.corner.biz.service;
 
-import org.apache.commons.lang.StringUtils;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
-import com.doucome.corner.biz.core.utils.JacksonHelper;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import com.doucome.corner.biz.core.exception.UpyunException;
+import com.doucome.corner.biz.core.service.upyun.UpYunUtils;
 
 public class Test {
 
-	public static void main(String[] args) {
-		LuckydrawResponse<Boolean> e = new LuckydrawResponse<Boolean>() ;
-		e.setResponseData(false) ;
-		String s = JacksonHelper.toJSON(e) ;
-		System.out.println(s);
-		String sss = "{\"responseData\":false,\"errorCode\":null}" ;
-		LuckydrawResponse<Boolean> r = JacksonHelper.fromJSON(sss, LuckydrawResponse.class) ;
-		System.out.println(r.getResponseData());
+	public static void main(String[] args) throws Exception  {
+HttpClient client = new DefaultHttpClient() ;
+		
+		HttpEntity entry = null ;
+		try {		
+			HttpGet get = new HttpGet("http://captcha.qq.com/getimage?aid=8000108&r=0.3266268726438284") ;
+			HttpResponse response = client.execute(get) ;
+			int statusCode = response.getStatusLine().getStatusCode() ;
+			if(statusCode != 200){
+				throw new UpyunException("get resource error , errcode :" + statusCode) ;
+			}
+			entry = response.getEntity() ;
+			long len = entry.getContentLength() ;
+			
+			InputStream is = entry.getContent();  
+			byte[] imgBuffer = UpYunUtils.inputStream2Buf(is , (int)entry.getContentLength());
+			if(imgBuffer == null){
+				throw new IllegalArgumentException("img url is not correct .") ;
+			}
+			
+			FileOutputStream o = new FileOutputStream(new File("d:/ver.png")) ;
+			o.write(imgBuffer) ;
+			o.close() ;
+		}catch (UpyunException e) {
 	}
-
-	public static class LuckydrawResponse<T> {
-		private T responseData ;
-		private String errorCode;
-
-		public LuckydrawResponse(){
-			
-		}
-		public boolean isSuccess() {
-			return StringUtils.isBlank(errorCode);
-		}
-
-		public String getErrorCode() {
-			return errorCode;
-		}
-
-		public void setErrorCode(String errorCode) {
-			this.errorCode = errorCode;
-		}
-
-		public T getResponseData() {
-			return responseData;
-		}
-
-		public void setResponseData(T responseData) {
-			this.responseData = responseData;
-		}
-			
 	}
 }

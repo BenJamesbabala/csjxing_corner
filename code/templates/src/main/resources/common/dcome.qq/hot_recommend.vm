@@ -1,0 +1,39 @@
+<div class="dd-hide" id="hotItemTemplate">
+	<li class="main-box">
+		<div class="box-top"></div>
+		<div class="box-body">
+			<h2><a class="title" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item-id@" title="@item-name@" data-item-id="@item-id@" @gtrack@='/virtual/qq/item?tracelog=hot-offer-buy&id=@item-id@'>@item-name@</a></h2>
+			<div class="info-box dd-clr">
+				<div class="meta">
+					<div class="item-buy-bg">
+						<a class="buy dd-r" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item-id@" title="@item-name@" data-item-id="@item-id@" @gtrack@='/virtual/qq/item?tracelog=hot-offer-buy&id=@item-id@'></a>
+					    <span>￥@prom-price@</span>
+					</div>
+					<dl class="item-prices">
+						<dt class="">原 价</dt>
+						<dt class="">限时特价</dt>
+						<dt class="">赠送积分</dt>
+						<dd class="price"><del>￥@price@</del></dd>
+						<dd class="prom-price">￥@prom-price@</dd>
+						<dd class="integral"><span class="color-red">@integral@</span>积分</dd>
+					</dl>
+					<div class="item-sold">
+						本月全网狂销<strong class="sell-count">@sell-count@</strong>件
+						<p class="desc">限时特价，数量有限，抢完即止！</p>
+						@postal-enable@
+					</div>
+					<div class="item-prom">
+						<a class="share-btn btn1" title="分享送10积分" href="javascript:;">分享送积分</a>
+					</div>
+				</div>
+				<div class="picbox">
+					<div class="pic">
+						<a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=@item-id@" title="@item-name@" data-item-id="@item-id@" @gtrack@='/virtual/qq/item?tracelog=hot-offer-buy&id=@item-id@'>
+							<img class="picture" src="@pic-url@">
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</li>
+</div>

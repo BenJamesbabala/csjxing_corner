@@ -2,14 +2,14 @@ package com.doucome.corner.biz.core.taobao.dto;
 
 import java.math.BigDecimal;
 
+import com.doucome.corner.biz.common.utils.ReflectUtils;
 import com.doucome.corner.biz.core.constant.DecimalConstant;
-import com.doucome.corner.biz.core.model.AbstractModel;
-import com.doucome.corner.biz.core.utils.ReflectUtils;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 import com.taobao.api.domain.TaobaokeShop;
 
 /**
  * Ã‘±¶øÕÕ∆π„µÍ∆ÃDO
- * @author shenjia.caosj 2012-2-24
+ * @author langben 2012-2-24
  *
  */
 public class TaobaokeShopDTO extends AbstractModel {

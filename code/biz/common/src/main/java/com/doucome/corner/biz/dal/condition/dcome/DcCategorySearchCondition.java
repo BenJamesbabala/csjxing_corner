@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * ≤È—Ø¿‡ƒø
- * @author shenjia.caosj 2012-7-24
+ * @author langben 2012-7-24
  *
  */
 public class DcCategorySearchCondition {
@@ -14,7 +14,7 @@ public class DcCategorySearchCondition {
 	
 	private Long id ;
 		
-	private String name ;
+	private String name;
 	
 	public Map<String,Object> toMap(){
 		Map<String,Object> condition = new HashMap<String,Object>() ;

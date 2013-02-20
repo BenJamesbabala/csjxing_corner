@@ -21,10 +21,12 @@ public class DefaultDdzSessionOperator implements DdzSessionOperator {
 
     private DdzAccountService ddzAccountService;
 
+    @Override
     public boolean load(String uid) {
         if (StringUtils.isEmpty(uid)) {
             return false;
         }
+        
         DdzUserDO userDO = ddzUserService.getByUid(uid);
 
         if (userDO == null) {
@@ -38,6 +40,7 @@ public class DefaultDdzSessionOperator implements DdzSessionOperator {
         DdzAccountDO accountDO = ddzAccountService.queryAccountDOByUid(uid);
         if (accountDO != null && StringUtils.isBlank(authzContext.getAlipayId())) {
             authzContext.setAlipayId(accountDO.getAlipayId());
+            authzContext.setValidAlipayId(accountDO.getAlipayId()) ;
         }
         authzContext.setAuthentication(true, true);
         return true;

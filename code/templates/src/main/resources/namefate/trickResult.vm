@@ -1,0 +1,13 @@
+#set($layout="dcome/frame.namefate/default.vm")
+<input type="hidden" id="suppressLogin" value="true"/>
+<div class="trick-result">
+    <div class="trick-result-area">你上当啦！这是<span class="trick-result-name">$!trick.userNick</span>和你开的一个小玩笑。</div>
+    <div class="trick-result-area">你填写的内容已经悄悄的发送给TA。 </div>
+	
+    <div class="tamenxihuan"><img src="${env.staticroot}/dcome/namefate/images/tamenxihuan.png"></img></div>
+	
+    <div>
+		<div><a href="javascript:;" class="submit"></a> <span>或者</span></div>
+		<div><a href="${env.root}/s/$!shorten" class="" target="_blank">${env.root}/s/$!shorten</a></div>
+	</div>
+</div>

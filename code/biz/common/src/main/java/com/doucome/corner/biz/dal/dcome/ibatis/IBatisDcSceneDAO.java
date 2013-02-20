@@ -48,7 +48,7 @@ public class IBatisDcSceneDAO extends SqlMapClientDaoSupport implements DcSceneD
 	@Override
 	public int countScenesWithPagination(DcSceneSearchCondition searchCondition) {
 		Map<String,Object> condition = searchCondition.toMap() ;
-		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("DcScene.countScenesWithPagination" , condition));
+		return NumberUtils.parseInt((Integer)getSqlMapClientTemplate().queryForObject("DcScene.countScenesWithPagination" , condition));
 	}
 
 }

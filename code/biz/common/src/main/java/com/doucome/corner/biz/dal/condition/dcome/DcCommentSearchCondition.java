@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * 豆蔻评论查询条件
- * @author shenjia.caosj 2012-7-21
+ * @author langben 2012-7-21
  *
  */
 public class DcCommentSearchCondition {

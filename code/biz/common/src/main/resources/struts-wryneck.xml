@@ -1,0 +1,53 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="frame-wryneck" namespace="/frame/wryneck" extends="default">
+		<interceptors>
+            <interceptor-stack name="wryneckDefaultStack">
+				 <interceptor-ref name="cornerDefaultStack" />
+				 <interceptor-ref name="setWryneckContextInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<action name="qqLogin" class="com.doucome.corner.web.wryneck.action.WryneckQqLoginAction">
+			<interceptor-ref name="wryneckDefaultStack" />
+			<result name="success" type="redirect">/frame/wryneck/index.htm</result>
+		</action>
+		
+		<action name="index" class="com.doucome.corner.web.wryneck.action.WryneckIndexAction">
+		    <interceptor-ref name="wryneckDefaultStack" />
+			<result name="success" type="velocity">/wryneck/index.vm</result>
+		</action>
+		
+		<action name="wryneck_pic_download" class="com.doucome.corner.web.wryneck.action.WryneckPicDownloadAction">
+			<interceptor-ref name="wryneckDefaultStack" />
+			<result name="success" type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="contentDisposition">attachment;filename=${fileName}</param>
+				<param name="bufferSize">4096</param>
+				<param name="inputStream">inputStream</param>
+			</result>
+		</action>
+		
+	</package>
+	
+	<package name="frame-wryneck-remote" namespace="/frame/wryneck/remote" extends="struts-json">
+		<interceptors>
+            <interceptor-stack name="wryneckDefaultStack">
+				 <interceptor-ref name="cornerDefaultStack" />
+				 <interceptor-ref name="setWryneckContextInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<action name="is_qzone_fans_ajax" class="com.doucome.corner.web.wryneck.ajax.WryneckQzoneAjaxAction" method="isQzoneFans">
+			<interceptor-ref name="wryneckDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+		
+		<action name="wryneck_test_ajax" class="com.doucome.corner.web.wryneck.ajax.WryneckTestAjaxAction">
+			<interceptor-ref name="wryneckDefaultStack" />
+			<result name="success" type="json"></result>
+		</action>
+	</package>
+</struts>

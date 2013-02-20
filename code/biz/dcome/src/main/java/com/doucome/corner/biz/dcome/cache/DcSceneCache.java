@@ -4,22 +4,22 @@ import com.doucome.corner.biz.dcome.model.DcSceneDTO;
 
 /**
  * 场景缓存
- * @author shenjia.caosj 2012-7-23
+ * @author langben 2012-7-23
  *
  */
 public interface DcSceneCache {
 
 	/**
-	 * 获取缓存
+	 * 获取缓存(包括detail)
 	 * @return
 	 */
-	DcSceneDTO getCache(Long sceneId) ;
+	DcSceneDTO get(Long sceneId) ;
 	
 	/**
-	 * 设置缓存
+	 * 设置缓存(包括detail)
 	 * @param itemList
 	 */
-	void setCache(DcSceneDTO scene) ;
+	void set(DcSceneDTO scene) ;
 	
 	/**
 	 * 清空缓存

@@ -18,7 +18,7 @@ import com.doucome.corner.biz.core.taobao.model.TaokeItemSearchCondition;
 
 /**
  * 淘宝开放平台接口封装
- * @author shenjia.caosj 2012-2-24
+ * @author langben 2012-2-24
  *
  */
 public interface TaobaokeServiceDecorator {
@@ -47,6 +47,7 @@ public interface TaobaokeServiceDecorator {
 	 * @param outCode 自定义参数
 	 * @param fields 显示字段, see {@link TaokeItemConst}
 	 * @return
+	 * @deprecated 
 	 */
 	List<TaobaokeItemDTO> conventItems(String[] itemIds ,  String outCode , String[] fields) throws TaobaoRemoteException  ;
 	
@@ -56,8 +57,50 @@ public interface TaobaokeServiceDecorator {
 	 * @param outCode 自定义参数
 	 * @param fields 显示字段, see {@link TaokeItemConst}
 	 * @return
+	 * @deprecated 
 	 */
 	TaobaokeItemDTO conventItem(String itemId ,  String outCode , String[] fields) throws TaobaoRemoteException  ;
+	
+	/**
+	 * 
+	 * @param itemId
+	 * @param outCode
+	 * @param fields
+	 * @return
+	 * @throws TaobaoRemoteException
+	 */
+	List<TaobaokeItemDTO> widgetConventItems(String[] itemIds ,  String outCode , String[] fields) throws TaobaoRemoteException  ;
+	
+	/**
+	 * 
+	 * @param itemId
+	 * @param outCode
+	 * @param fields
+	 * @return
+	 * @throws TaobaoRemoteException
+	 */
+	List<TaobaokeItemDTO> widgetConventItems(String[] itemIds ,  String outCode , Boolean isMobile , String[] fields) throws TaobaoRemoteException  ;
+	
+	/**
+	 * 
+	 * @param itemId
+	 * @param outCode
+	 * @param fields
+	 * @return
+	 * @throws TaobaoRemoteException
+	 */
+	TaobaokeItemDTO widgetConventItem(String itemId ,  String outCode , String[] fields) throws TaobaoRemoteException  ;
+	
+	/**
+	 * 
+	 * @param itemId
+	 * @param outCode
+	 * @param fields
+	 * @return
+	 * @throws TaobaoRemoteException
+	 */
+	TaobaokeItemDTO widgetConventItem(String itemId ,  String outCode , Boolean isMobile , String[] fields) throws TaobaoRemoteException  ;
+	
 	
 	/**
 	 * 淘宝客报表查询 

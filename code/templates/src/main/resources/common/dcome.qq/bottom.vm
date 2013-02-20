@@ -1,9 +1,9 @@
 #if($dcAuthz.isPrivateUser())
 	#parse("/common/bottomhost.vm")
 #end
-#if(!$dcAuthz.isPrivateUser() && $env.production)
+##if(!$dcAuthz.isPrivateUser() && $env.production)
 	#parse("/common/dcome/google_analytics.vm")
-#end
+##end
 
 
 

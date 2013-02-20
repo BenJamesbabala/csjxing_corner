@@ -6,8 +6,8 @@
 	<package name="surl" namespace="/surl" extends="default">
 		
 		<action name="surl" class="com.doucome.corner.web.common.action.ShortUrlAction">
-			<interceptor-ref name="basicStack" />
-			<result name="success" type="velocity">/zhe/index.vm</result>
+			<interceptor-ref name="cornerBasicStack" />
+			<result name="success" type="redirect">/zhe/index.htm</result>
 		</action>
 		
 	</package>

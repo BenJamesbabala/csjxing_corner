@@ -14,4 +14,13 @@ public class DateUtilsToolbox extends DateTool {
 	public Date now(){
 		return new Date() ;
 	}
+	
+	public long currentTimeMillis(){
+		return System.currentTimeMillis() ;
+	}
+	
+	public long timeMillisOf(Date date){
+		long millseconds = date == null ? 0 : date.getTime() ;
+		return millseconds ;
+	}
 }

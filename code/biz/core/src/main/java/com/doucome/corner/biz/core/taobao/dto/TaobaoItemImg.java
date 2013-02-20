@@ -6,7 +6,7 @@ import com.doucome.corner.biz.dal.model.AbstractModel;
 
 /**
  * Ã‘±¶ItemÕº∆¨
- * @author shenjia.caosj 2012-8-1
+ * @author langben 2012-8-1
  *
  */
 public class TaobaoItemImg extends AbstractModel {

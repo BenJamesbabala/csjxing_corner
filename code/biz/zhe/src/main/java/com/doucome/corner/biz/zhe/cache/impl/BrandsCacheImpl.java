@@ -16,9 +16,9 @@ public class BrandsCacheImpl extends AbstractCacheSupport implements BrandsCache
 	@Override
 	public List<TaobaokeShopFacade> getItems() {
 		CacheClient cc = getCacheClient() ;
-		String key = buildCachekeyWithArgs("") ;
+		String key = buildCachekeyWithArgs() ;
 		InternalStoreItem<List<TaobaokeShopFacade>> store = cc.get(key) ;
-		if(isExpire(store)) {
+		if(store == null) {
 			return null ;
 		}
 		return store.getItem();
@@ -27,35 +27,16 @@ public class BrandsCacheImpl extends AbstractCacheSupport implements BrandsCache
 	@Override
 	public void setCache(List<TaobaokeShopFacade> items) {
 		CacheClient cc = getCacheClient() ;
-		String key = buildCachekeyWithArgs("") ;
+		String key = buildCachekeyWithArgs() ;
 		InternalStoreItem<List<TaobaokeShopFacade>> store = new InternalStoreItem<List<TaobaokeShopFacade>>(items) ;
-		cc.put(key, store) ;
+		cc.put(key, store , ONE_HOUR_MILLISECONDS * 6) ;
 	}
 
 	@Override
 	public void clear() {
 		CacheClient cc = getCacheClient() ;
-		String key = buildCachekeyWithArgs("") ;
+		String key = buildCachekeyWithArgs() ;
 		cc.delete(key) ;
 	}
 	
-	private boolean isExpire(InternalStoreItem<List<TaobaokeShopFacade>> store){
-		if(store == null){
-			return true ;
-		}
-		
-		Date gmtCreate = store.getGmtCreate() ;
-		if(gmtCreate == null){
-			return true ;
-		}
-		
-		Date now = new Date() ;
-		
-		if(DateUtils.isSameDay(gmtCreate, now)){
-			return false ;
-		}
-		
-		return true ;
-	}
-
 }

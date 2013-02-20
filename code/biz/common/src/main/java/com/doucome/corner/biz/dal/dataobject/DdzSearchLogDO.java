@@ -8,7 +8,7 @@ import com.doucome.corner.biz.dal.model.AbstractModel;
 /**
  * 点点折搜索框查询日志
  * 
- * @author shenjia.caosj 2012-3-6
+ * @author langben 2012-3-6
  * 
  */
 public class DdzSearchLogDO extends AbstractModel {

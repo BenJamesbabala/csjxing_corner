@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="exchangeItem">
+	<typeAlias alias="TA-DcExchangeItem" type="com.doucome.corner.biz.dal.dataobject.dcome.DcExchangeItemDO"/>
+	
+	<resultMap id="RM-DcExchangeItem" class="TA-DcExchangeItem">
+		<result property="id" column="ID" />
+		<result property="itemId" column="ITEM_ID"/>
+		<result property="itemTitle" column="ITEM_TITLE"/>
+		<result property="itemPictures" column="ITEM_PICTURES"/>
+		<result property="itemPrice" column="ITEM_PRICE" jdbcType="DECIMAL"/>
+		<result property="itemType" column="ITEM_TYPE"/>
+		<result property="exIntegral" column="EX_INTEGRAL"/>
+		<result property="exCount" column="EX_COUNT" />
+		<result property="exSuccCount" column="EX_SUCC_COUNT" />
+		<result property="userId" column="USER_ID" />
+		<result property="requireFields" column="REQUIRE_FIELDS" />
+		<result property="exType" column="EX_TYPE" />
+		<result property="gmtModified" column="GMT_MODIFIED" jdbcType="TIMESTAMP" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertExchangeItem">
+		INSERT INTO DC_EXCHANGE_ITEM
+			(ITEM_ID, ITEM_TITLE, ITEM_PRICE, ITEM_PICTURES, EX_INTEGRAL, EX_COUNT, USER_ID, ITEM_TYPE, GMT_MODIFIED, GMT_CREATE)
+		VALUES
+			(#itemId#, #itemTitle#, #itemPrice#, #itemPictures#, #exIntegral#, #exCount#, #userId#, #itemType#, now(), now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="getExchangeItem" resultMap="RM-DcExchangeItem">
+		SELECT ID, ITEM_ID, ITEM_TITLE, ITEM_PICTURES, ITEM_PRICE, ITEM_TYPE, EX_INTEGRAL, EX_COUNT, EX_SUCC_COUNT, USER_ID,REQUIRE_FIELDS,EX_TYPE,GMT_MODIFIED, GMT_CREATE
+		  FROM DC_EXCHANGE_ITEM
+		  WHERE ID = #id#
+		  LIMIT 1
+	</select>
+	
+	<select id="queryExchangeItemsNoPage" resultMap="RM-DcExchangeItem">
+		SELECT ID, ITEM_ID, ITEM_TITLE, ITEM_PICTURES, ITEM_PRICE, ITEM_TYPE, EX_INTEGRAL, EX_COUNT, EX_SUCC_COUNT, USER_ID, REQUIRE_FIELDS,EX_TYPE,GMT_MODIFIED, GMT_CREATE
+		  FROM DC_EXCHANGE_ITEM
+		  <dynamic>
+			  <isParameterPresent open="WHERE" removeFirstPrepend="true">
+			      <isNotEmpty property="id" prepend="AND">
+					  <![CDATA[
+					  ID = #id#
+					  ]]>
+				  </isNotEmpty>
+				  <isNotEmpty property="exType" prepend="AND">
+					  <![CDATA[
+					  EX_TYPE = #exType#
+					  ]]>
+				  </isNotEmpty>
+				  <isEmpty property="exType" prepend="AND">
+					  <![CDATA[
+					  EX_TYPE = 'P'
+					  ]]>
+				  </isEmpty>
+				  <isEqual property="status" compareValue="ON" prepend="AND">
+				      EX_INTEGRAL > 0 AND EX_COUNT > 0
+				  </isEqual>
+				  <isEqual property="status" compareValue="EN" prepend="AND">
+				      EX_INTEGRAL > 0 AND EX_COUNT = 0
+				  </isEqual>
+				  <isEqual property="status" compareValue="FU" prepend="AND">
+				      EX_INTEGRAL IS NULL OR <![CDATA[EX_INTEGRAL <= 0]]> AND EX_COUNT IS NULL AND <![CDATA[EX_COUNT <= 0]]>
+				  </isEqual>
+				  <isNotNull property="userId" prepend="AND">
+				      USER_ID=#userId#
+				  </isNotNull>
+				  <isEqual property="exUserType" compareValue="A" prepend="AND">
+				      USER_ID = 1
+				  </isEqual>
+				  <isEqual property="exUserType" compareValue="P" prepend="AND">
+				      <![CDATA[USER_ID<>1]]>
+				  </isEqual>
+			  </isParameterPresent>
+		  </dynamic>
+		  <isEqual property="order" compareValue="exIntegral">
+		      ORDER BY EX_INTEGRAL
+		  </isEqual>
+		  <isEqual property="order" compareValue="exCount">
+		      ORDER BY EX_COUNT DESC
+		  </isEqual>
+		  <isEmpty property="order" prepend="">
+		      ORDER BY GMT_MODIFIED DESC
+		  </isEmpty>
+	</select>
+	
+	<select id="queryExchangeItemsPage" resultMap="RM-DcExchangeItem">
+		SELECT ID, ITEM_ID, ITEM_TITLE, ITEM_PICTURES, ITEM_PRICE, ITEM_TYPE, EX_INTEGRAL, EX_COUNT, EX_SUCC_COUNT, USER_ID,REQUIRE_FIELDS,EX_TYPE, GMT_MODIFIED, GMT_CREATE
+		  FROM DC_EXCHANGE_ITEM
+		  <dynamic>
+			  <isParameterPresent open="WHERE" removeFirstPrepend="true">
+			      <isNotEmpty property="id" prepend="AND">
+					  <![CDATA[
+					  ID = #id#
+					  ]]>
+				  </isNotEmpty>
+				  <isNotEmpty property="exType" prepend="AND">
+					  <![CDATA[
+					  EX_TYPE = #exType#
+					  ]]>
+				  </isNotEmpty>
+				  <isEmpty property="exType" prepend="AND">
+					  <![CDATA[
+					  EX_TYPE = 'P'
+					  ]]>
+				  </isEmpty>
+				  <isEqual property="status" compareValue="ON" prepend="AND">
+				      EX_INTEGRAL > 0 AND EX_COUNT > 0
+				  </isEqual>
+				  <isEqual property="status" compareValue="EN" prepend="AND">
+				      EX_INTEGRAL > 0 AND EX_COUNT = 0
+				  </isEqual>
+				  <isEqual property="status" compareValue="FU" prepend="AND">
+				      EX_INTEGRAL IS NULL OR <![CDATA[EX_INTEGRAL <= 0]]> AND EX_COUNT IS NULL AND <![CDATA[EX_COUNT <= 0]]>
+				  </isEqual>
+				  <isNotNull property="userId" prepend="AND">
+				      USER_ID=#userId#
+				  </isNotNull>
+				  <isEqual property="exUserType" compareValue="A" prepend="AND">
+				      USER_ID = 1
+				  </isEqual>
+				  <isEqual property="exUserType" compareValue="P" prepend="AND">
+				      <![CDATA[USER_ID<>1]]>
+				  </isEqual>
+			  </isParameterPresent>
+		  </dynamic>
+		  <isEqual property="order" compareValue="exIntegral">
+		      ORDER BY EX_INTEGRAL
+		  </isEqual>
+		  <isEqual property="order" compareValue="exCount">
+		      ORDER BY EX_COUNT DESC
+		  </isEqual>
+		  <isEmpty property="order" prepend="">
+		      ORDER BY GMT_MODIFIED DESC
+		  </isEmpty>
+		  LIMIT #start#, #size#
+	</select>
+	
+	<select id="countExchangeItems" resultClass="java.lang.Integer">
+		SELECT COUNT(ID)
+		  FROM DC_EXCHANGE_ITEM
+		  <dynamic>
+			  <isParameterPresent open="WHERE" removeFirstPrepend="true">
+			      <isNotEmpty property="id" prepend="AND">
+					  <![CDATA[ID = #id#]]>
+				  </isNotEmpty>
+				  <isEqual property="status" compareValue="ON" prepend="AND">
+				      EX_INTEGRAL > 0 AND EX_COUNT > 0
+				  </isEqual>
+				  <isEqual property="status" compareValue="EN" prepend="AND">
+				      EX_INTEGRAL > 0 AND EX_COUNT = 0
+				  </isEqual>
+				  <isEqual property="status" compareValue="FU" prepend="AND">
+				      EX_INTEGRAL IS NULL OR <![CDATA[EX_INTEGRAL <= 0]]> AND EX_COUNT IS NULL AND <![CDATA[EX_COUNT <= 0]]>
+				  </isEqual>
+				  <isNotNull property="userId" prepend="AND">
+				      USER_ID=#userId#
+				  </isNotNull>
+				  <isEqual property="exUserType" compareValue="A" prepend="AND">
+				      USER_ID = 1
+				  </isEqual>
+				  <isEqual property="exUserType" compareValue="P" prepend="AND">
+				      <![CDATA[USER_ID<>1]]>
+				  </isEqual>
+			  </isParameterPresent>
+		  </dynamic>
+	</select>
+
+    <update id="initExchangeInfo">
+	    UPDATE DC_EXCHANGE_ITEM
+	      SET EX_INTEGRAL=#exIntegral#, EX_COUNT=#exCount#,
+              ITEM_TYPE=#itemType#, GMT_MODIFIED = now()
+	      WHERE ID=#id#
+	</update>
+
+	<update id="decExchangeNum">
+	    UPDATE DC_EXCHANGE_ITEM
+	      SET EX_COUNT=EX_COUNT - #exCount#, EX_SUCC_COUNT=EX_SUCC_COUNT + #exCount#, GMT_MODIFIED = now()
+	      WHERE ID=#id# AND <![CDATA[EX_COUNT >= #exCount#]]>
+	</update>
+	
+	<delete id="delExchangeItem">
+	    DELETE FROM DC_EXCHANGE_ITEM
+	      WHERE ID=#id#
+	</delete>
+	
+</sqlMap>

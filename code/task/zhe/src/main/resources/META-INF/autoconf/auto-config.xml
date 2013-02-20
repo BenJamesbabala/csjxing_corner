@@ -28,8 +28,13 @@
 	
 	<script>
 		<generate template="bin/env.sh.vm" destfile="bin/env.sh" charset="GBK" />
+		<generate template="bin/calculateRateStart.sh" destfile="bin/calculateRateStart.sh" charset="GBK" />
+		<generate template="bin/collectMoguItemStart.sh" destfile="bin/collectMoguItemStart.sh" charset="GBK" />
+		<generate template="bin/spiderItemTaskStart.sh" destfile="bin/spiderItemTaskStart.sh" charset="GBK" />
 		<generate template="bin/startSendReportMails.sh" destfile="bin/startSendReportMails.sh" charset="GBK" />
+		<generate template="bin/addUser.sh" destfile="bin/addUser.sh" charset="GBK" />
 		<generate template="bin/taokeReportSyncStarter.sh" destfile="bin/taokeReportSyncStarter.sh" charset="GBK" />
+		<generate template="bin/dcItemSyncStart.sh" destfile="bin/dcItemSyncStart.sh" charset="GBK" />
 	</script>
 </config>
 

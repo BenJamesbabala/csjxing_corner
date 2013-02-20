@@ -10,14 +10,71 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
 		default-autowire="byName">
-		
 	
-	<bean id="ddzAccountDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzAccountDAO" />
-	<bean id="ddzSearchLogDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzSearchLogDAO"/>
-	<bean id="ddzTaokeReportDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzTaokeReportDAO"/>
-	<bean id="ddzTransferUrlDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzTransferUrlDAO"/>
-	<bean id="ddzUserDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzUserDAO"/>
-	<bean id="ddzSyncReportTaskDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzSyncReportTaskDAO"/>
-	<bean id="ddzTaokeReportSettleDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzTaokeReportSettleDAO"/>
-	<bean id="ddzConfigDAO" class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzConfigDAO"/>
+	<bean id="ddzAccountDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzAccountDAO" />
+		</property>
+	</bean>
+	
+	<bean id="ddzSearchLogDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzSearchLogDAO" />
+		</property>
+	</bean>
+	
+	<bean id="ddzTaokeReportDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzTaokeReportDAO" />
+		</property>
+	</bean>
+	
+	<bean id="ddzTransferUrlDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzTransferUrlDAO" />
+		</property>
+	</bean>
+	
+	<bean id="ddzUserDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzUserDAO" />
+		</property>
+	</bean>
+
+	<bean id="ddzSyncReportTaskDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzSyncReportTaskDAO" />
+		</property>
+	</bean>
+
+	<bean id="ddzTaokeReportSettleDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzTaokeReportSettleDAO" />
+		</property>
+	</bean>
+	
+	<bean id="ddzConfigDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzConfigDAO" />
+		</property>
+	</bean>
+	
+	<bean id="ddzBrandPartnerDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzBrandPartnerDAO" />
+		</property>
+	</bean>
+	
+	<bean id="ddzDrawApproveDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzDrawApproveDAO" />
+		</property>
+	</bean>
+	
+	<bean id="ddzJfbSettleRecordDAO" parent="baseDAOProxyFactoryBean">
+		<property name="target">
+			<bean class="com.doucome.corner.biz.dal.dao.ibatis.IBatisDdzJfbSettleRecordDAO" />
+		</property>
+	</bean>
+	
 </beans>

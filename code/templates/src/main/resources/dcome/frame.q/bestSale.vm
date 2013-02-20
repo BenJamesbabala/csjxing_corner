@@ -1,0 +1,115 @@
+#set($page_nav = "index")
+#set($layout="dcome/frame.q/default.vm")
+
+<div class="idx-cnt">
+	#parse("/common/dcome.qq/cnt_top.vm")
+	<div class="banner-config-init" data-banner-id="dc_best_sale_top"></div>
+	<div class="cnt-pgc">
+		<div class="">
+			<div class="waterfall" id="waterfall">
+				<div class="item-head">
+					<ul class="item-tab dd-l">
+						<li class="#if($!recType == 'LB')active#end">
+							<a class="index-tab" href="${env.root}/frame/q/best_sale.htm">9块9包邮</a>
+						</li>
+						<li class="#if($!recType == 'HD')active#end">
+							<a class="hd-tab" href="${env.root}/frame/q/best_sale.htm?recType=HD">创意生活</a>
+						</li>
+					</ul>
+				</div>
+				#if ($!recType == 'HD')
+					<ul class="huodong">
+						#if($collectionUtils.isEmpty($hotItems))
+	     		    	    <li>暂时还没有特价商品数据，<a href="${env.root}/frame/q/pgcs.htm" title="看看别的">去看看别的吧...</a></li>
+	     		    	#else
+	     		    	    #foreach($item in $hotItems)
+	     		    	    	<li class="box dd-l">
+									<div class="container">
+										<div class="mbs pic_item">
+											<a class="link" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!item.id" gtrack="/virtual/qq/item?tracelog=huodong-offer-img&amp;id=$!item.id" data-item-id="$!item.id" height="220" title="$!item.itemTitle">
+												<img alt="$!item.itemTitle" src="$!item.picUrl220x220" width="220" height="220" class="item-pic">
+											</a>
+											<div class="mbs status clearfix"></div>
+											<span class="price lbl bob">&yen;$!item.itemPromPriceFormat</span>
+											<div class="sell-info">
+												#if ($!item.postalEnable == 'Y')
+												<span class="postal-enable lbl">包邮</span>
+												#end
+												#if ($!item.sells > 100)
+												<span class="sell-count lbl">售$!item.sells</span>
+												#end
+											</div>
+										</div>
+										<p class="c_grey2 hots">
+											<span class=" buy_integral">购买获赠<span class="integral">$!item.integralCount</span>积分</span>
+											<a class="c_grey1 mrs" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!item.id" gtrack="/virtual/qq/item?tracelog=huodong-offer-detail&amp;id=$!item.id" data-item-id="$!item.id" height="220" title="$!item.itemTitle">看详情</a>
+										</p>
+									</div>
+									<div class="box_bottom"></div>
+								</li>
+    	    		     	#end
+	     		    	#end
+					</ul>
+				#else
+			    	<ul class="item-list" id="tiles">
+			    		#if($collectionUtils.isEmpty($hotItems))
+	     		    	    <li>暂时还没有特价商品数据，<a href="${env.root}/frame/q/pgcs.htm" title="看看别的">去看看别的吧...</a></li>
+	     		    	#else
+			    	    #foreach($hotItem in $hotItems)
+			    	    	<li class="main-box">
+								<div class="box-top"></div>
+								<div class="box-body">
+									<h2><a class="title" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!hotItem.id" title="$!hotItem.itemTitle" data-item-id="$!hotItem.id" gtrack='/virtual/qq/item?tracelog=hot-offer-buy&id=$!hotItem.id'>$!hotItem.itemTitle</a></h2>
+									<div class="info-box dd-clr">
+										<div class="meta">
+											<div class="item-buy-bg">
+												<a class="buy dd-r" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!hotItem.id" title="$!hotItem.itemTitle" data-item-id="$!hotItem.id" gtrack='/virtual/qq/item?tracelog=hot-offer-buy&id=$!hotItem.id'></a>
+											    <span>￥$!hotItem.itemPromPriceFormat</span>
+											</div>
+											<dl class="item-prices">
+												<dt class="">原 价</dt>
+												<dt class="">限时特价</dt>
+												<dt class="">赠送积分</dt>
+												<dd class="price"><del>￥$!hotItem.itemPriceFmt</del></dd>
+												<dd class="prom-price">￥$!hotItem.itemPromPriceFormat</dd>
+												<dd class="integral"><span class="color-red">$!hotItem.integralCount</span>积分</dd>
+											</dl>
+											<div class="item-sold">
+												本月全网狂销<strong class="sell-count">$!hotItem.getFakeSells($velocityCount)</strong>件
+												<p class="desc">限时特价，数量有限，抢完即止！</p>
+												#if ($!hotItem.postalEnable == 'Y')
+												<a class="postal" taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!hotItem.id" title="包邮哦，亲" data-item-id="$!hotItem.id" gtrack='/virtual/qq/item?tracelog=hot-offer-buy&id=$!hotItem.id'></a>
+												#end
+											</div>
+										</div>
+										<div class="picbox">
+											<div class="pic">
+												<a taoke-href="${env.root}/frame/q/remote/rest/redirect_item.htm?itemId=$!hotItem.id" title="$!hotItem.itemTitle" data-item-id="$!hotItem.id" @gtrack@='/virtual/qq/item?tracelog=hot-offer-buy&id=$!hotItem.id'>
+													<img class="picture" src="$!hotItem.picUrl300x300">
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+	    	    		#end
+	    	    		#end
+			    	</ul>
+		    	#end
+		    </div>
+		</div>
+	</div>
+	
+	<div class="s8-navi">
+		<div class="bg">
+			<ul class="click-box">
+				<a gtrack="/virtual/index_s8?cat=yifu" href="http://s8.taobao.com/search?q=%C5%AE&cat=16&style=grid&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&cps=yes&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&start_price=20#rankbar" target="_blank"><li></li></a>
+				<a gtrack="/virtual/index_s8?cat=xiezi" href="http://s8.taobao.com/search?spm=a230z.1.6.10.WU5xr8&q=%C5%AE&user_type=1&filter=reserve_price%5B20%2C100%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&from=compass&cat=50006843&navlog=compass-11-c-50006843" target="_blank"><li></li></a>
+				<a gtrack="/virtual/index_s8?cat=baobao" href="http://s8.taobao.com/search?spm=a230z.1.0.145.snevGA&q=%B0%FC&cat=50006842&style=grid&filter=reserve_price%5B20%2C99%5D&cps=yes&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=coefp" target="_blank"><li></li></a>
+				<a gtrack="/virtual/index_s8?cat=peishi" href="http://s8.taobao.com/search?q=%CA%CE&cat=1705&style=grid&isprepay=1&promoted_service4=4&cps=yes&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&start_price=1&end_price=99#rankbar" target="_blank"><li></li></a>
+				<a gtrack="/virtual/index_s8?cat=meizhuang" href="http://s8.taobao.com/search?spm=a230z.1.6.8.JljMAX&q=%D5%FD%C6%B7&style=grid&user_type=1&filter=reserve_price%5B1%2C99%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&from=compass&cat=1801&navlog=compass-8-c-1801" target="_blank"><li></li></a>
+			</ul>
+		</div>
+	</div>
+</div>
+	

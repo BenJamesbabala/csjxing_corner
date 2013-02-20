@@ -7,7 +7,7 @@
 	<!--
       - ===============================================
       - 打开命名空间
-      - @author Flouny.Caesar
+      - @author 
       - @date 2009-08-21
       - ===============================================
 	-->
@@ -15,6 +15,10 @@
     
   	<sqlMap resource="corner/sqlmap/sqlmap-bops-admin.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-shortUrl.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-spider-item.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-spider-config.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-smsLog.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-bannerConfig.xml"/>
   	
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-account.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-report.xml" />
@@ -24,8 +28,10 @@
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-user.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-syncReportTask.xml" />
   	<sqlMap resource="corner/sqlmap/sqlmap-zhe-config.xml" />
-  	
-  	
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-brandPartner.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-drawApprove.xml" />
+  	<sqlMap resource="corner/sqlmap/sqlmap-zhe-jfbSettleRecord.xml" />
+  	  	
   	<sqlMap resource="corner/sqlmap/sqlmap-dcome-item.xml"/>
   	<sqlMap resource="corner/sqlmap/sqlmap-dcome-comment.xml"/>
   	<sqlMap resource="corner/sqlmap/sqlmap-dcome-loveDetail.xml"/>
@@ -35,5 +41,36 @@
   	<sqlMap resource="corner/sqlmap/sqlmap-dcome-qindex-config.xml"/>
   	<sqlMap resource="corner/sqlmap/sqlmap-dcome-system.xml"/>
   	<sqlMap resource="corner/sqlmap/sqlmap-dcome-user.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-userLoginTrace.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-rate-event.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-promotionAward.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-promotion.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-promotionRateDetail.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-promotion-item.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-userIntegralDetail.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-userClickStatistics.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-game-rule.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-auction-item.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-exchange-item.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-promotionSnapInfo.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-appVote.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-winnerGameConfig.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-winnerGamePlayDetail.xml"/>
+
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-userIntegralRecord.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-userExchangeApprove.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-searchLog.xml"/>
+  	<sqlMap resource="corner/sqlmap/sqlmap-dcome-autoExchange.xml"/>  	
   	
+  	<sqlMap resource="corner/sqlmap/horoscope/sqlmap-hs-user.xml"/>
+  	<sqlMap resource="corner/sqlmap/horoscope/sqlmap-hs-fate-daily.xml"/>
+  	<sqlMap resource="corner/sqlmap/horoscope/sqlmap-hs-fate-week.xml"/>
+  	<sqlMap resource="corner/sqlmap/horoscope/sqlmap-hs-fate-month.xml"/>
+	<sqlMap resource="corner/sqlmap/horoscope/sqlmap-hs-topic.xml"/>
+  	
+  	<sqlMap resource="corner/sqlmap/wryneck/sqlmap-wryneck-user.xml"/>
+  	<sqlMap resource="corner/sqlmap/wryneck/sqlmap-wryneck-test.xml"/>
+  	
+  	<sqlMap resource="corner/sqlmap/namefate/sqlmap-namefate-user.xml"/>
+  	<sqlMap resource="corner/sqlmap/namefate/sqlmap-namefate-trick.xml"/>
 </sqlMapConfig>

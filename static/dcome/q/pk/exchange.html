@@ -1,0 +1,356 @@
+<html>
+<head>
+	<meta charset="GBK">
+	<link rel="stylesheet" type="text/css" href="common.css" />
+	<link rel="stylesheet" type="text/css" href="index.css" />
+</head>
+
+<body>
+    <div class="dc-body" id="dc-body">
+	    <div class="result-message" id="resultMessage">
+		    <div class="head">
+				<a class="close-btn" href="javascript:;"></a>
+				<div class="title dd-l">提交审核成功</div>
+			</div>
+			<ul class="content">
+			    <li>系统审核您提交的兑换后，会向您发送相应的消息。</li>
+				<li>系统审核通过后，您提交的商品将出现在"积分兑换"页中，按照正常的兑换流程兑换即可。</li>
+			</ul>
+		</div>
+	    <div class="ex-search-guide" id="exSearchGuide" style="display: none;">
+		    <div class="head">
+				<a class="close-btn" href="javascript:;"></a>
+				<div class="title dd-l">轻松购物两步走</div>
+				<a class="read dd-l" href="javascript:;">我知道了</a>
+			</div>
+			<div class="container">
+			    <div class="slide">
+					<a class="prev-btn prev-btn-enable" title="上一步"></a>
+					<a class="next-btn next-btn-enable" title="下一步"></a>
+				</div>
+				<div class="steps">
+					<img src="http://img.doucome.com/dcome/ex-guide/ex-search1.png" width="500" height="230"/>
+					<img src="http://img.doucome.com/dcome/ex-guide/ex-search2.png" width="500" height="230"/>
+					<img src="http://img.doucome.com/dcome/ex-guide/ex-search3.png" width="500" height="230"/>
+				</div>
+			</div>
+		</div>
+		<div class="ex-layer" style="left: 558px; top: 223px; display: none;">
+			<a class="close-btn" href="javascript:;"></a>
+			<dl class="content">
+				<dt class="lbl"><span>兑换数量：</span></dt>
+				<dd class="ex-info">
+					<span><input type="text" name="exNum" class="ex-num" value="1" title="请输入兑换数量"/></span>件
+					<span>(还有<span class="rest-num">2</span>件)</span>
+				</dd>
+			</dl>
+			<div class="info">你的积分不够哦~~</div>
+			<a class="confirm-btn btn">立即兑换</a>
+			<div class="foot-shadow"></div>
+		</div>
+		<div class="ex-search-layer" id="exSearchLayer" style="display: none;">
+			<div class="head">
+				<a class="close-btn" href="javascript:;"></a>
+				<div class="title dd-l">查查我喜欢的商品需要多少积分才能兑换</div>
+			</div>
+			<div class="wrap dd-l">
+				<div class="ugc-wrap dd-l">
+					<div class="top">
+						<div class="title dd-l">将商品网址粘贴到下面的框中</div>
+						<div class="source-list dd-l">
+							<span class="dd-l">(支持</span>
+							<a class="icon-ugc-src tb-s8 icon-tb" href="http://www.taobao.com" target="_blank">淘宝网</a>
+							<a class="icon-ugc-src tb-s8 icon-tm" href="http://www.tmall.com" target="_blank">天猫商城</a>
+							<span>)</span>
+						</div>
+					</div>
+					<div class="content dd-l">
+						<input class="item-url" placeholder="请粘贴你要购买的淘宝宝贝网址" />
+						<a class="btn query-btn" href="javascript:;">查询</a>
+					</div>
+					<div class="loadding18x18 query-load" style="">获取商品信息中...</div>
+					<div class="query-info info" style="">获取商品信息失败</div>
+					<div class="ugc-content" style="">
+						<div class="content-wrap dd-l">
+							<div class="item-info dd-l">
+								<div class="pic-wrap dd-l" style="">
+									<img src="item80.jpg"/>
+								</div>
+								<div class="text-info dd-l">
+									<div class="title">十周年店庆【拇指斗价】TONYJEANS汤尼俊士专柜正品衬衫秋装新品</div>
+									<div class="other">
+										<div class="orignal-price dd-l" >
+										    <span class="dd-l">价格:&yen;</span>
+											<span class="ori-price dd-l">100.00</span>
+										</div>
+										<div class="integral-wrap dd-l">
+											<span>兑换需要</span>
+											<span class="ex-integral">10000</span>
+											<span>积分</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ugc-oper dd-l">
+								<a class="ugc-ex btn dd-l" href="javascript:;">我要兑换</a>
+								<div class="other dd-l">
+									<a class="ugc-buy dd-l" href="javascript:;">去购买，拿积分</a>
+									<span>(购买获赠<span>100</span>积分)<span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<ul class="ex-info">
+						<li class="caution">
+							<span class="info">以下信息将作为系统审核的依据，请如实填写。</span>
+						</li>
+						<li>
+							<div class="wrap-l">
+								<span class="lbl">商品尺码</span>
+								<input type="text" class="item-size" name="size"/>
+							</div>
+							<div class="wrap-r">
+								<span class="lbl">商品颜色</span>
+								<input type="text" class="item-color" name="color"/>
+							</div>
+						</li>
+						<li>
+							<div class="wrap-l">
+								<span class="lbl">商品价格</span>
+								<input type="text" class="user-name" name="user-name"/>
+							</div>
+							<div class="wrap-r">
+								<span class="lbl">邮费</span>
+								<input type="text" class="postal-fee" name="postalFee"/>
+							</div>
+						</li>
+						<li>
+							<span class="lbl">其他信息</span>
+							<textarea name="memo" class="memo">如有额外信息，请在此处录入</textarea>
+						</li>
+						<li class="info">
+							兑换需要1000积分,您的积分不够
+						</li>
+						<li>
+							<a class="ugc-ex-submit btn" href="javascript:;">提交审核</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	    <div class="header" id="header">
+			<div class="top-nav">
+				<ul class="info dd-r">
+					<li class="user dd-l">
+						<img src="user30.jpg" class="user-avatar dd-l">
+						<span class="user-nick dd-l">月溪谷</span>
+						<span class="user-level5"></span>
+					</li>
+					<li class="user-area dd-l">
+						<div class="icon dd-l"></div>
+						<div class="dd-l integral-area">
+							<div class="active ">积分:<span class="integral-count">5530</span></div>
+						</div>
+					</li>
+					<li class="message-area dd-l">
+						<div class="total-num">3</div>
+						<div class="messages" style="display: none;">
+							<div class="head">
+								<h3>
+									<span class="head-lbl">消息通知&nbsp;&nbsp;|</span>
+									<span class="normal title">
+										<a class="cur" href="javascript:;">我的消息</a>
+										<span class="normal-num num">2</span>
+									</span>
+									<span class="award title">
+										<a class="on" href="javascript:;">中奖消息</a>
+										<span class="award-num num">1</span>
+									</span>
+								</h3>
+							</div>
+							<ul class="content-list">
+								<li class="content">暂时还么有消息</li>
+								<li class="content">你还有<a class="my-award" href="javascript:;">1个奖品</a>领取领取</li>
+								<li class="content">你还有<a class="earn-integral-btn" href="javascript:;">45积分</a>没有领取</li>
+							</ul>
+							<div class="foot-shadow"></div>
+						</div>
+					</li>
+					<li class="dd-l">
+					    <a class="checkin dd-l"></a>
+					</li>
+					<li class="dd-l">
+					    <a class="invite-btn invite dd-l" href="javascript:;" style="">邀请朋友</a>
+						<p class="invite-tip"></p>
+					</li>
+				</ul>
+			</div>
+			<div class="search-wrap">
+			    <div class="search-top">
+					<div class="search-tabs dd-l">
+						<a class="integral-tab on" href="javascript:;" title="查询购买商品送的积分">查积分</a>
+						<a class="exchange-tab" href="javascript:;" title="查询兑换商品需要的积分">查兑换</a>
+					</div>
+					<a class="dd-r" href="javascript:;" style="color:#666666;">积分能干嘛？</a>
+				</div>
+				<div class="integral-search search">
+					<input type="text" class="buy-url item-url dd-l" placeholder="输入淘宝商品链接，看看还能省多少" />
+					<a class="search-btn dd-l" href="javascript:;"></a>
+				</div>
+				<div class="exchange-search search dd-hide">
+					<input type="text" class="buy-url item-url dd-l" placeholder="输入淘宝商品链接，看看还能省多少" />
+					<a class="search-btn dd-l" href="javascript:;"></a>
+				</div>
+			</div>
+			<div class="logo">
+			    <img src="index-logo.png"/>
+			</div>
+			<div class="menu-nav">
+			    <div class="wrap dd-l">
+					<div class="dd-l nav">
+						<ul class="menu-list">
+							<li class="exchange cur">
+								<a class="auction-menu" href="javascript:;" class="my-award">积分兑换</a>
+							</li>
+							<li class="lb on split">
+								<a href="javascript:;" class="hot-menu split" style="">特价商品</a>
+							</li>
+							<li class="pgcs split">
+								<a class="pgc-menu split" href="${env.root}/frame/q/rank.htm" style="line-space: 1px;">小编精选</a>
+							</li>
+							<li class="">
+								<a class="ugc-btn" href="javascript:;"></a>
+							</li>
+						</ul>
+					</div>
+					<div class="dd-r other">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="idx-cnt">
+		    <div class="cnt-pgc">
+				    <div class="waterfall">
+						<ul id="tiles" class="exchange-list">
+						    <li class="auto-exchange main dd-l">
+							    <div class="placehold"></div>
+								<div class="ws-ft"></div>
+								<div class="wrap dd-l" style="width: 433px;">
+								    <div>查查我想要的东西需要多少积分才能兑换？</div>
+									<div class="ex-search-container" style="">
+										<input type="text" class="ex-url" placeholder="请输入你想要的淘宝商品的网址"/>
+										<a class="ex-search ex-search-btn" href="javascript:;"></a>
+									</div>
+									<ul class="ex-s8">
+										<li>
+											<a href="http://s8.taobao.com/search?spm=a230z.1.6.1.xgUHR3&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50099260&from=category&navlog=allcat-1-c-50099260" style="font-size:14px" title="中长款羽绒服" target="_blank">中长款羽绒服</a>
+											<a href="http://s8.taobao.com/search?spm=a230z.1.6.1.Dli22G&q=%C5%AE&cat=50102538&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&from=compass&ppath=" title="毛呢外套" target="_blanak">毛呢外套</a>              
+										</li>
+										<li>
+											<a href="http://s8.taobao.com/search?q=%C8%A1%C5%AF%C6%F7&pid=mm_30820461_0_0&unid=keyword&mode=63&from_bt=1&initiative_id=staobaoz_20130112&suggest_query=%C8%A1%C5%AF%C6%F7&sb_id=6&suggest=0_1&source=suggest&wq=%C8%A1%C5%AF&tab=mall" style="font-size:14px" title="取暖器" target="_blank">取暖器</a>
+											<a href="http://s8.taobao.com/search?q=%C4%D0%D0%AC&cat=&scat=&pid=mm_30820461_0_0&unid=keyword&mode=63&from_bt=1&initiative_id=staobaoz_20130112&tab=mall" style="font-size:18px" title="男鞋" target="_blank">男鞋</a>                
+										</li>
+										<li>
+											<a href="http://s8.taobao.com/search?spm=a230z.1.6.4.kK3R9s&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C100%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50031712&from=category&navlog=allcat-4-c-50031712" title="雪地靴" target="_blank">雪地靴</a>
+											<a href="http://s8.taobao.com/search?spm=a230z.1.6.19.wfGQyy&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C100%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50029747&from=category&navlog=allcat-19-c-50029747" style="font-size:18px" title="高筒靴" target="_blank">高筒靴</a>
+											<a href="http://s8.taobao.com/search?spm=a230z.1.6.23.1Ftc59&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50007068&from=category&navlog=allcat-23-c-50007068" style="font-size:14px" title="厚打底裤" target="_blank">厚打底裤</a>
+										</li>
+										<li>
+											<a href="http://s8.taobao.com/search?spm=a230z.1.0.145.snevGA&q=%B0%FC&cat=50006842&style=grid&filter=reserve_price%5B20%2C99%5D&cps=yes&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=coefp" style="font-size:18px" title="女包" target="_blank">女包</a>
+											<a href="http://s8.taobao.com/search?spm=a230z.1.6.18.Q4LR0k&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50096877&from=category&navlog=allcat-18-c-50096877" style="font-size:13px" title="特价皮草外套" target="_blank">特价皮草外套</a>
+											<a href="http://s8.taobao.com/search?spm=a230z.1.6.12.m3OjFW&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50016772&from=category&navlog=allcat-12-c-50016772" style="font-size:20px" title="保暖棉衣" target="_blank">保暖棉衣</a>                
+										</li>
+										<li>
+											<a href="http://www.taobao.com/go/chn/tbk_channel/tejia/nianhuo.php?pid=mm_30820461_0_0&&unid=&clk1=a57b113c764fe6d80aa29e8c58472ad2" style="font-size:14px" title="年货" target="_blank">年货</a>
+											<a href="http://s8.taobao.com/search?spm=a230z.1.6.3.Eu9UBj&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=162103&from=category&navlog=allcat-3-c-162103" style="font-size:20px" title="厚毛衣" target="_blank">厚毛衣</a>
+										</li>
+										<li>
+											<a href="http://s8.taobao.com/search?spm=a230z.1.6.16.AQGbaD&q=%C5%AE&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&cat=50099705&from=category&navlog=allcat-16-c-50099705" title="大码女装" target="_blank">大码女装</a>
+											<a href="http://s8.taobao.com/search?style=grid&q=%CE%A7%BD%ED&cat=&scat=&pid=mm_30820461_0_0&unid=keyword&mode=63&from_bt=1&initiative_id=staobaoz_20130112&tab=mall" style="font-size:18px" title="厚围巾" target="_blank">厚围巾</a>
+											<a href="http://s8.taobao.com/search?style=grid&q=%CD%AF%C3%DE%B7%FE&cat=&scat=&pid=mm_30820461_0_0&unid=keyword&mode=63&from_bt=1&initiative_id=staobaoz_20130112&tab=mall" title="童棉服" target="_blank">童棉服</a>               
+										</li>
+										<li>
+											<a href="http://s8.taobao.com/search?style=grid&q=%D3%F0%C8%DE%B7%FE+%C5%B7%D6%DE%D5%BE&cat=&scat=&pid=mm_30820461_0_0&unid=keyword&mode=63&from_bt=1&initiative_id=staobaoz_20130112&suggest_query=%D3%F0%C8%DE%B7%FE+%C5%B7%D6%DE%D5%BE&sb_id=6&suggest=0_1&source=suggest&wq=%D3%F0%C8%DE%B7%FE+%C5%B7%D6%DE&tab=mall" title="欧洲站羽绒服" target="_blank">欧洲站羽绒服</a>
+											<a href="http://s8.taobao.com/search?spm=a230z.1.6.103.srR5Jc&q=%C5%AE&cat=50101670&style=grid&user_type=1&filter=reserve_price%5B20%2C%5D&isprepay=1&promoted_service4=4&from_bt=1&unid=keyword&mode=63&pid=mm_30820461_0_0&tab=mall&cps=yes&from=compass&ppath=10995144:146108112&navlog=compass-Dmore1-p-10995144:146108112" style="font-size:14px" title="加绒牛仔裤" target="_blank">加绒牛仔裤</a>                
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li class="main dd-l">
+								<div class="item-info dd-l">
+								    <a class="img-wrap" href="javascript:;">
+									    <img width="220" height="220" class="item-pic" src="http://itemimg.doucome.com/upload/product/201208/22/222252739536359.jpg_220x220.jpg" alt="韩国饰品镀18K金 迷你 闪钻 爱心项链 锁骨链">
+									</a>
+									<div class="other dd-l">
+									    <h3 class="title text-hide dd-l">
+										    <a gtrack="/virtual/qq/item?tracelog=pgc-offer-title&amp;id=100962" title="韩国饰品镀18K金 迷你 闪钻 爱心项链 锁骨链" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100962" gtrack-init="y">韩国饰品镀18K金 迷你 闪钻 爱心项链 锁骨链</a>
+										</h3>
+									    <span class="price dd-r">&yen;13.00</span>
+									</div>
+								</div>
+								<div class="exchange-info dd-l">
+									<div class="integral-info dd-l">
+									    <div class="integral-wrap integral-more dd-l">
+										    <span class="lbl">需要</span>
+											<span class="ex-integral">999</span>
+											<span class="lbl">积分</span>
+										    <span class="more-up more-down"></span>
+											<div class="integral-more">
+											     <ul>
+												     <li><span class="user-level1 dd-l"></span><span>用户:<span class="color1">1000</span>积分</span></li>
+													 <li><span class="user-level2 dd-l"></span><span>用户:<span class="color1">950</span>积分</span></li>
+												 </ul>
+											</div>
+									    </div>
+										<div class="cd-wrap dd-r" style="">
+											<span>还有</span>
+											<span class="rest-num">10</span>
+											<span>件</span>
+										</div>
+									</div>
+									<div class="exchange-bar dd-l">
+										<a class="exchange-btn btn" href="javascript:;">立即兑换</a>
+										<a class="earn-integral" href="javascript:;" title="赚积分" style="font-size: 10px;">积分不够？</a>
+								    </div>
+								</div>
+								<div class="ws-ft"></div>
+							</li>
+							<li class="main dd-l">
+								<div class="item-info dd-l">
+								    <a class="img-wrap" href="javascript:;">
+									    <img width="220" height="220" class="item-pic" src="http://itemimg.doucome.com/upload/product/201208/22/222252739536359.jpg_220x220.jpg" alt="韩国饰品镀18K金 迷你 闪钻 爱心项链 锁骨链">
+									</a>
+									<div class="other dd-l">
+									    <h3 class="title text-hide dd-l">
+										    <a gtrack="/virtual/qq/item?tracelog=pgc-offer-title&amp;id=100962" title="韩国饰品镀18K金 迷你 闪钻 爱心项链 锁骨链" taoke-href="http://doucome.com/frame/q/remote/rest/redirect_item.htm?itemId=100962" gtrack-init="y">韩国饰品镀18K金 迷你 闪钻 爱心项链 锁骨链</a>
+										</h3>
+									    <span class="price dd-r">&yen;13.00</span>
+									</div>
+								</div>
+								<div class="exchange-info dd-l">
+									<div class="integral-info dd-l">
+									    <div class="integral-wrap dd-l">
+										    <span class="lbl">需要</span>
+											<span class="ex-integral">9999</span>
+											<span class="lbl">积分</span>
+									    </div>
+										<div class="cd-wrap dd-r">
+											10件商品已兑完
+										</div>
+									</div>
+									<div class="exchange-bar exchange-end">
+										<div class="dd-r">TM兑换了</div>
+									</div>
+								</div>
+								<div class="ws-ft"></div>
+							</li>
+						</ul>
+					</div>
+			</div>
+		</div>
+		<div class="footer">
+			<span>您的ID是，如有问题请联系客服：vip@doucome.com&nbsp;&nbsp;版权所有&nbsp;&copy;&nbsp;豆蔻</span>
+		</div>
+	</div>
+</body>
+</html>

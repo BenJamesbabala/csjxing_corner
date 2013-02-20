@@ -32,7 +32,7 @@ public class IBatisDcSceneDetailDAO extends SqlMapClientDaoSupport implements Dc
 	public int countItemsBySceneWithPagination(long sceneId) {
 		Map<String,Object> condition = new HashMap<String,Object>() ;
 		condition.put("sceneId", sceneId) ;
-		return NumberUtils.integerToInt((Integer)getSqlMapClientTemplate().queryForObject("DcSceneDetail.countItemsBySceneWithPagination" , condition)) ;
+		return NumberUtils.parseInt((Integer)getSqlMapClientTemplate().queryForObject("DcSceneDetail.countItemsBySceneWithPagination" , condition)) ;
 	}
 
 	@Override

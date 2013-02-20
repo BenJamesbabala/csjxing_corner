@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DcSearchLog">
+	<typeAlias alias="TA-DcSearchLog" type="com.doucome.corner.biz.dal.dataobject.dcome.DcSearchLogDO" />
+	
+	<resultMap id="RM-DcSearchLog" class="TA-DcSearchLog">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="nativeId" column="NATIVE_ID" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE" jdbcType="VARCHAR" />
+		<result property="picture" column="PICTURE" jdbcType="VARCHAR" />
+		<result property="price" column="PRICE" jdbcType="DECIMAL" />
+		<result property="commissionRate" column="COMMISSION_RATE" jdbcType="DECIMAL" />
+		<result property="status" column="STATUS" jdbcType="VARCHAR" />
+		<result property="gmtCreate" column="GMT_CREATE" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertSearchLog">
+		INSERT INTO DC_SEARCH_LOG (ID, USER_ID, NATIVE_ID, TITLE, PICTURE, PRICE, COMMISSION_RATE, STATUS, GMT_CREATE)
+		VALUES
+			(#id#, #userId#, #nativeId#, #title#, #picture#, #price#, #commissionRate#, 'U', now())
+		<selectKey resultClass="java.lang.Long" keyProperty="id">
+    		<![CDATA[
+				SELECT LAST_INSERT_ID() AS ID
+			]]>
+		  </selectKey>
+	</insert>
+	
+	<select id="querySearchLogsPage" resultMap="RM-DcSearchLog">
+		SELECT ID, USER_ID, NATIVE_ID, TITLE, PICTURE, PRICE, COMMISSION_RATE, STATUS, GMT_CREATE
+		  FROM DC_SEARCH_LOG
+		  <dynamic>
+			  <isParameterPresent open="WHERE" removeFirstPrepend="true">
+			      <isNotEmpty property="id" prepend="AND">
+					  ID = #id#
+				  </isNotEmpty>
+				  <isNotEmpty property="status" prepend="AND">
+				      STATUS=#status#
+				  </isNotEmpty>
+				  <isNotNull property="userId" prepend="AND">
+				      USER_ID=#userId#
+				  </isNotNull>
+				  <isNotNull property="priceStart" prepend="AND">
+				      PRICE <![CDATA[>=]]>#priceStart#
+				  </isNotNull>
+				  <isNotNull property="priceEnd" prepend="AND">
+				      PRICE <![CDATA[<]]>#priceEnd#
+				  </isNotNull>
+				  <isNotNull property="gmtStart" prepend="AND">
+				      GMT_CREATE <![CDATA[>=]]> #gmtStart#
+				  </isNotNull>
+				  <isNotNull property="gmtEnd" prepend="AND">
+				      GMT_CREATE <![CDATA[<]]> #gmtEnd#
+				  </isNotNull>
+			  </isParameterPresent>
+		  </dynamic>
+		  ORDER BY USER_ID, NATIVE_ID
+		  LIMIT #start#, #size#
+	</select>
+	
+	<select id="countSearchLogs" resultClass="java.lang.Integer">
+		SELECT COUNT(ID)
+		  FROM DC_SEARCH_LOG
+		  <dynamic>
+			  <isParameterPresent open="WHERE" removeFirstPrepend="true">
+			      <isNotEmpty property="id" prepend="AND">
+					  ID = #id#
+				  </isNotEmpty>
+				  <isNotEmpty property="status" prepend="AND">
+				      STATUS=#status#
+				  </isNotEmpty>
+				  <isNotNull property="userId" prepend="AND">
+				      USER_ID=#userId#
+				  </isNotNull>
+				  <isNotNull property="priceStart" prepend="AND">
+				      PRICE <![CDATA[>=]]>#priceStart#
+				  </isNotNull>
+				  <isNotNull property="priceEnd" prepend="AND">
+				      PRICE <![CDATA[<]]>#priceEnd#
+				  </isNotNull>
+				  <isNotNull property="gmtStart" prepend="AND">
+				      GMT_CREATE <![CDATA[>=]]> #gmtStart#
+				  </isNotNull>
+				  <isNotNull property="gmtEnd" prepend="AND">
+				      GMT_CREATE <![CDATA[<]]> #gmtEnd#
+				  </isNotNull>
+			  </isParameterPresent>
+		  </dynamic>
+	</select>
+	
+	<update id="updateSearchLogStatus">
+	    UPDATE DC_SEARCH_LOG
+	      SET STATUS = #status#, GMT_CREATE = NOW()
+	      WHERE USER_ID = #userId#
+	        <isNotNull property="id" prepend="AND">
+	            ID = #id#
+	        </isNotNull>
+	        <isNotNull property="gmtStart" prepend="AND">
+	            GMT_CREATE <![CDATA[>=]]> #gmtStart#
+	        </isNotNull>
+	        <isNotNull property="gmtEnd" prepend="AND">
+	            GMT_CREATE <![CDATA[<]]> #gmtEnd#
+	        </isNotNull>
+	</update>
+</sqlMap>

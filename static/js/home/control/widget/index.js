@@ -1,11 +1,11 @@
 !(function($){
 	$.namespace("DD.Index");
-	var taobaoRecommend = 'http://item.taobao.com/item.html?id=16016359396' ; //淘宝推荐
+	var taobaoRecommend = 'http://item.taobao.com/item.htm?id=20138548730' ; //淘宝推荐
 	var self = DD.Index;
 
 	$.extend(DD.Index,{
 		Email_Regex : /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-		Mobile_Regex : /^1[3458]\d{9}$/,
+		Mobile_Regex : /^1\d{10}$/,
 		init:function(){
 			self._initSearchEvent();
 			//self._initPaging();
@@ -18,11 +18,73 @@
 			self._initGtrack();
 			//查询促销价格
 			self._initQueryPromotion();
+			
+			/**
+			 * 提现规则修改通知
+			 */
+			self._initTixian();
+			
+			self._initVideoEvent() ;
+			
 			//self._initShareAwardTips();
 			self._initRecommend();
 			self._initDdDialog();
 			self._initPlaceholder();
 		},
+		
+		/**
+		 * 
+		 */
+		_initVideoEvent:function(){
+			$('.ui-video-xbox .close-flash-xbox').click(function(){
+				$(".ui-video-xbox").addClass('dd-hide') ;
+				$("#shadow-overlay").addClass('dd-hide') ;
+			}) ;
+			
+			//集分宝视频
+			$(".dd-item-main .jfb-study-video").click(function(){
+				$('.ui-video-xbox .flash-src').attr('src','https://hi.alipay.com/cms/huohaier/jfb_flash.swf');
+				$('.ui-video-xbox .flash-src').attr('value','https://hi.alipay.com/cms/huohaier/jfb_flash.swf');
+				$('.ui-video-xbox').removeClass('dd-hide');
+				$('#shadow-overlay').removeClass('dd-hide');
+			}) ;
+		} ,
+		
+		/**
+		 * 提现规则修改通知
+		 */
+		_initTixian:function(){
+			var isNotify = $("#isNotify").val() ;
+			if(isNotify == 'true'){
+				$('#shadow-overlay').removeClass('dd-hide') ;
+				$('#tixian-notify-dialog').removeClass('dd-hide') ;
+			}
+			
+			$("#tixian-tip").css({opacity: 0});
+			$("#tixian-tip").removeClass('dd-hide') ;
+			$("#tixian-tip").delay(800).animate({opacity:1} , 1000) ;
+			
+			$("#tixian-notify-dialog .tixian-ikonw-click").click(function(){
+				$('#shadow-overlay').addClass('dd-hide') ;
+				$('#tixian-notify-dialog').addClass('dd-hide') ;
+				var ddzRoot	= $("#ddzRoot").val() ;
+				$.ajax({
+					url : ddzRoot + '/zhe/remote/rest/decr_account_notify_ajax.htm',
+					data : {} , 
+					type : "POST" ,
+					success:function(data){
+						var code = data.json.code ;
+					} ,
+					error:function(data){
+						var error = data;
+					}
+				});
+			});
+			
+			$("#header .login-tip").delay(500)
+				.animate({top:'-=8'},200, "linear").animate({top:'+=8'},200, "linear").animate({top:'-=8'},200, "linear").animate({top:'+=8'},200, "linear")
+				.animate({top:'-=8'},200, "linear").animate({top:'+=8'},200, "linear");
+		} ,
 		
 		_initRecommend:function(){
 			
@@ -181,8 +243,13 @@
 									var result = data.json.data ; 
 									if(result.hasPromotion){
 										$("[data-originPrice]").html(result.promotionPriceFormat) ;
-										$("[data-userCommission]").html(result.userCommissionFormat);
+										$("[data-userCommission]").html(result.userJfbByMoneyFormat);
+										$(".item-price-view .rumour").hide() ;
+									} else {
+										//没有促销价
 									}
+								} else {
+								    //$(".item-price-view").append('<div class="select-tips" style="opacity: 1; "><div class="content">购买价格以店铺价格为准哦~</div><div class="angle-top" style="top: -7px;left:140px;"></div></div>');
 								}
 							}catch(e){
 								

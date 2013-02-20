@@ -1,25 +1,49 @@
 package com.doucome.corner.biz.zhe.model;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
-import com.doucome.corner.biz.core.model.AbstractModel;
+import org.apache.commons.lang.StringUtils;
+
+import com.doucome.corner.biz.common.utils.ReflectUtils;
+import com.doucome.corner.biz.core.model.URLModel;
 import com.doucome.corner.biz.core.taobao.dto.TaobaokeShopDTO;
-import com.doucome.corner.biz.core.utils.ReflectUtils;
+import com.doucome.corner.biz.core.utils.HttpUrlHelper;
+import com.doucome.corner.biz.dal.model.AbstractModel;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule;
 import com.doucome.corner.biz.zhe.rule.DdzEatDiscountRule.InternalCommission;
 
 public class TaobaokeShopFacade extends AbstractModel{
+	
+	private transient DdzEatDiscountRule rule ;
+	
+	private URLModel clickUrlModel ;
+	
+	private URLModel partnerClickUrlModel ;
 
 	public TaobaokeShopFacade(TaobaokeShopDTO shop , DdzEatDiscountRule rule) {
 		if(shop != null){
 			ReflectUtils.reflectTo(shop, this) ;
-			
-			
-			InternalCommission internalCommission = DdzEatDiscountRule.calcUserCommission(rule ,  commissionRate) ;
-			
-			this.userCommissionRate = internalCommission.getCommissionRate() ;
+			this.rule = rule ;
+			this.clickUrlModel = HttpUrlHelper.parseURL(shop.getClickUrl()) ;
+			__calcCommissions() ;
 		}
 	}
+	
+	private void __calcCommissions(){
+		InternalCommission internalCommission = null ;
+		if(partnerCommissionRate == null){
+			internalCommission = DdzEatDiscountRule.calcUserCommission(rule ,  commissionRate) ;
+		} else {
+			internalCommission = DdzEatDiscountRule.calcUserCommission(rule ,  partnerCommissionRate) ;
+		}
+		this.userCommissionRate = internalCommission.getCommissionRate() ;
+	}
+	
+	/**
+	 * 是否是合作商铺
+	 */
+	private boolean isPartner ;
 	
 	/**
 	 * shopId
@@ -67,6 +91,85 @@ public class TaobaokeShopFacade extends AbstractModel{
 	private Long auctionCount ;
 	
 	private BigDecimal userCommissionRate ;
+		
+	private String partnerClickUrl ;
+	
+	private BigDecimal partnerCommissionRate ;
+	
+	private String partnerShopTitle ;
+	
+	
+	public void setBrandPartner(DdzBrandPartnerDTO partner){
+		if(!StringUtils.equals(partner.getSid() , this.sid)){
+			return ;
+		}
+		this.partnerClickUrl = partner.getClickUrl() ;
+		this.partnerCommissionRate = partner.getCommissionRate() ;
+		this.partnerShopTitle = partner.getShopTitle() ;
+		this.partnerClickUrlModel = HttpUrlHelper.parseURL(this.partnerClickUrl) ;
+		//替换用户属性
+		if(partnerClickUrlModel != null &&  clickUrlModel != null){
+			Map<String,String> partParams = partnerClickUrlModel.getParams() ;
+			Map<String,String> oriParams = clickUrlModel.getParams() ;
+			String pid = oriParams.get("pid") ;
+			String unid = oriParams.get("unid") ;
+			if(StringUtils.isNotBlank(pid)){
+				partParams.put("p", pid) ;
+			}
+			if(StringUtils.isNotBlank(unid)){
+				partParams.put("unid", unid ) ;
+			}
+		}
+		setPartner(true) ;
+		
+		__calcCommissions() ;//重新计算佣金
+	}
+	
+	/**
+	 * 用户显示的title
+	 * @return
+	 */
+	public String getUserShopTitle(){
+		if(StringUtils.isNotBlank(partnerShopTitle)){
+			return partnerShopTitle ;
+		}
+		return shopTitle ;
+	}
+	
+	public String getUserClickUrl(){
+		if(partnerClickUrlModel != null){
+			return this.partnerClickUrlModel.toString() ;
+		} else if(this.clickUrl != null) {
+			return this.clickUrlModel.toString() ;
+		}
+		return null ;
+	}
+	
+	public String getPartnerClickUrl() {
+		return partnerClickUrl;
+	}
+
+	public void setPartnerClickUrl(String partnerClickUrl) {
+		this.partnerClickUrl = partnerClickUrl;
+	}
+
+	public BigDecimal getPartnerCommissionRate() {
+		return partnerCommissionRate;
+	}
+
+	public void setPartnerCommissionRate(BigDecimal partnerCommissionRate) {
+		this.partnerCommissionRate = partnerCommissionRate;
+	}
+
+	public String getPartnerShopTitle() {
+		return partnerShopTitle;
+	}
+
+	public void setPartnerShopTitle(String partnerShopTitle) {
+		this.partnerShopTitle = partnerShopTitle;
+	}
+
+	/**********************************************************/
 
 	public BigDecimal getUserCommissionRate() {
 		return userCommissionRate;
@@ -146,6 +249,14 @@ public class TaobaokeShopFacade extends AbstractModel{
 
 	public void setSid(String sid) {
 		this.sid = sid;
+	}
+
+	public boolean isPartner() {
+		return isPartner;
+	}
+
+	public void setPartner(boolean isPartner) {
+		this.isPartner = isPartner;
 	}
 	
 	

@@ -453,6 +453,22 @@ var defaultAvatar = function(size){
 		} ,
 		
 		/**
+		 * 我的活动页.
+		 */
+		__initMyPromotion: function {
+			if ($("pageName") == "myPromotion") {
+				$(".operation").click(function() {
+					var _this = $(this);
+			    	if (_this.hasClass("active")) {
+			    		return ;
+			    	}
+			    	_this.parent().find(".active").removeClass("active");
+			    	_this.addClass("active");
+				});
+			}
+		},
+		
+		/**
 		 * google track
 		 */
 		_initGtrack:function(){
@@ -467,7 +483,7 @@ var defaultAvatar = function(size){
 				}
 			}) ;
 						
-		},	
+		},
 		
 		end:0
 	};

@@ -61,7 +61,7 @@ public class AddSceneItemAction extends BopsBasicAction implements ModelDriven<D
 	public String execute() throws Exception {
 		
 		sceneDTO = dcSceneService.getSceneById(sceneId);
-		List<Long> catList = sceneDTO.getCategoryIdList() ;
+		List<Long> catList = sceneDTO.getCatIdList() ;
 		if(!CollectionUtils.isEmpty(catList)){
 			categoryList = dcCategoryService.getCategoriesByIds(catList) ;
 		}
@@ -71,7 +71,7 @@ public class AddSceneItemAction extends BopsBasicAction implements ModelDriven<D
 		}
 		
 		if(catId != null){
-			List<Long> idList = sceneDTO.getCategoryIdList() ;
+			List<Long> idList = sceneDTO.getCatIdList() ;
 			if(CollectionUtils.contains(idList.iterator(), catId)){
 				condition.setCategoryId(catId) ;
 			}
@@ -80,7 +80,7 @@ public class AddSceneItemAction extends BopsBasicAction implements ModelDriven<D
 		sceneDetailList = dcSceneDetailService.getItemsByScene(sceneId, 100) ;
 		
 		if(condition.getCategoryId() == null){
-			condition.setCategoryIds(sceneDTO.getCategoryIdList()) ;
+//			condition.setCategoryIds(sceneDTO.getCatIdList()) ;
 		}
 		
 		this.itemQuery = dcItemService.getItemsWithPagination(condition, new Pagination(page , 30));

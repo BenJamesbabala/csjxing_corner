@@ -1,0 +1,446 @@
+
+.angle-right {
+	background-image: url(../imgs/angle_right.png);
+	display: inline-block;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	background-color: transparent;
+}
+
+.angle-top {
+	background-image: url(../imgs/angle_top.png);
+	display: inline-block;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	background-color: transparent;
+	z-index: 999;
+}
+
+.angle-down {
+	background-image: url(../imgs/angle_down.png);
+	display: inline-block;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	background-color: transparent;
+}
+
+.angle-right {
+	background-position: 0 0;
+	height: 13px;
+	position: absolute;
+	width: 7px;
+	z-index: 1;
+	right: -7px;
+}
+
+.angle-down {
+	background-position: 0 0;
+	height: 7px;
+	position: absolute;
+	width: 15px;
+	z-index: 1;
+	right: 7px;
+}
+
+.angle-top {
+	background-position: 0 0;
+	height: 13px;
+	position: absolute;
+	width: 15px;
+	z-index: 1;
+	right: -7px;
+}
+
+.winner-game .play-box .box-0-0 {
+	left: 0;
+	top: 0;
+}
+
+.winner-game .play-box .box-0-1 {
+	left: 61px;
+	top: 0;
+}
+
+.winner-game .play-box .box-0-2 {
+	left: 121px;
+	top: 0;
+}
+
+.winner-game .play-box .box-0-3 {
+	left: 181px;
+	top: 0;
+}
+
+.winner-game .play-box .box-0-4 {
+	left: 241px;
+	top: 0;
+}
+
+.winner-game .play-box .box-0-5 {
+	left: 301px;
+	top: 0;
+}
+
+.winner-game .play-box .box-0-6 {
+	left: 361px;
+	top: 0;
+}
+
+.winner-game .play-box .box-1-0 {
+	left: 0;
+	top: 61px;
+}
+
+.winner-game .play-box .box-1-6 {
+	left: 361px;
+	top: 61px;
+}
+
+.winner-game .play-box .box-2-0 {
+	left: 0;
+	top: 121px;
+}
+
+.winner-game .play-box .box-2-6 {
+	left: 361px;
+	top: 121px;
+}
+
+.winner-game .play-box .box-3-0 {
+	left: 0;
+	top: 181px;
+}
+
+.winner-game .play-box .box-3-6 {
+	left: 361px;
+	top: 181px;
+}
+
+.winner-game .play-box .box-4-0 {
+	left: 0;
+	top: 241px;
+}
+
+.winner-game .play-box .box-4-6 {
+	left: 361px;
+	top: 241px;
+}
+
+.winner-game .play-box .box-5-0 {
+	left: 0;
+	top: 301px;
+}
+
+.winner-game .play-box .box-5-6 {
+	left: 361px;
+	top: 301px;
+}
+
+.winner-game .play-box .box-6-0 {
+	left: 0;
+	top: 361px;
+}
+
+.winner-game .play-box .box-6-1 {
+	left: 61px;
+	top: 361px;
+}
+
+.winner-game .play-box .box-6-2 {
+	left: 121px;
+	top: 361px;
+}
+
+.winner-game .play-box .box-6-3 {
+	left: 181px;
+	top: 361px;
+}
+
+.winner-game .play-box .box-6-4 {
+	left: 241px;
+	top: 361px;
+}
+
+.winner-game .play-box .box-6-5 {
+	left: 301px;
+	top: 361px;
+}
+
+.winner-game .play-box .box-6-6 {
+	left: 361px;
+	top: 361px;
+}
+
+.winner-game .orange {
+	background: url("../imgs/card/orange.png") no-repeat ;
+}
+
+.winner-game .alarm {
+	background: url("../imgs/card/alarm.png") no-repeat ;
+}
+
+.winner-game .barbar {
+	background: url("../imgs/card/barbar.png") no-repeat ;
+}
+
+.winner-game .barbarbar {
+	background: url("../imgs/card/barbarbar.png") no-repeat ;
+}
+
+.winner-game .apple {
+	background: url("../imgs/card/apple.png") no-repeat ;
+}
+
+.winner-game .cattle {
+	background: url("../imgs/card/cattle.png") no-repeat ;
+}
+
+.winner-game .coconut {
+	background: url("../imgs/card/coconut.png") no-repeat ;
+}
+
+.winner-game .watermelons {
+	background: url("../imgs/card/watermelons.png") no-repeat ;
+}
+
+.winner-game .oncemore {
+	background: url("../imgs/card/oncemore.png") no-repeat ;
+}
+
+.winner-game .starstar {
+	background: url("../imgs/card/starstar.png") no-repeat ;
+}
+
+.winner-game .sevenseven {
+	background: url("../imgs/card/sevenseven.png") no-repeat ;
+}
+
+.winner-game {
+	margin:20px 10px;
+	height: 400px;
+}
+
+.winner-game .play-box {
+	position: relative;
+	float: left;
+	width: 440px;
+	height: 440px;
+}
+
+.winner-game .play-box li {
+	position: absolute;
+}
+
+.winner-game .play-box .card {
+	width: 50px;
+	height: 50px;
+	border : 3px solid #f5dd76;
+}
+
+.winner-game .play-box .current {
+	border: 3px solid #ff3300 ;
+}
+
+.winner-game .bet-box {
+	float: left;
+	width: 250px;
+	height: 250px;
+	position: relative;
+}
+
+.winner-game .bet-box li {
+	float: left;
+	margin-right: 2px;
+	cursor: pointer;
+	margin-bottom: 25px;
+	border:2px solid #f5dd76 ;
+	
+	-moz-transform:scale(0.8);
+	-moz-transform-origin:scale(0.8);
+	-moz-margin-start:-10px;
+}
+
+.winner-game .bet-box .bet-btn .current {
+	border:2px solid #fe0100 ;
+}
+
+.winner-game .bet-box .card {
+	width: 50px;
+	height: 50px;
+	zoom:0.8;
+	border:1px solid #f5dd76;
+}
+
+.winner-game .bet-box .score {
+	text-align: center ;
+	font-weight: bold;
+	font-family: Arial ;
+	background-color: #009200;
+	color: #000;
+	border:1px solid #f5dd76;
+}
+
+.winner-game .bet-box .bet-count {
+	text-align: center ;
+	font-weight: bold;
+	font-family: Arial ;
+	background-color: #420100;
+	color: #ff0000;
+	border:1px solid #570100;
+}
+
+.winner-game .bet-box .score-box {
+	height: 100px;	
+	width: 120px;
+	position: relative;
+}
+
+.winner-game .bet-box .score-box .label {
+	font-weight: bold;
+	margin-left: 5px;
+	font-size: 14px;
+	font-family: 'Î¢ÈíÑÅºÚ',Tahoma,Arial,'ËÎÌå',sans-serif ;
+	margin-right: 10px;
+}
+
+.winner-game .bet-box .score-box .seperator {
+	border-top: 1px solid #EE3503;
+	border-bottom: 1px solid #eee;
+}
+
+.winner-game .bet-box .score-box .credit-count , 
+.winner-game .bet-box .score-box .bonus-win-count {  
+	font-weight: bold;
+	font-family: Arial ;
+	font-size: 16px;
+	margin:4px 10px 0 0 ;
+	margin-top:0px\9;
+	position: absolute;
+	right:5px;
+}
+
+.winner-game .bet-box .score-box .credit-box {
+	background-color: #f3623a;
+	color: #fff;
+	clear: both;
+}
+
+.winner-game .bet-box .score-box .bonus-win-box {
+	background-color: #fd8463;
+	color: #fff;
+	clear: both;
+}
+
+.winner-game .winner-start a{
+	background: url("../imgs/winner_start.png") no-repeat ;
+	width: 84px ;
+	height:32px;
+	float: left ;
+	color: #fff;
+	font-weight: bold ;
+	font-size:14px;
+	text-decoration: none ;
+	background-position: -84px 0 ;
+	margin-top:50px;
+}
+
+.winner-game .winner-start .disable {
+	background-position:  0 0 ;
+	color: #d0d0d0 ;
+}
+
+.winner-game .winner-start .current {
+	background-position: -84px 0 ;
+}
+
+.winner-game .winner-start span {
+	float: left ;
+	margin: 5px 0 0 25px;
+}
+
+.winner-game .bet-btn .bg-red {
+	background-color: #fe0000;
+}
+
+.winner-game .bet-btn {
+	clear:both;
+}
+
+.winner-game .bet-btn li {
+	position: relative;
+}
+
+.winner-game .bet-box .label {
+	width:60px;
+	line-height: 30px;
+}
+
+.winner-game .game-rule {
+	margin:40px;
+}
+
+.winner-game .light {
+	position: absolute;
+	left : 8px;
+	top: -20px;
+}
+
+.winner-game .light {
+	background: url("../imgs/light.png") no-repeat ;
+	height: 18px;
+	width: 20px;
+	background-position: -21px 0 ;
+}
+
+.winner-game .light-active {
+	background-position: 0 0 ;
+}
+
+.winner-game .bet-box .biaoqing {
+	position: relative;
+	clear: both;
+}
+
+.winner-game .bet-box .biaoqing img {
+	position: absolute;
+	top:-20px;
+}
+
+.winner-game .start-guide-dialog {
+	border: 1px solid #666;
+	width: 180px;
+	font-size: 14px;
+	color:#444;
+	font-weight:bold;
+	position: absolute;
+	background-color: #aaa;
+	top: 300px;
+	left: 10px;
+}
+
+.winner-game .start-guide-dialog .tip {
+	margin:5px 10px;
+}
+
+.winner-game .start-guide-dialog .angle-top {
+	display: none;
+}
+
+.winner-game .integral-tip {
+	position: absolute;
+	color: #fff;
+	font-family : 'Î¢ÈíÑÅºÚ',Tahoma,Arial,'ËÎÌå',sans-serif ;
+	font-size:10px;
+	left: 125px;
+	top: -5px;
+	background-color: #F16101;
+	border-radius:4px;
+	padding: 1px 4px;
+	-webkit-text-size-adjust:none;
+	width:20px\9;
+}
+
+.winner-game .integral-tip-add {
+	background-color: #53A000; 
+	top: 15px ;
+}

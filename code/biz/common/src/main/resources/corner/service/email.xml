@@ -8,5 +8,8 @@ http://www.doucome.com/schema/mails http://www.doucome.com/schema/mails/mails.xs
 		<mails:mail id="email-rebate-notice" host="smtp.exmail.qq.com"
 			from="vip@diandianzhe.com" sender="点点折" password="3edc4rfv" title="点点折-购物返现通知"
 			template="/mail/rebateNotice.vm" />
+		<mails:mail id="email-delay-rebate-notice" host="smtp.exmail.qq.com"
+			from="vip@diandianzhe.com" sender="点点折" password="3edc4rfv" title="点点折-购物待返现通知"
+			template="/mail/rebateDelayNotice.vm" />
 	</mails:mails>
 </beans>

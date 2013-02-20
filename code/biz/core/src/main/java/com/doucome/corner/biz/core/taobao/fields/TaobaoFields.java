@@ -37,6 +37,8 @@ public class TaobaoFields {
 		TaobaoItemConst.post_fee,
 		TaobaoItemConst.express_fee ,
 		TaobaoItemConst.ems_fee ,
-		TaobaoItemConst.item_img
+		TaobaoItemConst.item_img,
+		TaobaoItemConst.freight_payer,
+		TaobaoItemConst.approve_status
 	} ;
 }

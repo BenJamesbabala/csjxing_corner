@@ -1,0 +1,29 @@
+<div class="tomorrow-fate daily-fate dd-l">
+     <ul class="fate-list dd-l">
+	     <li class="composite-index">
+		     <span>#if($!{hsFate.compositeIndex})$!{hsFate.compositeIndex}%#end</span>
+		 </li>
+		 <li class="love-index">
+		     <span>#if($!{hsFate.loveIndex})$!{hsFate.loveIndex}%#end</span>
+		 </li>
+		 <li class="wealth-index">
+		     <span>#if($!{hsFate.wealthIndex})$!{hsFate.wealthIndex}%#end</span>
+		 </li>
+		 <li class="work-index">
+		     <span>#if($!{hsFate.workIndex})$!{hsFate.workIndex}%#end</span>
+		 </li>
+		 <li class="health-index">
+		     <span>#if($!{hsFate.healthIndex})$!{hsFate.healthIndex}%#end</span>
+		 </li>
+	 </ul>
+	 <div class="summary fate-detail dd-l">
+	 	<div class="effect-date">有效日期：$!dateUtils.format($!effectDateStart, 'yyyy-MM-dd')</div>
+	 	<p class="fate-content">#if($!hsFate.summary)$!hsFate.summary#else暂时还没有明日运势解析呢，请稍等~~#end</p>
+	 	 #if($!hsFate.summary)
+		 <div class="toolbar dd-l">
+			 <a class="invite-btn btn" href="javascript:;" title="邀请好友">邀请好友</a>
+			 <a class="share-btn btn" href="javascript:;" title="分享">分享</a>
+		 </div>
+		 #end
+	 </div>
+ </div>
